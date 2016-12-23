@@ -21,7 +21,7 @@
 #include "jni.h"
 #include <android/log.h>
 
-#define LOG_TAG "jackpal-termexec"
+#define LOG_TAG "TermOnePlus(exec)"
 
 extern "C" {
 JNIEXPORT jint JNICALL Java_jackpal_androidterm_TermExec_createSubprocessInternal

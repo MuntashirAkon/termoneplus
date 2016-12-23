@@ -9,11 +9,11 @@ android {
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
+    }
 
-        ndk {
-            moduleName 'libjackpal-termexec2'
-            abiFilters 'all'
-            ldLibs 'log', 'c'
+    externalNativeBuild {
+        cmake {
+            path "src/main/cpp/CMakeLists.txt"
         }
     }
 
