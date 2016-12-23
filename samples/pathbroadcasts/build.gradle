@@ -4,7 +4,7 @@ android {
     compileSdkVersion project.ext.compileSdkVersion
     buildToolsVersion project.ext.buildToolsVersion
     defaultConfig {
-        applicationId "jackpal.androidterm.sample.pathbroadcasts"
+        applicationId "com.termoneplus.sample.pathbroadcasts"
         minSdkVersion project.ext.minSdkVersion
         targetSdkVersion project.ext.targetSdkVersion
     }
