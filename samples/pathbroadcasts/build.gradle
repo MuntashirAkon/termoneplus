@@ -8,11 +8,6 @@ android {
         applicationId "jackpal.androidterm.sample.pathbroadcasts"
         minSdkVersion 4
         targetSdkVersion 22
-
-        ndk {
-            moduleName "libjackpal-androidterm4"
-            ldLibs "log"
-        }
     }
 
     buildTypes {
