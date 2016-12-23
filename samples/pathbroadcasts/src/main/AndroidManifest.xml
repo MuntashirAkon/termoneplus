@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="jackpal.androidterm.sample.pathbroadcasts"
-      android:versionCode="1"
-      android:versionName="1.0">
+      package="jackpal.androidterm.sample.pathbroadcasts">
     <uses-permission android:name="jackpal.androidterm.permission.APPEND_TO_PATH" />
     <!-- Declare this if you want to receive PATH prepend broadcasts -->
     <uses-permission android:name="jackpal.androidterm.permission.PREPEND_TO_PATH" />

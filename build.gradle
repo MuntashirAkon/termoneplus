@@ -24,6 +24,9 @@ allprojects {
         compileSdkVersion = 25
         targetSdkVersion = 25
         minSdkVersion = 9
+
+        versionCode = 199
+        versionName = '2.0.0.beta1'
     }
 }
 
