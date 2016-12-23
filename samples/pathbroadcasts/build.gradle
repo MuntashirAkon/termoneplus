@@ -1,15 +1,15 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion "22.0.1"
-
+    compileSdkVersion project.ext.compileSdkVersion
+    buildToolsVersion project.ext.buildToolsVersion
     defaultConfig {
         applicationId "jackpal.androidterm.sample.pathbroadcasts"
-        minSdkVersion 4
-        targetSdkVersion 22
+        minSdkVersion project.ext.minSdkVersion
+        targetSdkVersion project.ext.targetSdkVersion
     }
-
+    productFlavors {
+    }
     buildTypes {
         release {
             minifyEnabled false

@@ -19,6 +19,12 @@ allprojects {
     repositories {
         jcenter()
     }
+    project.ext {
+        buildToolsVersion = '25.0.2'
+        compileSdkVersion = 25
+        targetSdkVersion = 25
+        minSdkVersion = 4
+    }
 }
 
 subprojects {
