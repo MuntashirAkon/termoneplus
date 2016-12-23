@@ -6,7 +6,6 @@ import android.graphics.  Canvas;
 import android.graphics.  Paint;
 import android.graphics.  Paint.Align;
 import android.graphics.  Rect;
-import android.util.      FloatMath;
 import java.lang.         Float;
 
 public class TextIcon
@@ -40,8 +39,8 @@ public class TextIcon
     float   f=       ((float)width)*H/((float)height);
     int     hBitmap= (int)H;
     int     wBitmap= (int)W;
-    if(W<f) {wBitmap=(int)FloatMath.ceil(f); hBitmap=(int)FloatMath.ceil(H);}
-    else    {wBitmap=(int)FloatMath.ceil(W); hBitmap=(int)FloatMath.ceil(height*wBitmap/width);}
+    if(W<f) {wBitmap=(int)Math.ceil(f); hBitmap=(int)Math.ceil(H);}
+    else    {wBitmap=(int)Math.ceil(W); hBitmap=(int)Math.ceil(height*wBitmap/width);}
 
     Bitmap  b=       Bitmap.createBitmap(wBitmap, hBitmap, Config.ARGB_8888);
             b.       setDensity(Bitmap.DENSITY_NONE);
