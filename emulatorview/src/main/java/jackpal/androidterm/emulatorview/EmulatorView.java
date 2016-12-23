@@ -499,7 +499,7 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
      */
     public EmulatorView(Context context, TermSession session, DisplayMetrics metrics) {
         super(context);
-        attachSession(session);
+        attachSession(context, session);
         setDensity(metrics);
         commonConstructor(context);
     }
@@ -540,13 +540,13 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
      *
      * @param session The {@link TermSession} this view will be displaying.
      */
-    public void attachSession(TermSession session) {
+    public void attachSession(Context context, TermSession session) {
         mTextRenderer = null;
         mForegroundPaint = new Paint();
         mBackgroundPaint = new Paint();
         mTopRow = 0;
         mLeftColumn = 0;
-        mGestureDetector = new GestureDetector(this);
+        mGestureDetector = new GestureDetector(context, this);
         // mGestureDetector.setIsLongpressEnabled(false);
         setVerticalScrollBarEnabled(true);
         setFocusable(true);

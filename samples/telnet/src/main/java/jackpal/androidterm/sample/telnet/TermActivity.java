@@ -117,7 +117,7 @@ public class TermActivity extends Activity
         }
 
         /* Attach the TermSession to the EmulatorView. */
-        view.attachSession(session);
+        view.attachSession(this, session);
 
         /* That's all you have to do!  The EmulatorView will call the attached
            TermSession's initializeEmulator() automatically, once it can
@@ -279,7 +279,7 @@ public class TermActivity extends Activity
         /* Create the TermSession and attach it to the view.  See the
            TelnetSession class for details. */
         TermSession session = new TelnetSession(termIn, termOut);
-        mEmulatorView.attachSession(session);
+        mEmulatorView.attachSession(this, session);
         mSession = session;
     }
 }
