@@ -159,5 +159,4 @@
   <string name="use_keyboard_shortcuts_summary_off">Raccourcis clavier désactivés.</string>
 
   <string name="help">Aide</string>
-  <!--<string name="help_url">http://jackpal.github.com/Android-Terminal-Emulator/help/index.html</string>-->
 </resources>
