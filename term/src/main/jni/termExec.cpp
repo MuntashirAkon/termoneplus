@@ -16,7 +16,7 @@
 
 #include "common.h"
 
-#define LOG_TAG "Exec"
+#define LOG_TAG "TermOnePlus(term)-Exec"
 
 #include <sys/types.h>
 #include <sys/ioctl.h>

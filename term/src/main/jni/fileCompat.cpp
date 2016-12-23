@@ -16,7 +16,7 @@
 
 #include "common.h"
 
-#define LOG_TAG "FileCompat"
+#define LOG_TAG "TermOnePlus(term)-FileCompat"
 
 #include <unistd.h>
 
