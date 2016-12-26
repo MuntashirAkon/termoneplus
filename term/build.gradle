@@ -1,8 +1,21 @@
 apply plugin: 'com.android.application'
 
+def renameArtifact(variant, defaultConfig) {
+    variant.outputs.each { output ->
+        def fullName = output.outputFile.name
+        def projectName = fullName.substring(0, fullName.indexOf('-'))
+
+        output.outputFile = new File(
+                (String) output.outputFile.parent,
+                (String) output.outputFile.name.replace(projectName, "termoneplus-${defaultConfig.versionName}"))
+    }
+}
+
+
 android {
     compileSdkVersion project.ext.compileSdkVersion
     buildToolsVersion project.ext.buildToolsVersion
+    applicationVariants.all { variant -> renameArtifact(variant, defaultConfig) }
     defaultConfig {
         applicationId "com.termoneplus"
         minSdkVersion project.ext.minSdkVersion
