@@ -14,7 +14,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
     <permission
-        android:name="jackpal.androidterm.permission.RUN_SCRIPT"
+        android:name="com.termoneplus.permission.RUN_SCRIPT"
         android:description="@string/permdesc_run_script"
         android:label="@string/perm_run_script"
         android:permissionGroup="android.permission-group.SYSTEM_TOOLS"
@@ -85,9 +85,9 @@
         <activity
             android:name="RunScript"
             android:excludeFromRecents="true"
-            android:permission="jackpal.androidterm.permission.RUN_SCRIPT">
+            android:permission="com.termoneplus.permission.RUN_SCRIPT">
             <intent-filter>
-                <action android:name="jackpal.androidterm.RUN_SCRIPT"/>
+                <action android:name="com.termoneplus.RUN_SCRIPT"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>

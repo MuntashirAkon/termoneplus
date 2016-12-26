@@ -10,6 +10,10 @@ import android.widget.EditText;
 
 public class IntentSampleActivity extends Activity
 {
+    private static final String ACTION_RUN_SCRIPT = "com.termoneplus.RUN_SCRIPT";
+    private static final String RUN_SCRIPT_WINDOW_HANDLE = "com.termoneplus.WindowHandle";
+    private static final String RUN_SCRIPT_COMMAND = "com.termoneplus.Command";
+
     private String mHandle;
     private static final int REQUEST_WINDOW_HANDLE = 1;
 
@@ -34,13 +38,12 @@ public class IntentSampleActivity extends Activity
             public void onClick(View v) {
                 /* Intent for opening a new window and running the provided
                    script -- you must declare the permission
-                   jackpal.androidterm.permission.RUN_SCRIPT in your manifest
+                   com.termoneplus.permission.RUN_SCRIPT in your manifest
                    to use */
-                Intent intent =
-                        new Intent("jackpal.androidterm.RUN_SCRIPT");
+                Intent intent = new Intent(ACTION_RUN_SCRIPT);
                 intent.addCategory(Intent.CATEGORY_DEFAULT);
                 String command = script.getText().toString();
-                intent.putExtra("jackpal.androidterm.iInitialCommand", command);
+                intent.putExtra(RUN_SCRIPT_COMMAND, command);
                 startActivity(intent);
             }});
         addClickListener(R.id.runScriptSaveWindow, new OnClickListener() {
@@ -48,15 +51,13 @@ public class IntentSampleActivity extends Activity
                 /* Intent for running a script in a previously opened window,
                    if it still exists
                    This will open another window if it doesn't find a match */
-                Intent intent =
-                        new Intent("jackpal.androidterm.RUN_SCRIPT");
+                Intent intent = new Intent(ACTION_RUN_SCRIPT);
                 intent.addCategory(Intent.CATEGORY_DEFAULT);
                 String command = script.getText().toString();
-                intent.putExtra("jackpal.androidterm.iInitialCommand", command);
+                intent.putExtra(RUN_SCRIPT_COMMAND, command);
                 if (mHandle != null) {
                     // Identify the targeted window by its handle
-                    intent.putExtra("jackpal.androidterm.window_handle",
-                            mHandle);
+                    intent.putExtra(RUN_SCRIPT_WINDOW_HANDLE, mHandle);
                 }
                 /* The handle for the targeted window -- whether newly opened
                    or reused -- is returned to us via onActivityResult()
@@ -76,7 +77,7 @@ public class IntentSampleActivity extends Activity
         }
 
         if (request == REQUEST_WINDOW_HANDLE && data != null) {
-            mHandle = data.getStringExtra("jackpal.androidterm.window_handle");
+            mHandle = data.getStringExtra(RUN_SCRIPT_WINDOW_HANDLE);
             ((Button) findViewById(R.id.runScriptSaveWindow)).setText(
                     R.string.run_script_existing_window);
         }
