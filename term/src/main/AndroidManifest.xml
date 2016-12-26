@@ -95,7 +95,7 @@
             android:name="RunShortcut"
             android:excludeFromRecents="true">
             <intent-filter>
-                <action android:name="jackpal.androidterm.RUN_SHORTCUT"/>
+                <action android:name="com.termoneplus.RUN_SHORTCUT"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>

@@ -255,8 +255,8 @@ public class      AddShortcut
       }
       Intent target=  new Intent().setClass(context, RunShortcut.class);
              target.setAction(RunShortcut.ACTION_RUN_SHORTCUT);
-             target.putExtra(RunShortcut.EXTRA_SHORTCUT_COMMAND, cmdEnc);
-             target.putExtra(RunShortcut.EXTRA_WINDOW_HANDLE, shortcutName);
+             target.putExtra(RunShortcut.RUN_SHORTCUT_COMMAND, cmdEnc);
+             target.putExtra(RunShortcut.RUN_SHORTCUT_WINDOW_HANDLE, shortcutName);
              target.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
       Intent wrapper= new Intent();
              wrapper.setAction("com.android.launcher.action.INSTALL_SHORTCUT");

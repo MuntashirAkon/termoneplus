@@ -24,10 +24,10 @@ import android.content.Intent;
 import android.util.Log;
 
 public final class RunShortcut extends RemoteInterface {
-    public static final String ACTION_RUN_SHORTCUT = "jackpal.androidterm.RUN_SHORTCUT";
+    public static final String ACTION_RUN_SHORTCUT = "com.termoneplus.RUN_SHORTCUT";
 
-    public static final String EXTRA_WINDOW_HANDLE = "jackpal.androidterm.window_handle";
-    public static final String EXTRA_SHORTCUT_COMMAND = "jackpal.androidterm.iShortcutCommand";
+    public static final String RUN_SHORTCUT_WINDOW_HANDLE = "com.termoneplus.WindowHandle";
+    public static final String RUN_SHORTCUT_COMMAND = "com.termoneplus.Command";
 
     @Override
     protected void handleIntent() {
@@ -40,7 +40,7 @@ public final class RunShortcut extends RemoteInterface {
         Intent myIntent = getIntent();
         String action = myIntent.getAction();
         if (action.equals(ACTION_RUN_SHORTCUT)) {
-            String encCommand = myIntent.getStringExtra(EXTRA_SHORTCUT_COMMAND);
+            String encCommand = myIntent.getStringExtra(RUN_SHORTCUT_COMMAND);
             if (encCommand == null) {
                 Log.e(TermDebug.LOG_TAG, "No command provided in shortcut!");
                 finish();
@@ -64,7 +64,7 @@ public final class RunShortcut extends RemoteInterface {
                 return;
             }
 
-            String handle = myIntent.getStringExtra(EXTRA_WINDOW_HANDLE);
+            String handle = myIntent.getStringExtra(RUN_SHORTCUT_WINDOW_HANDLE);
             if (handle != null) {
                 // Target the request at an existing window if open
                 handle = appendToWindow(handle, command);
@@ -73,7 +73,7 @@ public final class RunShortcut extends RemoteInterface {
                 handle = openNewWindow(command);
             }
             Intent result = new Intent();
-            result.putExtra(EXTRA_WINDOW_HANDLE, handle);
+            result.putExtra(RUN_SHORTCUT_WINDOW_HANDLE, handle);
             setResult(RESULT_OK, result);
         }
 
