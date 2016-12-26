@@ -10,6 +10,8 @@ import android.widget.EditText;
 
 public class IntentSampleActivity extends Activity
 {
+    private static final String ACTION_OPEN_NEW_WINDOW = "com.termoneplus.OPEN_NEW_WINDOW";
+
     private static final String ACTION_RUN_SCRIPT = "com.termoneplus.RUN_SCRIPT";
     private static final String RUN_SCRIPT_WINDOW_HANDLE = "com.termoneplus.WindowHandle";
     private static final String RUN_SCRIPT_COMMAND = "com.termoneplus.Command";
@@ -26,8 +28,7 @@ public class IntentSampleActivity extends Activity
         addClickListener(R.id.openNewWindow, new OnClickListener() {
             public void onClick(View v) {
                 // Intent for opening a new window without providing script
-                Intent intent =
-                        new Intent("jackpal.androidterm.OPEN_NEW_WINDOW");
+                Intent intent = new Intent(ACTION_OPEN_NEW_WINDOW);
                 intent.addCategory(Intent.CATEGORY_DEFAULT);
                 startActivity(intent);
             }});
