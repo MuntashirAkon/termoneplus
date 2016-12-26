@@ -110,6 +110,7 @@ public class RemoteInterface extends Activity {
 
         Intent myIntent = getIntent();
         String action = myIntent.getAction();
+        Log.i(TermDebug.LOG_TAG, "RemoteInterface action: " + action);
         if (action.equals(Intent.ACTION_SEND)
                 && myIntent.hasExtra(Intent.EXTRA_STREAM)) {
           /* "permission.RUN_SCRIPT" not required as this is merely opening a new window. */
