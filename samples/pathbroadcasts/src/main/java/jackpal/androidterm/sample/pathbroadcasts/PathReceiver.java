@@ -31,6 +31,10 @@ import java.io.OutputStream;
 import java.lang.ProcessBuilder;
 
 public class PathReceiver extends BroadcastReceiver {
+
+    public static final String ACTION_PATH_APPEND_BROADCAST = "com.termoneplus.broadcast.APPEND_TO_PATH";
+    public static final String ACTION_PATH_PREPEND_BROADCAST = "com.termoneplus.broadcast.PREPEND_TO_PATH";
+
     /**
      * Called when a broadcast matching the declared intent filters is
      * received.
@@ -47,10 +51,10 @@ public class PathReceiver extends BroadcastReceiver {
 
         /**
          * You need to declare the permission
-         * jackpal.androidterm.permission.APPEND_TO_PATH
+         * com.termoneplus.permission.APPEND_TO_PATH
          * to receive this broadcast.
          */
-        if (action.equals("jackpal.androidterm.broadcast.APPEND_TO_PATH")) {
+        if (action.equals(ACTION_PATH_APPEND_BROADCAST)) {
             /* The directory we want appended goes into the result extras */
             Bundle result = getResultExtras(true);
 
@@ -68,14 +72,14 @@ public class PathReceiver extends BroadcastReceiver {
 
         /**
          * You need to declare the permission
-         * jackpal.androidterm.permission.PREPEND_TO_PATH
+         * com.termoneplus.permission.PREPEND_TO_PATH
          * to receive this broadcast.
          *
          * This is intended for packages like BusyBox installers which need
          * to override existing system commands; otherwise, you should listen
          * for the APPEND_TO_PATH broadcast instead.
          */
-        if (action.equals("jackpal.androidterm.broadcast.PREPEND_TO_PATH")) {
+        if (action.equals(ACTION_PATH_PREPEND_BROADCAST)) {
             /* The directory we want prepended goes into the result extras */
             Bundle result = getResultExtras(true);
             result.putString(packageName, sbinDir.getAbsolutePath());
