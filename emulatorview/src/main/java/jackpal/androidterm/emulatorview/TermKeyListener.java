@@ -368,7 +368,7 @@ class TermKeyListener {
 
     private void setFnKeys(String termType) {
         // These key assignments taken from the debian squeeze terminfo database.
-        if (termType.equals("xterm")) {
+        if (termType.startsWith("xterm")) {
             mKeyCodes[KEYCODE_NUMPAD_7] = mKeyCodes[KEYCODE_MOVE_HOME] = "\033OH";
             mKeyCodes[KEYCODE_NUMPAD_1] = mKeyCodes[KEYCODE_MOVE_END] = "\033OF";
         } else {
@@ -405,7 +405,7 @@ class TermKeyListener {
             mKeyCodes[KEYCODE_F12] = "\033[24~";
         } else {
             // default
-            // screen, screen-256colors, xterm, anything new
+            // screen, screen-256colors, xterm, xterm-256colors, anything new
             mKeyCodes[KEYCODE_F1] = "\033OP"; // VT100 PF1
             mKeyCodes[KEYCODE_F2] = "\033OQ"; // VT100 PF2
             mKeyCodes[KEYCODE_F3] = "\033OR"; // VT100 PF3
