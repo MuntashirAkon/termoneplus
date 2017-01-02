@@ -51,6 +51,7 @@
         <item>Texte vert sur noir</item>
         <item>Texte orange sur noir</item>
         <item>Texte rouge sur noir</item>
+        <item>Holo blue text on black</item>
         <item>Solarized Light</item>
         <item>Solarized Dark</item>
         <item>Console Linux</item>
@@ -72,6 +73,7 @@
         <item>Touche Vol Haut</item>
         <item>Touche Vol Bas</item>
         <item>Touche Camera</item>
+        <item>None</item>
     </string-array>
 
     <string-array name="entries_fnkey_preference">
@@ -82,6 +84,7 @@
         <item>Touche Vol Haut</item>
         <item>Touche Vol Bas</item>
         <item>Touche Camera</item>
+        <item>None</item>
     </string-array>
 
     <string-array name="entries_ime_preference">

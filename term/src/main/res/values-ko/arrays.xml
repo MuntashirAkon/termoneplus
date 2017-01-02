@@ -78,6 +78,7 @@
         <item>검은 배경에 Holo Blue 글자</item>
         <item>밝은 솔라리스</item>
         <item>어두운 솔라리스</item>
+        <item>Linux Console</item>
     </string-array>
 
     <string-array name="entries_backaction_preference">

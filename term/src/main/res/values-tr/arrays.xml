@@ -63,6 +63,7 @@
         <item>Siyah arkaplan üzerinde yeşil metin</item>
         <item>Siyah arkaplan üzerinde turuncu metin</item>
         <item>Siyah arkaplan üzerinde kırmızı metin</item>
+        <item>Holo blue text on black</item>
         <item>Solarized Light</item>
         <item>Solarized Dark</item>
         <item>Linux Console</item>
@@ -76,6 +77,7 @@
         <item>Ses Arttırma Tuşu</item>
         <item>Ses Kısma Tuşu</item>
         <item>Kamera Tuşu</item>
+        <item>None</item>
     </string-array>
 
     <string-array name="entries_ime_preference">
