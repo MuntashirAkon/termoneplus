@@ -176,7 +176,7 @@
     <string name="fsnavigator_change_theme">Промени тему</string>
     <!-- AddShortcut.java -->
     <string name="addshortcut_command_hint">наредба</string>
-    <string name="addshortcut_example_hint">--пример=\""a\"</string>
+    <string name="addshortcut_example_hint">--пример=\"a\"</string>
     <string name="addshortcut_button_find_command">Нађи наредбу</string>
     <string name="addshortcut_navigator_title">ИЗБОР МЕТЕ ПРЕЧИЦЕ</string>
     <string name="addshortcut_command_window_instructions">Окно наредбе захтева пуну путању, без аргумената. За остале наредбе користите окно аргумената (нпр: cd /sdcard).</string>

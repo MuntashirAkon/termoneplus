@@ -170,7 +170,7 @@
     <string name="fsnavigator_change_theme">Zmeniť tému</string>
 
     <string name="addshortcut_command_hint">príkaz</string>
-    <string name="addshortcut_example_hint">--príklad=\""a\"</string>
+    <string name="addshortcut_example_hint">--príklad=\"a\"</string>
     <string name="addshortcut_button_find_command">Nájsť príkaz</string>
     <string name="addshortcut_navigator_title">VYBERTE CIEĽ SKRATKY</string>
     <string name="addshortcut_command_window_instructions">Príkazové okno vyžaduje celé umiestnenie, žiadne argumenty. Pre ostatné príkazy použite okno pre argumenty (napríklad: cd /sdcard).</string>

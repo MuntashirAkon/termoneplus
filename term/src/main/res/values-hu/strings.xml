@@ -175,7 +175,7 @@
     <string name="fsnavigator_change_theme">Téma váltása</string>
     <!-- AddShortcut.java -->
     <string name="addshortcut_command_hint">parancs</string>
-    <string name="addshortcut_example_hint">--példa=\""a\"</string>
+    <string name="addshortcut_example_hint">--példa=\"a\"</string>
     <string name="addshortcut_button_find_command">Parancs keresése</string>
     <string name="addshortcut_navigator_title">PARANCS KERESÉSE</string>
     <string name="addshortcut_command_window_instructions">A parancs mezőbe teljes útvonalat kell megadni, paraméterek nélkül. A parancs paramétereit a Paraméterek mezőben lehet megadni (pl.: cd /sdcard).</string>

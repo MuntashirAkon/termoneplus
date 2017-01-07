@@ -177,7 +177,7 @@
     <string name="fsnavigator_change_theme">Change theme</string>
     <!-- AddShortcut.java -->
     <string name="addshortcut_command_hint">command</string>
-    <string name="addshortcut_example_hint">--example=\""a\"</string>
+    <string name="addshortcut_example_hint">--example=\"a\"</string>
     <string name="addshortcut_button_find_command">Find command</string>
     <string name="addshortcut_navigator_title">SELECT SHORTCUT TARGET</string>
     <string name="addshortcut_command_window_instructions">Command window requires full path, no arguments. For other commands use Arguments window (ex: cd /sdcard).</string>

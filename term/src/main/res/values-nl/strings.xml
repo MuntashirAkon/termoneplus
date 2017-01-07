@@ -157,7 +157,7 @@
     <string name="fsnavigator_change_theme">Thema veranderen</string>
 
     <string name="addshortcut_command_hint">opdracht</string>
-    <string name="addshortcut_example_hint">--voorbeeld=\""a\"</string>
+    <string name="addshortcut_example_hint">--voorbeeld=\"a\"</string>
     <string name="addshortcut_button_find_command">Opdracht vinden</string>
     <string name="addshortcut_navigator_title">DOEL SNELKOPPELING KIEZEN</string>
     <string name="addshortcut_command_window_instructions">Opdrachtvenster vereist volledig pad, zonder toevoegingen. Voor extra opdrachten, gebruikt het veld \'Toevoeging\' (bijv: cd /sdcard).</string>
