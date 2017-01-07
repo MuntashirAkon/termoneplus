@@ -165,7 +165,7 @@
     <string name="help">Hife</string>
     <string name="activity_term_here_title">Terminal hier</string>
 
-    <string name="activity_shortcut_create">"Terminal Verknüpfung"</string>
+    <string name="activity_shortcut_create">Terminal Verknüpfung</string>
 
     <string name="fsnavigator_title">DATEI AUSWÄHLEN</string>
     <string name="fsnavigator_no_external_storage">Externer Speicher nicht verfügbar</string>

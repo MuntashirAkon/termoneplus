@@ -169,7 +169,7 @@
 
     <!-- BEGIN SHORTCUT RELATED STRINGS -->
     <!-- AndroidManifest.xml -->
-    <string name="activity_shortcut_create">"Terminal (acceso directo)"</string>
+    <string name="activity_shortcut_create">Terminal (acceso directo)</string>
     <!-- FSNavigator.java -->
     <string name="fsnavigator_title">EXPLORADOR DE ARCHIVOS</string>
     <string name="fsnavigator_no_external_storage">Almacenamiento externo no disponible</string>

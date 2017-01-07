@@ -168,7 +168,7 @@
     <string name="activity_term_here_title">Терминал овде</string>
     <!-- BEGIN SHORTCUT RELATED STRINGS -->
     <!-- AndroidManifest.xml -->
-    <string name="activity_shortcut_create">"Терминалска пречица"</string>
+    <string name="activity_shortcut_create">Терминалска пречица</string>
     <!-- FSNavigator.java -->
     <string name="fsnavigator_title">ИЗБОР ФАЈЛА</string>
     <string name="fsnavigator_no_external_storage">Спољашње складиште није доступно</string>

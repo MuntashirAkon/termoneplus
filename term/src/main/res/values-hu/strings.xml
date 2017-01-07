@@ -167,7 +167,7 @@
     <string name="help">Súgó</string>
     <!-- BEGIN SHORTCUT RELATED STRINGS -->
     <!-- AndroidManifest.xml -->
-    <string name="activity_shortcut_create">"Terminál parancsikon"</string>
+    <string name="activity_shortcut_create">Terminál parancsikon</string>
     <!-- FSNavigator.java -->
     <string name="fsnavigator_title">FÁJL MEGNYITÁSA</string>
     <string name="fsnavigator_no_external_storage">Külső tároló nem elérhető</string>

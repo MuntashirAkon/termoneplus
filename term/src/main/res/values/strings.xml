@@ -169,7 +169,7 @@
     <string name="activity_term_here_title">Term here</string>
     <!-- BEGIN SHORTCUT RELATED STRINGS -->
     <!-- AndroidManifest.xml -->
-    <string name="activity_shortcut_create">"Term shortcut"</string>
+    <string name="activity_shortcut_create">Term shortcut</string>
     <!-- FSNavigator.java -->
     <string name="fsnavigator_title">FILE SELECTOR</string>
     <string name="fsnavigator_no_external_storage">External storage not available</string>

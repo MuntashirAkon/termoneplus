@@ -149,7 +149,7 @@
 
     <string name="activity_term_here_title">Terminal</string>
 
-    <string name="activity_shortcut_create">"Terminal snelkoppeling"</string>
+    <string name="activity_shortcut_create">Terminal snelkoppeling</string>
 
     <string name="fsnavigator_title">BESTANDSKIEZER</string>
     <string name="fsnavigator_no_external_storage">Externe opslag niet beschikbaar</string>
