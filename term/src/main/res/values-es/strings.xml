@@ -181,8 +181,8 @@
     <string name="addshortcut_button_find_command">Encontrar comando</string>
     <string name="addshortcut_navigator_title">ELIJE DESTINO DEL ACCESO DIRECTO</string>
     <string name="addshortcut_command_window_instructions">La ventana de comandos necesita la ruta completa, sin argumentos. Para otros comandos usa la ventana de Argumentos (ej: cd /sdcard).</string>
-    <string name="addshortcut_arguments_label">Argumentos\:</string>
-    <string name="addshortcut_shortcut_label">Etiqueta acceso directo\:</string>
+    <string name="addshortcut_arguments_label">Argumentos:</string>
+    <string name="addshortcut_shortcut_label">Etiqueta acceso directo:</string>
     <string name="addshortcut_button_text_icon">Texto del icono</string>
     <string name="addshortcut_make_text_icon">HACER ICONO DE TEXTO</string>
     <string name="addshortcut_title">Acceso directo a terminal</string>

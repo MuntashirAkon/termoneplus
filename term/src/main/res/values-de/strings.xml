@@ -172,7 +172,7 @@
     <string name="fsnavigator_optional_enter_path">Oder hier einen Pfad eingeben.</string>
     <string name="fsnavigator_change_theme">Theme ändern</string>
 
-    <string name="addshortcut_arguments_label">Argumente\:</string>
+    <string name="addshortcut_arguments_label">Argumente:</string>
 
     <string name="colorvalue_letter_red">R</string>
     <string name="colorvalue_letter_green">G</string>
