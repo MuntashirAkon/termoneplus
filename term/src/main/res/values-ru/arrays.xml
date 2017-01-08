@@ -75,7 +75,7 @@
 
     <string-array name="entries_controlkey_preference">
         <item>Трекбол</item>
-        <item>Клавиша @</item>
+        <item>Клавиша \@</item>
         <item>Левый Alt</item>
         <item>Правый Alt</item>
         <item>Громкость вверх</item>
@@ -86,7 +86,7 @@
 
     <string-array name="entries_fnkey_preference">
         <item>Трекбол</item>
-        <item>Клавиша @</item>
+        <item>Клавиша \@</item>
         <item>Левый Alt</item>
         <item>Правый Alt</item>
         <item>Громкость вверх</item>
