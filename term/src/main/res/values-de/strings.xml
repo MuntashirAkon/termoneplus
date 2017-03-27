@@ -16,7 +16,7 @@
 -->
 
 <resources>
-    <string name="application_terminal">Terminal Emulator</string>
+    <string name="application_terminal">Terminalemulator</string>
     <string name="preferences">Einstellungen</string>
     <string name="new_window">Neues Fenster</string>
     <string name="close_window">Fenster schließen</string>
@@ -39,8 +39,8 @@
     <string name="select_text">Text auswählen</string>
     <string name="copy_all">Alles kopieren</string>
     <string name="paste">Einfügen</string>
-    <string name="send_control_key">Sende Strg-Taste</string>
-    <string name="send_fn_key">Sende FN-Taste</string>
+    <string name="send_control_key">Strg-Taste senden</string>
+    <string name="send_fn_key">FN-Taste senden</string>
 
     <string name="window_title">Fenster %1$d</string>
 
@@ -63,13 +63,13 @@
     <string name="summary_orientation_preference">Wähle die Bilschirmausrichtung</string>
     <string name="dialog_title_orientation_preference">Bildschirmausrichtung</string>
 
-    <string name="title_cursorstyle_preference">Aussehen des Cursor</string>
-    <string name="summary_cursorstyle_preference">Das Aussehen des Cursors auswählen.</string>
-    <string name="dialog_title_cursorstyle_preference">Aussehen des Cursor</string>
+    <string name="title_cursorstyle_preference">Zeigerstil</string>
+    <string name="summary_cursorstyle_preference">Zeigerstil auswählen.</string>
+    <string name="dialog_title_cursorstyle_preference">Zeigerstil</string>
 
-    <string name="title_cursorblink_preference">Cursor-Blinken</string>
-    <string name="summary_cursorblink_preference">Die Art auswählen, wie der Cursor blinken soll.</string>
-    <string name="dialog_title_cursorblink_preference">Cursor-Blinken</string>
+    <string name="title_cursorblink_preference">Zeigerblinken</string>
+    <string name="summary_cursorblink_preference">Zeigerblinken auswählen</string>
+    <string name="dialog_title_cursorblink_preference">Zeigerblinken</string>
 
     <string name="text_preferences">Text</string>
 
@@ -162,19 +162,23 @@
     <string name="title_use_keyboard_shortcuts">Nutze Tastenkombinationen</string>
     <string name="use_keyboard_shortcuts_summary_off">Tastenkombinationen deaktiviert.</string>
 
-    <string name="help">Hife</string>
+    <string name="help">Hilfe</string>
     <string name="activity_term_here_title">Terminal hier</string>
-
+    <!-- BEGIN SHORTCUT RELATED STRINGS -->
     <string name="activity_shortcut_create">Terminal Verknüpfung</string>
-
+    <!-- FSNavigator.java -->
     <string name="fsnavigator_title">DATEI AUSWÄHLEN</string>
     <string name="fsnavigator_no_external_storage">Externer Speicher nicht verfügbar</string>
     <string name="fsnavigator_optional_enter_path">Oder hier einen Pfad eingeben.</string>
-    <string name="fsnavigator_change_theme">Theme ändern</string>
-
+    <string name="fsnavigator_change_theme">Aussehen ändern</string>
+    <!-- AddShortcut.java -->
+    <string name="addshortcut_command_hint">Befehl</string>
+    <string name="addshortcut_button_find_command">Befehl finden</string>
     <string name="addshortcut_arguments_label">Argumente:</string>
-
+    <string name="addshortcut_button_text_icon">Textsymbol</string>
+    <!-- ColorValue.java -->
     <string name="colorvalue_letter_red">R</string>
     <string name="colorvalue_letter_green">G</string>
     <string name="colorvalue_letter_blue">B</string>
+    <!-- END SHORTCUT RELATED STRINGS -->
 </resources>
