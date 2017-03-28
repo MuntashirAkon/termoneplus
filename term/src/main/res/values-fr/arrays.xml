@@ -17,14 +17,14 @@
 
 <resources>
     <string-array name="entries_statusbar_preference">
-        <item>Afficher la barre de statut</item>
-        <item>Masquer la barre de statut</item>
+        <item>Afficher la barre d\'état</item>
+        <item>Masquer la barre d\'état</item>
     </string-array>
 
     <string-array name="entries_actionbar_preference">
         <!-- <item>Désactiver la barre d\'actions</item> -->
         <item>Toujours afficher la barre d\'actions</item>
-        <item>Cacher la barre d\'actions (Touche Haut de l\'écran ou la touche Menu de l\'appareil pour afficher)</item>
+        <item>Masquer la barre d\'actions (touche Haut de l\'écran ou touche Menu de l\'appareil pour afficher)</item>
     </string-array>
 
     <string-array name="entries_orientation_preference">
@@ -51,9 +51,9 @@
         <item>Texte vert sur noir</item>
         <item>Texte orange sur noir</item>
         <item>Texte rouge sur noir</item>
-        <item>Holo blue text on black</item>
-        <item>Solarized Light</item>
-        <item>Solarized Dark</item>
+        <item>Texte bleu holo sur noir</item>
+        <item>Solarisé clair</item>
+        <item>Solarisé foncé</item>
         <item>Console Linux</item>
     </string-array>
 
