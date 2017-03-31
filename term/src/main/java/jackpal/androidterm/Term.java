@@ -376,9 +376,12 @@ public class Term extends Activity implements UpdateCallback, SharedPreferences.
         setContentView(R.layout.term_activity);
         mViewFlipper = (TermViewFlipper) findViewById(VIEW_FLIPPER);
 
-        PowerManager pm = (PowerManager)getSystemService(Context.POWER_SERVICE);
+        Context app = getApplicationContext();
+
+        PowerManager pm = (PowerManager) app.getSystemService(Context.POWER_SERVICE);
         mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TermDebug.LOG_TAG);
-        WifiManager wm = (WifiManager)getSystemService(Context.WIFI_SERVICE);
+
+        WifiManager wm = (WifiManager) app.getSystemService(Context.WIFI_SERVICE);
         int wifiLockMode = WifiManager.WIFI_MODE_FULL;
         if (AndroidCompat.SDK >= 12) {
             wifiLockMode = WIFI_MODE_FULL_HIGH_PERF;
