@@ -143,7 +143,7 @@
     <string name="confirm_window_close_message">Lukk dette vinduet?</string>
 
     <string name="perm_run_script">Kjøre forskjellige kommandoer i Terminalemulatoren</string>
-    <string name="permdesc_run_script">Lar appen åpne nye vinduer i Terminalemulatoren, samt kjøre kommandoer i disse. Appen vil da kunne kjøre kommandoer med alle tillatelsene som Terminalemulatoren har, inkludert tilgang til Internett og SD-kortet. </string>
+    <string name="permdesc_run_script">Lar appen åpne nye vinduer i Terminalemulatoren, samt kjøre kommandoer i disse. Appen vil da kunne kjøre kommandoer med alle tillatelsene som Terminalemulatoren har, inkludert tilgang til Internett og SD-kortet.</string>
     <string name="perm_append_to_path">Legge til kommandoer i Terminalemulatoren</string>
     <string name="permdesc_append_to_path">Lar appen tilby flere kommandoer (Legge til i PATH) til Terminalemulatoren.</string>
     <string name="perm_prepend_to_path">Overstyr kommandoer i Terminalemulatoren</string>

@@ -150,7 +150,7 @@
     <string name="permdesc_prepend_to_path">어플리케이션이 터미널 에뮬레이터의 명령어를 덮어씌울 수 있습니다.</string>
 
     <string name="email_transcript_subject">터미널 에뮬레이터로 이메일 보내기</string>
-    <string name="email_transcript_chooser_title">이메일 보내기 : </string>
+    <string name="email_transcript_chooser_title">이메일 보내기 :</string>
     <string name="email_transcript_no_email_activity_found">이메일을 보낼 수 있는 어플리케이션이 존재하지 않습니다.</string>
 
     <string name="alt_sends_esc">Alt 키로 ESC 키를 입력</string>
