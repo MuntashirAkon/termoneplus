@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string-array name="entries_statusbar_preference">
+        <item>Показване на лента за състояние</item>
+        <item>Скриване на лента за състояние</item>
+    </string-array>
+    <string-array name="entries_actionbar_preference">
+        <item>Винаги да се показва лента за действия</item>
+        <item>Скриване на лента за действия/докоснете върха на екрана или клавиша \"Меню\" за показване</item>
+    </string-array>
+    <string-array name="entries_orientation_preference">
+        <item>Автоматично</item>
+        <item>Водоравно</item>
+        <item>Отвесно</item>
+    </string-array>
+    <string-array name="entries_cursorblink_preference">
+        <item>Немигащ показалец</item>
+        <item>Мигащ показалец</item>
+    </string-array>
+    <string-array name="entries_cursorstyle_preference">
+        <item>Правоъгълник</item>
+        <item>Подчертан</item>
+        <item>Отвесна черта</item>
+    </string-array>
+    <string-array name="entries_fontsize_preference">
+        <item>4 x 8 точки</item>
+        <item>6 пункта</item>
+        <item>7 пункта</item>
+        <item>8 пункта</item>
+        <item>9 пункта</item>
+        <item>10 пункта</item>
+        <item>12 пункта</item>
+        <item>14 пункта</item>
+        <item>16 пункта</item>
+        <item>20 пункта</item>
+        <item>24 пункта</item>
+        <item>28 пункта</item>
+        <item>32 пункта</item>
+        <item>36 пункта</item>
+        <item>42 пункта</item>
+        <item>48 пункта</item>
+        <item>64 пункта</item>
+        <item>72 пункта</item>
+        <item>96 пункта</item>
+        <item>144 пункта</item>
+        <item>288 пункта</item>
+    </string-array>
+    <string-array name="entries_color_preference">
+        <item>Черен на бяло</item>
+        <item>Бял на черно</item>
+        <item>Бял на синьо</item>
+        <item>Зелен на черно</item>
+        <item>Жълт на черно</item>
+        <item>Червен на черно</item>
+        <item>Син на черно</item>
+        <item>Осветен светъл</item>
+        <item>Осветен тъмен</item>
+        <item>Терминал на Линукс</item>
+    </string-array>
+    <string-array name="entries_backaction_preference">
+        <item>Затваряне на всички терминални прозорци</item>
+        <item>Затваряне на текущия терминален прозорец</item>
+        <item>Затваряне на приложението оставяйки сесията работеща</item>
+        <item>Изпращане на освобождаване(<ESC>) към терминала</ESC></item>
+        <item>Изпращане на отместване(<TAB>) към терминала</TAB></item>
+    </string-array>
+    <string-array name="entries_controlkey_preference">
+        <item>Топче</item>
+        <item>Клавиш маймунско а (\@&gt;)</item>
+        <item>Ляв клавиш Alt</item>
+        <item>Десен клавиш Alt</item>
+        <item>Усилване</item>
+        <item>Намаляване</item>
+        <item>Фотоапарат</item>
+        <item>Без</item>
+    </string-array>
+    <string-array name="entries_fnkey_preference">
+        <item>Топче</item>
+        <item>Клавиш маймунско а (\@&gt;)</item>
+        <item>Ляв клавиш Alt</item>
+        <item>Десен клавиш Alt</item>
+        <item>Усилване</item>
+        <item>Намаляване</item>
+        <item>Фотоапарат</item>
+        <item>Без</item>
+    </string-array>
+    <string-array name="entries_ime_preference">
+        <item>По знаци</item>
+        <item>По думи</item>
+    </string-array>
+    <string-array name="control_keys_short_names">
+        <item>Топче</item>
+        <item>маймунско а (\@&gt;)</item>
+        <item>Ляв Alt</item>
+        <item>Десен Alt</item>
+        <item>Усилване</item>
+        <item>Намаляване</item>
+        <item>Фотоапарат</item>
+        <item>Без</item>
+    </string-array>
+    <string-array name="fn_keys_short_names">
+        <item>Топче</item>
+        <item>маймунско а (\@&gt;)</item>
+        <item>Ляв Alt</item>
+        <item>Десен Alt</item>
+        <item>Усилване</item>
+        <item>Намаляване</item>
+        <item>Фотоапарат</item>
+        <item>Без</item>
+    </string-array>
+</resources>
