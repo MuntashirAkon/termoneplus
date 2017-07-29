@@ -16,8 +16,12 @@
 
 package jackpal.androidterm.emulatorview;
 
-import java.io.InputStream;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
@@ -25,10 +29,6 @@ import java.nio.CharBuffer;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetEncoder;
 import java.nio.charset.CodingErrorAction;
-
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 
 /**
  * A terminal session, consisting of a VT100 terminal emulator and its
@@ -56,60 +56,31 @@ import android.os.Message;
  * and closes the attached I/O streams.
  */
 public class TermSession {
-    public void setKeyListener(TermKeyListener l) {
-        mKeyListener = l;
-    }
-
-    private TermKeyListener mKeyListener;
-
-    private ColorScheme mColorScheme = BaseTextRenderer.defaultColorScheme;
-    private UpdateCallback mNotify;
-
-    private OutputStream mTermOut;
-    private InputStream mTermIn;
-
-    private String mTitle;
-
-    private TranscriptScreen mTranscriptScreen;
-    private TerminalEmulator mEmulator;
-
-    private boolean mDefaultUTF8Mode;
-
-    private Thread mReaderThread;
-    private ByteQueue mByteQueue;
-    private byte[] mReceiveBuffer;
-
-    private Thread mWriterThread;
-    private ByteQueue mWriteQueue;
-    private Handler mWriterHandler;
-
-    private CharBuffer mWriteCharBuffer;
-    private ByteBuffer mWriteByteBuffer;
-    private CharsetEncoder mUTF8Encoder;
-
     // Number of rows in the transcript
     private static final int TRANSCRIPT_ROWS = 10000;
-
     private static final int NEW_INPUT = 1;
     private static final int NEW_OUTPUT = 2;
     private static final int FINISH = 3;
     private static final int EOF = 4;
-
-    /**
-     * Callback to be invoked when a {@link TermSession} finishes.
-     *
-     * @see TermSession#setUpdateCallback
-     */
-    public interface FinishCallback {
-        /**
-         * Callback function to be invoked when a {@link TermSession} finishes.
-         *
-         * @param session The <code>TermSession</code> which has finished.
-         */
-        void onSessionFinish(TermSession session);
-    }
+    private TermKeyListener mKeyListener;
+    private ColorScheme mColorScheme = BaseTextRenderer.defaultColorScheme;
+    private UpdateCallback mNotify;
+    private OutputStream mTermOut;
+    private InputStream mTermIn;
+    private String mTitle;
+    private TranscriptScreen mTranscriptScreen;
+    private TerminalEmulator mEmulator;
+    private boolean mDefaultUTF8Mode;
+    private Thread mReaderThread;
+    private ByteQueue mByteQueue;
+    private byte[] mReceiveBuffer;
+    private Thread mWriterThread;
+    private ByteQueue mWriteQueue;
+    private Handler mWriterHandler;
+    private CharBuffer mWriteCharBuffer;
+    private ByteBuffer mWriteByteBuffer;
+    private CharsetEncoder mUTF8Encoder;
     private FinishCallback mFinishCallback;
-
     private boolean mIsRunning = false;
     private Handler mMsgHandler = new Handler() {
         @Override
@@ -129,9 +100,7 @@ public class TermSession {
             }
         }
     };
-
     private UpdateCallback mTitleChangedListener;
-
     public TermSession() {
         this(false);
     }
@@ -151,7 +120,7 @@ public class TermSession {
             @Override
             public void run() {
                 try {
-                    while(true) {
+                    while (true) {
                         int read = mTermIn.read(mBuffer);
                         if (read == -1) {
                             // EOF -- process exited
@@ -230,6 +199,10 @@ public class TermSession {
         mWriterThread.setName("TermSession output writer");
     }
 
+    public void setKeyListener(TermKeyListener l) {
+        mKeyListener = l;
+    }
+
     protected void onProcessExit() {
         finish();
     }
@@ -238,7 +211,7 @@ public class TermSession {
      * Set the terminal emulator's window size and start terminal emulation.
      *
      * @param columns The number of columns in the terminal window.
-     * @param rows The number of rows in the terminal window.
+     * @param rows    The number of rows in the terminal window.
      */
     public void initializeEmulator(int columns, int rows) {
         mTranscriptScreen = new TranscriptScreen(columns, TRANSCRIPT_ROWS, rows, mColorScheme);
@@ -263,9 +236,9 @@ public class TermSession {
      * it to the stream, but implementations in derived classes should call
      * through to this method to do the actual writing.
      *
-     * @param data An array of bytes to write to the terminal.
+     * @param data   An array of bytes to write to the terminal.
      * @param offset The offset into the array at which the data starts.
-     * @param count The number of bytes to be written.
+     * @param count  The number of bytes to be written.
      */
     public void write(byte[] data, int offset, int count) {
         try {
@@ -329,7 +302,7 @@ public class TermSession {
         encoder.reset();
         encoder.encode(charBuf, byteBuf, true);
         encoder.flush(byteBuf);
-        write(byteBuf.array(), 0, byteBuf.position()-1);
+        write(byteBuf.array(), 0, byteBuf.position() - 1);
     }
 
     /* Notify the writer thread that there's new output waiting */
@@ -337,7 +310,7 @@ public class TermSession {
         Handler writerHandler = mWriterHandler;
         if (writerHandler == null) {
            /* Writer thread isn't started -- will pick up data once it does */
-           return;
+            return;
         }
         writerHandler.sendEmptyMessage(NEW_OUTPUT);
     }
@@ -460,7 +433,7 @@ public class TermSession {
      * implementation.</em>
      *
      * @param columns The number of columns in the terminal window.
-     * @param rows The number of rows in the terminal window.
+     * @param rows    The number of rows in the terminal window.
      */
     public void updateSize(int columns, int rows) {
         if (mEmulator == null) {
@@ -474,7 +447,7 @@ public class TermSession {
      * Retrieve the terminal's screen and scrollback buffer.
      *
      * @return A {@link String} containing the contents of the screen and
-     *         scrollback buffer.
+     * scrollback buffer.
      */
     public String getTranscriptText() {
         return mTranscriptScreen.getTranscriptText();
@@ -507,9 +480,9 @@ public class TermSession {
      * emulator without modifying it in any way.  Subclasses can override it to
      * modify the data before giving it to the terminal.
      *
-     * @param data A byte array containing the data read.
+     * @param data   A byte array containing the data read.
      * @param offset The offset into the buffer where the read data begins.
-     * @param count The number of bytes read.
+     * @param count  The number of bytes read.
      */
     protected void processInput(byte[] data, int offset, int count) {
         mEmulator.append(data, offset, count);
@@ -520,9 +493,9 @@ public class TermSession {
      * emulation client, the session's {@link InputStream}, and any processing
      * being done by {@link #processInput processInput}.
      *
-     * @param data The data to be written to the terminal.
+     * @param data   The data to be written to the terminal.
      * @param offset The starting offset into the buffer of the data.
-     * @param count The length of the data to be written.
+     * @param count  The length of the data to be written.
      */
     protected final void appendToEmulator(byte[] data, int offset, int count) {
         mEmulator.append(data, offset, count);
@@ -634,5 +607,19 @@ public class TermSession {
         if (mFinishCallback != null) {
             mFinishCallback.onSessionFinish(this);
         }
+    }
+
+    /**
+     * Callback to be invoked when a {@link TermSession} finishes.
+     *
+     * @see TermSession#setUpdateCallback
+     */
+    public interface FinishCallback {
+        /**
+         * Callback function to be invoked when a {@link TermSession} finishes.
+         *
+         * @param session The <code>TermSession</code> which has finished.
+         */
+        void onSessionFinish(TermSession session);
     }
 }
