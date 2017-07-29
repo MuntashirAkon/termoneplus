@@ -126,7 +126,7 @@ public class      AddShortcut
     lv.addView(layoutTextViewH(getString(R.string.addshortcut_shortcut_label),  et[NAME]));
 
     final ImageView img=new ImageView(context);
-                    img.setImageResource(jackpal.androidterm.R.drawable.ic_launcher);
+                    img.setImageResource(jackpal.androidterm.R.mipmap.ic_launcher);
                     img.setMaxHeight(100);
                     img.setTag(0xFFFFFFFF);
                     img.setMaxWidth(100);
@@ -281,7 +281,7 @@ public class      AddShortcut
              {
                wrapper.putExtra(
                  Intent.EXTRA_SHORTCUT_ICON_RESOURCE
-               , Intent.ShortcutIconResource.fromContext(context, jackpal.androidterm.R.drawable.ic_launcher)
+               , Intent.ShortcutIconResource.fromContext(context, jackpal.androidterm.R.mipmap.ic_launcher)
                );
              }
       setResult(RESULT_OK, wrapper);

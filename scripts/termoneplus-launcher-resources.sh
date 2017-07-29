@@ -4,7 +4,13 @@ set -e
 
 cd `dirname $0`
 
-XCFFILE=../docs/termoneplus-launcher-icon.xcf
+for T in n r ; do
+
+case $T in
+n) XCFFILE=../docs/termoneplus-launcher-icon.xcf;;
+r) XCFFILE=../docs/termoneplus-launcher-round_icon.xcf;;
+*) exit 99;;
+esac
 
 for MODE in '' l m h xh xxh xxxh ; do
   case "$MODE" in
@@ -23,7 +29,10 @@ for MODE in '' l m h xh xxh xxxh ; do
   qualifier=
   test -z "$MODE" || qualifier=-"$MODE"dpi
 
-  PNGFILE=drawable"$qualifier"/ic_launcher.png
+  case $T in
+  n) PNGFILE=mipmap"$qualifier"/ic_launcher.png;;
+  r) PNGFILE=mipmap"$qualifier"/ic_launcher_round.png;;
+  esac
   echo creating .../$PNGFILE ... >&2
 
   # Start gimp with python-fu batch-interpreter
@@ -44,4 +53,5 @@ convert('${XCFFILE}', '${size}', '../term/src/main/res/${PNGFILE}')
 
 pdb.gimp_quit(1)
 EOF
+done
 done

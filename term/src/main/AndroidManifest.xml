@@ -38,8 +38,9 @@
 
     <application
         android:hardwareAccelerated="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/application_terminal"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/Theme">
         <activity
             android:name="Term"
