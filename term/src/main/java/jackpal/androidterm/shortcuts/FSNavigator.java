@@ -495,7 +495,9 @@ public class      FSNavigator
   }
   String getCanonicalPath(File file)
   {
-    try{return(file.getCanonicalPath());}catch(IOException e){return(file.getPath());}
+    // NOTE do not use getCanonicalPath as it resolves symbolic links!
+    //try{return(file.getCanonicalPath());}catch(IOException e){return(file.getPath());}
+    return(file.getAbsolutePath());
   }
   //////////////////////////////////////////////////////////////////////
   public boolean onCreateOptionsMenu(Menu menu)
