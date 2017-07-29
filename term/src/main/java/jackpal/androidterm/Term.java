@@ -692,12 +692,22 @@ public class Term extends Activity implements UpdateCallback, SharedPreferences.
                         // Switch windows after session list is in sync, not here
                         onResumeSelectWindow = position;
                     } else if (position == -1) {
-                        doCreateNewWindow();
-                        // TODO in some cases mTermSessions is not initialized (!?)
-                        if (mTermSessions != null)
-                            onResumeSelectWindow = mTermSessions.size() - 1;
-                        else
-                            onResumeSelectWindow = - 1;
+                        // NOTE do not create new windows (view) here as start of activity
+                        // WindowList clean indirectly view flipper - see method onStop.
+                        // Create only new session and then on service connection view
+                        // flipper and etc. will be updated...
+                        //doCreateNewWindow();
+                        if (mTermSessions != null) {
+                            try {
+                                TermSession session = createTermSession();
+                                mTermSessions.add(session);
+                                onResumeSelectWindow = mTermSessions.size() - 1;
+                            } catch (IOException e) {
+                                Toast.makeText(this, "Failed to create a session", Toast.LENGTH_SHORT).show();
+                                onResumeSelectWindow = -1;
+                            }
+                        } else
+                            onResumeSelectWindow = -1;
                     }
                 } else {
                     // Close the activity if user closed all sessions
