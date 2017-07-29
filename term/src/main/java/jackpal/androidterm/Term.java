@@ -693,7 +693,11 @@ public class Term extends Activity implements UpdateCallback, SharedPreferences.
                         onResumeSelectWindow = position;
                     } else if (position == -1) {
                         doCreateNewWindow();
-                        onResumeSelectWindow = mTermSessions.size() - 1;
+                        // TODO in some cases mTermSessions is not initialized (!?)
+                        if (mTermSessions != null)
+                            onResumeSelectWindow = mTermSessions.size() - 1;
+                        else
+                            onResumeSelectWindow = - 1;
                     }
                 } else {
                     // Close the activity if user closed all sessions
