@@ -566,7 +566,8 @@ public class TermSession {
      * Reset the terminal emulator's state.
      */
     public void reset() {
-        mEmulator.reset();
+        if (mEmulator != null)
+            mEmulator.reset();
         notifyUpdate();
     }
 
@@ -587,7 +588,8 @@ public class TermSession {
      */
     public void finish() {
         mIsRunning = false;
-        mEmulator.finish();
+        if (mEmulator != null)
+            mEmulator.finish();
         if (mTranscriptScreen != null) {
             mTranscriptScreen.finish();
         }
