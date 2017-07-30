@@ -119,11 +119,11 @@
         </service>
 
         <activity
-            android:name="jackpal.androidterm.shortcuts.AddShortcut"
+            android:name="com.termoneplus.shortcuts.AddShortcut"
             android:configChanges="orientation|keyboard|keyboardHidden"
             android:label="@string/activity_shortcut_create"
             android:launchMode="singleTop"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar">
+            android:theme="@style/Theme.AppCompat.Translucent.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
             </intent-filter>

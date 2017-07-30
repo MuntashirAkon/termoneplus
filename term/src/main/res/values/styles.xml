@@ -14,14 +14,21 @@
      limitations under the License.
 -->
 
-<!-- The base theme. This theme is only used for API level 1..10.
- -->
-
 <resources>
     <style name="Theme" parent="@android:style/Theme.Light">
+        <!-- The base theme. This theme is only used for API level 1..10.
+         -->
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowFrame">@null</item>
         <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <style name="Theme.AppCompat.Translucent.NoActionBar" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation</item>
     </style>
 </resources>
 
