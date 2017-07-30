@@ -12,3 +12,6 @@
 # Use java diff syntax for java files.
 
 *.java diff=java
+
+# Declare files that will always have CRLF line endings on checkout.
+*.bat text eol=crlf

@@ -1,8 +1,4 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
-task wrapper (type:Wrapper) {
-    gradleVersion = '3.4.1'
-    distributionUrl = 'https://services.gradle.org/distributions/gradle-3.4.1-all.zip'
-}
 
 buildscript {
     repositories {
@@ -29,4 +25,9 @@ allprojects {
         versionCode = 202
         versionName = '2.0.2'
     }
+}
+
+task wrapper (type:Wrapper) {
+    gradleVersion = '4.0.2'
+    distributionUrl = "https://services.gradle.org/distributions/gradle-${gradleVersion}-bin.zip"
 }
