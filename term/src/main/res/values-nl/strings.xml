@@ -161,8 +161,8 @@
     <string name="addshortcut_button_find_command">Opdracht vinden</string>
     <string name="addshortcut_navigator_title">DOEL SNELKOPPELING KIEZEN</string>
     <string name="addshortcut_command_window_instructions">Opdrachtvenster vereist volledig pad, zonder toevoegingen. Voor extra opdrachten, gebruikt het veld \'Toevoeging\' (bijv: cd /sdcard).</string>
-    <string name="addshortcut_arguments_label">Toevoeging:</string>
-    <string name="addshortcut_shortcut_label">Naam snelkoppeling:</string>
+    <string name="addshortcut_arguments_label">Toevoeging</string>
+    <string name="addshortcut_shortcut_label">Naam snelkoppeling</string>
     <string name="addshortcut_button_text_icon">Tekstpictogram</string>
     <string name="addshortcut_make_text_icon">TEKSTPICTOGRAM MAKEN</string>
     <string name="addshortcut_title">Terminal snelkoppeling</string>

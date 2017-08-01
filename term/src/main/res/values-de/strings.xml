@@ -174,7 +174,7 @@
     <!-- AddShortcut.java -->
     <string name="addshortcut_command_hint">Befehl</string>
     <string name="addshortcut_button_find_command">Befehl finden</string>
-    <string name="addshortcut_arguments_label">Argumente:</string>
+    <string name="addshortcut_arguments_label">Argumente</string>
     <string name="addshortcut_button_text_icon">Textsymbol</string>
     <!-- ColorValue.java -->
     <string name="colorvalue_letter_red">R</string>

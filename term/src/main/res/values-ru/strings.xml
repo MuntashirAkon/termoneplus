@@ -160,8 +160,8 @@
     <string name="addshortcut_button_find_command">Поиск команды</string>
     <string name="addshortcut_navigator_title">ВЫБЕРИТЕ ЦЕЛЬ ЯРЛЫКА</string>
     <string name="addshortcut_command_window_instructions">Командное окно требует полный путь без аргументов. Для других команд использовать окно Аргументы (пример: CD/SD-карта).</string>
-    <string name="addshortcut_arguments_label">Аргументы:</string>
-    <string name="addshortcut_shortcut_label">Метка ярлыка:</string>
+    <string name="addshortcut_arguments_label">Аргументы</string>
+    <string name="addshortcut_shortcut_label">Метка ярлыка</string>
     <string name="addshortcut_button_text_icon">Текст значок</string>
     <string name="addshortcut_make_text_icon">СОЗДАТЬ ЗНАЧОК ТЕКСТА</string>
     <string name="addshortcut_title">Ярлык терминала</string>

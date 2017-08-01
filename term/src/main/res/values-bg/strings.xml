@@ -165,8 +165,8 @@
     <string name="addshortcut_button_find_command">Команда за търсене</string>
     <string name="addshortcut_navigator_title">Избор на цел за връзката</string>
     <string name="addshortcut_command_window_instructions">Командния прозорец изисква пълен път, без параметри. За другите команди да се използва прозореца за параметри, напр. cd /sdcard.</string>
-    <string name="addshortcut_arguments_label">Параметри:</string>
-    <string name="addshortcut_shortcut_label">Име на връзката:</string>
+    <string name="addshortcut_arguments_label">Параметри</string>
+    <string name="addshortcut_shortcut_label">Име на връзката</string>
     <string name="addshortcut_button_text_icon">Икона с тект</string>
     <string name="addshortcut_make_text_icon">Създаване на тeкстова икона</string>
     <string name="addshortcut_title">Връзка към терминал</string>

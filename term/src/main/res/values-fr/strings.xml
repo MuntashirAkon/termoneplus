@@ -177,8 +177,8 @@
     <string name="addshortcut_example_hint">--example=\"a\"</string>
     <string name="addshortcut_navigator_title">SÉLECTIONNER LA CIBLE</string>
     <string name="addshortcut_command_window_instructions">La fenêtre de commande nécessite un chemin complet, pas d\'arguments. Pour les autres commandes, utilisez la fenêtre Arguments (ex : cd / carte SD).</string>
-    <string name="addshortcut_arguments_label">Arguments:</string>
-    <string name="addshortcut_shortcut_label">Étiquette de raccourci:</string>
+    <string name="addshortcut_arguments_label">Arguments</string>
+    <string name="addshortcut_shortcut_label">Étiquette de raccourci</string>
     <string name="addshortcut_button_text_icon">Icône de texte</string>
     <!-- ColorValue.java -->
     <string name="colorvalue_letter_alpha">α</string>
