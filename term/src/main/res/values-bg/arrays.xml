@@ -62,12 +62,12 @@
         <item>Затваряне на всички терминални прозорци</item>
         <item>Затваряне на текущия терминален прозорец</item>
         <item>Затваряне на приложението оставяйки сесията работеща</item>
-        <item>Изпращане на освобождаване(<ESC>) към терминала</ESC></item>
-        <item>Изпращане на отместване(<TAB>) към терминала</TAB></item>
+        <item>Изпращане на освобождаване(ESC) към терминала</item>
+        <item>Изпращане на отместване(TAB) към терминала</item>
     </string-array>
     <string-array name="entries_controlkey_preference">
         <item>Топче</item>
-        <item>Клавиш маймунско а (\@&gt;)</item>
+        <item>Клавиш маймунско а (\@)</item>
         <item>Ляв клавиш Alt</item>
         <item>Десен клавиш Alt</item>
         <item>Усилване</item>
@@ -77,7 +77,7 @@
     </string-array>
     <string-array name="entries_fnkey_preference">
         <item>Топче</item>
-        <item>Клавиш маймунско а (\@&gt;)</item>
+        <item>Клавиш маймунско а (\@)</item>
         <item>Ляв клавиш Alt</item>
         <item>Десен клавиш Alt</item>
         <item>Усилване</item>
@@ -91,7 +91,7 @@
     </string-array>
     <string-array name="control_keys_short_names">
         <item>Топче</item>
-        <item>маймунско а (\@&gt;)</item>
+        <item>маймунско а (\@)</item>
         <item>Ляв Alt</item>
         <item>Десен Alt</item>
         <item>Усилване</item>
@@ -101,7 +101,7 @@
     </string-array>
     <string-array name="fn_keys_short_names">
         <item>Топче</item>
-        <item>маймунско а (\@&gt;)</item>
+        <item>маймунско а (\@)</item>
         <item>Ляв Alt</item>
         <item>Десен Alt</item>
         <item>Усилване</item>
