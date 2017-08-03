@@ -204,20 +204,42 @@ public class AddShortcut extends AppCompatActivity {
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Uri uri = null;
-        path = null;
+
         switch (requestCode) {
-            case OP_MAKE_SHORTCUT:
-                if (data != null && (uri = data.getData()) != null && (path = uri.getPath()) != null) {
-                    preferences.edit().putString("lastPath", path).commit();
+            case OP_MAKE_SHORTCUT: {
+                if (resultCode != RESULT_OK) break;
+                if (data == null) break;
+
+                {
+                    Uri uri = data.getData();
+                    if (uri == null) break;
+                    path = uri.getPath();
+                }
+                if (path == null) {
+                    finish();
+                    break;
+                }
+
+                preferences.edit().putString("lastPath", path).commit();
+
+                {
                     EditText cmd_path = (EditText) shortcut_view.findViewById(R.id.cmd_path);
                     cmd_path.setText(path);
-                    String name = path.replaceAll(".*/", "");
+                }
+
+                String name = path.replaceAll(".*/", "");
+
+                {
                     EditText cmd_name = (EditText) shortcut_view.findViewById(R.id.cmd_name);
-                    if (cmd_name.getText().toString().equals("")) cmd_name.setText(name);
-                    if (iconText[0] != null && iconText[0].equals("")) iconText[0] = name;
-                } else finish();
+                    if (cmd_name.getText().toString().equals(""))
+                        cmd_name.setText(name);
+                }
+
+                if (iconText[0] != null && iconText[0].equals(""))
+                    iconText[0] = name;
+
                 break;
+            }
         }
     }
 }
