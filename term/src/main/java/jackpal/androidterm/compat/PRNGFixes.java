@@ -217,10 +217,7 @@ public final class PRNGFixes {
         @Override
         protected void engineSetSeed(byte[] bytes) {
             try {
-                OutputStream out;
-                synchronized (sLock) {
-                    out = getUrandomOutputStream();
-                }
+                OutputStream out = getUrandomOutputStream();
                 out.write(bytes);
                 out.flush();
             } catch (IOException e) {
@@ -241,13 +238,8 @@ public final class PRNGFixes {
             }
 
             try {
-                DataInputStream in;
-                synchronized (sLock) {
-                    in = getUrandomInputStream();
-                }
-                synchronized (in) {
-                    in.readFully(bytes);
-                }
+                DataInputStream in = getUrandomInputStream();
+                in.readFully(bytes);
             } catch (IOException e) {
                 throw new SecurityException(
                         "Failed to read from " + URANDOM_FILE, e);
