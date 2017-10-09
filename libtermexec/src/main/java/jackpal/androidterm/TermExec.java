@@ -51,8 +51,8 @@ public class TermExec {
     }
 
     public @NonNull TermExec command(List<String> command) {
-        command.clear();
-        command.addAll(command);
+        this.command.clear();
+        this.command.addAll(command);
         return this;
     }
 
