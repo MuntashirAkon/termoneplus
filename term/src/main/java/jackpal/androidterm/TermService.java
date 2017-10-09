@@ -43,9 +43,6 @@ import java.util.UUID;
 
 public class TermService extends Service implements TermSession.FinishCallback
 {
-    /* Parallels the value of START_STICKY on API Level >= 5 */
-    private static final int COMPAT_START_STICKY = 1;
-
     private static final int RUNNING_NOTIFICATION = 1;
     private ServiceForegroundCompat compat;
 
@@ -60,12 +57,8 @@ public class TermService extends Service implements TermSession.FinishCallback
     private final IBinder mTSBinder = new TSBinder();
 
     @Override
-    public void onStart(Intent intent, int flags) {
-    }
-
-    /* This should be @Override if building with API Level >=5 */
     public int onStartCommand(Intent intent, int flags, int startId) {
-        return COMPAT_START_STICKY;
+        return START_STICKY;
     }
 
     @Override
@@ -111,7 +104,6 @@ public class TermService extends Service implements TermSession.FinishCallback
         compat.startForeground(RUNNING_NOTIFICATION, notification);
 
         Log.d(TermDebug.LOG_TAG, "TermService started");
-        return;
     }
 
     @Override
@@ -125,7 +117,6 @@ public class TermService extends Service implements TermSession.FinishCallback
             session.finish();
         }
         mTermSessions.clear();
-        return;
     }
 
     public SessionList getSessions() {
