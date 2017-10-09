@@ -27,7 +27,6 @@
         android:layout_weight="1"
         android:padding="15dp"
         android:maxLines="1"
-        android:singleLine="true"
         android:textAppearance="?android:attr/textAppearanceLarge" />
     <View android:id="@+id/window_list_separator"
         android:background="#ff313431"
