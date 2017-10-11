@@ -80,20 +80,12 @@ public class AddShortcut extends AppCompatActivity {
                     public void onClick(View view) {
                         String lastPath = preferences.getString("lastPath", null);
 
-                        File get = (lastPath == null)
-                                ? Environment.getExternalStorageDirectory()
-                                : new File(lastPath).getParentFile();
-                        Intent pickerIntent = new Intent();
-                        if (preferences.getBoolean("useInternalScriptFinder", false)) {
-                            pickerIntent
-                                    .setClass(getApplicationContext(), jackpal.androidterm.shortcuts.FSNavigator.class)
-                                    .setData(Uri.fromFile(get))
-                                    .putExtra("title", getString(R.string.addshortcut_navigator_title));
-                        } else {
-                            pickerIntent
-                                    .putExtra("CONTENT_TYPE", "*/*")
-                                    .setAction(Intent.ACTION_PICK);
-                        }
+                        Intent pickerIntent = new Intent(Intent.ACTION_PICK)
+                                .putExtra("CONTENT_TYPE", "*/*");
+
+                        if (lastPath != null)
+                            pickerIntent.putExtra("COMMAND_PATH", lastPath);
+
                         startActivityForResult(pickerIntent, OP_MAKE_SHORTCUT);
                     }
                 }

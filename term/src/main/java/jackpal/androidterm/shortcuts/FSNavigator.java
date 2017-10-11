@@ -61,6 +61,13 @@ public class      FSNavigator
     extSdCard=getCanonicalPath(extSdCardFile);
     Uri    uri=intent.getData();
     String path=uri==null?null:uri.getPath();
+    if(path == null && intent.hasExtra("COMMAND_PATH")) {
+      File cmd_path = new File(intent.getStringExtra("COMMAND_PATH"));
+      if (cmd_path.isFile())
+        path = cmd_path.getParentFile().getAbsolutePath();
+      else if (cmd_path.isDirectory())
+        path = cmd_path.getAbsolutePath();
+    }
     if(null == path || null==(chdir(path))) chdir(extSdCard);
     if(intent.hasExtra("title"))           setTitle(intent.getStringExtra("title"));
 
