@@ -136,7 +136,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="jackpal.androidterm.shortcuts.FSNavigator"
+            android:name="com.termoneplus.shortcuts.FileSelection"
             android:configChanges="orientation|keyboardHidden"
             android:exported="true"
             android:label="@string/addshortcut_button_find_command"
