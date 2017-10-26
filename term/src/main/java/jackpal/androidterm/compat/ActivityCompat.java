@@ -16,12 +16,14 @@
 
 package jackpal.androidterm.compat;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 
 /**
  * Compatibility class for android.app.Activity
  */
 public class ActivityCompat {
+    @TargetApi(11)
     private static class Api11OrLater {
         public static void invalidateOptionsMenu(Activity activity) {
             activity.invalidateOptionsMenu();
