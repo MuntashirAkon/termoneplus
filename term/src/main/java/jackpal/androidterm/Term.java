@@ -113,7 +113,6 @@ public class Term extends Activity implements UpdateCallback, SharedPreferences.
     private ComponentName mPrivateAlias;
     private PowerManager.WakeLock mWakeLock;
     private WifiManager.WifiLock mWifiLock;
-    private boolean mBackKeyPressed;
     private int mPendingPathBroadcasts = 0;
     private TermService mTermService;
     private ActionBarCompat mActionBar;
@@ -516,13 +515,6 @@ public class Term extends Activity implements UpdateCallback, SharedPreferences.
     public void onPause() {
         super.onPause();
 
-        if (AndroidCompat.SDK < 5) {
-            /* If we lose focus between a back key down and a back key up,
-               we shouldn't respond to the next back key up event unless
-               we get another key down first */
-            mBackKeyPressed = false;
-        }
-
         /* Explicitly close the input method
            Otherwise, the soft keyboard could cover up whatever activity takes
            our place */
@@ -804,34 +796,9 @@ public class Term extends Activity implements UpdateCallback, SharedPreferences.
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        /* The pre-Eclair default implementation of onKeyDown() would prevent
-           our handling of the Back key in onKeyUp() from taking effect, so
-           ignore it here */
-        if (AndroidCompat.SDK < 5 && keyCode == KeyEvent.KEYCODE_BACK) {
-            /* Android pre-Eclair has no key event tracking, and a back key
-               down event delivered to an activity above us in the back stack
-               could be succeeded by a back key up event to us, so we need to
-               keep track of our own back key presses */
-            mBackKeyPressed = true;
-            return true;
-        } else {
-            return super.onKeyDown(keyCode, event);
-        }
-    }
-
-    @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         switch (keyCode) {
             case KeyEvent.KEYCODE_BACK:
-                if (AndroidCompat.SDK < 5) {
-                    if (!mBackKeyPressed) {
-                    /* This key up event might correspond to a key down
-                       delivered to another activity -- ignore */
-                        return false;
-                    }
-                    mBackKeyPressed = false;
-                }
                 if (mActionBarMode == TermSettings.ACTION_BAR_MODE_HIDES && mActionBar != null && mActionBar.isShowing()) {
                     mActionBar.hide();
                     return true;
