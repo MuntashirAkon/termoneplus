@@ -37,6 +37,7 @@
         android:protectionLevel="dangerous"/>
 
     <application
+        android:allowBackup="false"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/application_terminal"
