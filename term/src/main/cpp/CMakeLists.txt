@@ -19,7 +19,6 @@ add_library(
 
 	# Provides a relative path to your source file(s).
 	../jni/common.cpp
-	../jni/fileCompat.cpp
 	../jni/termExec.cpp
 )
 
