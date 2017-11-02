@@ -20,7 +20,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.ParcelFileDescriptor;
 import android.util.Log;
-import jackpal.androidterm.compat.FileCompat;
 import jackpal.androidterm.util.TermSettings;
 
 import java.io.*;
@@ -106,7 +105,7 @@ public class ShellTermSession extends GenericTermSession {
         StringBuilder checkedPath = new StringBuilder(path.length());
         for (String dirname : dirs) {
             File dir = new File(dirname);
-            if (dir.isDirectory() && FileCompat.canExecute(dir)) {
+            if (dir.isDirectory() && dir.canExecute()) {
                 checkedPath.append(dirname);
                 checkedPath.append(":");
             }
@@ -139,7 +138,7 @@ public class ShellTermSession extends GenericTermSession {
             if (!file.exists()) {
                 Log.e(TermDebug.LOG_TAG, "Shell " + arg0 + " not found!");
                 throw new FileNotFoundException(arg0);
-            } else if (!FileCompat.canExecute(file)) {
+            } else if (!file.canExecute()) {
                 Log.e(TermDebug.LOG_TAG, "Shell " + arg0 + " not executable!");
                 throw new FileNotFoundException(arg0);
             }

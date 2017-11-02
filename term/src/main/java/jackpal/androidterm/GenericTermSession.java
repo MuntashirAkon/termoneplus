@@ -30,7 +30,6 @@ import jackpal.androidterm.emulatorview.ColorScheme;
 import jackpal.androidterm.emulatorview.TermSession;
 import jackpal.androidterm.emulatorview.UpdateCallback;
 
-import jackpal.androidterm.compat.FileCompat;
 import jackpal.androidterm.util.TermSettings;
 
 /**
