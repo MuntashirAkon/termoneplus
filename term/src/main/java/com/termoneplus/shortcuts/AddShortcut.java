@@ -70,7 +70,7 @@ public class AddShortcut extends AppCompatActivity {
                 AlertDialogCompat.newInstanceBuilder(this, AlertDialogCompat.THEME_DEVICE_DEFAULT_DARK);
 
         LayoutInflater inflater = getLayoutInflater();
-        View view = inflater.inflate(R.layout.addshortcut_activity, null);
+        View view = inflater.inflate(R.layout.activity_addshortcut, null);
         shortcut_view = view;
 
         final EditText cmd_param = (EditText) view.findViewById(R.id.cmd_param);
