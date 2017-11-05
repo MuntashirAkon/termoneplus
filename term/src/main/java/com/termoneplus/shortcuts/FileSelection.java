@@ -16,12 +16,12 @@
 
 package com.termoneplus.shortcuts;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.IntDef;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -38,7 +38,7 @@ import java.util.Comparator;
 
 import jackpal.androidterm.R;
 
-public class FileSelection extends Activity {
+public class FileSelection extends AppCompatActivity {
     private String STATE_CWD = "CWD";
 
     private String cwd; // current working directory

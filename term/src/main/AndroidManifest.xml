@@ -141,7 +141,8 @@
             android:configChanges="orientation|keyboardHidden"
             android:exported="true"
             android:label="@string/addshortcut_button_find_command"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.PICK"/>
                 <category android:name="android.intent.category.DEFAULT"/>
