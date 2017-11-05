@@ -99,6 +99,7 @@ public class AddShortcut extends AppCompatActivity {
                         Intent pickerIntent = new Intent(Intent.ACTION_PICK)
                                 .putExtra("CONTENT_TYPE", "*/*");
 
+                        pickerIntent.putExtra("TITLE", getString(R.string.addshortcut_button_find_command));
                         if (lastPath != null)
                             pickerIntent.putExtra("COMMAND_PATH", lastPath);
 

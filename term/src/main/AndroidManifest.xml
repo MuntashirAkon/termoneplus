@@ -140,7 +140,7 @@
             android:name="com.termoneplus.shortcuts.FileSelection"
             android:configChanges="orientation|keyboardHidden"
             android:exported="true"
-            android:label="@string/addshortcut_button_find_command"
+            android:label="@string/fsnavigator_title"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme">
             <intent-filter>

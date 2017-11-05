@@ -49,8 +49,12 @@ public class FileSelection extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_file_selection);
 
+        Intent intent = getIntent();
+
+        if (intent.hasExtra("TITLE"))
+            setTitle(intent.getStringExtra("TITLE"));
+
         if (savedInstanceState == null) {
-            Intent intent = getIntent();
             Uri uri = intent.getData();
             if (uri != null) {
                 cwd = uri.getPath();
