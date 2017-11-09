@@ -154,12 +154,12 @@
     <!-- BEGIN SHORTCUT RELATED STRINGS -->
     <!-- AndroidManifest.xml -->
     <string name="activity_shortcut_create">Връзка към терминал</string>
-    <!-- FSNavigator.java -->
+    <!-- FileSelection activity -->
     <string name="fsnavigator_title">Избор на файлове</string>
     <string name="fsnavigator_no_external_storage">Външното хранилище не е достъпно</string>
     <string name="fsnavigator_optional_enter_path">Или въведете път тук</string>
     <string name="fsnavigator_change_theme">Смяна на темата</string>
-    <!-- AddShortcut.java -->
+    <!-- AddShortcut activity -->
     <string name="addshortcut_command_hint">команда</string>
     <string name="addshortcut_example_hint">--пример=\"a\"</string>
     <string name="addshortcut_button_find_command">Команда за търсене</string>

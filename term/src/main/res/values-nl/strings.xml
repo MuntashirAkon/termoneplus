@@ -149,13 +149,14 @@
 
     <string name="activity_term_here_title">Terminal</string>
 
+    <!-- BEGIN SHORTCUT RELATED STRINGS -->
     <string name="activity_shortcut_create">Terminal snelkoppeling</string>
-
-    <string name="fsnavigator_title">BESTANDSKIEZER</string>
+    <!-- FileSelection activity -->
+    <string name="fsnavigator_title">Bestandskiezer</string>
     <string name="fsnavigator_no_external_storage">Externe opslag niet beschikbaar</string>
     <string name="fsnavigator_optional_enter_path">Of voer hier pad in</string>
     <string name="fsnavigator_change_theme">Thema veranderen</string>
-
+    <!-- AddShortcut activity -->
     <string name="addshortcut_command_hint">opdracht</string>
     <string name="addshortcut_example_hint">--voorbeeld=\"a\"</string>
     <string name="addshortcut_button_find_command">Opdracht vinden</string>
@@ -166,7 +167,8 @@
     <string name="addshortcut_button_text_icon">Tekstpictogram</string>
     <string name="addshortcut_make_text_icon">TEKSTPICTOGRAM MAKEN</string>
     <string name="addshortcut_title">Terminal snelkoppeling</string>
-
+    <!-- ColorValue.java -->
     <string name="colorvalue_label_lock_button_column">VAST</string>
     <string name="colorvalue_icon_text_entry_hint">Pictogramtekst</string>
+    <!-- END SHORTCUT RELATED STRINGS -->
 </resources>

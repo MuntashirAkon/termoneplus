@@ -168,12 +168,12 @@
     <!-- BEGIN SHORTCUT RELATED STRINGS -->
     <!-- AndroidManifest.xml -->
     <string name="activity_shortcut_create">Terminál parancsikon</string>
-    <!-- FSNavigator.java -->
-    <string name="fsnavigator_title">FÁJL MEGNYITÁSA</string>
+    <!-- FileSelection activity -->
+    <string name="fsnavigator_title">Fájl megnyitása</string>
     <string name="fsnavigator_no_external_storage">Külső tároló nem elérhető</string>
     <string name="fsnavigator_optional_enter_path">vagy adja meg az útvonalat</string>
     <string name="fsnavigator_change_theme">Téma váltása</string>
-    <!-- AddShortcut.java -->
+    <!-- AddShortcut activity -->
     <string name="addshortcut_command_hint">parancs</string>
     <string name="addshortcut_example_hint">--példa=\"a\"</string>
     <string name="addshortcut_button_find_command">Parancs keresése</string>

@@ -166,12 +166,12 @@
     <string name="activity_term_here_title">Terminal hier</string>
     <!-- BEGIN SHORTCUT RELATED STRINGS -->
     <string name="activity_shortcut_create">Terminal Verknüpfung</string>
-    <!-- FSNavigator.java -->
-    <string name="fsnavigator_title">DATEI AUSWÄHLEN</string>
+    <!-- FileSelection activity -->
+    <string name="fsnavigator_title">Datei auswählen</string>
     <string name="fsnavigator_no_external_storage">Externer Speicher nicht verfügbar</string>
     <string name="fsnavigator_optional_enter_path">Oder hier einen Pfad eingeben.</string>
     <string name="fsnavigator_change_theme">Aussehen ändern</string>
-    <!-- AddShortcut.java -->
+    <!-- AddShortcut activity -->
     <string name="addshortcut_command_hint">Befehl</string>
     <string name="addshortcut_button_find_command">Befehl finden</string>
     <string name="addshortcut_arguments_label">Argumente</string>

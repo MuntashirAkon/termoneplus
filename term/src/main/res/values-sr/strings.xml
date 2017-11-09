@@ -169,12 +169,12 @@
     <!-- BEGIN SHORTCUT RELATED STRINGS -->
     <!-- AndroidManifest.xml -->
     <string name="activity_shortcut_create">Терминалска пречица</string>
-    <!-- FSNavigator.java -->
-    <string name="fsnavigator_title">ИЗБОР ФАЈЛА</string>
+    <!-- FileSelection activity -->
+    <string name="fsnavigator_title">Избор фајла</string>
     <string name="fsnavigator_no_external_storage">Спољашње складиште није доступно</string>
     <string name="fsnavigator_optional_enter_path">Или унесите путању овде.</string>
     <string name="fsnavigator_change_theme">Промени тему</string>
-    <!-- AddShortcut.java -->
+    <!-- AddShortcut activity -->
     <string name="addshortcut_command_hint">наредба</string>
     <string name="addshortcut_example_hint">--пример=\"a\"</string>
     <string name="addshortcut_button_find_command">Нађи наредбу</string>

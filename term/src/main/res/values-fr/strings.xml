@@ -167,12 +167,12 @@
 
     <!-- BEGIN SHORTCUT RELATED STRINGS -->
     <!-- AndroidManifest.xml -->
-    <!-- FSNavigator.java -->
-    <string name="fsnavigator_title">SÉLECTEUR DE FICHIERS</string>
+    <!-- FileSelection activity -->
+    <string name="fsnavigator_title">Sélecteur de fichiers</string>
     <string name="fsnavigator_no_external_storage">Stockage externe non disponible</string>
     <string name="fsnavigator_optional_enter_path">Ou entrer le chemin ici.</string>
     <string name="fsnavigator_change_theme">Changer le thème</string>
-    <!-- AddShortcut.java -->
+    <!-- AddShortcut activity -->
     <string name="addshortcut_command_hint">commande</string>
     <string name="addshortcut_example_hint">--example=\"a\"</string>
     <string name="addshortcut_navigator_title">SÉLECTIONNER LA CIBLE</string>

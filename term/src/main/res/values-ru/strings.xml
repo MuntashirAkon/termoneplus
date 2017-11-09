@@ -148,13 +148,15 @@
 
     <string name="help">Помощь</string>
     <string name="activity_term_here_title">Терминал здесь</string>
-    <string name="activity_shortcut_create">Ярлык терминала</string>
 
-    <string name="fsnavigator_title">ВЫБОР ФАЙЛОВ</string>
+    <!-- BEGIN SHORTCUT RELATED STRINGS -->
+    <string name="activity_shortcut_create">Ярлык терминала</string>
+    <!-- FileSelection activity -->
+    <string name="fsnavigator_title">Выбор файлов</string>
     <string name="fsnavigator_no_external_storage">Внешние хранилища недоступно</string>
     <string name="fsnavigator_optional_enter_path">Или введите путь здесь</string>
     <string name="fsnavigator_change_theme">Изменить тему</string>
-
+    <!-- AddShortcut activity -->
     <string name="addshortcut_command_hint">command</string>
     <string name="addshortcut_example_hint">--пример=\"a\"</string>
     <string name="addshortcut_button_find_command">Поиск команды</string>
@@ -165,7 +167,8 @@
     <string name="addshortcut_button_text_icon">Текст значок</string>
     <string name="addshortcut_make_text_icon">СОЗДАТЬ ЗНАЧОК ТЕКСТА</string>
     <string name="addshortcut_title">Ярлык терминала</string>
-
+    <!-- ColorValue.java -->
     <string name="colorvalue_label_lock_button_column">LOCK</string>
     <string name="colorvalue_icon_text_entry_hint">Введите текст для значка</string>
+    <!-- END SHORTCUT RELATED STRINGS -->
 </resources>
