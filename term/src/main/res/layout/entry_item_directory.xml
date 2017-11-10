@@ -26,5 +26,5 @@
         android:layout_height="wrap_content"
         android:drawableLeft="@drawable/ic_folder"
         android:drawableStart="@drawable/ic_folder"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
 </LinearLayout>
