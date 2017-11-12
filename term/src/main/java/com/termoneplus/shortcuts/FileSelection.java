@@ -21,10 +21,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.IntDef;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -39,7 +42,7 @@ import java.util.Comparator;
 import jackpal.androidterm.R;
 
 public class FileSelection extends AppCompatActivity {
-    private String STATE_CWD = "CWD";
+    private final String STATE_CWD = "CWD";
 
     private String cwd; // current working directory
 
@@ -48,6 +51,18 @@ public class FileSelection extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_file_selection);
+
+        setResult(RESULT_CANCELED);
+
+        {
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
+        }
+        {    // Show the Up button in the action bar.
+            ActionBar actionBar = getSupportActionBar();
+            if (actionBar != null)
+                actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         Intent intent = getIntent();
 
@@ -99,13 +114,22 @@ public class FileSelection extends AppCompatActivity {
 
                                 setResult(RESULT_OK, getIntent().setData(Uri.fromFile(file)));
                                 finish();
-                                return (true);
+                                return true;
                             }
-                            return (false);
+                            return false;
                         }
                     }
             );
         }
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home: // Action bar home/up button selected
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -203,8 +227,7 @@ public class FileSelection extends AppCompatActivity {
         }
 
         @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent,
-                                             int viewType) {
+        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view;
             ViewHolder holder = null;
 

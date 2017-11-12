@@ -142,7 +142,7 @@
             android:exported="true"
             android:label="@string/fsnavigator_title"
             android:launchMode="singleTop"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.PICK"/>
                 <category android:name="android.intent.category.DEFAULT"/>
