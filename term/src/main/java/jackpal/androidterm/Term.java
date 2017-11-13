@@ -607,7 +607,16 @@ public class Term extends Activity implements UpdateCallback, SharedPreferences.
         } else if (id == R.id.action_help) {
             Intent openHelp = new Intent(Intent.ACTION_VIEW,
                     Uri.parse(getString(R.string.help_url)));
-            startActivity(openHelp);
+            try {
+                startActivity(openHelp);
+            } catch (android.content.ActivityNotFoundException e) {
+                new AlertDialog.Builder(this)
+                        .setTitle("Exception")
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setMessage("Failed to launch view action!")
+                        .setNeutralButton("Ok", null)
+                        .create().show();
+            }
         }
         // Hide the action bar if appropriate
         if (mActionBarMode == TermSettings.ACTION_BAR_MODE_HIDES) {
