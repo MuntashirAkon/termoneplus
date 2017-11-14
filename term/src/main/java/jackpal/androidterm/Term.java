@@ -693,8 +693,8 @@ public class Term extends Activity implements UpdateCallback, SharedPreferences.
                         // Switch windows after session list is in sync, not here
                         onResumeSelectWindow = position;
                     } else if (position == -1) {
-                        // NOTE do not create new windows (view) here as start of activity
-                        // WindowList clean indirectly view flipper - see method onStop.
+                        // NOTE do not create new windows (view) here as launch of a
+                        // activity cleans indirectly view flipper - see method onStop.
                         // Create only new session and then on service connection view
                         // flipper and etc. will be updated...
                         //doCreateNewWindow();
