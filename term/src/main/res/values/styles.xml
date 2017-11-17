@@ -35,12 +35,6 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
-    <style name="AppTheme.NoActionBar.Translucent">
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:colorBackgroundCacheHint">@null</item>
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowAnimationStyle">@android:style/Animation</item>
-    </style>
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
@@ -56,4 +50,12 @@
     </style>
     <style name="AppTheme.Light.AppBarOverlay" parent="ThemeOverlay.AppCompat.ActionBar"/>
     <style name="AppTheme.Light.PopupOverlay" parent="ThemeOverlay.AppCompat"/>
+
+    <!-- style used in "AddShortcut" activity -->
+    <style name="AppTheme.NoActionBar.Translucent">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation</item>
+    </style>
 </resources>
