@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2007 The Android Open Source Project
+ * Copyright (C) 2017 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +18,6 @@
 package jackpal.androidterm;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -27,8 +27,6 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.net.Uri;
@@ -38,6 +36,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -57,10 +56,11 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.termoneplus.utils.WrapOpenURL;
+
 import java.io.IOException;
 import java.text.Collator;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Locale;
 
 import jackpal.androidterm.compat.ActionBarCompat;
@@ -605,18 +605,7 @@ public class Term extends Activity implements UpdateCallback, SharedPreferences.
         } else if (id == R.id.menu_toggle_wifilock) {
             doToggleWifiLock();
         } else if (id == R.id.action_help) {
-            Intent openHelp = new Intent(Intent.ACTION_VIEW,
-                    Uri.parse(getString(R.string.help_url)));
-            try {
-                startActivity(openHelp);
-            } catch (android.content.ActivityNotFoundException e) {
-                new AlertDialog.Builder(this)
-                        .setTitle("Exception")
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .setMessage("Failed to launch view action!")
-                        .setNeutralButton("Ok", null)
-                        .create().show();
-            }
+            WrapOpenURL.launch(this, R.string.help_url);
         }
         // Hide the action bar if appropriate
         if (mActionBarMode == TermSettings.ACTION_BAR_MODE_HIDES) {
@@ -1027,20 +1016,6 @@ public class Term extends Activity implements UpdateCallback, SharedPreferences.
         getCurrentEmulatorView().requestFocus();
     }
 
-    /**
-     * Send a URL up to Android to be handled by a browser.
-     *
-     * @param link The URL to be opened.
-     */
-    private void execURL(String link) {
-        Uri webLink = Uri.parse(link);
-        Intent openLink = new Intent(Intent.ACTION_VIEW, webLink);
-        PackageManager pm = getPackageManager();
-        List<ResolveInfo> handlers = pm.queryIntentActivities(openLink, 0);
-        if (handlers.size() > 0)
-            startActivity(openLink);
-    }
-
     private class WindowListActionBarAdapter extends WindowListAdapter implements UpdateCallback {
         // From android.R.style in API 13
         private static final int TextAppearance_Holo_Widget_ActionBar_Title = 0x01030112;
@@ -1088,7 +1063,7 @@ public class Term extends Activity implements UpdateCallback, SharedPreferences.
             //Check for link at tap location
             String link = view.getURLat(e.getX(), e.getY());
             if (link != null)
-                execURL(link);
+                WrapOpenURL.launch(Term.this, link);
             else
                 doUIToggle((int) e.getX(), (int) e.getY(), view.getVisibleWidth(), view.getVisibleHeight());
             return true;
