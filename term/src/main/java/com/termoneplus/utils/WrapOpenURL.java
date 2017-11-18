@@ -28,41 +28,41 @@ import java.util.List;
 
 public class WrapOpenURL {
 
-	public static void launch(Context context, Uri uri) {
+    public static void launch(Context context, Uri uri) {
 
-		Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
 
-		PackageManager pm = context.getPackageManager();
-		List<ResolveInfo> activities = pm.queryIntentActivities(intent, 0);
+        PackageManager pm = context.getPackageManager();
+        List<ResolveInfo> activities = pm.queryIntentActivities(intent, 0);
 
-		if (activities.size() > 0) {
-			try {
-				context.startActivity(intent);
-			} catch (android.content.ActivityNotFoundException e) {
-				new AlertDialog.Builder(context)
-						.setTitle(android.R.string.dialog_alert_title)
-						.setIcon(android.R.drawable.ic_dialog_alert)
-						.setMessage("Failed to launch view action!")
-						.setNeutralButton(android.R.string.ok, null)
-						.create().show();
-			}
-		} else {
-			new AlertDialog.Builder(context)
-					.setTitle(android.R.string.dialog_alert_title)
-					.setIcon(android.R.drawable.ic_dialog_info)
-					.setMessage("Missing view actions!")
-					.setNeutralButton(android.R.string.ok, null)
-					.create().show();
-		}
-	}
+        if (activities.size() > 0) {
+            try {
+                context.startActivity(intent);
+            } catch (android.content.ActivityNotFoundException e) {
+                new AlertDialog.Builder(context)
+                        .setTitle(android.R.string.dialog_alert_title)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setMessage("Failed to launch view action!")
+                        .setNeutralButton(android.R.string.ok, null)
+                        .create().show();
+            }
+        } else {
+            new AlertDialog.Builder(context)
+                    .setTitle(android.R.string.dialog_alert_title)
+                    .setIcon(android.R.drawable.ic_dialog_info)
+                    .setMessage("Missing view actions!")
+                    .setNeutralButton(android.R.string.ok, null)
+                    .create().show();
+        }
+    }
 
-	public static void launch(Context context, String path) {
-		Uri uri = Uri.parse(path);
-		launch(context, uri);
-	}
+    public static void launch(Context context, String path) {
+        Uri uri = Uri.parse(path);
+        launch(context, uri);
+    }
 
-	public static void launch(Context context, int resId) {
-		String path = context.getString(resId);
-		launch(context, path);
-	}
+    public static void launch(Context context, int resId) {
+        String path = context.getString(resId);
+        launch(context, path);
+    }
 }
