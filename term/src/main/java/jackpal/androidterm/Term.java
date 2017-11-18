@@ -386,7 +386,6 @@ public class Term extends Activity implements UpdateCallback, SharedPreferences.
             return;
         }
         if (mTermSessions != null) {
-            int position = mViewFlipper.getDisplayedChild();
             if (mWinListAdapter == null) {
                 mWinListAdapter = new WindowListActionBarAdapter(mTermSessions);
 
@@ -396,7 +395,7 @@ public class Term extends Activity implements UpdateCallback, SharedPreferences.
             }
             mViewFlipper.addCallback(mWinListAdapter);
 
-            mActionBar.setSelectedNavigationItem(position);
+            synchronizeActionBar();
         }
     }
 
@@ -1016,6 +1015,11 @@ public class Term extends Activity implements UpdateCallback, SharedPreferences.
         getCurrentEmulatorView().requestFocus();
     }
 
+    private void synchronizeActionBar() {
+        int position = mViewFlipper.getDisplayedChild();
+        mActionBar.setSelectedNavigationItem(position);
+    }
+
     private class WindowListActionBarAdapter extends WindowListAdapter implements UpdateCallback {
         // From android.R.style in API 13
         private static final int TextAppearance_Holo_Widget_ActionBar_Title = 0x01030112;
@@ -1044,7 +1048,7 @@ public class Term extends Activity implements UpdateCallback, SharedPreferences.
 
         public void onUpdate() {
             notifyDataSetChanged();
-            mActionBar.setSelectedNavigationItem(mViewFlipper.getDisplayedChild());
+            synchronizeActionBar();
         }
     }
 
