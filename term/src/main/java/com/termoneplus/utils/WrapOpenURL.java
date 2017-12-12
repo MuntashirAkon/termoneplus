@@ -16,15 +16,14 @@
 
 package com.termoneplus.utils;
 
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
-import android.support.v7.app.AlertDialog;
 
 import java.util.List;
+
 
 public class WrapOpenURL {
 
@@ -39,20 +38,16 @@ public class WrapOpenURL {
             try {
                 context.startActivity(intent);
             } catch (android.content.ActivityNotFoundException e) {
-                new AlertDialog.Builder(context)
-                        .setTitle(android.R.string.dialog_alert_title)
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .setMessage("Failed to launch view action!")
-                        .setNeutralButton(android.R.string.ok, null)
-                        .create().show();
+                alert(context,
+                        android.R.drawable.ic_dialog_alert,
+                        "Failed to launch view action!"
+                );
             }
         } else {
-            new AlertDialog.Builder(context)
-                    .setTitle(android.R.string.dialog_alert_title)
-                    .setIcon(android.R.drawable.ic_dialog_info)
-                    .setMessage("Missing view actions!")
-                    .setNeutralButton(android.R.string.ok, null)
-                    .create().show();
+            alert(context,
+                    android.R.drawable.ic_dialog_info,
+                    "Missing view actions!"
+            );
         }
     }
 
@@ -64,5 +59,25 @@ public class WrapOpenURL {
     public static void launch(Context context, int resId) {
         String path = context.getString(resId);
         launch(context, path);
+    }
+
+
+    private static void alert(Context context, int iconId, CharSequence message) {
+        Class clazz = android.support.v4.app.FragmentActivity.class;
+        if (clazz.isInstance(context)) {
+            new android.support.v7.app.AlertDialog.Builder(context)
+                    .setTitle(android.R.string.dialog_alert_title)
+                    .setIcon(iconId)
+                    .setMessage(message)
+                    .setNeutralButton(android.R.string.ok, null)
+                    .create().show();
+        } else {
+            new android.app.AlertDialog.Builder(context)
+                    .setTitle(android.R.string.dialog_alert_title)
+                    .setIcon(iconId)
+                    .setMessage(message)
+                    .setNeutralButton(android.R.string.ok, null)
+                    .create().show();
+        }
     }
 }
