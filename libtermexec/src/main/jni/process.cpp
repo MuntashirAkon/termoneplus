@@ -16,7 +16,6 @@
 
 #include "process.h"
 
-#include <sys/types.h>
 #include <sys/ioctl.h>
 #include <sys/wait.h>
 #include <dirent.h>
@@ -24,8 +23,7 @@
 #include <fcntl.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <termios.h>
-#include <signal.h>
+#include <string.h>
 
 typedef unsigned short char16_t;
 
