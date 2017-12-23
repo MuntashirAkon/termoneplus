@@ -170,7 +170,6 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
     private float mDensity;
 
     private float mScaledDensity;
-    private static final int SELECT_TEXT_OFFSET_Y = -40;
     private int mSelXAnchor = -1;
     private int mSelYAnchor = -1;
     private int mSelX1 = -1;
@@ -1230,9 +1229,7 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
     private boolean onTouchEventWhileSelectingText(MotionEvent ev) {
         int action = ev.getAction();
         int cx = (int)(ev.getX() / mCharacterWidth);
-        int cy = Math.max(0,
-                (int)((ev.getY() + SELECT_TEXT_OFFSET_Y * mScaledDensity)
-                        / mCharacterHeight) + mTopRow);
+        int cy = Math.max(0, (int)(ev.getY() / mCharacterHeight - 0.7) + mTopRow);
         switch (action) {
         case MotionEvent.ACTION_DOWN:
             mSelXAnchor = cx;
