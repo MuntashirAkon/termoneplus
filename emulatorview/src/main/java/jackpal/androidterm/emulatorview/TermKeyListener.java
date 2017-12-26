@@ -475,9 +475,9 @@ class TermKeyListener {
                 result = 27; // ^[ (Esc)
             } else if (result == '.') {
                 result = 28; // ^\
-            } else if (result > '0' && result <= '9') {
+            } else if (result >= '1' && result <= '9') {
                 // F1-F9
-                result = (char)(result + KEYCODE_OFFSET + KEYCODE_F1 - 1);
+                result = KEYCODE_OFFSET + KEYCODE_F1 + (result - '1');
             } else if (result == '0') {
                 result = KEYCODE_OFFSET + KEYCODE_F10;
             } else if (result == 'i' || result == 'I') {
