@@ -615,8 +615,10 @@ class TermKeyListener {
             }
         }
 
-        boolean effectiveControl = chordedCtrl || mHardwareControlKey || (allowToggle && mControlKey.isActive());
-        boolean effectiveFn = allowToggle && mFnKey.isActive();
+        // Note: state of control and functional keys is still managed internally,
+        // i.e. "toggled behavior" is not used yet => ignore allowToggle.
+        boolean effectiveControl = chordedCtrl || mHardwareControlKey || (/*allowToggle && */mControlKey.isActive());
+        boolean effectiveFn = /*allowToggle && */mFnKey.isActive();
 
         result = mapControlChar(effectiveControl, effectiveFn, result);
 
