@@ -101,6 +101,7 @@ public class TermSession {
         }
     };
     private UpdateCallback mTitleChangedListener;
+
     public TermSession() {
         this(false);
     }
@@ -138,6 +139,13 @@ public class TermSession {
                     }
                 } catch (IOException e) {
                 } catch (InterruptedException e) {
+                }
+
+                { // stop producer as well
+                    Handler writer = mWriterHandler;
+                    mWriterHandler = null;
+                    if (writer != null)
+                        writer.sendEmptyMessage(FINISH);
                 }
 
                 if (exitOnEOF) mMsgHandler.sendMessage(mMsgHandler.obtainMessage(EOF));
@@ -243,6 +251,10 @@ public class TermSession {
     public void write(byte[] data, int offset, int count) {
         try {
             while (count > 0) {
+                // do not write if consumer is finished
+                if (mReaderThread.getState() == Thread.State.TERMINATED)
+                    break;
+
                 int written = mWriteQueue.write(data, offset, count);
                 offset += written;
                 count -= written;
@@ -595,9 +607,12 @@ public class TermSession {
         }
 
         // Stop the reader and writer threads, and close the I/O streams
-        if (mWriterHandler != null) {
-            mWriterHandler.sendEmptyMessage(FINISH);
-        }
+        // Reader thread, if running, will be terminated indirectly by closed
+        // input stream.
+        // Remarks:
+        // - when reader finish it closes writer thread.
+        // - flag IsRunning blocks recursive call:
+        //   -> mMsgHandler on EOF ->  onProcessExit() -> finish()
         try {
             mTermIn.close();
             mTermOut.close();
