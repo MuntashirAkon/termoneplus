@@ -15,3 +15,7 @@
 
 # Declare files that will always have CRLF line endings on checkout.
 *.bat text eol=crlf
+
+# gradle wrapper shell script must have unix(LF) end-of-line conversion
+
+gradlew eol=lf
