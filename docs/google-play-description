@@ -1,0 +1,15 @@
+TermOnePlus is a terminal emulator application for Android devices.
+Each android device has a build-in born shell and a number of shell command that allows user to manage files, processes, device and etc.
+
+Application supports multiple terminal windows.
+Terminal window allows user access to text terminal and to use programs with command line or text interface. By default window starts build-in shell but user could change it. It emulates large subset of Digital Equipment Corporation VT-100 terminal capabilities - supported are following terminal types: vt100, screen (default), linux, screen-256color, xterm and xterm-256color. Also it supports UTF-8 console text mode by default.
+
+Functionality "prepend/append path" allows external applications to enhance set of available commands.
+
+Launcher short-cut functionality allows user to create "button"(android short-cut widget) to a command or shell script.
+Build-in file selector (aka file explorer) is exported and so allows other applications easy to pick a file.
+
+Application is localized in many languages and/or territories (locales).
+
+Remark: TermOnePlus is an open-source application, successor of un-maintained Jack Palevich's "Terminal Emulator for Android". It enhance portability of terminal - works fine with recent android release (Oreo/8.1) also with ancient like Gingerbread(2.3). TermOnePlus includes a number of stability fixes, improved look of screens and defect fixes.
+Visit application site to find out how to participate into development and/or localization, to report issue with existing functionality, to request new or enhanced functionality.
