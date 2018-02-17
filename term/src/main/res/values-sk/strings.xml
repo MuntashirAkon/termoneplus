@@ -57,6 +57,7 @@
 
     <string name="title_actionbar_preference">Panel akcií</string>
     <string name="summary_actionbar_preference">Vybrať správanie panela akcií (Android 3.0 a vyšší).</string>
+    <string name="summary_actionbar_preference_compat">Vybrať správanie panela akcií.</string>
     <string name="dialog_title_actionbar_preference">Správanie panela akcií</string>
 
     <string name="title_orientation_preference">Orientácia obrazovky</string>

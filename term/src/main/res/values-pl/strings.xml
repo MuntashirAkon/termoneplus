@@ -57,6 +57,7 @@
 
     <string name="title_actionbar_preference">Pasek akcji</string>
     <string name="summary_actionbar_preference">Wybierz zachowanie paska akcji (Android 3.0 i nowsze).</string>
+    <string name="summary_actionbar_preference_compat">Wybierz zachowanie paska akcji.</string>
     <string name="dialog_title_actionbar_preference">Zachowanie paska akcji</string>
 
     <string name="title_cursorstyle_preference">Styl kursora</string>

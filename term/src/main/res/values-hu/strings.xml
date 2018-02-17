@@ -57,6 +57,7 @@
 
     <string name="title_actionbar_preference">Akciósáv</string>
     <string name="summary_actionbar_preference">Válassza ki az akciósáv viselkedési módját (csak Android 3.0-tól).</string>
+    <string name="summary_actionbar_preference_compat">Válassza ki az akciósáv viselkedési módját.</string>
     <string name="dialog_title_actionbar_preference">Akciósáv viselkedése</string>
 
     <string name="title_orientation_preference">Kijelző tájolása</string>

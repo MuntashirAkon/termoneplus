@@ -57,6 +57,7 @@
 
     <string name="title_actionbar_preference">アクションバー</string>
     <string name="summary_actionbar_preference">アクションバーの振舞いを選択する. (Android 3.0 以降).</string>
+    <string name="summary_actionbar_preference_compat">アクションバーの振舞いを選択する.</string>
     <string name="dialog_title_actionbar_preference">アクションバーの振舞い</string>
 
     <string name="title_cursorstyle_preference">カーソルのスタイル</string>

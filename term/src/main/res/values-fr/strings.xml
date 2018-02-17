@@ -58,6 +58,7 @@
 
     <string name="title_actionbar_preference">Barre d\'actions</string>
     <string name="summary_actionbar_preference">Choisir le comportement de la barre d\'actions (à partir d\'Android 3.0)</string>
+    <string name="summary_actionbar_preference_compat">Choisir le comportement de la barre d\'actions</string>
     <string name="dialog_title_actionbar_preference">Barre d\'actions</string>
 
     <string name="title_orientation_preference">Orientation de l\'écran</string>

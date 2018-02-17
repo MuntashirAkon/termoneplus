@@ -57,6 +57,7 @@
 
     <string name="title_actionbar_preference">액션바</string>
     <string name="summary_actionbar_preference">액션바의 상태를 설정합니다.</string>
+    <string name="summary_actionbar_preference_compat">액션바의 상태를 설정합니다.</string>
     <string name="dialog_title_actionbar_preference">액션바 상태</string>
 
     <string name="title_orientation_preference">화면 회전</string>

@@ -57,6 +57,7 @@
 
     <string name="title_actionbar_preference">Ekintza-barra</string>
     <string name="summary_actionbar_preference">Aukeratu ekintza-barraren portaera (Android 3.0tik aurrera).</string>
+    <string name="summary_actionbar_preference_compat">Aukeratu ekintza-barraren portaera.</string>
     <string name="dialog_title_actionbar_preference">Ekintza-barraren portaera</string>
 
     <string name="title_cursorstyle_preference">Kurtsore-estiloa</string>

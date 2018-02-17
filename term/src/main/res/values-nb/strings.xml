@@ -57,6 +57,7 @@
 
     <string name="title_actionbar_preference">Handlingslinje</string>
     <string name="summary_actionbar_preference">Velg hvordan handlingslinjen (ActionBar) skal oppføre seg (Android 3.0 og oppover).</string>
+    <string name="summary_actionbar_preference_compat">Velg hvordan handlingslinjen (ActionBar) skal oppføre seg.</string>
     <string name="dialog_title_actionbar_preference">Handlingslinje</string>
 
     <string name="title_orientation_preference">Rotasjon</string>

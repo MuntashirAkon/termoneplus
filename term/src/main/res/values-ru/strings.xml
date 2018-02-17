@@ -42,6 +42,7 @@
 
     <string name="title_actionbar_preference">Панель действий</string>
     <string name="summary_actionbar_preference">Настройка поведения панели действий (Android 3.0 и выше)</string>
+    <string name="summary_actionbar_preference_compat">Настройка поведения панели действий</string>
     <string name="dialog_title_actionbar_preference">Поведение панели действий</string>
 
     <string name="title_orientation_preference">Поворот экрана</string>

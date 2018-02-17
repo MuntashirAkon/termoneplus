@@ -32,6 +32,7 @@
     <string name="dialog_title_statusbar_preference">Статус бар</string>
     <string name="title_actionbar_preference">Бар дії</string>
     <string name="summary_actionbar_preference">Виберіть поведінку бару дії (Android 3.0 і вище).</string>
+    <string name="summary_actionbar_preference_compat">Виберіть поведінку бару дії.</string>
     <string name="dialog_title_actionbar_preference">Поведінка бару дії</string>
     <string name="text_preferences">Текст</string>
     <string name="title_utf8_by_default_preference">За замовчуванням UTF-8</string>

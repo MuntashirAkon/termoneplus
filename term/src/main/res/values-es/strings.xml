@@ -57,6 +57,7 @@
 
     <string name="title_actionbar_preference">Barra de tareas</string>
     <string name="summary_actionbar_preference">Elije el comportamiente de la barra de tareas (Android 3.0+).</string>
+    <string name="summary_actionbar_preference_compat">Elije el comportamiente de la barra de tareas.</string>
     <string name="dialog_title_actionbar_preference">Barra de tareas</string>
 
     <string name="title_orientation_preference">Orientación de pantalla</string>

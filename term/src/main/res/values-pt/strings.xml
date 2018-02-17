@@ -57,6 +57,7 @@
 
     <string name="title_actionbar_preference">Barra de ação</string>
     <string name="summary_actionbar_preference">Escolha o comportamento da barra de ação (Android 3.0 ou superior).</string>
+    <string name="summary_actionbar_preference_compat">Escolha o comportamento da barra de ação.</string>
     <string name="dialog_title_actionbar_preference">Comportamento da barra de ação</string>
 
     <string name="title_cursorstyle_preference">Estilo do cursor</string>

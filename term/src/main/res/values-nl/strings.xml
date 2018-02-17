@@ -49,6 +49,7 @@
 
     <string name="title_actionbar_preference">Menubalk</string>
     <string name="summary_actionbar_preference">Gedrag van menubalk kiezen (Android 3.0 en hoger)</string>
+    <string name="summary_actionbar_preference_compat">Gedrag van menubalk kiezen</string>
     <string name="dialog_title_actionbar_preference">Gedrag menubalk</string>
 
     <string name="title_orientation_preference">Oriëntatie van het scherm</string>
