@@ -151,7 +151,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <string name="control_key_dialog_title">Управляващи и функционални клавиши</string>
     <!-- The word CTRLKEY should be left un-translated. It will be replaced at run-time with the
          actual control key key name. -->
-    <string name="control_key_dialog_control_text">Copy text \t\nCTRLKEY Празно : Управление-@ (NUL)\nCTRLKEY A..Z : Управление-A..Z\nCTRLKEY 5 : Управление-]\nCTRLKEY 6 : Управление-^\nCTRLKEY 7 : Управление-_\nCTRLKEY 9 : F11\nCTRLKEY 0 : F12</string>
+    <string name="control_key_dialog_control_text">CTRLKEY Празно : Управление-@ (NUL)\nCTRLKEY A..Z : Управление-A..Z\nCTRLKEY 5 : Управление-]\nCTRLKEY 6 : Управление-^\nCTRLKEY 7 : Управление-_\nCTRLKEY 9 : F11\nCTRLKEY 0 : F12</string>
     <string name="control_key_dialog_control_disabled_text">Не е зададен управляващ клавиш</string>
     <!-- The word FNKEY should be left un-translated. It will be replaced at run-time with the
          actual function key key name. -->
