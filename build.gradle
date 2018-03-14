@@ -23,8 +23,8 @@ allprojects {
         targetSdkVersion = 25
         minSdkVersion = 9
 
-        versionCode = 240
-        versionName = '2.4.0'
+        versionCode = 250
+        versionName = '2.5.0'
     }
 }
 
