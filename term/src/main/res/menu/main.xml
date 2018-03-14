@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
  * Copyright (C) 2008 The Android Open Source Project
+ * Copyright (c) 2017 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,13 +17,16 @@
 -->
 
 <menu
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/menu_new_window"
           android:icon="@drawable/ic_menu_add"
-          android:title="@string/new_window"/>
+          android:title="@string/new_window"
+          app:showAsAction="always"/>
     <item android:id="@+id/menu_close_window"
           android:icon="@drawable/ic_menu_close_clear_cancel"
-          android:title="@string/close_window"/>
+          android:title="@string/close_window"
+          app:showAsAction="ifRoom"/>
     <item android:id="@+id/menu_window_list"
           android:icon="@drawable/ic_menu_windows"
           android:title="@string/window_list"/>
