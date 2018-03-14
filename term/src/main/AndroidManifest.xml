@@ -47,6 +47,7 @@
             android:name="Term"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:launchMode="singleTask"
+            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize|stateAlwaysVisible">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

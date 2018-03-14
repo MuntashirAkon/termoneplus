@@ -34,7 +34,7 @@
                 android:key="actionbar"
                 android:defaultValue="@integer/pref_actionbar_default"
                 android:title="@string/title_actionbar_preference"
-                android:summary="@string/summary_actionbar_preference"
+                android:summary="@string/summary_actionbar_preference_compat"
                 android:entries="@array/entries_actionbar_preference"
                 android:entryValues="@array/entryvalues_actionbar_preference"
                 android:dialogTitle="@string/dialog_title_actionbar_preference" />

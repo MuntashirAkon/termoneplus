@@ -77,7 +77,8 @@ public class TermViewFlipper extends ViewFlipper implements Iterable<View> {
         this.context = context;
         callbacks = new LinkedList<UpdateCallback>();
 
-        updateVisibleRect();
+        if (!isInEditMode())
+            updateVisibleRect();
         Rect visible = mVisibleRect;
         mChildParams = new LayoutParams(visible.width(), visible.height(),
             Gravity.TOP|Gravity.LEFT);

@@ -18,4 +18,5 @@
     <color name="colorPrimary">#607D8B</color>
     <color name="colorPrimaryDark">#455A64</color>
     <color name="colorAccent">#8BC34A</color>
+    <color name="floatToolbar">#A0607D8B</color>
 </resources>
