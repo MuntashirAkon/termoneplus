@@ -867,7 +867,9 @@ public class Term extends AppCompatActivity
     private void doCopyAll() {
         ClipboardManagerCompat clip = ClipboardManagerCompatFactory
                 .getManager(getApplicationContext());
-        clip.setText(getCurrentTermSession().getTranscriptText().trim());
+        TermSession session = getCurrentTermSession();
+        if (session != null)
+            clip.setText(session.getTranscriptText().trim());
     }
 
     private void doPaste() {
@@ -877,7 +879,9 @@ public class Term extends AppCompatActivity
         ClipboardManagerCompat clip = ClipboardManagerCompatFactory
                 .getManager(getApplicationContext());
         CharSequence paste = clip.getText();
-        getCurrentTermSession().write(paste.toString());
+        TermSession session = getCurrentTermSession();
+        if (session != null)
+            session.write(paste.toString());
     }
 
     private void doSendControlKey() {
