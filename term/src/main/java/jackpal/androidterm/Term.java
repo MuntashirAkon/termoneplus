@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2007 The Android Open Source Project
- * Copyright (C) 2017 Roumen Petrov.  All rights reserved.
+ * Copyright (C) 2017-2018 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 
 package jackpal.androidterm;
 
+import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -35,6 +36,8 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -57,6 +60,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.termoneplus.TermActionBar;
+import com.termoneplus.WindowListActivity;
+import com.termoneplus.WindowListAdapter;
 import com.termoneplus.utils.WrapOpenURL;
 
 import java.io.IOException;
@@ -555,7 +560,7 @@ public class Term extends AppCompatActivity
         } else if (id == R.id.menu_close_window) {
             confirmCloseWindow();
         } else if (id == R.id.menu_window_list) {
-            startActivityForResult(new Intent(this, WindowList.class), REQUEST_CHOOSE_WINDOW);
+            startActivityForResult(new Intent(this, WindowListActivity.class), REQUEST_CHOOSE_WINDOW);
         } else if (id == R.id.menu_reset) {
             doResetTerminal();
             Toast toast = Toast.makeText(this, R.string.reset_toast_notification, Toast.LENGTH_LONG);
@@ -973,24 +978,28 @@ public class Term extends AppCompatActivity
     }
 
     private class WindowListActionBarAdapter extends WindowListAdapter implements UpdateCallback {
-        // From android.R.style in API 13
-        private static final int TextAppearance_Holo_Widget_ActionBar_Title = 0x01030112;
 
         public WindowListActionBarAdapter(SessionList sessions) {
-            super(sessions);
+            super(Term.this);
+            setSessions(sessions);
         }
 
+        @SuppressLint("InflateParams")
+        @NonNull
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            TextView label = new TextView(Term.this);
-            String title = getSessionTitle(position, getString(R.string.window_title, position + 1));
-            label.setText(title);
-            if (AndroidCompat.SDK >= 13) {
-                label.setTextAppearance(Term.this, TextAppearance_Holo_Widget_ActionBar_Title);
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+            ViewHolder holder;
+            if (convertView == null) {
+                convertView = inflater.inflate(R.layout.actionbar_windowlist, null);
+                holder = new ViewHolder();
+                holder.title = (TextView) convertView.findViewById(R.id.title);
+
+                convertView.setTag(holder);
             } else {
-                label.setTextAppearance(Term.this, android.R.style.TextAppearance_Medium);
+                holder = (ViewHolder) convertView.getTag();
             }
-            return label;
+            holder.title.setText(getItemTitle(position));
+            return convertView;
         }
 
         @Override
@@ -1001,6 +1010,10 @@ public class Term extends AppCompatActivity
         public void onUpdate() {
             notifyDataSetChanged();
             synchronizeActionBar();
+        }
+
+        private class ViewHolder {
+            public TextView title;
         }
     }
 

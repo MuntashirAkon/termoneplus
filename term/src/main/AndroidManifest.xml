@@ -138,6 +138,15 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="com.termoneplus.WindowListActivity"
+            android:label="@string/window_list"
+            android:parentActivityName="jackpal.androidterm.Term"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="jackpal.androidterm.Term"/>
+        </activity>
+        <activity
             android:name="com.termoneplus.shortcuts.FileSelection"
             android:configChanges="orientation|keyboardHidden"
             android:exported="true"

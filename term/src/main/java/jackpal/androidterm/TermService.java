@@ -49,7 +49,7 @@ public class TermService extends Service implements TermSession.FinishCallback
     private SessionList mTermSessions;
 
     public class TSBinder extends Binder {
-        TermService getService() {
+        public TermService getService() {
             Log.i("TermService", "Activity binding to service");
             return TermService.this;
         }

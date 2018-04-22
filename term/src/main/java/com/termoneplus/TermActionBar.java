@@ -24,7 +24,6 @@ import android.widget.AdapterView;
 import android.widget.Spinner;
 
 import jackpal.androidterm.R;
-import jackpal.androidterm.WindowListAdapter;
 import jackpal.androidterm.util.SessionList;
 
 

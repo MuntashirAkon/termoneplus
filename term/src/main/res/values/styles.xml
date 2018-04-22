@@ -58,4 +58,9 @@
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowAnimationStyle">@android:style/Animation</item>
     </style>
+
+    <!-- Default selector background in clickable view -->
+    <style name="CloseButton">
+        <item name="android:background">@android:drawable/list_selector_background</item>
+    </style>
 </resources>
