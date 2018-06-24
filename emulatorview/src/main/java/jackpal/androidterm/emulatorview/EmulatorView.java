@@ -169,7 +169,6 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
 
     private float mDensity;
 
-    private float mScaledDensity;
     private int mSelXAnchor = -1;
     private int mSelYAnchor = -1;
     private int mSelX1 = -1;
@@ -575,7 +574,6 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
             mTextSize = (int) (mTextSize * metrics.density);
         }
         mDensity = metrics.density;
-        mScaledDensity = metrics.scaledDensity;
     }
 
     /**
