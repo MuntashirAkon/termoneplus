@@ -60,6 +60,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.termoneplus.TermActionBar;
+import com.termoneplus.TermPreferencesActivity;
 import com.termoneplus.WindowListActivity;
 import com.termoneplus.WindowListAdapter;
 import com.termoneplus.utils.WrapOpenURL;
@@ -829,7 +830,7 @@ public class Term extends AppCompatActivity
     }
 
     private void doPreferences() {
-        startActivity(new Intent(this, TermPreferences.class));
+        startActivity(new Intent(this, TermPreferencesActivity.class));
     }
 
     private void doResetTerminal() {
