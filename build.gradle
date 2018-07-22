@@ -32,7 +32,7 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
+apply from: 'version.gradle'
 task wrapper (type:Wrapper) {
-    gradleVersion = '4.8.1'
     distributionUrl = "https://services.gradle.org/distributions/gradle-${gradleVersion}-bin.zip"
 }
