@@ -16,7 +16,7 @@ allprojects {
         google()
     }
     project.ext {
-        buildToolsVersion = '28.0.0'
+        buildToolsVersion = '28.0.1'
         supportLibVersion = '25.4.0'
 
         compileSdkVersion = 25
