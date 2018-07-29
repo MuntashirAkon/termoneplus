@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (c) 2017 Roumen Petrov.  All rights reserved.
+<!-- Copyright (c) 2017-2018 Roumen Petrov.  All rights reserved.
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -16,118 +16,96 @@
 
 <android.support.v4.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="@dimen/activity_margin"
+    tools:context="com.termoneplus.shortcuts.AddShortcut">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/cmd_info"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:text="@string/addshortcut_command_window_instructions"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
-            <TextView
-                android:id="@+id/cmd_info"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.0"
-                android:text="@string/addshortcut_command_window_instructions"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+        <Button
+            android:id="@+id/btn_cmd_path"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/addshortcut_button_find_command"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
-        </LinearLayout>
-
-        <LinearLayout
+        <EditText
+            android:id="@+id/cmd_path"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/text2_margin"
+            android:layout_marginStart="@dimen/text2_margin"
+            android:hint="@string/addshortcut_command_hint"
+            android:inputType="text"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
-            <Button
-                android:id="@+id/btn_cmd_path"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.50"
-                android:text="@string/addshortcut_button_find_command"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+        <TextView
+            android:id="@+id/st_cmd_param"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/addshortcut_arguments_label"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
-            <EditText
-                android:id="@+id/cmd_path"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.50"
-                android:hint="@string/addshortcut_command_hint"
-                android:inputType="text"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
-
-        </LinearLayout>
-
-        <LinearLayout
+        <EditText
+            android:id="@+id/cmd_param"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/text2_margin"
+            android:layout_marginStart="@dimen/text2_margin"
+            android:hint="@string/addshortcut_example_hint"
+            android:inputType="text"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
-            <TextView
-                android:id="@+id/st_cmd_param"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.50"
-                android:gravity="right"
-                android:text="@string/addshortcut_arguments_label"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+        <TextView
+            android:id="@+id/st_cmd_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/addshortcut_shortcut_label"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
-            <EditText
-                android:id="@+id/cmd_param"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.50"
-                android:hint="@string/addshortcut_example_hint"
-                android:inputType="text"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
-        </LinearLayout>
+        <EditText
+            android:id="@+id/cmd_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/text2_margin"
+            android:layout_marginStart="@dimen/text2_margin"
+            android:inputType="text"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/st_cmd_name"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.50"
-                android:gravity="right"
-                android:text="@string/addshortcut_shortcut_label"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
-
-            <EditText
-                android:id="@+id/cmd_name"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.50"
-                android:inputType="text"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/btn_cmd_icon"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.50"
                 android:text="@string/addshortcut_button_text_icon"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
             <ImageView
                 android:id="@+id/cmd_icon"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.50"
                 android:adjustViewBounds="false"
                 android:maxHeight="100dp"
                 android:maxWidth="100dp"
                 android:scaleType="centerInside"
                 android:src="@mipmap/ic_launcher"/>
+
         </LinearLayout>
 
     </LinearLayout>
