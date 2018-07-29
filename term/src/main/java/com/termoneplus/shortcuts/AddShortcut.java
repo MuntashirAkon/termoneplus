@@ -23,6 +23,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -38,7 +39,6 @@ import jackpal.androidterm.R;
 import jackpal.androidterm.RemoteInterface;
 import jackpal.androidterm.RunShortcut;
 import jackpal.androidterm.TermDebug;
-import jackpal.androidterm.compat.AlertDialogCompat;
 import jackpal.androidterm.compat.PRNGFixes;
 import jackpal.androidterm.shortcuts.ColorValue;
 import jackpal.androidterm.shortcuts.TextIcon;
@@ -66,9 +66,6 @@ public class AddShortcut extends AppCompatActivity {
     }
 
     private void makeShortcut() {
-
-        final AlertDialogCompat.Builder alert =
-                AlertDialogCompat.newInstanceBuilder(this, AlertDialogCompat.THEME_DEVICE_DEFAULT_DARK);
 
         LayoutInflater inflater = getLayoutInflater();
         View view = inflater.inflate(R.layout.activity_addshortcut, null);
@@ -121,6 +118,7 @@ public class AddShortcut extends AppCompatActivity {
                     }
                 });
 
+        final AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setView(view);
         alert.setTitle(getString(R.string.addshortcut_title));
         alert.setPositiveButton(android.R.string.yes,
