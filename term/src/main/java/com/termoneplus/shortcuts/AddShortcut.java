@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Roumen Petrov.  All rights reserved.
+ * Copyright (C) 2017-2018 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -169,8 +170,8 @@ public class AddShortcut extends AppCompatActivity {
         }
 
         StringBuilder cmd = new StringBuilder();
-        if (path != null && !path.equals("")) cmd.append(RemoteInterface.quoteForBash(path));
-        if (arguments != null && !arguments.equals("")) cmd.append(" " + arguments);
+        if (!TextUtils.isEmpty(path)) cmd.append(RemoteInterface.quoteForBash(path));
+        if (!TextUtils.isEmpty(arguments)) cmd.append(" ").append(arguments);
         String cmdStr = cmd.toString();
         String cmdEnc = null;
 
@@ -190,10 +191,10 @@ public class AddShortcut extends AppCompatActivity {
         Intent wrapper = new Intent();
         wrapper.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
         wrapper.putExtra(Intent.EXTRA_SHORTCUT_INTENT, target);
-        if (shortcutName != null && !shortcutName.equals("")) {
+        if (!TextUtils.isEmpty(shortcutName)) {
             wrapper.putExtra(Intent.EXTRA_SHORTCUT_NAME, shortcutName);
         }
-        if (shortcutText != null && !shortcutText.equals("")) {
+        if (!TextUtils.isEmpty(shortcutText)) {
             wrapper.putExtra(
                     Intent.EXTRA_SHORTCUT_ICON,
                     TextIcon.getTextIcon(shortcutText, shortcutColor, 96, 96)
