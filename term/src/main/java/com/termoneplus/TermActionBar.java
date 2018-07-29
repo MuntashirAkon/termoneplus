@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Roumen Petrov.  All rights reserved.
+ * Copyright (C) 2017-2018 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,6 @@ import android.widget.AdapterView;
 import android.widget.Spinner;
 
 import jackpal.androidterm.R;
-import jackpal.androidterm.util.SessionList;
 
 
 /**
@@ -76,11 +75,6 @@ public class TermActionBar {
             }
         };
         spinner.setOnItemSelectedListener(wrapper);
-    }
-
-    public void setSessions(SessionList sessions) {
-        WindowListAdapter adapter = (WindowListAdapter) spinner.getAdapter();
-        adapter.setSessions(sessions);
     }
 
     public void setSelection(int position) {
