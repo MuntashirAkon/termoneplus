@@ -106,9 +106,6 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
-        <activity
-            android:name="TermPreferences"
-            android:label="@string/preferences"/>
 
         <service android:name="TermService">
             <intent-filter>
