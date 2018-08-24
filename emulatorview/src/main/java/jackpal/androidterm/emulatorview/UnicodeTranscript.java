@@ -16,9 +16,9 @@
 
 package jackpal.androidterm.emulatorview;
 
+import android.text.AndroidCharacter;
 import android.util.Log;
 
-import jackpal.androidterm.emulatorview.compat.AndroidCharacterCompat;
 import jackpal.androidterm.emulatorview.compat.AndroidCompat;
 
 /**
@@ -553,9 +553,9 @@ class UnicodeTranscript {
         }
         if (Character.charCount(codePoint) == 1) {
             // Android's getEastAsianWidth() only works for BMP characters
-            switch (AndroidCharacterCompat.getEastAsianWidth((char) codePoint)) {
-            case AndroidCharacterCompat.EAST_ASIAN_WIDTH_FULL_WIDTH:
-            case AndroidCharacterCompat.EAST_ASIAN_WIDTH_WIDE:
+            switch (AndroidCharacter.getEastAsianWidth((char) codePoint)) {
+            case AndroidCharacter.EAST_ASIAN_WIDTH_FULL_WIDTH:
+            case AndroidCharacter.EAST_ASIAN_WIDTH_WIDE:
                 return 2;
             }
         } else {
