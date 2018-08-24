@@ -40,7 +40,6 @@ import jackpal.androidterm.RemoteInterface;
 import jackpal.androidterm.RunShortcut;
 import jackpal.androidterm.TermDebug;
 import jackpal.androidterm.compat.PRNGFixes;
-import jackpal.androidterm.shortcuts.ColorValue;
 import jackpal.androidterm.shortcuts.TextIcon;
 import jackpal.androidterm.util.ShortcutEncryption;
 
