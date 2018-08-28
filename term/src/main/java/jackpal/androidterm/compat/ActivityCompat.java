@@ -18,6 +18,7 @@ package jackpal.androidterm.compat;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.os.Build;
 
 /**
  * Compatibility class for android.app.Activity
@@ -31,7 +32,7 @@ public class ActivityCompat {
     }
 
     public static void invalidateOptionsMenu(Activity activity) {
-        if (AndroidCompat.SDK >= 11) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB /*API Level 11*/) {
             Api11OrLater.invalidateOptionsMenu(activity);
         }
     }

@@ -31,6 +31,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -71,7 +72,6 @@ import java.util.Arrays;
 import java.util.Locale;
 
 import jackpal.androidterm.compat.ActivityCompat;
-import jackpal.androidterm.compat.AndroidCompat;
 import jackpal.androidterm.emulatorview.EmulatorView;
 import jackpal.androidterm.emulatorview.TermSession;
 import jackpal.androidterm.emulatorview.UpdateCallback;
@@ -98,14 +98,10 @@ public class Term extends AppCompatActivity
     private final static int PASTE_ID = 2;
     private final static int SEND_CONTROL_KEY_ID = 3;
     private final static int SEND_FN_KEY_ID = 4;
-    // Available on API 12 and later
-    private static final int WIFI_MODE_FULL_HIGH_PERF = 3;
     private static final String ACTION_PATH_APPEND_BROADCAST = "com.termoneplus.broadcast.APPEND_TO_PATH";
     private static final String ACTION_PATH_PREPEND_BROADCAST = "com.termoneplus.broadcast.PREPEND_TO_PATH";
     private static final String PERMISSION_PATH_APPEND_BROADCAST = "com.termoneplus.permission.APPEND_TO_PATH";
     private static final String PERMISSION_PATH_PREPEND_BROADCAST = "com.termoneplus.permission.PREPEND_TO_PATH";
-    // Available on API 12 and later
-    private static final int FLAG_INCLUDE_STOPPED_PACKAGES = 0x20;
     /**
      * The ViewFlipper which holds the collection of EmulatorView widgets.
      */
@@ -248,8 +244,9 @@ public class Term extends AppCompatActivity
         mActionBarMode  = mSettings.actionBarMode();
 
         Intent broadcast = new Intent(ACTION_PATH_APPEND_BROADCAST);
-        if (AndroidCompat.SDK >= 12) {
-            broadcast.addFlags(FLAG_INCLUDE_STOPPED_PACKAGES);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1 /*API Level 12*/) {
+            // Available on API 12 and later
+            broadcast.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
         }
         mPendingPathBroadcasts++;
         sendOrderedBroadcast(broadcast, PERMISSION_PATH_APPEND_BROADCAST, mPathReceiver, null, RESULT_OK, null, null);
@@ -289,8 +286,9 @@ public class Term extends AppCompatActivity
 
         WifiManager wm = (WifiManager) app.getSystemService(Context.WIFI_SERVICE);
         int wifiLockMode = WifiManager.WIFI_MODE_FULL;
-        if (AndroidCompat.SDK >= 12) {
-            wifiLockMode = WIFI_MODE_FULL_HIGH_PERF;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1 /*API Level 12*/) {
+            // Available on API 12 and later
+            wifiLockMode = WifiManager.WIFI_MODE_FULL_HIGH_PERF;
         }
         mWifiLock = wm.createWifiLock(wifiLockMode, TermDebug.LOG_TAG);
 
