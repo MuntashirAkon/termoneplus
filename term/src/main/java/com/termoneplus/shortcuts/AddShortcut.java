@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -33,6 +34,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.termoneplus.utils.TextIcon;
+
 import java.security.GeneralSecurityException;
 
 import jackpal.androidterm.R;
@@ -40,8 +43,8 @@ import jackpal.androidterm.RemoteInterface;
 import jackpal.androidterm.RunShortcut;
 import jackpal.androidterm.TermDebug;
 import jackpal.androidterm.compat.PRNGFixes;
-import jackpal.androidterm.shortcuts.TextIcon;
 import jackpal.androidterm.util.ShortcutEncryption;
+
 
 public class AddShortcut extends AppCompatActivity {
     private final int OP_MAKE_SHORTCUT = 1;
@@ -191,17 +194,17 @@ public class AddShortcut extends AppCompatActivity {
         if (!TextUtils.isEmpty(shortcutName)) {
             wrapper.putExtra(Intent.EXTRA_SHORTCUT_NAME, shortcutName);
         }
-        if (!TextUtils.isEmpty(shortcutText)) {
-            wrapper.putExtra(
-                    Intent.EXTRA_SHORTCUT_ICON,
-                    TextIcon.getTextIcon(shortcutText, shortcutColor, 96, 96)
-            );
-        } else {
+
+        Bitmap icon = null;
+        if (!TextUtils.isEmpty(shortcutText))
+            icon = TextIcon.create(context, shortcutText, shortcutColor);
+        if (icon != null)
+            wrapper.putExtra(Intent.EXTRA_SHORTCUT_ICON, icon);
+        else
             wrapper.putExtra(
                     Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
                     Intent.ShortcutIconResource.fromContext(context, jackpal.androidterm.R.mipmap.ic_launcher)
             );
-        }
 
         setResult(RESULT_OK, wrapper);
         finish();

@@ -18,6 +18,7 @@ package com.termoneplus.shortcuts;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
@@ -30,8 +31,9 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.termoneplus.utils.TextIcon;
+
 import jackpal.androidterm.R;
-import jackpal.androidterm.shortcuts.TextIcon;
 
 
 public class ColorValue {
@@ -144,9 +146,12 @@ public class ColorValue {
                         String s = icon_text.getText().toString();
                         if (TextUtils.isEmpty(s)) return;
 
-                        result[1] = result[0] = s;
-                        imgview.setTag(color);
-                        imgview.setImageBitmap(TextIcon.getTextIcon(s, color, 96, 96));
+                        Bitmap image = TextIcon.create(s, color, 96, 96);
+                        if (image != null) {
+                            result[1] = result[0] = s;
+                            imgview.setTag(color);
+                            imgview.setImageBitmap(image);
+                        }
                     }
                 })
                 .setNegativeButton(android.R.string.cancel, null)
