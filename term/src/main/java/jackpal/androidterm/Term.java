@@ -241,7 +241,7 @@ public class Term extends AppCompatActivity
         final SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
         mSettings = new TermSettings(getResources(), mPrefs);
         mPrefs.registerOnSharedPreferenceChangeListener(this);
-        mActionBarMode  = mSettings.actionBarMode();
+        mActionBarMode = mSettings.actionBarMode();
 
         Intent broadcast = new Intent(ACTION_PATH_APPEND_BROADCAST);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1 /*API Level 12*/) {
@@ -877,15 +877,18 @@ public class Term extends AppCompatActivity
     }
 
     private void doPaste() {
-        if (!canPaste()) {
-            return;
-        }
+        if (!canPaste()) return;
+
         ClipboardManagerCompat clip = ClipboardManagerCompatFactory
                 .getManager(getApplicationContext());
+
         CharSequence paste = clip.getText();
+        if (TextUtils.isEmpty(paste)) return;
+
         TermSession session = getCurrentTermSession();
-        if (session != null)
-            session.write(paste.toString());
+        if (session == null) return;
+
+        session.write(paste.toString());
     }
 
     private void doSendControlKey() {
