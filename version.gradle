@@ -1,1 +1,1 @@
-def gradleVersion = '4.9'
+def gradleVersion = '4.10'
