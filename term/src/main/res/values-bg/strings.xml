@@ -142,7 +142,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <string name="title_do_path_extensions_preference">Разрешаване на допълнения към PATH</string>
     <string name="summary_do_path_extensions_preference">Разрешаване на другите приложения да предоставят допълнителни команди</string>
 
-    <string name="title_allow_prepend_path_preference">Разрешаване на добаване на пътища в началото на PATH</string>
+    <string name="title_allow_prepend_path_preference">Разрешаване на добавяне на пътища в началото на PATH</string>
 
     <string name="summary_allow_prepend_path_preference">Дали другите приложения могат да припокрият съществуващите команди, т.е. да вмъкнат пътища в началото на PATH.</string>
     <string name="title_home_path_preference">Домашна директория</string>
@@ -165,7 +165,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <string name="perm_append_to_path">Добавяне на команди към терминалната програма</string>
     <string name="permdesc_append_to_path">Разрешава на приложението да предостави допълнителни команди, т.е. да добави пътища към PATH на терминалната програма за Android</string>
     <string name="perm_prepend_to_path">Припокриване на команди в терминалната програма</string>
-    <string name="permdesc_prepend_to_path">Разрешава на приложението да припокрие съществувашите команди със собствени, т.е. да вмъкне пътища към PATH на терминалната програма за Android</string>
+    <string name="permdesc_prepend_to_path">Разрешава на приложението да припокрие съществуващите команди със собствени, т.е. да вмъкне пътища към PATH на терминалната програма за Android</string>
 
     <string name="email_transcript_subject">Запис от терминалната програма</string>
     <string name="email_transcript_chooser_title">Изпращане на записа използвайки:</string>
@@ -195,12 +195,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <!-- AddShortcut activity -->
     <string name="addshortcut_command_hint">команда</string>
     <string name="addshortcut_example_hint">--пример=\"a\"</string>
-    <string name="addshortcut_button_find_command">Команда за търсене</string>
+    <string name="addshortcut_button_find_command">Търсене на команда</string>
     <string name="addshortcut_navigator_title">Избор на цел за връзката</string>
     <string name="addshortcut_command_window_instructions">Командния прозорец изисква пълен път, без параметри. За другите команди да се използва прозореца за параметри, напр. cd /sdcard.</string>
     <string name="addshortcut_arguments_label">Параметри</string>
     <string name="addshortcut_shortcut_label">Име на връзката</string>
-    <string name="addshortcut_button_text_icon">Икона с тект</string>
+    <string name="addshortcut_button_text_icon">Икона с текст</string>
     <string name="addshortcut_make_text_icon">Създаване на текстова икона</string>
     <string name="addshortcut_title">Връзка към терминал</string>
     <!-- ColorValue.java -->
