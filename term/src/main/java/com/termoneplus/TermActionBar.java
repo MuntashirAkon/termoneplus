@@ -35,14 +35,14 @@ public class TermActionBar {
     private final Spinner spinner;
 
     private TermActionBar(AppCompatActivity context, boolean floating) {
-        toolbar = (Toolbar) context.findViewById(R.id.toolbar);
+        toolbar = context.findViewById(R.id.toolbar);
         context.setSupportActionBar(toolbar);
 
         ActionBar appbar = context.getSupportActionBar();
         if (appbar != null)
             appbar.setDisplayShowTitleEnabled(false);
 
-        spinner = (Spinner) context.findViewById(R.id.spinner);
+        spinner = context.findViewById(R.id.spinner);
 
         if (floating)
             hide();

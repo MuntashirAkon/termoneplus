@@ -70,7 +70,7 @@ public class FileSelection extends AppCompatActivity {
         setResult(RESULT_CANCELED);
 
         {
-            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            Toolbar toolbar = findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
         }
         {    // Show the Up button in the action bar.
@@ -106,12 +106,12 @@ public class FileSelection extends AppCompatActivity {
         final Adapter adapter = new Adapter(cwd);
 
         {
-            RecyclerView view = (RecyclerView) findViewById(R.id.directory_list);
+            RecyclerView view = findViewById(R.id.directory_list);
             view.setAdapter(adapter);
         }
 
         {
-            final EditText path_input = (EditText) findViewById(R.id.path);
+            final EditText path_input = findViewById(R.id.path);
             path_input.setOnKeyListener(
                     new EditText.OnKeyListener() {
                         public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -201,7 +201,7 @@ public class FileSelection extends AppCompatActivity {
 
         public ViewHolder(View view) {
             super(view);
-            name = (TextView) itemView.findViewById(R.id.name);
+            name = itemView.findViewById(R.id.name);
         }
 
         public void setFile(File file) {
@@ -306,7 +306,7 @@ public class FileSelection extends AppCompatActivity {
         }
 
         @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             switch (holder.getItemViewType()) {
                 case ViewType.UP_ENTRY: {
                     holder.name.setText(cwd);

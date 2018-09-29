@@ -105,14 +105,14 @@ public class ColorValue {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.activity_color_value, null);
 
-        icon_text = (EditText) view.findViewById(R.id.icon_text);
+        icon_text = view.findViewById(R.id.icon_text);
         icon_text.setTextColor(color);
         icon_text.setText(result[0]);
 
-        data[0].seekbar = (SeekBar) view.findViewById(R.id.alpha);
-        data[1].seekbar = (SeekBar) view.findViewById(R.id.red);
-        data[2].seekbar = (SeekBar) view.findViewById(R.id.green);
-        data[3].seekbar = (SeekBar) view.findViewById(R.id.blue);
+        data[0].seekbar = view.findViewById(R.id.alpha);
+        data[1].seekbar = view.findViewById(R.id.red);
+        data[2].seekbar = view.findViewById(R.id.green);
+        data[3].seekbar = view.findViewById(R.id.blue);
         for (int k = 0; k < data.length; k++) {
             SeekBar seekbar = data[k].seekbar;
             seekbar.setTag(k);
@@ -123,16 +123,16 @@ public class ColorValue {
         }
 
         CheckBox checkbox;
-        checkbox = (CheckBox) view.findViewById(R.id.lock_alpha);
+        checkbox = view.findViewById(R.id.lock_alpha);
         checkbox.setOnCheckedChangeListener(lock_checked);
-        checkbox = (CheckBox) view.findViewById(R.id.lock_red);
+        checkbox = view.findViewById(R.id.lock_red);
         checkbox.setOnCheckedChangeListener(lock_checked);
-        checkbox = (CheckBox) view.findViewById(R.id.lock_green);
+        checkbox = view.findViewById(R.id.lock_green);
         checkbox.setOnCheckedChangeListener(lock_checked);
-        checkbox = (CheckBox) view.findViewById(R.id.lock_blue);
+        checkbox = view.findViewById(R.id.lock_blue);
         checkbox.setOnCheckedChangeListener(lock_checked);
 
-        hex_code = (TextView) view.findViewById(R.id.hex_code);
+        hex_code = view.findViewById(R.id.hex_code);
         hex_code.setText(colorAsHexString());
 
         new AlertDialog.Builder(context)

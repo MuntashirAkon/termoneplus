@@ -276,7 +276,7 @@ public class Term extends AppCompatActivity
             }
         });
 
-        mViewFlipper = (TermViewFlipper) findViewById(VIEW_FLIPPER);
+        mViewFlipper = findViewById(VIEW_FLIPPER);
 
         Context app = getApplicationContext();
 
@@ -993,7 +993,7 @@ public class Term extends AppCompatActivity
             if (convertView == null) {
                 convertView = inflater.inflate(R.layout.actionbar_windowlist, null);
                 holder = new ViewHolder();
-                holder.title = (TextView) convertView.findViewById(R.id.title);
+                holder.title = convertView.findViewById(R.id.title);
 
                 convertView.setTag(holder);
             } else {

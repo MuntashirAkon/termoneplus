@@ -73,8 +73,8 @@ public class AddShortcut extends AppCompatActivity {
         View view = inflater.inflate(R.layout.activity_addshortcut, null);
         shortcut_view = view;
 
-        final EditText cmd_param = (EditText) view.findViewById(R.id.cmd_param);
-        final EditText cmd_name = (EditText) view.findViewById(R.id.cmd_name);
+        final EditText cmd_param = view.findViewById(R.id.cmd_param);
+        final EditText cmd_name = view.findViewById(R.id.cmd_name);
 
         cmd_param.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -89,7 +89,7 @@ public class AddShortcut extends AppCompatActivity {
             }
         });
 
-        Button btn_cmd_path = (Button) view.findViewById(R.id.btn_cmd_path);
+        Button btn_cmd_path = view.findViewById(R.id.btn_cmd_path);
         btn_cmd_path.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -108,10 +108,10 @@ public class AddShortcut extends AppCompatActivity {
                 }
         );
 
-        final ImageView cmd_icon = (ImageView) view.findViewById(R.id.cmd_icon);
+        final ImageView cmd_icon = view.findViewById(R.id.cmd_icon);
         cmd_icon.setTag(0xFFFFFFFF);
 
-        Button btn_cmd_icon = (Button) view.findViewById(R.id.btn_cmd_icon);
+        Button btn_cmd_icon = view.findViewById(R.id.btn_cmd_icon);
         btn_cmd_icon.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -231,14 +231,14 @@ public class AddShortcut extends AppCompatActivity {
                 preferences.edit().putString("lastPath", path).commit();
 
                 {
-                    EditText cmd_path = (EditText) shortcut_view.findViewById(R.id.cmd_path);
+                    EditText cmd_path = shortcut_view.findViewById(R.id.cmd_path);
                     cmd_path.setText(path);
                 }
 
                 String name = path.replaceAll(".*/", "");
 
                 {
-                    EditText cmd_name = (EditText) shortcut_view.findViewById(R.id.cmd_name);
+                    EditText cmd_name = shortcut_view.findViewById(R.id.cmd_name);
                     if (cmd_name.getText().toString().equals(""))
                         cmd_name.setText(name);
                 }

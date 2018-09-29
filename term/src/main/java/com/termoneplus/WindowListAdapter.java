@@ -81,8 +81,8 @@ public class WindowListAdapter extends BaseAdapter implements UpdateCallback {
             // NOTE for Adapters parent will apply default layout parameters unless ...!
             convertView = inflater.inflate(R.layout.content_windowlist, null);
             holder = new ViewHolder();
-            holder.title = (TextView) convertView.findViewById(R.id.title);
-            holder.close = (WindowListFragment.CloseButton) convertView.findViewById(R.id.close);
+            holder.title = convertView.findViewById(R.id.title);
+            holder.close = convertView.findViewById(R.id.close);
             holder.close.setOnClickListener(
                     new View.OnClickListener() {
                         @Override
