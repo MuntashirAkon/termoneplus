@@ -7,8 +7,9 @@ android {
         minSdkVersion project.ext.minSdkVersion
         targetSdkVersion project.ext.targetSdkVersion
 
-        versionCode project.ext.versionCode
-        versionName project.ext.versionName
+        //Major.Minor.Patch
+        versionCode 10100
+        versionName "1.1.0"
     }
     productFlavors {
     }
