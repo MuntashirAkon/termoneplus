@@ -22,6 +22,7 @@ import java.util.LinkedList;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
@@ -91,6 +92,7 @@ public class TermViewFlipper extends ViewFlipper implements Iterable<View> {
         mStatusBarVisible = statusBarVisible;
     }
 
+    @NonNull
     public Iterator<View> iterator() {
         return new ViewFlipperIterator();
     }
