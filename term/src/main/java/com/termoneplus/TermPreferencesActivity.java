@@ -16,10 +16,8 @@
 
 package com.termoneplus;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
@@ -41,10 +39,7 @@ public class TermPreferencesActivity extends AppCompatPreferenceActivity {
             }
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB /*API Level 11*/)
-            loadPreferences();
-        else
-            loadPreferencesObsolete();
+        loadPreferences();
     }
 
     @Override
@@ -58,12 +53,6 @@ public class TermPreferencesActivity extends AppCompatPreferenceActivity {
         }
     }
 
-    @SuppressWarnings("deprecation")
-    private void loadPreferencesObsolete() {
-        addPreferencesFromResource(R.xml.preferences);
-    }
-
-    @RequiresApi(11)
     private void loadPreferences() {
         // Display the fragment as the main content.
         getFragmentManager().beginTransaction()
@@ -71,7 +60,6 @@ public class TermPreferencesActivity extends AppCompatPreferenceActivity {
                 .commit();
     }
 
-    @RequiresApi(11)
     public static class TermPreferencesFragment extends PreferenceFragment {
         @Override
         public void onCreate(Bundle savedInstanceState) {
