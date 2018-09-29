@@ -37,7 +37,7 @@ class TermKeyListener {
     private String[] mAppKeyCodes = new String[256];
 
     private void initKeyCodes() {
-        mKeyMap = new HashMap<Integer, String>();
+        mKeyMap = new HashMap<>();
         mKeyMap.put(KEYMOD_SHIFT | KEYCODE_DPAD_LEFT, "\033[1;2D");
         mKeyMap.put(KEYMOD_ALT | KEYCODE_DPAD_LEFT, "\033[1;3D");
         mKeyMap.put(KEYMOD_ALT | KEYMOD_SHIFT | KEYCODE_DPAD_LEFT, "\033[1;4D");

@@ -230,7 +230,7 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
      *
      * A hash table of underlying URLs to implement clickable links.
      */
-    private Hashtable<Integer,URLSpan[]> mLinkLayer = new Hashtable<Integer,URLSpan[]>();
+    private Hashtable<Integer,URLSpan[]> mLinkLayer = new Hashtable<>();
 
     /**
      * Accept links that start with http[s]:
