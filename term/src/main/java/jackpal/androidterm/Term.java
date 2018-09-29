@@ -71,7 +71,6 @@ import java.text.Collator;
 import java.util.Arrays;
 import java.util.Locale;
 
-import jackpal.androidterm.compat.ActivityCompat;
 import jackpal.androidterm.emulatorview.EmulatorView;
 import jackpal.androidterm.emulatorview.TermSession;
 import jackpal.androidterm.emulatorview.UpdateCallback;
@@ -943,7 +942,7 @@ public class Term extends AppCompatActivity
         } else {
             mWakeLock.acquire();
         }
-        ActivityCompat.invalidateOptionsMenu(this);
+        invalidateOptionsMenu();
     }
 
     private void doToggleWifiLock() {
@@ -952,7 +951,7 @@ public class Term extends AppCompatActivity
         } else {
             mWifiLock.acquire();
         }
-        ActivityCompat.invalidateOptionsMenu(this);
+        invalidateOptionsMenu();
     }
 
     private void doUIToggle(int x, int y, int width, int height) {
