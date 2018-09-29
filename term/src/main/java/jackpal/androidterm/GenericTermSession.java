@@ -17,12 +17,7 @@
 package jackpal.androidterm;
 
 import java.io.*;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
 
-import android.os.Build;
-import android.os.Handler;
-import android.os.Message;
 import android.os.ParcelFileDescriptor;
 import android.util.Log;
 
@@ -39,8 +34,6 @@ import jackpal.androidterm.util.TermSettings;
 class GenericTermSession extends TermSession {
     //** Set to true to force into 80 x 24 for testing with vttest. */
     private static final boolean VTTEST_MODE = false;
-
-    private static Field descriptorField;
 
     private final long createdAt;
 
@@ -176,7 +169,7 @@ class GenericTermSession extends TermSession {
             return;
 
         try {
-            Exec.setPtyWindowSizeInternal(getIntFd(mTermFd), row, col, xpixel, ypixel);
+            Exec.setPtyWindowSizeInternal(mTermFd.getFd(), row, col, xpixel, ypixel);
         } catch (IOException e) {
             Log.e("exec", "Failed to set window size: " + e.getMessage());
 
@@ -195,7 +188,7 @@ class GenericTermSession extends TermSession {
             return;
 
         try {
-            Exec.setPtyUTF8ModeInternal(getIntFd(mTermFd), utf8Mode);
+            Exec.setPtyUTF8ModeInternal(mTermFd.getFd(), utf8Mode);
         } catch (IOException e) {
             Log.e("exec", "Failed to set UTF mode: " + e.getMessage());
 
@@ -209,27 +202,5 @@ class GenericTermSession extends TermSession {
      */
     boolean isFailFast() {
         return false;
-    }
-
-    private static void cacheDescField() throws NoSuchFieldException {
-        if (descriptorField != null)
-            return;
-
-        descriptorField = FileDescriptor.class.getDeclaredField("descriptor");
-        descriptorField.setAccessible(true);
-    }
-
-    private static int getIntFd(ParcelFileDescriptor parcelFd) throws IOException {
-        if (Build.VERSION.SDK_INT >= 12)
-            return FdHelperHoneycomb.getFd(parcelFd);
-        else {
-            try {
-                cacheDescField();
-
-                return descriptorField.getInt(parcelFd.getFileDescriptor());
-            } catch (Exception e) {
-                throw new IOException("Unable to obtain file descriptor on this OS version: " + e.getMessage());
-            }
-        }
     }
 }

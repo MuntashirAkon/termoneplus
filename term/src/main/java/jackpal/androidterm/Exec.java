@@ -15,16 +15,8 @@
  */
 
 package jackpal.androidterm;
-import android.os.Build;
-import android.os.ParcelFileDescriptor;
-import android.util.Log;
 
-import java.io.File;
-import java.io.FileDescriptor;
 import java.io.IOException;
-import java.lang.IllegalStateException;
-import java.lang.Process;
-import java.lang.reflect.Field;
 
 /**
  * Utility methods for managing a pty file descriptor.
