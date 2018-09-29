@@ -16,8 +16,6 @@
 
 package jackpal.androidterm.emulatorview;
 
-import jackpal.androidterm.emulatorview.compat.AndroidCompat;
-
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
