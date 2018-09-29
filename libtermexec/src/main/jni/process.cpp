@@ -177,7 +177,7 @@ static int create_subprocess(JNIEnv *env, const char *cmd, char *const argv[], c
 
 extern "C" {
 
-JNIEXPORT void JNICALL Java_jackpal_androidterm_TermExec_sendSignal(JNIEnv *env, jobject clazz,
+JNIEXPORT void JNICALL Java_jackpal_androidterm_TermExec_sendSignal(JNIEnv *env, jclass clazz,
     jint procId, jint signal)
 {
     kill(procId, signal);
