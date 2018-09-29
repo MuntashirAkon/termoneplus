@@ -61,6 +61,6 @@
 
     <!-- Default selector background in clickable view -->
     <style name="CloseButton">
-        <item name="android:background">@android:drawable/list_selector_background</item>
+        <item name="android:background">?android:attr/selectableItemBackground</item>
     </style>
 </resources>
