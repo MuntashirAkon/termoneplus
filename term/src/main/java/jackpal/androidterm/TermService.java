@@ -34,7 +34,6 @@ import android.support.v4.app.NotificationCompat;
 
 import jackpal.androidterm.emulatorview.TermSession;
 
-import jackpal.androidterm.compat.ServiceForegroundCompat;
 import jackpal.androidterm.libtermexec.v1.*;
 import jackpal.androidterm.util.SessionList;
 import jackpal.androidterm.util.TermSettings;
@@ -44,7 +43,6 @@ import java.util.UUID;
 public class TermService extends Service implements TermSession.FinishCallback
 {
     private static final int RUNNING_NOTIFICATION = 1;
-    private ServiceForegroundCompat compat;
 
     private SessionList mTermSessions;
 
@@ -84,7 +82,6 @@ public class TermService extends Service implements TermSession.FinishCallback
         editor.putString("home_path", homePath);
         editor.commit();
 
-        compat = new ServiceForegroundCompat(this);
         mTermSessions = new SessionList();
 
         /* Put the service in the foreground. */
@@ -101,14 +98,14 @@ public class TermService extends Service implements TermSession.FinishCallback
                 .setContentText(getText(R.string.service_notify_text))
                 .build();
         notification.flags |= Notification.FLAG_ONGOING_EVENT;
-        compat.startForeground(RUNNING_NOTIFICATION, notification);
+
+        startForeground(RUNNING_NOTIFICATION, notification);
 
         Log.d(TermDebug.LOG_TAG, "TermService started");
     }
 
     @Override
     public void onDestroy() {
-        compat.stopForeground(true);
         for (TermSession session : mTermSessions) {
             /* Don't automatically remove from list of sessions -- we clear the
              * list below anyway and we could trigger
@@ -117,6 +114,7 @@ public class TermService extends Service implements TermSession.FinishCallback
             session.finish();
         }
         mTermSessions.clear();
+        stopForeground(true);
     }
 
     public SessionList getSessions() {
