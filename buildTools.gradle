@@ -1,0 +1,5 @@
+allprojects {
+    project.ext {
+        buildToolsVersion = '28.0.3'
+    }
+}
