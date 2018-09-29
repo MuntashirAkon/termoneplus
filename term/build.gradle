@@ -31,10 +31,10 @@ android {
 }
 
 dependencies {
-    compile project(':emulatorview')
-    compile project(':libtermexec')
-    compile "com.android.support:support-v4:${project.ext.supportLibVersion}"
-    compile "com.android.support:appcompat-v7:${project.ext.supportLibVersion}"
-    compile "com.android.support:recyclerview-v7:${project.ext.supportLibVersion}"
-    compile "com.android.support:design:${project.ext.supportLibVersion}"
+    implementation project(':emulatorview')
+    implementation project(':libtermexec')
+    implementation "com.android.support:support-v4:${project.ext.supportLibVersion}"
+    implementation "com.android.support:appcompat-v7:${project.ext.supportLibVersion}"
+    implementation "com.android.support:recyclerview-v7:${project.ext.supportLibVersion}"
+    implementation "com.android.support:design:${project.ext.supportLibVersion}"
 }
