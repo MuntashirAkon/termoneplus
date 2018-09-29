@@ -7,8 +7,9 @@ android {
         minSdkVersion project.ext.minSdkVersion
         targetSdkVersion project.ext.targetSdkVersion
 
-        versionCode project.ext.versionCode
-        versionName project.ext.versionName
+        //Major.Minor.Patch
+        versionCode 10001
+        versionName "1.0.1"
     }
     externalNativeBuild {
         cmake {
