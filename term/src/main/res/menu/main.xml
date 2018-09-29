@@ -24,7 +24,7 @@
           android:title="@string/new_window"
           app:showAsAction="always"/>
     <item android:id="@+id/menu_close_window"
-          android:icon="@drawable/ic_menu_close_clear_cancel"
+          android:icon="@drawable/ic_close_black_24dp"
           android:title="@string/close_window"
           app:showAsAction="ifRoom"/>
     <item android:id="@+id/menu_window_list"
