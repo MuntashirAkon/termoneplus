@@ -11,6 +11,10 @@ android {
         versionCode project.ext.versionCode
         versionName project.ext.versionName
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
     productFlavors {
     }
     buildTypes {
