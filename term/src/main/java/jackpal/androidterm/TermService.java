@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2007 The Android Open Source Project
+ * Copyright (C) 2018 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,33 +17,42 @@
 
 package jackpal.androidterm;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.*;
-import android.content.Intent;
+import android.os.Binder;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.IBinder;
+import android.os.Looper;
+import android.os.ParcelFileDescriptor;
+import android.os.ResultReceiver;
 import android.preference.PreferenceManager;
+import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
 import android.util.Log;
-import android.app.Notification;
-import android.app.PendingIntent;
-import android.support.v4.app.NotificationCompat;
-
-import jackpal.androidterm.emulatorview.TermSession;
-
-import jackpal.androidterm.libtermexec.v1.*;
-import jackpal.androidterm.util.SessionList;
-import jackpal.androidterm.util.TermSettings;
 
 import java.util.UUID;
 
-public class TermService extends Service implements TermSession.FinishCallback
-{
+import jackpal.androidterm.emulatorview.TermSession;
+import jackpal.androidterm.libtermexec.v1.ITerminal;
+import jackpal.androidterm.util.SessionList;
+import jackpal.androidterm.util.TermSettings;
+
+public class TermService extends Service implements TermSession.FinishCallback {
     private static final int RUNNING_NOTIFICATION = 1;
+
+    public static final String NOTIFICATION_CHANNEL_APPLICATION = "com.termoneplus.application";
 
     private SessionList mTermSessions;
 
@@ -52,6 +62,7 @@ public class TermService extends Service implements TermSession.FinishCallback
             return TermService.this;
         }
     }
+
     private final IBinder mTSBinder = new TSBinder();
 
     @Override
@@ -85,18 +96,7 @@ public class TermService extends Service implements TermSession.FinishCallback
         mTermSessions = new SessionList();
 
         /* Put the service in the foreground. */
-        Intent notifyIntent = new Intent(this, Term.class);
-        notifyIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notifyIntent, 0);
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-        Notification notification = builder.setContentIntent(pendingIntent)
-                .setSmallIcon(R.drawable.ic_stat_service_notification_icon)
-                .setTicker(getText(R.string.service_notify_text))
-                .setWhen(System.currentTimeMillis())
-                //.setAutoCancel(true)	TODO
-                .setContentTitle(getText(R.string.application_terminal))
-                .setContentText(getText(R.string.service_notify_text))
-                .build();
+        Notification notification = buildNotification();
         notification.flags |= Notification.FLAG_ONGOING_EVENT;
 
         startForeground(RUNNING_NOTIFICATION, notification);
@@ -125,6 +125,43 @@ public class TermService extends Service implements TermSession.FinishCallback
         mTermSessions.remove(session);
     }
 
+
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O /*API Level 26*/) return;
+
+        NotificationChannel channel = new NotificationChannel(
+                NOTIFICATION_CHANNEL_APPLICATION,
+                "TermOnePlus",
+                NotificationManager.IMPORTANCE_LOW);
+        channel.setDescription("TermOnePlus running notification");
+
+        // Register the channel with the system ...
+        // Note we can't change the importance or other notification behaviors after this.
+        NotificationManager notificationManager = getSystemService(NotificationManager.class);
+        notificationManager.createNotificationChannel(channel);
+    }
+
+    private Notification buildNotification() {
+        createNotificationChannel();
+
+        Intent notifyIntent = new Intent(this, Term.class);
+        notifyIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notifyIntent, 0);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this,
+                NOTIFICATION_CHANNEL_APPLICATION)
+                .setSmallIcon(R.drawable.ic_stat_service_notification_icon)
+                .setContentTitle(getText(R.string.application_terminal))
+                .setContentText(getText(R.string.service_notify_text))
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setTicker(getText(R.string.service_notify_text))
+                .setWhen(System.currentTimeMillis())
+                .setContentIntent(pendingIntent);
+        return builder.build();
+    }
+
     private final class RBinder extends ITerminal.Stub {
         @Override
         public IntentSender startSession(final ParcelFileDescriptor pseudoTerminalMultiplexerFd,
@@ -146,7 +183,7 @@ public class TermService extends Service implements TermSession.FinishCallback
             if (pkgs == null || pkgs.length == 0)
                 return null;
 
-            for (String packageName:pkgs) {
+            for (String packageName : pkgs) {
                 try {
                     final PackageInfo pkgInfo = pm.getPackageInfo(packageName, 0);
 
@@ -185,7 +222,8 @@ public class TermService extends Service implements TermSession.FinishCallback
 
                         return result.getIntentSender();
                     }
-                } catch (PackageManager.NameNotFoundException ignore) {}
+                } catch (PackageManager.NameNotFoundException ignore) {
+                }
             }
 
             return null;
