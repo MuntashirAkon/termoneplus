@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.lang.ref.WeakReference;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.charset.Charset;
@@ -82,19 +83,7 @@ public class TermSession {
     private CharsetEncoder mUTF8Encoder;
     private FinishCallback mFinishCallback;
     private boolean mIsRunning = false;
-    private Handler mMsgHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            if (!mIsRunning) {
-                return;
-            }
-            if (msg.what == NEW_INPUT) {
-                readFromProcess();
-            } else if (msg.what == EOF) {
-                new Handler(Looper.getMainLooper()).post(() -> onProcessExit());
-            }
-        }
-    };
+    private Handler mMsgHandler = new TermHandler(this);
     private UpdateCallback mTitleChangedListener;
 
     public TermSession() {
@@ -633,5 +622,27 @@ public class TermSession {
          * @param session The <code>TermSession</code> which has finished.
          */
         void onSessionFinish(TermSession session);
+    }
+
+
+    private static class TermHandler extends Handler {
+        private final WeakReference<TermSession> reference;
+
+        TermHandler(TermSession session) {
+            reference = new WeakReference<>(session);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            TermSession session = reference.get();
+            if (session == null) return;
+            if (!session.mIsRunning) return;
+
+            if (msg.what == NEW_INPUT) {
+                session.readFromProcess();
+            } else if (msg.what == EOF) {
+                new Handler(Looper.getMainLooper()).post(session::onProcessExit);
+            }
+        }
     }
 }
