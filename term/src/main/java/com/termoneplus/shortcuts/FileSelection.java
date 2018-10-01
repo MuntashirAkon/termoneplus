@@ -40,7 +40,6 @@ import java.io.File;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.Arrays;
-import java.util.Comparator;
 
 import jackpal.androidterm.R;
 
@@ -113,26 +112,24 @@ public class FileSelection extends AppCompatActivity {
         {
             final EditText path_input = findViewById(R.id.path);
             path_input.setOnKeyListener(
-                    new EditText.OnKeyListener() {
-                        public boolean onKey(View v, int keyCode, KeyEvent event) {
-                            if (keyCode == KeyEvent.KEYCODE_ENTER) {
-                                String path = path_input.getText().toString();
-                                File file = new File(path);
-                                if (!file.exists()) return true;
+                    (v, keyCode, event) -> {
+                        if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                            String path = path_input.getText().toString();
+                            File file = new File(path);
+                            if (!file.exists()) return true;
 
-                                if (file.isDirectory()) {
-                                    cwd = file.getAbsolutePath();
-                                    adapter.load(file);
-                                    adapter.notifyDataSetChanged();
-                                    return true;
-                                }
-
-                                setResult(RESULT_OK, getIntent().setData(Uri.fromFile(file)));
-                                finish();
+                            if (file.isDirectory()) {
+                                cwd = file.getAbsolutePath();
+                                adapter.load(file);
+                                adapter.notifyDataSetChanged();
                                 return true;
                             }
-                            return false;
+
+                            setResult(RESULT_OK, getIntent().setData(Uri.fromFile(file)));
+                            finish();
+                            return true;
                         }
+                        return false;
                     }
             );
         }
@@ -225,34 +222,30 @@ public class FileSelection extends AppCompatActivity {
                 load(dir);
             }
 
-            dir_listener = new View.OnClickListener() {
-                public void onClick(View view) {
-                    String tag = (String) view.getTag();
-                    if (tag == null) return;
+            dir_listener = view -> {
+                String tag = (String) view.getTag();
+                if (tag == null) return;
 
-                    File dir;
-                    if (tag.equals("..")) {
-                        dir = new File(cwd);
-                        // NOTE system does not return parent for root!
-                        if (!cwd.equals("/")) dir = dir.getParentFile();
-                    } else
-                        dir = new File(cwd, tag);
-                    cwd = dir.getAbsolutePath();
-                    load(dir);
-                    notifyDataSetChanged();
-                }
+                File dir;
+                if (tag.equals("..")) {
+                    dir = new File(cwd);
+                    // NOTE system does not return parent for root!
+                    if (!cwd.equals("/")) dir = dir.getParentFile();
+                } else
+                    dir = new File(cwd, tag);
+                cwd = dir.getAbsolutePath();
+                load(dir);
+                notifyDataSetChanged();
             };
 
-            file_listener = new View.OnClickListener() {
-                public void onClick(View view) {
-                    String tag = (String) view.getTag();
-                    if (tag == null) return;
+            file_listener = view -> {
+                String tag = (String) view.getTag();
+                if (tag == null) return;
 
-                    File file = new File(cwd, tag);
-                    Uri uri = Uri.fromFile(file);
-                    setResult(RESULT_OK, getIntent().setData(uri));
-                    finish();
-                }
+                File file = new File(cwd, tag);
+                Uri uri = Uri.fromFile(file);
+                setResult(RESULT_OK, getIntent().setData(uri));
+                finish();
             };
         }
 
@@ -334,24 +327,22 @@ public class FileSelection extends AppCompatActivity {
         private void load(File dir) {
             entries = dir.listFiles();
             if (entries == null) return;
-            Arrays.sort(entries, new Comparator<File>() {
-                public int compare(File f1, File f2) {
-                    if (f1.isDirectory()) {
-                        if (f2.isDirectory())
-                            return f1.getName().compareTo(f2.getName());
-                        return -1;
-                    }
-                    if (f1.isFile()) {
-                        if (f2.isDirectory()) return 1;
-                        if (f2.isFile())
-                            return f1.getName().compareTo(f2.getName());
-                        return -1;
-                    }
-                    // non-existent symbolic link
-                    if (f2.isDirectory()) return 1;
-                    if (f2.isFile()) return 1;
-                    return f1.getName().compareTo(f2.getName());
+            Arrays.sort(entries, (f1, f2) -> {
+                if (f1.isDirectory()) {
+                    if (f2.isDirectory())
+                        return f1.getName().compareTo(f2.getName());
+                    return -1;
                 }
+                if (f1.isFile()) {
+                    if (f2.isDirectory()) return 1;
+                    if (f2.isFile())
+                        return f1.getName().compareTo(f2.getName());
+                    return -1;
+                }
+                // non-existent symbolic link
+                if (f2.isDirectory()) return 1;
+                if (f2.isFile()) return 1;
+                return f1.getName().compareTo(f2.getName());
             });
         }
     }

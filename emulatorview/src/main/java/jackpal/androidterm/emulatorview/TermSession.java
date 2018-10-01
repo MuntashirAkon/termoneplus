@@ -91,12 +91,7 @@ public class TermSession {
             if (msg.what == NEW_INPUT) {
                 readFromProcess();
             } else if (msg.what == EOF) {
-                new Handler(Looper.getMainLooper()).post(new Runnable() {
-                    @Override
-                    public void run() {
-                        onProcessExit();
-                    }
-                });
+                new Handler(Looper.getMainLooper()).post(() -> onProcessExit());
             }
         }
     };

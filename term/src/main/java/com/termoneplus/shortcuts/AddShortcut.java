@@ -17,7 +17,6 @@
 package com.termoneplus.shortcuts;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -75,35 +74,29 @@ public class AddShortcut extends AppCompatActivity {
         final EditText cmd_param = shortcut_view.findViewById(R.id.cmd_param);
         final EditText cmd_name = shortcut_view.findViewById(R.id.cmd_name);
 
-        cmd_param.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean focus) {
-                if (!focus) {
-                    String s;
-                    if (cmd_name.getText().toString().equals("") &&
-                            !(s = cmd_param.getText().toString()).equals("")
-                            )
-                        cmd_name.setText(s.split("\\s")[0]);
-                }
+        cmd_param.setOnFocusChangeListener((view, focus) -> {
+            if (!focus) {
+                String s;
+                if (cmd_name.getText().toString().equals("") &&
+                        !(s = cmd_param.getText().toString()).equals("")
+                        )
+                    cmd_name.setText(s.split("\\s")[0]);
             }
         });
 
         Button btn_cmd_path = shortcut_view.findViewById(R.id.btn_cmd_path);
         btn_cmd_path.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        String lastPath = preferences.getString("lastPath", null);
+                view -> {
+                    String lastPath = preferences.getString("lastPath", null);
 
-                        Intent pickerIntent = new Intent(Intent.ACTION_PICK)
-                                .putExtra("CONTENT_TYPE", "*/*");
+                    Intent pickerIntent = new Intent(Intent.ACTION_PICK)
+                            .putExtra("CONTENT_TYPE", "*/*");
 
-                        pickerIntent.putExtra("TITLE", getString(R.string.addshortcut_button_find_command));
-                        if (lastPath != null)
-                            pickerIntent.putExtra("COMMAND_PATH", lastPath);
+                    pickerIntent.putExtra("TITLE", getString(R.string.addshortcut_button_find_command));
+                    if (lastPath != null)
+                        pickerIntent.putExtra("COMMAND_PATH", lastPath);
 
-                        startActivityForResult(pickerIntent, OP_MAKE_SHORTCUT);
-                    }
+                    startActivityForResult(pickerIntent, OP_MAKE_SHORTCUT);
                 }
         );
 
@@ -112,36 +105,23 @@ public class AddShortcut extends AppCompatActivity {
 
         Button btn_cmd_icon = shortcut_view.findViewById(R.id.btn_cmd_icon);
         btn_cmd_icon.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        new ColorValue(AddShortcut.this, cmd_icon, iconText);
-                    }
-                });
+                view -> new ColorValue(AddShortcut.this, cmd_icon, iconText));
 
         final AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setView(shortcut_view);
         alert.setTitle(getString(R.string.addshortcut_title));
         alert.setPositiveButton(android.R.string.yes,
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        buildShortcut(
-                                AddShortcut.this,
-                                path,
-                                cmd_param.getText().toString(),
-                                cmd_name.getText().toString(),
-                                iconText[1],
-                                (Integer) cmd_icon.getTag()
-                        );
-                    }
-                }
+                (dialog, which) -> buildShortcut(
+                        AddShortcut.this,
+                        path,
+                        cmd_param.getText().toString(),
+                        cmd_name.getText().toString(),
+                        iconText[1],
+                        (Integer) cmd_icon.getTag()
+                )
         );
         alert.setNegativeButton(android.R.string.cancel,
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                }
+                (dialog, which) -> finish()
         );
         alert.show();
     }

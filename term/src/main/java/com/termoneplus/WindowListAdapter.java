@@ -84,13 +84,10 @@ public class WindowListAdapter extends BaseAdapter implements UpdateCallback {
             holder.title = convertView.findViewById(R.id.title);
             holder.close = convertView.findViewById(R.id.close);
             holder.close.setOnClickListener(
-                    new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            int position = (Integer) view.getTag();
-                            sessions.remove(position);
-                            notifyDataSetChanged();
-                        }
+                    view -> {
+                        int position1 = (Integer) view.getTag();
+                        sessions.remove(position1);
+                        notifyDataSetChanged();
                     }
             );
 

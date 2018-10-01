@@ -10,10 +10,8 @@ import android.text.method.TextKeyListener;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -62,41 +60,37 @@ public class TermActivity extends Activity {
            also send input (whether from a hardware device or soft keyboard)
            directly to the EmulatorView. */
         mEntry = (EditText) findViewById(R.id.term_entry);
-        mEntry.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            public boolean onEditorAction(TextView v, int action, KeyEvent ev) {
-                // Ignore enter-key-up events
-                if (ev != null && ev.getAction() == KeyEvent.ACTION_UP) {
-                    return false;
-                }
-                // Don't try to send something if we're not connected yet
-                TermSession session = mSession;
-                if (mSession == null) {
-                    return true;
-                }
-
-                Editable e = (Editable) v.getText();
-                // Write to the terminal session
-                session.write(e.toString());
-                session.write('\r');
-                TextKeyListener.clear(e);
+        mEntry.setOnEditorActionListener((v, action, ev) -> {
+            // Ignore enter-key-up events
+            if (ev != null && ev.getAction() == KeyEvent.ACTION_UP) {
+                return false;
+            }
+            // Don't try to send something if we're not connected yet
+            TermSession session = mSession;
+            if (mSession == null) {
                 return true;
             }
+
+            Editable e = (Editable) v.getText();
+            // Write to the terminal session
+            session.write(e.toString());
+            session.write('\r');
+            TextKeyListener.clear(e);
+            return true;
         });
 
         /* Sends the content of the text entry box to the terminal, without
            sending a carriage return afterwards */
         Button sendButton = (Button) findViewById(R.id.term_entry_send);
-        sendButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // Don't try to send something if we're not connected yet
-                TermSession session = mSession;
-                if (mSession == null) {
-                    return;
-                }
-                Editable e = (Editable) mEntry.getText();
-                session.write(e.toString());
-                TextKeyListener.clear(e);
+        sendButton.setOnClickListener(v -> {
+            // Don't try to send something if we're not connected yet
+            TermSession session = mSession;
+            if (mSession == null) {
+                return;
             }
+            Editable e = (Editable) mEntry.getText();
+            session.write(e.toString());
+            TextKeyListener.clear(e);
         });
 
         /**

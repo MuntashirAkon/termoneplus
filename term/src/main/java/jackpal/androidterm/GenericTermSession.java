@@ -49,11 +49,7 @@ class GenericTermSession extends TermSession {
 
     private String mProcessExitMessage;
 
-    private UpdateCallback mUTF8ModeNotify = new UpdateCallback() {
-        public void onUpdate() {
-            setPtyUTF8Mode(getUTF8Mode());
-        }
-    };
+    private UpdateCallback mUTF8ModeNotify = () -> setPtyUTF8Mode(getUTF8Mode());
 
     GenericTermSession(ParcelFileDescriptor mTermFd, TermSettings settings, boolean exitOnEOF) {
         super(exitOnEOF);

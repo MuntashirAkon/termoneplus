@@ -22,7 +22,6 @@ import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
@@ -260,20 +259,17 @@ public class Term extends AppCompatActivity
 
         mActionBar = TermActionBar.setTermContentView(this,
                 mActionBarMode == TermSettings.ACTION_BAR_MODE_HIDES);
-        mActionBar.setOnItemSelectedListener(new TermActionBar.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(int position) {
-                int oldPosition = mViewFlipper.getDisplayedChild();
-                if (position == oldPosition) return;
+        mActionBar.setOnItemSelectedListener(position -> {
+            int oldPosition = mViewFlipper.getDisplayedChild();
+            if (position == oldPosition) return;
 
-                if (position >= mViewFlipper.getChildCount()) {
-                    TermSession session = mTermSessions.get(position);
-                    mViewFlipper.addView(createEmulatorView(session));
-                }
-                mViewFlipper.setDisplayedChild(position);
-                if (mActionBarMode == TermSettings.ACTION_BAR_MODE_HIDES)
-                    mActionBar.hide();
+            if (position >= mViewFlipper.getChildCount()) {
+                TermSession session = mTermSessions.get(position);
+                mViewFlipper.addView(createEmulatorView(session));
             }
+            mViewFlipper.setDisplayedChild(position);
+            if (mActionBarMode == TermSettings.ACTION_BAR_MODE_HIDES)
+                mActionBar.hide();
         });
 
         mViewFlipper = findViewById(VIEW_FLIPPER);
@@ -609,16 +605,10 @@ public class Term extends AppCompatActivity
         final AlertDialog.Builder b = new AlertDialog.Builder(this);
         b.setIcon(android.R.drawable.ic_dialog_alert);
         b.setMessage(R.string.confirm_window_close_message);
-        final Runnable closeWindow = new Runnable() {
-            public void run() {
-                doCloseWindow();
-            }
-        };
-        b.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.dismiss();
-                mHandler.post(closeWindow);
-            }
+        final Runnable closeWindow = this::doCloseWindow;
+        b.setPositiveButton(android.R.string.yes, (dialog, id) -> {
+            dialog.dismiss();
+            mHandler.post(closeWindow);
         });
         b.setNegativeButton(android.R.string.no, null);
         b.show();

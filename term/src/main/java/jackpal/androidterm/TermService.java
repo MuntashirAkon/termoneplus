@@ -159,30 +159,27 @@ public class TermService extends Service implements TermSession.FinishCallback
                     if (!TextUtils.isEmpty(label)) {
                         final String niceName = label.toString();
 
-                        new Handler(Looper.getMainLooper()).post(new Runnable() {
-                            @Override
-                            public void run() {
-                                GenericTermSession session = null;
-                                try {
-                                    final TermSettings settings = new TermSettings(getResources(),
-                                            PreferenceManager.getDefaultSharedPreferences(getApplicationContext()));
+                        new Handler(Looper.getMainLooper()).post(() -> {
+                            GenericTermSession session = null;
+                            try {
+                                final TermSettings settings = new TermSettings(getResources(),
+                                        PreferenceManager.getDefaultSharedPreferences(getApplicationContext()));
 
-                                    session = new BoundSession(pseudoTerminalMultiplexerFd, settings, niceName);
+                                session = new BoundSession(pseudoTerminalMultiplexerFd, settings, niceName);
 
-                                    mTermSessions.add(session);
+                                mTermSessions.add(session);
 
-                                    session.setHandle(sessionHandle);
-                                    session.setFinishCallback(new RBinderCleanupCallback(result, callback));
-                                    session.setTitle("");
+                                session.setHandle(sessionHandle);
+                                session.setFinishCallback(new RBinderCleanupCallback(result, callback));
+                                session.setTitle("");
 
-                                    session.initializeEmulator(80, 24);
-                                } catch (Exception whatWentWrong) {
-                                    Log.e("TermService", "Failed to bootstrap AIDL session: "
-                                            + whatWentWrong.getMessage());
+                                session.initializeEmulator(80, 24);
+                            } catch (Exception whatWentWrong) {
+                                Log.e("TermService", "Failed to bootstrap AIDL session: "
+                                        + whatWentWrong.getMessage());
 
-                                    if (session != null)
-                                        session.finish();
-                                }
+                                if (session != null)
+                                    session.finish();
                             }
                         });
 

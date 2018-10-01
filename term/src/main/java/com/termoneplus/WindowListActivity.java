@@ -28,7 +28,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 
 import jackpal.androidterm.R;
 import jackpal.androidterm.Term;
@@ -72,12 +71,7 @@ public class WindowListActivity extends AppCompatActivity
         }
         {
             FloatingActionButton fab = findViewById(R.id.fab);
-            fab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    onPositionSelected(-1);
-                }
-            });
+            fab.setOnClickListener(view -> onPositionSelected(-1));
         }
     }
 

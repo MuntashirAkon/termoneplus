@@ -32,11 +32,7 @@ public class SessionList extends ArrayList<TermSession>
 {
     LinkedList<UpdateCallback> callbacks = new LinkedList<>();
     LinkedList<UpdateCallback> titleChangedListeners = new LinkedList<>();
-    UpdateCallback mTitleChangedListener = new UpdateCallback() {
-        public void onUpdate() {
-            notifyTitleChanged();
-        }
-    };
+    UpdateCallback mTitleChangedListener = this::notifyTitleChanged;
 
     public SessionList() {
         super();

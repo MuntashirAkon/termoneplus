@@ -17,7 +17,6 @@
 package com.termoneplus.shortcuts;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
@@ -80,16 +79,13 @@ public class ColorValue {
         }
     };
 
-    private CompoundButton.OnCheckedChangeListener lock_checked = new CompoundButton.OnCheckedChangeListener() {
-        @Override
-        public void onCheckedChanged(CompoundButton button, boolean isChecked) {
-            try {
-                String s = (String) button.getTag();
-                int index = Integer.parseInt(s);
-                data[index].lock = isChecked;
-            } catch (Exception e) {
-                // nop
-            }
+    private CompoundButton.OnCheckedChangeListener lock_checked = (button, isChecked) -> {
+        try {
+            String s = (String) button.getTag();
+            int index = Integer.parseInt(s);
+            data[index].lock = isChecked;
+        } catch (Exception e) {
+            // nop
         }
     };
 
@@ -138,20 +134,17 @@ public class ColorValue {
         new AlertDialog.Builder(context)
                 .setView(view)
                 .setTitle(R.string.addshortcut_make_text_icon)
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (which != AlertDialog.BUTTON_POSITIVE) return;
+                .setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                    if (which != AlertDialog.BUTTON_POSITIVE) return;
 
-                        String s = icon_text.getText().toString();
-                        if (TextUtils.isEmpty(s)) return;
+                    String s = icon_text.getText().toString();
+                    if (TextUtils.isEmpty(s)) return;
 
-                        Bitmap image = TextIcon.create(s, color, 96, 96);
-                        if (image != null) {
-                            result[1] = result[0] = s;
-                            imgview.setTag(color);
-                            imgview.setImageBitmap(image);
-                        }
+                    Bitmap image = TextIcon.create(s, color, 96, 96);
+                    if (image != null) {
+                        result[1] = result[0] = s;
+                        imgview.setTag(color);
+                        imgview.setImageBitmap(image);
                     }
                 })
                 .setNegativeButton(android.R.string.cancel, null)
