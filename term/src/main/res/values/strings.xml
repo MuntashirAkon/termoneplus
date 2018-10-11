@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
  * Copyright (C) 2008 The Android Open Source Project
+ * Copyright (C) 2018 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,6 +35,10 @@
     <string name="disable_wakelock">Drop WakeLock</string>
     <string name="enable_wifilock">Take WifiLock</string>
     <string name="disable_wifilock">Drop WifiLock</string>
+
+    <string name="message_external_storage_rationale">Access to \"External Storage\" could be used to manage files</string>
+    <string name="message_external_storage_granted">Granted access to \"External Storage\"</string>
+    <string name="message_external_storage_not_granted">Denied access to \"External Storage\"</string>
 
     <string name="edit_text">Edit text</string>
     <string name="select_text">Select text</string>

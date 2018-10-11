@@ -38,6 +38,7 @@ import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -59,6 +60,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.termoneplus.Permissions;
 import com.termoneplus.TermActionBar;
 import com.termoneplus.TermPreferencesActivity;
 import com.termoneplus.WindowListActivity;
@@ -290,6 +292,7 @@ public class Term extends AppCompatActivity
         mHaveFullHwKeyboard = checkHaveFullHwKeyboard(getResources().getConfiguration());
 
         updatePrefs();
+        requestStoragePermission();
         mAlreadyStarted = true;
     }
 
@@ -805,6 +808,49 @@ public class Term extends AppCompatActivity
                 }
             }
         }
+    }
+
+    private void requestStoragePermission() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1 /*API Level 22*/)
+            return;
+        if (Permissions.permissionExternalStorage(this))
+            return;
+
+        if (Permissions.shouldShowExternalStorageRationale(this)) {
+            Snackbar.make(
+                    mViewFlipper,
+                    R.string.message_external_storage_rationale,
+                    Snackbar.LENGTH_INDEFINITE)
+                    .setAction(android.R.string.yes,
+                            view -> Permissions.requestPermissionExternalStorage(
+                                    this,
+                                    Permissions.REQUEST_EXTERNAL_STORAGE))
+                    .show();
+        } else
+            Permissions.requestPermissionExternalStorage(
+                    this,
+                    Permissions.REQUEST_EXTERNAL_STORAGE);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case Permissions.REQUEST_EXTERNAL_STORAGE: {
+                if (Permissions.isPermissionGranted(grantResults)) {
+                    Snackbar.make(mViewFlipper,
+                            R.string.message_external_storage_granted,
+                            Snackbar.LENGTH_SHORT)
+                            .show();
+                } else {
+                    Snackbar.make(mViewFlipper,
+                            R.string.message_external_storage_not_granted,
+                            Snackbar.LENGTH_SHORT)
+                            .show();
+                }
+                return;
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     private boolean canPaste() {
