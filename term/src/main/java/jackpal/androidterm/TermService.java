@@ -155,6 +155,7 @@ public class TermService extends Service implements TermSession.FinishCallback {
                 .setSmallIcon(R.drawable.ic_stat_service_notification_icon)
                 .setContentTitle(getText(R.string.application_terminal))
                 .setContentText(getText(R.string.service_notify_text))
+                .setCategory(NotificationCompat.CATEGORY_SERVICE)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setTicker(getText(R.string.service_notify_text))
                 .setWhen(System.currentTimeMillis())
