@@ -136,6 +136,7 @@ public class TermService extends Service implements TermSession.FinishCallback {
                 "TermOnePlus",
                 NotificationManager.IMPORTANCE_LOW);
         channel.setDescription("TermOnePlus running notification");
+        channel.setShowBadge(false);;
 
         // Register the channel with the system ...
         // Note we can't change the importance or other notification behaviors after this.
