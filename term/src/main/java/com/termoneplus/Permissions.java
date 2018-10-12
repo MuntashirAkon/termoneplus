@@ -39,12 +39,7 @@ public class Permissions {
             // added in API level 16
             list.add(Manifest.permission.READ_EXTERNAL_STORAGE);
         }
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN_MR2 /*API Level 18*/) {
-            // Starting in API level 19, this permission is not required to read/write
-            // files in your application-specific directories returned by
-            // Context.getExternalFilesDir(String) and Context.getExternalCacheDir().
-            list.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        }
+        list.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
         external_stogare_permissions = list.toArray(new String[0]);
     }
