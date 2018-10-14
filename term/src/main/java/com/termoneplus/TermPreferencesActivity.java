@@ -17,17 +17,16 @@
 package com.termoneplus;
 
 import android.os.Bundle;
-import android.preference.PreferenceFragment;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.preference.PreferenceFragmentCompat;
 import android.view.MenuItem;
-
-import com.termoneplus.support.AppCompatPreferenceActivity;
 
 import jackpal.androidterm.R;
 
 
-public class TermPreferencesActivity extends AppCompatPreferenceActivity {
+public class TermPreferencesActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,18 +54,16 @@ public class TermPreferencesActivity extends AppCompatPreferenceActivity {
 
     private void loadPreferences() {
         // Display the fragment as the main content.
-        getFragmentManager().beginTransaction()
+        getSupportFragmentManager().beginTransaction()
                 .replace(android.R.id.content, new TermPreferencesFragment())
                 .commit();
     }
 
-    public static class TermPreferencesFragment extends PreferenceFragment {
+    public static class TermPreferencesFragment extends PreferenceFragmentCompat {
         @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-
+        public void onCreatePreferences(Bundle bundle, String rootKey) {
             // Load the preferences from an XML resource
-            addPreferencesFromResource(R.xml.preferences);
+            setPreferencesFromResource(R.xml.preferences, rootKey);
         }
     }
 }
