@@ -803,8 +803,8 @@ public class Term extends AppCompatActivity
     }
 
     private void requestStoragePermission() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1 /*API Level 22*/)
-            return;
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M /*API Level 23*/) return;
+
         if (Permissions.permissionExternalStorage(this))
             return;
 
