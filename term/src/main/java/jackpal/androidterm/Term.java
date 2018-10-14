@@ -65,6 +65,7 @@ import com.termoneplus.TermActionBar;
 import com.termoneplus.TermPreferencesActivity;
 import com.termoneplus.WindowListActivity;
 import com.termoneplus.WindowListAdapter;
+import com.termoneplus.utils.SimpleClipboardManager;
 import com.termoneplus.utils.WrapOpenURL;
 
 import java.io.IOException;
@@ -75,8 +76,6 @@ import java.util.Locale;
 import jackpal.androidterm.emulatorview.EmulatorView;
 import jackpal.androidterm.emulatorview.TermSession;
 import jackpal.androidterm.emulatorview.UpdateCallback;
-import jackpal.androidterm.emulatorview.compat.ClipboardManagerCompat;
-import jackpal.androidterm.emulatorview.compat.ClipboardManagerCompatFactory;
 import jackpal.androidterm.emulatorview.compat.KeycodeConstants;
 import jackpal.androidterm.util.SessionList;
 import jackpal.androidterm.util.TermSettings;
@@ -846,12 +845,11 @@ public class Term extends AppCompatActivity
     }
 
     private boolean canPaste() {
-        ClipboardManagerCompat clip = ClipboardManagerCompatFactory
-                .getManager(getApplicationContext());
-        if (clip.hasText()) {
-            return true;
-        }
-        return false;
+        return canPaste(new SimpleClipboardManager(this));
+    }
+
+    private boolean canPaste(SimpleClipboardManager clip) {
+        return clip.hasText();
     }
 
     private void doPreferences() {
@@ -896,24 +894,22 @@ public class Term extends AppCompatActivity
     }
 
     private void doCopyAll() {
-        ClipboardManagerCompat clip = ClipboardManagerCompatFactory
-                .getManager(getApplicationContext());
         TermSession session = getCurrentTermSession();
-        if (session != null)
-            clip.setText(session.getTranscriptText().trim());
+        if (session == null) return;
+
+        SimpleClipboardManager clip = new SimpleClipboardManager(this);
+        clip.setText(session.getTranscriptText().trim());
     }
 
     private void doPaste() {
-        if (!canPaste()) return;
+        TermSession session = getCurrentTermSession();
+        if (session == null) return;
 
-        ClipboardManagerCompat clip = ClipboardManagerCompatFactory
-                .getManager(getApplicationContext());
+        SimpleClipboardManager clip = new SimpleClipboardManager(this);
+        if (!canPaste(clip)) return;
 
         CharSequence paste = clip.getText();
         if (TextUtils.isEmpty(paste)) return;
-
-        TermSession session = getCurrentTermSession();
-        if (session == null) return;
 
         session.write(paste.toString());
     }
