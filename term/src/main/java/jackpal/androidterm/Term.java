@@ -279,12 +279,7 @@ public class Term extends AppCompatActivity
         mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TermDebug.LOG_TAG);
 
         WifiManager wm = (WifiManager) app.getSystemService(Context.WIFI_SERVICE);
-        int wifiLockMode = WifiManager.WIFI_MODE_FULL;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1 /*API Level 12*/) {
-            // Available on API 12 and later
-            wifiLockMode = WifiManager.WIFI_MODE_FULL_HIGH_PERF;
-        }
-        mWifiLock = wm.createWifiLock(wifiLockMode, TermDebug.LOG_TAG);
+        mWifiLock = wm.createWifiLock(WifiManager.WIFI_MODE_FULL_HIGH_PERF, TermDebug.LOG_TAG);
 
         mHaveFullHwKeyboard = checkHaveFullHwKeyboard(getResources().getConfiguration());
 
