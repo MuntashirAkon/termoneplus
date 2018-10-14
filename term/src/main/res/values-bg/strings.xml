@@ -52,6 +52,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <string name="enable_wifilock">Прихващане на безжичната мрежа</string>
     <string name="disable_wifilock">Освобождаване на безжичната мрежа</string>
 
+    <string name="message_external_storage_rationale">Достъпът до \"външен носител\" е необходим за управление на файловете му</string>
+    <string name="message_external_storage_granted">Получен достъп до \"външен носител\"</string>
+    <string name="message_external_storage_not_granted">Отказан достъп до \"външен носител\"</string>
+
     <string name="edit_text">Редактиране на текст</string>
 
     <string name="select_text">Избиране на текст</string>
