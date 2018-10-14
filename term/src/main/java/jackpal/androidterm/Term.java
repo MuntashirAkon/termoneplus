@@ -244,10 +244,7 @@ public class Term extends AppCompatActivity
         mActionBarMode = mSettings.actionBarMode();
 
         Intent broadcast = new Intent(ACTION_PATH_APPEND_BROADCAST);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1 /*API Level 12*/) {
-            // Available on API 12 and later
-            broadcast.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
-        }
+        broadcast.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
         mPendingPathBroadcasts++;
         sendOrderedBroadcast(broadcast, PERMISSION_PATH_APPEND_BROADCAST, mPathReceiver, null, RESULT_OK, null, null);
 
