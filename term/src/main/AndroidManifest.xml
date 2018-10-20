@@ -44,7 +44,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/application_terminal"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:theme="@style/Theme">
+        android:theme="@style/AppTheme.NoActionBar">
         <activity
             android:name="Term"
             android:configChanges="keyboard|keyboardHidden|orientation"

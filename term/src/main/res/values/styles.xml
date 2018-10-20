@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Copyright (C) 2007 The Android Open Source Project
-     Copyright (c) 2017 Roumen Petrov.  All rights reserved.
+     Copyright (c) 2017-2018 Roumen Petrov.  All rights reserved.
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -16,14 +16,6 @@
 -->
 
 <resources>
-    <style name="Theme" parent="@android:style/Theme.Light">
-        <!-- The base theme. This theme is only used for API level 1..10.
-         -->
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowFrame">@null</item>
-        <item name="android:windowContentOverlay">@null</item>
-    </style>
-
     <!-- "Compat" application themes ... -->
     <style name="AppTheme" parent="Theme.AppCompat">
         <!-- Customize TermOnePlus theme here. -->
