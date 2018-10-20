@@ -60,6 +60,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.termoneplus.Application;
 import com.termoneplus.Permissions;
 import com.termoneplus.TermActionBar;
 import com.termoneplus.TermPreferencesActivity;
@@ -198,7 +199,7 @@ public class Term extends AppCompatActivity
     };
     private ServiceConnection mTSConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
-            Log.i(TermDebug.LOG_TAG, "Bound to TermService");
+            Log.i(Application.APP_TAG, "Bound to TermService");
             TermService.TSBinder binder = (TermService.TSBinder) service;
             mTermService = binder.getService();
             if (mPendingPathBroadcasts <= 0) {
@@ -230,7 +231,7 @@ public class Term extends AppCompatActivity
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
 
-        Log.v(TermDebug.LOG_TAG, "onCreate");
+        Log.v(Application.APP_TAG, "onCreate");
 
         mPrivateAlias = new ComponentName(this, RemoteInterface.PRIVACT_ACTIVITY_ALIAS);
 
@@ -275,10 +276,10 @@ public class Term extends AppCompatActivity
         Context app = getApplicationContext();
 
         PowerManager pm = (PowerManager) app.getSystemService(Context.POWER_SERVICE);
-        mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TermDebug.LOG_TAG);
+        mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, Application.APP_TAG);
 
         WifiManager wm = (WifiManager) app.getSystemService(Context.WIFI_SERVICE);
-        mWifiLock = wm.createWifiLock(WifiManager.WIFI_MODE_FULL_HIGH_PERF, TermDebug.LOG_TAG);
+        mWifiLock = wm.createWifiLock(WifiManager.WIFI_MODE_FULL_HIGH_PERF, Application.APP_TAG);
 
         mHaveFullHwKeyboard = checkHaveFullHwKeyboard(getResources().getConfiguration());
 
@@ -576,7 +577,7 @@ public class Term extends AppCompatActivity
 
     private void doCreateNewWindow() {
         if (mTermSessions == null) {
-            Log.w(TermDebug.LOG_TAG, "Couldn't create new window because mTermSessions == null");
+            Log.w(Application.APP_TAG, "Couldn't create new window because mTermSessions == null");
             return;
         }
 

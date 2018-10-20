@@ -42,6 +42,8 @@ import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.termoneplus.Application;
+
 import java.util.UUID;
 
 import jackpal.androidterm.emulatorview.TermSession;
@@ -101,7 +103,7 @@ public class TermService extends Service implements TermSession.FinishCallback {
 
         startForeground(RUNNING_NOTIFICATION, notification);
 
-        Log.d(TermDebug.LOG_TAG, "TermService started");
+        Log.d(Application.APP_TAG, "TermService started");
     }
 
     @Override

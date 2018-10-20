@@ -31,6 +31,8 @@ import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.termoneplus.Application;
+
 import jackpal.androidterm.emulatorview.TermSession;
 
 import jackpal.androidterm.util.SessionList;
@@ -71,7 +73,7 @@ public class RemoteInterface extends Activity {
         mTSIntent = TSIntent;
         startService(TSIntent);
         if (!bindService(TSIntent, mTSConnection, BIND_AUTO_CREATE)) {
-            Log.e(TermDebug.LOG_TAG, "bind to service failed!");
+            Log.e(Application.APP_TAG, "bind to service failed!");
             finish();
         }
     }
@@ -110,7 +112,7 @@ public class RemoteInterface extends Activity {
 
         Intent myIntent = getIntent();
         String action = myIntent.getAction();
-        Log.i(TermDebug.LOG_TAG, "RemoteInterface action: " + action);
+        Log.i(Application.APP_TAG, "RemoteInterface action: " + action);
         if (action != null
                 && action.equals(Intent.ACTION_SEND)
                 && myIntent.hasExtra(Intent.EXTRA_STREAM)) {

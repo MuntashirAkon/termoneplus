@@ -23,6 +23,8 @@ import java.security.GeneralSecurityException;
 import android.content.Intent;
 import android.util.Log;
 
+import com.termoneplus.Application;
+
 public final class RunShortcut extends RemoteInterface {
     public static final String ACTION_RUN_SHORTCUT = "com.termoneplus.RUN_SHORTCUT";
 
@@ -42,7 +44,7 @@ public final class RunShortcut extends RemoteInterface {
         if (action.equals(ACTION_RUN_SHORTCUT)) {
             String encCommand = myIntent.getStringExtra(RUN_SHORTCUT_COMMAND);
             if (encCommand == null) {
-                Log.e(TermDebug.LOG_TAG, "No command provided in shortcut!");
+                Log.e(Application.APP_TAG, "No command provided in shortcut!");
                 finish();
                 return;
             }
@@ -51,7 +53,7 @@ public final class RunShortcut extends RemoteInterface {
             ShortcutEncryption.Keys keys = ShortcutEncryption.getKeys(this);
             if (keys == null) {
                 // No keys -- no valid shortcuts can exist
-                Log.e(TermDebug.LOG_TAG, "No shortcut encryption keys found!");
+                Log.e(Application.APP_TAG, "No shortcut encryption keys found!");
                 finish();
                 return;
             }
@@ -59,7 +61,7 @@ public final class RunShortcut extends RemoteInterface {
             try {
                 command = ShortcutEncryption.decrypt(encCommand, keys);
             } catch (GeneralSecurityException e) {
-                Log.e(TermDebug.LOG_TAG, "Invalid shortcut: " + e.toString());
+                Log.e(Application.APP_TAG, "Invalid shortcut: " + e.toString());
                 finish();
                 return;
             }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007 The Android Open Source Project
+ * Copyright (C) 2018 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,16 +14,14 @@
  * limitations under the License.
  */
 
-package jackpal.androidterm;
+package com.termoneplus;
 
-/**
- * Debug settings.
- */
 
-public class TermDebug {
+public class Application extends android.app.Application {
     /**
-     * Set to true to add debugging code and logging.
+     * The tag we use when logging, so that our messages can be distinguished
+     * from other messages in the log. Public because it's used by several
+     * classes.
      */
-    public static final boolean DEBUG = false;
-
+    public static final String APP_TAG = "TermOnePlus";
 }

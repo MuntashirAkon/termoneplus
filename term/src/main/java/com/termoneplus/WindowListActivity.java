@@ -31,7 +31,6 @@ import android.util.Log;
 
 import jackpal.androidterm.R;
 import jackpal.androidterm.Term;
-import jackpal.androidterm.TermDebug;
 import jackpal.androidterm.TermService;
 import jackpal.androidterm.util.SessionList;
 
@@ -81,7 +80,7 @@ public class WindowListActivity extends AppCompatActivity
 
         Intent TSIntent = new Intent(this, TermService.class);
         if (!bindService(TSIntent, service_connection, BIND_AUTO_CREATE)) {
-            Log.e(TermDebug.LOG_TAG, "bind to service failed!");
+            Log.e(Application.APP_TAG, "bind to service failed!");
         }
     }
 

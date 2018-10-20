@@ -33,6 +33,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.termoneplus.Application;
 import com.termoneplus.utils.TextIcon;
 
 import java.security.GeneralSecurityException;
@@ -40,7 +41,6 @@ import java.security.GeneralSecurityException;
 import jackpal.androidterm.R;
 import jackpal.androidterm.RemoteInterface;
 import jackpal.androidterm.RunShortcut;
-import jackpal.androidterm.TermDebug;
 import jackpal.androidterm.compat.PRNGFixes;
 import jackpal.androidterm.util.ShortcutEncryption;
 
@@ -142,7 +142,7 @@ public class AddShortcut extends AppCompatActivity {
             try {
                 keys = ShortcutEncryption.generateKeys();
             } catch (GeneralSecurityException e) {
-                Log.e(TermDebug.LOG_TAG, "Generating shortcut encryption keys failed: " + e.toString());
+                Log.e(Application.APP_TAG, "Generating shortcut encryption keys failed: " + e.toString());
                 throw new RuntimeException(e);
             }
             ShortcutEncryption.saveKeys(context, keys);
@@ -157,7 +157,7 @@ public class AddShortcut extends AppCompatActivity {
         try {
             cmdEnc = ShortcutEncryption.encrypt(cmdStr, keys);
         } catch (GeneralSecurityException e) {
-            Log.e(TermDebug.LOG_TAG, "Shortcut encryption failed: " + e.toString());
+            Log.e(Application.APP_TAG, "Shortcut encryption failed: " + e.toString());
             throw new RuntimeException(e);
         }
 
