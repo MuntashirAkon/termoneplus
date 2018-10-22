@@ -11,6 +11,11 @@ android {
         versionCode 10100
         versionName "1.1.0"
     }
+    externalNativeBuild {
+        cmake {
+            path "src/CMakeLists.txt"
+        }
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
