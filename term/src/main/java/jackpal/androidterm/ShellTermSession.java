@@ -22,6 +22,7 @@ import android.os.ParcelFileDescriptor;
 import android.util.Log;
 
 import com.termoneplus.Application;
+import com.termoneplus.Process;
 
 import jackpal.androidterm.util.TermSettings;
 
@@ -152,7 +153,7 @@ public class ShellTermSession extends GenericTermSession {
             args = argList.toArray(new String[1]);
         }
 
-        return TermExec.createSubprocess(mTermFd, arg0, args, env);
+        return Process.createSubprocess(mTermFd, arg0, args, env);
     }
 
     private ArrayList<String> parse(String cmd) {

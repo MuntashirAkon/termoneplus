@@ -41,6 +41,7 @@ android.libraryVariants.all { variant ->
 }
 
 dependencies {
+    implementation project(':emulatorview')
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "com.android.support:support-annotations:${project.ext.supportLibVersion}"
 }

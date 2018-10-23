@@ -4,6 +4,8 @@ import android.os.Looper;
 import android.os.ParcelFileDescriptor;
 import android.support.annotation.NonNull;
 
+import com.termoneplus.Process;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -53,13 +55,6 @@ public class TermExec {
      */
     public static native void sendSignal(int processId, int signal);
 
-    static int createSubprocess(ParcelFileDescriptor masterFd, String cmd, String[] args, String[] envVars) throws IOException {
-        int fd = masterFd.getFd();
-        return createSubprocessInternal(cmd, args, envVars, fd);
-    }
-
-    private static native int createSubprocessInternal(String cmd, String[] args, String[] envVars, int masterFd);
-
 
     public @NonNull
     List<String> command() {
@@ -108,6 +103,6 @@ public class TermExec {
             envArray[i++] = entry.getKey() + "=" + entry.getValue();
         }
 
-        return createSubprocess(ptmxFd, cmd, cmdArray, envArray);
+        return Process.createSubprocess(ptmxFd, cmd, cmdArray, envArray);
     }
 }
