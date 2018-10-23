@@ -1,0 +1,235 @@
+/*
+ * Copyright (C) 2018 Roumen Petrov.  All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#include "registration.h"
+#include "compat.h"
+
+#if defined(__cplusplus)
+# error "__cplusplus"
+#endif
+
+#include <malloc.h>
+#include <fcntl.h>
+#include <stdlib.h>
+#include <errno.h>
+#include <memory.h>
+#include <unistd.h>
+#include <sys/ioctl.h>
+
+
+static char *
+dup_jbyteArray(JNIEnv *env, jbyteArray array) {
+    char *ret;
+    jsize len;
+    int k;
+
+    len = (*env)->GetArrayLength(env, array);
+    if (len < 1) return NULL;
+
+    ret = malloc(len + 1);
+    if (ret == NULL) return NULL;
+
+    jbyte *data = (*env)->GetByteArrayElements(env, array, NULL);
+    for (k = 0; k < len; k++)
+        ret[k] = data[k];
+    ret[k] = '\0';
+    (*env)->ReleaseByteArrayElements(env, array, data, JNI_ABORT);
+
+    return ret;
+}
+
+
+static char **
+dup_jobjectArray(JNIEnv *env, jobjectArray list) {
+    char **ret;
+    jsize len;
+    int k;
+
+    len = (*env)->GetArrayLength(env, list);
+    if (len < 1) return NULL;
+
+    ret = malloc((len + 1) * sizeof(char *));
+    if (ret == NULL) return NULL;
+
+    for (k = 0; k < len; k++) {
+        jobject item = (*env)->GetObjectArrayElement(env, list, (jsize) k);
+        ret[k] = dup_jbyteArray(env, item);
+        if (ret[k] == NULL) goto err;
+    }
+    ret[len] = NULL;
+
+    return ret;
+
+    err:
+    for (--k; k >= 0; k--) {
+        free(ret[k]);
+    }
+    free(ret);
+    return NULL;
+}
+
+
+static pid_t
+process_create_subprocess(
+        JNIEnv *env, jobject clazz,
+        int ptm, char *path, char **argv, char **envp
+) {
+    pid_t pid;
+    char devname[64]; /*match bionic, see libc/unistd/ptsname_r.c*/
+
+    fcntl(ptm, F_SETFD, FD_CLOEXEC);
+
+    /* openpty part for amaster ... */
+    if (grantpt(ptm) < 0) {
+        /* bionic stub that returns zero */
+        return -1;
+    }
+
+    if (unlockpt(ptm) < 0) {
+        char msg[1024];
+        snprintf(msg, sizeof(msg), "unlockpt fail / error %d/%s",
+                 errno, strerror(errno));
+        throwIOException(env, msg);
+        return -1;
+    }
+
+    memset(devname, 0, sizeof(devname));
+    if (ptsname_r(ptm, devname, sizeof(devname)) != 0) {
+        char msg[1024];
+        snprintf(msg, sizeof(msg), "ptsname_r fail / error %d/%s",
+                 errno, strerror(errno));
+        throwIOException(env, msg);
+        return -1;
+    }
+
+    pid = fork();
+    if (pid < 0) {
+        char msg[1024];
+        snprintf(msg, sizeof(msg), "fork fail / error %d/%s",
+                 errno, strerror(errno));
+        throwIOException(env, msg);
+        return -1;
+    }
+
+    if (pid > 0) {
+        /* in parent */
+        return pid;
+    }
+    /* else in child */
+    {
+        int pts;
+
+        /* make controlling tty ... */
+
+        /* required by TIOCSCTTY */
+        if (setsid() < 0) {
+            char msg[1024];
+            snprintf(msg, sizeof(msg), "setsid fail / error %d/%s",
+                     errno, strerror(errno));
+            throwIOException(env, msg);
+            exit(-1);
+        }
+
+        /* openpty part for aslave ... */
+        pts = open(devname, O_RDWR | O_NOCTTY);
+        if (pts < 0) {
+            char msg[1024];
+            snprintf(msg, sizeof(msg), "open pty fail / error %d/%s",
+                     errno, strerror(errno));
+            throwIOException(env, msg);
+            exit(-1);
+        }
+
+        /* set controlling tty */
+        if (ioctl(pts, TIOCSCTTY, 0) < 0) {
+            char msg[1024];
+            snprintf(msg, sizeof(msg), "ioctl for TIOCSCTTY fail / error %d/%s",
+                     errno, strerror(errno));
+            throwIOException(env, msg);
+            exit(-1);
+        }
+
+        /* Redirect stdin/stdout/stderr from the pseudo tty */
+        dup2(pts, STDIN_FILENO);
+        dup2(pts, STDOUT_FILENO);
+        dup2(pts, STDERR_FILENO);
+
+        closefrom(STDERR_FILENO + 1);
+
+        execve(path, argv, envp);
+        /* NOTE On success, execve() does not return */
+        {
+            char msg[1024];
+            snprintf(msg, sizeof(msg), "execve fail / error %d/%s", errno, strerror(errno));
+            throwIOException(env, msg);
+            exit(-1);
+        }
+    }
+}
+
+
+static jint
+jprocess_create_subprocess(
+        JNIEnv *env, jobject clazz,
+        jint ptm, jbyteArray path_j, jobjectArray argv_j, jobjectArray envp_j
+) {
+    int k;
+    char *path = NULL, **argv = NULL, **envp = NULL;
+
+    path = dup_jbyteArray(env, path_j);
+    if (path == NULL) goto err;
+
+    argv = dup_jobjectArray(env, argv_j);
+    if (argv == NULL) goto err;
+
+    envp = dup_jobjectArray(env, envp_j);
+    if (envp == NULL) goto err;
+
+    /* NOTE:
+     * - typedef int __kernel_pid_t => __pid_t => pid_t
+     * - typedef int __int32_t => int32_t => jint
+     */
+    return process_create_subprocess(env, clazz, ptm, path, argv, envp);
+
+    err:
+    if (envp != NULL) {
+        for (k = 0; envp[k] != NULL; k++)
+            free(envp[k]);
+        free(envp);
+    }
+    if (argv != NULL) {
+        for (k = 0; argv[k] != NULL; k++)
+            free(argv[k]);
+        free(argv);
+    }
+    free(path);
+
+    throwOutOfMemoryError(env, "cannot allocate memory for process arguments");
+    return -1;
+}
+
+
+int
+register_process(JNIEnv *env) {
+    static JNINativeMethod methods[] = {
+            {"createSubprocess", "(I[B[[B[[B)I", (void *) jprocess_create_subprocess}
+    };
+    return register_native(
+            env,
+            "com/termoneplus/Process$Native",
+            methods, sizeof(methods) / sizeof(*methods)
+    );
+}

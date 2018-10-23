@@ -99,5 +99,11 @@ JNI_OnLoad(JavaVM *vm, void *reserved) {
         return -1;
     }
 
+    r = register_process(env.p);
+    if (r != JNI_OK) {
+        LOGE("ERROR: 'console' registration fail");
+        return -1;
+    }
+
     return JNI_VERSION_1_2;
 }
