@@ -33,14 +33,4 @@ JNIEXPORT void JNICALL Java_jackpal_androidterm_TermExec_sendSignal(JNIEnv *env,
     kill(procId, signal);
 }
 
-JNIEXPORT jint JNICALL Java_jackpal_androidterm_TermExec_waitFor(JNIEnv *env, jclass clazz, jint procId) {
-    int status;
-    waitpid(procId, &status, 0);
-    int result = 0;
-    if (WIFEXITED(status)) {
-        result = WEXITSTATUS(status);
-    }
-    return result;
-}
-
 }

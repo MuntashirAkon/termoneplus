@@ -42,14 +42,6 @@ public class TermExec {
     }
 
     /**
-     * Causes the calling thread to wait for the process associated with the
-     * receiver to finish executing.
-     *
-     * @return The exit value of the Process being waited on
-     */
-    public static native int waitFor(int processId);
-
-    /**
      * Send signal via the "kill" system call. Android {@link android.os.Process#sendSignal} does not
      * allow negative numbers (denoting process groups) to be used.
      */

@@ -23,9 +23,4 @@
 
 #define LOG_TAG "TermOnePlus(exec)"
 
-extern "C" {
-    JNIEXPORT jint JNICALL Java_jackpal_androidterm_TermExec_waitFor
-      (JNIEnv *, jclass, jint);
-}
-
 #endif	/* !defined(_JACKPAL_PROCESS_H) */

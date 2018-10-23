@@ -28,6 +28,7 @@
 #include <memory.h>
 #include <unistd.h>
 #include <sys/ioctl.h>
+#include <wait.h>
 
 
 static char *
@@ -222,10 +223,27 @@ jprocess_create_subprocess(
 }
 
 
+static jint
+process_wait_exit(
+        JNIEnv *env, jobject clazz,
+        jint pid
+) {
+    int wstatus;
+    jint result = -1;
+
+    waitpid((pid_t) pid, &wstatus, 0);
+    if (WIFEXITED(wstatus)) result = WEXITSTATUS(wstatus);
+    else if (WIFSIGNALED(wstatus)) result = WTERMSIG(wstatus);
+
+    return result;
+}
+
+
 int
 register_process(JNIEnv *env) {
     static JNINativeMethod methods[] = {
-            {"createSubprocess", "(I[B[[B[[B)I", (void *) jprocess_create_subprocess}
+            {"createSubprocess", "(I[B[[B[[B)I", (void *) jprocess_create_subprocess},
+            {"waitExit",         "(I)I",         (void *) process_wait_exit}
     };
     return register_native(
             env,

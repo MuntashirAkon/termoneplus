@@ -62,11 +62,16 @@ public class Process {
         return -1;
     }
 
+    public static int waitExit(int pid) {
+        return Native.waitExit(pid);
+    }
+
 
     private static class Native {
         private static native int createSubprocess(
                 int ptm,
                 byte[] path, byte[][] argv, byte[][] envp
         ) throws IOException;
+        private static native int waitExit(int pid);
     }
 }

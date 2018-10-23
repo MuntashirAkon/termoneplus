@@ -68,7 +68,7 @@ public class ShellTermSession extends GenericTermSession {
             @Override
             public void run() {
                 Log.i(Application.APP_TAG, "waiting for: " + mProcId);
-                int result = TermExec.waitFor(mProcId);
+                int result = Process.waitExit(mProcId);
                 Log.i(Application.APP_TAG, "Subprocess exited: " + result);
                 mMsgHandler.sendMessage(mMsgHandler.obtainMessage(PROCESS_EXITED, result));
             }
