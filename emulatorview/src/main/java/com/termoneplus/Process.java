@@ -66,6 +66,10 @@ public class Process {
         return Native.waitExit(pid);
     }
 
+    public static void finishChilds(int pid) {
+        Native.finishChilds(pid);
+    }
+
 
     private static class Native {
         private static native int createSubprocess(
@@ -73,5 +77,6 @@ public class Process {
                 byte[] path, byte[][] argv, byte[][] envp
         ) throws IOException;
         private static native int waitExit(int pid);
+        private static native void finishChilds(int pid);
     }
 }

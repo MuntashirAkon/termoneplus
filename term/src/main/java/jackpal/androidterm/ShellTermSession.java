@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2007 The Android Open Source Project
+ * Copyright (C) 2018 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -210,16 +211,7 @@ public class ShellTermSession extends GenericTermSession {
 
     @Override
     public void finish() {
-        hangupProcessGroup();
+        Process.finishChilds(mProcId);
         super.finish();
-    }
-
-    /**
-     * Send SIGHUP to a process group, SIGHUP notifies a terminal client, that the terminal have been disconnected,
-     * and usually results in client's death, unless it's process is a daemon or have been somehow else detached
-     * from the terminal (for example, by the "nohup" utility).
-     */
-    void hangupProcessGroup() {
-        TermExec.sendSignal(-mProcId, 1);
     }
 }

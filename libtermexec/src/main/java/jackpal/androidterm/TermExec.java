@@ -24,11 +24,6 @@ import java.util.Map;
 public class TermExec {
     public static final String SERVICE_ACTION_V1 = "jackpal.androidterm.action.START_TERM.v1";
 
-    // Warning: bump the library revision, when an incompatible change happens
-    static {
-        System.loadLibrary("termoneplus-exec");
-    }
-
     private final List<String> command;
     private final Map<String, String> environment;
 
@@ -40,12 +35,6 @@ public class TermExec {
         this.command = command;
         this.environment = new Hashtable<>(System.getenv());
     }
-
-    /**
-     * Send signal via the "kill" system call. Android {@link android.os.Process#sendSignal} does not
-     * allow negative numbers (denoting process groups) to be used.
-     */
-    public static native void sendSignal(int processId, int signal);
 
 
     public @NonNull

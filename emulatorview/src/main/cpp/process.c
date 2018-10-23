@@ -239,11 +239,22 @@ process_wait_exit(
 }
 
 
+static void
+process_finish_childs(
+        JNIEnv *env, jobject clazz,
+        jint pid
+) {
+    /* send SIGHUP to process group to die child processes... */
+    (void) kill(-(pid_t) pid, SIGHUP);
+}
+
+
 int
 register_process(JNIEnv *env) {
     static JNINativeMethod methods[] = {
             {"createSubprocess", "(I[B[[B[[B)I", (void *) jprocess_create_subprocess},
-            {"waitExit",         "(I)I",         (void *) process_wait_exit}
+            {"waitExit",         "(I)I",         (void *) process_wait_exit},
+            {"finishChilds",     "(I)V",         (void *) process_finish_childs}
     };
     return register_native(
             env,
