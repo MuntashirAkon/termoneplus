@@ -5,8 +5,7 @@
     package="jackpal.androidterm"
     android:installLocation="auto">
 
-    <uses-sdk
-        tools:overrideLibrary="android.support.graphics.drawable.animated"/>
+    <uses-sdk tools:overrideLibrary="android.support.graphics.drawable.animated"/>
 
     <uses-feature
         android:name="android.hardware.touchscreen"
@@ -45,8 +44,9 @@
         android:label="@string/application_terminal"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/AppTheme.NoActionBar">
+
         <activity
-            android:name="Term"
+            android:name=".Term"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.NoActionBar"
@@ -58,60 +58,72 @@
                 <category android:name="android.intent.category.MULTIWINDOW_LAUNCHER"/>
             </intent-filter>
         </activity>
+
         <activity-alias
-            android:name="TermInternal"
+            android:name=".TermInternal"
             android:exported="false"
-            android:targetActivity="Term">
+            android:targetActivity=".Term">
             <intent-filter>
                 <action android:name="jackpal.androidterm.private.OPEN_NEW_WINDOW"/>
+
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
             <intent-filter>
                 <action android:name="jackpal.androidterm.private.SWITCH_WINDOW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-        </activity-alias>
-        <activity
-            android:name="RemoteInterface"
-            android:excludeFromRecents="true">
-            <intent-filter>
-                <action android:name="com.termoneplus.OPEN_NEW_WINDOW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-        </activity>
-        <activity-alias
-            android:name="TermHere"
-            android:exported="true"
-            android:label="@string/activity_term_here_title"
-            android:targetActivity="RemoteInterface">
-            <intent-filter>
-                <action android:name="android.intent.action.SEND"/>
-                <data android:mimeType="*/*"/>
+
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity-alias>
 
         <activity
-            android:name="RunScript"
+            android:name=".RemoteInterface"
+            android:excludeFromRecents="true">
+            <intent-filter>
+                <action android:name="com.termoneplus.OPEN_NEW_WINDOW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+
+        <activity-alias
+            android:name=".TermHere"
+            android:exported="true"
+            android:label="@string/activity_term_here_title"
+            android:targetActivity=".RemoteInterface">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND"/>
+
+                <data android:mimeType="*/*"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity-alias>
+
+        <activity
+            android:name=".RunScript"
             android:excludeFromRecents="true"
             android:permission="com.termoneplus.permission.RUN_SCRIPT">
             <intent-filter>
                 <action android:name="com.termoneplus.RUN_SCRIPT"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="RunShortcut"
-            android:excludeFromRecents="true">
-            <intent-filter>
-                <action android:name="com.termoneplus.RUN_SHORTCUT"/>
+
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
 
-        <service android:name="TermService">
+        <activity
+            android:name=".RunShortcut"
+            android:excludeFromRecents="true">
+            <intent-filter>
+                <action android:name="com.termoneplus.RUN_SHORTCUT"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+
+        <service android:name=".TermService">
             <intent-filter>
                 <action android:name="jackpal.androidterm.action.START_TERM.v1"/>
+
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </service>
@@ -119,21 +131,23 @@
         <activity
             android:name="com.termoneplus.WindowListActivity"
             android:label="@string/window_list"
-            android:parentActivityName="jackpal.androidterm.Term"
+            android:parentActivityName=".Term"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="jackpal.androidterm.Term"/>
         </activity>
+
         <activity
             android:name="com.termoneplus.TermPreferencesActivity"
             android:label="@string/preferences"
-            android:parentActivityName="jackpal.androidterm.Term"
+            android:parentActivityName=".Term"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="jackpal.androidterm.Term"/>
         </activity>
+
         <activity
             android:name="com.termoneplus.shortcuts.AddShortcut"
             android:configChanges="orientation|keyboard|keyboardHidden"
@@ -148,9 +162,11 @@
             </intent-filter>
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT"/>
+
                 <data android:mimeType="text/*"/>
             </intent-filter>
         </activity>
+
         <activity
             android:name="com.termoneplus.shortcuts.FileSelection"
             android:configChanges="orientation|keyboardHidden"
@@ -160,6 +176,7 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.PICK"/>
+
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
             <intent-filter>
@@ -179,5 +196,7 @@
         <meta-data
             android:name="android.max_aspect"
             android:value="2.1"/>
+
     </application>
+
 </manifest>
