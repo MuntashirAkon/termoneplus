@@ -19,7 +19,6 @@ package jackpal.androidterm;
 
 import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
-import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -70,10 +69,8 @@ import com.termoneplus.utils.SimpleClipboardManager;
 import com.termoneplus.utils.WrapOpenURL;
 
 import java.io.IOException;
-import java.text.Collator;
-import java.util.Arrays;
-import java.util.Locale;
 
+import jackpal.androidterm.compat.PathCollector;
 import jackpal.androidterm.emulatorview.EmulatorView;
 import jackpal.androidterm.emulatorview.TermSession;
 import jackpal.androidterm.emulatorview.UpdateCallback;
@@ -98,10 +95,6 @@ public class Term extends AppCompatActivity
     private final static int PASTE_ID = 2;
     private final static int SEND_CONTROL_KEY_ID = 3;
     private final static int SEND_FN_KEY_ID = 4;
-    private static final String ACTION_PATH_APPEND_BROADCAST = "com.termoneplus.broadcast.APPEND_TO_PATH";
-    private static final String ACTION_PATH_PREPEND_BROADCAST = "com.termoneplus.broadcast.PREPEND_TO_PATH";
-    private static final String PERMISSION_PATH_APPEND_BROADCAST = "com.termoneplus.permission.APPEND_TO_PATH";
-    private static final String PERMISSION_PATH_PREPEND_BROADCAST = "com.termoneplus.permission.PREPEND_TO_PATH";
     /**
      * The ViewFlipper which holds the collection of EmulatorView widgets.
      */
@@ -115,7 +108,8 @@ public class Term extends AppCompatActivity
     private ComponentName mPrivateAlias;
     private PowerManager.WakeLock mWakeLock;
     private WifiManager.WifiLock mWifiLock;
-    private int mPendingPathBroadcasts = 0;
+    private boolean path_collected;
+    private PathCollector path_collector;
     private TermService mTermService;
     private TermActionBar mActionBar;
     private int mActionBarMode;
@@ -181,28 +175,12 @@ public class Term extends AppCompatActivity
             }
         }
     };
-    private BroadcastReceiver mPathReceiver = new BroadcastReceiver() {
-        public void onReceive(Context context, Intent intent) {
-            String path = makePathFromBundle(getResultExtras(false));
-            if (intent.getAction().equals(ACTION_PATH_PREPEND_BROADCAST)) {
-                mSettings.setPrependPath(path);
-            } else {
-                mSettings.setAppendPath(path);
-            }
-            mPendingPathBroadcasts--;
-
-            if (mPendingPathBroadcasts <= 0 && mTermService != null) {
-                populateViewFlipper();
-                populateWindowList();
-            }
-        }
-    };
     private ServiceConnection mTSConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
             Log.i(Application.APP_TAG, "Bound to TermService");
             TermService.TSBinder binder = (TermService.TSBinder) service;
             mTermService = binder.getService();
-            if (mPendingPathBroadcasts <= 0) {
+            if (path_collected) {
                 populateViewFlipper();
                 populateWindowList();
             }
@@ -243,15 +221,18 @@ public class Term extends AppCompatActivity
         mPrefs.registerOnSharedPreferenceChangeListener(this);
         mActionBarMode = mSettings.actionBarMode();
 
-        Intent broadcast = new Intent(ACTION_PATH_APPEND_BROADCAST);
-        broadcast.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
-        mPendingPathBroadcasts++;
-        sendOrderedBroadcast(broadcast, PERMISSION_PATH_APPEND_BROADCAST, mPathReceiver, null, RESULT_OK, null, null);
-
-        broadcast = new Intent(broadcast);
-        broadcast.setAction(ACTION_PATH_PREPEND_BROADCAST);
-        mPendingPathBroadcasts++;
-        sendOrderedBroadcast(broadcast, PERMISSION_PATH_PREPEND_BROADCAST, mPathReceiver, null, RESULT_OK, null, null);
+        path_collected = false;
+        path_collector = new PathCollector(this, mSettings);
+        path_collector.setOnPathsReceivedListener(new PathCollector.OnPathsReceivedListener() {
+            @Override
+            public void onPathsReceived() {
+                path_collected = true;
+                if (mTermService != null) {
+                    populateViewFlipper();
+                    populateWindowList();
+                }
+            }
+        });
 
         TSIntent = new Intent(this, TermService.class);
         startService(TSIntent);
@@ -286,28 +267,6 @@ public class Term extends AppCompatActivity
         updatePrefs();
         requestStoragePermission();
         mAlreadyStarted = true;
-    }
-
-    private String makePathFromBundle(Bundle extras) {
-        if (extras == null || extras.size() == 0) {
-            return "";
-        }
-
-        String[] keys = new String[extras.size()];
-        keys = extras.keySet().toArray(keys);
-        Collator collator = Collator.getInstance(Locale.US);
-        Arrays.sort(keys, collator);
-
-        StringBuilder path = new StringBuilder();
-        for (String key : keys) {
-            String dir = extras.getString(key);
-            if (dir != null && !dir.equals("")) {
-                path.append(dir);
-                path.append(":");
-            }
-        }
-
-        return path.substring(0, path.length() - 1);
     }
 
     @Override
