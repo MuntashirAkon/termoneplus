@@ -1,4 +1,4 @@
-TermOnePlus is a terminal emulator application for Android devices.
+"TermOne Plus" is a terminal emulator application for Android devices.
 Each android device has a build-in born shell and a number of shell command that allows user to:
 - manage files and directories: list, create, move(rename), delete, compare, view, and etc;
 - get information for running processes, network status and connections, mounted file system, free space, device;
@@ -17,6 +17,6 @@ Build-in file selector (aka file explorer) is exported and so allows other appli
 Application is localized in many languages and/or territories (locales).
 
 
-TermOnePlus is successor of excellent but un-maintained since 2015 "Terminal Emulator for Android". This new application includes many compatibility and portability improvements, stability and defect fixes, and localization enhancements. As result it works fine with recent android releases like Oreo(8.1). Even on ancient like Gingerbread(2.3) it looks and works the same as for recent one.
+"TermOne Plus" is successor of excellent but un-maintained since 2015 "Terminal Emulator for Android". This new application includes many compatibility and portability improvements, stability and defect fixes, and localization enhancements. As result it works fine with recent android releases like Oreo(8.1). Even on ancient like Gingerbread(2.3) it looks and works the same as for recent one.
 
 Please visit application site to find out how to participate into development and/or localization, how to request new or enhanced functionality.
