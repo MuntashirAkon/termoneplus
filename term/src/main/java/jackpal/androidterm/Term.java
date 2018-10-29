@@ -276,7 +276,7 @@ public class Term extends AppCompatActivity
         Context app = getApplicationContext();
 
         PowerManager pm = (PowerManager) app.getSystemService(Context.POWER_SERVICE);
-        mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, Application.APP_TAG);
+        mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, Application.APP_TAG + ":");
 
         WifiManager wm = (WifiManager) app.getSystemService(Context.WIFI_SERVICE);
         mWifiLock = wm.createWifiLock(WifiManager.WIFI_MODE_FULL_HIGH_PERF, Application.APP_TAG);
@@ -950,8 +950,7 @@ public class Term extends AppCompatActivity
         String[] keyNames = r.getStringArray(arrayId);
         String keyName = keyNames[keyId];
         String template = r.getString(enabledId);
-        String result = template.replaceAll(regex, keyName);
-        return result;
+        return template.replaceAll(regex, keyName);
     }
 
     private void doToggleSoftKeyboard() {
