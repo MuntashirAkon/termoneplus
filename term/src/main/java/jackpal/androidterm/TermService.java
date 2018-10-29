@@ -38,6 +38,7 @@ import android.os.Looper;
 import android.os.ParcelFileDescriptor;
 import android.os.ResultReceiver;
 import android.preference.PreferenceManager;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
 import android.util.Log;
@@ -127,27 +128,8 @@ public class TermService extends Service implements TermSession.FinishCallback {
         mTermSessions.remove(session);
     }
 
-
-    private void createNotificationChannel() {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O /*API Level 26*/) return;
-
-        NotificationChannel channel = new NotificationChannel(
-                NOTIFICATION_CHANNEL_APPLICATION,
-                "TermOnePlus",
-                NotificationManager.IMPORTANCE_LOW);
-        channel.setDescription("TermOnePlus running notification");
-        channel.setShowBadge(false);;
-
-        // Register the channel with the system ...
-        // Note we can't change the importance or other notification behaviors after this.
-        NotificationManager notificationManager = getSystemService(NotificationManager.class);
-        notificationManager.createNotificationChannel(channel);
-    }
-
     private Notification buildNotification() {
-        createNotificationChannel();
+        NotificationChannelCompat.create(this);
 
         Intent notifyIntent = new Intent(this, Term.class);
         notifyIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -164,6 +146,32 @@ public class TermService extends Service implements TermSession.FinishCallback {
                 .setWhen(System.currentTimeMillis())
                 .setContentIntent(pendingIntent);
         return builder.build();
+    }
+
+    private static class NotificationChannelCompat {
+        private static void create(TermService service) {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O /*API Level 26*/) return;
+            // Create the NotificationChannel, but only on API 26+ because
+            // the NotificationChannel class is new and not in the support library
+            Compat26.create(service);
+        }
+
+        @RequiresApi(26)
+        private static class Compat26 {
+            private static void create(TermService service) {
+                NotificationChannel channel = new NotificationChannel(
+                        service.NOTIFICATION_CHANNEL_APPLICATION,
+                        "TermOnePlus",
+                        NotificationManager.IMPORTANCE_LOW);
+                channel.setDescription("TermOnePlus running notification");
+                channel.setShowBadge(false);;
+
+                // Register the channel with the system ...
+                // Note we can't change the importance or other notification behaviors after this.
+                NotificationManager notificationManager = service.getSystemService(NotificationManager.class);
+                notificationManager.createNotificationChannel(channel);
+            }
+        }
     }
 
     private final class RBinder extends ITerminal.Stub {
