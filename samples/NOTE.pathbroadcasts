@@ -1,0 +1,17 @@
+DEPRECATION:
+
+Functionality that uses "broadcasts" to collect extra paths with shell commands is deprecated.
+
+1) It collects only one path for "prepend" and only one for "append" to the system PATH. Winner is last received.
+2) It is used only in normal start of terminal session but not if terminal is opened from external applications.
+3) Collection of "extra" path components slow down opening of normal sessions.
+4) Applications that run on Android 8.0 (Oreo, API Level 26) or higher no longer receive implicit broadcasts registered in their manifest.
+
+In transition period "broadcast" functionality will be restricted only to applications signed with the same certificate, i.e. "SecureBox".
+
+
+FUTURE:
+Broadcasts based path collection will be replaced with one action based.
+External application, according to permissions, could send one or more path components.
+"TermOne Plus" activity will allow user to position paths sent in PATH variable.
+Also activity will allows user to ignore or delete a path component.

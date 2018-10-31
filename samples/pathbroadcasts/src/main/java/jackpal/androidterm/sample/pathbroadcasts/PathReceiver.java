@@ -29,6 +29,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+
+@Deprecated
 public class PathReceiver extends BroadcastReceiver {
 
     public static final String ACTION_PATH_APPEND_BROADCAST = "com.termoneplus.broadcast.APPEND_TO_PATH";
