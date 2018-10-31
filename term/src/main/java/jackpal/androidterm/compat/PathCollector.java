@@ -46,7 +46,7 @@ public class PathCollector {
     private int pending;
     private OnPathsReceivedListener callback;
 
-    public PathCollector(AppCompatActivity context, TermSettings settings) {
+    public PathCollector(AppCompatActivity context, PathSettings settings) {
         pending = 0;
 
         BroadcastReceiver receiver = new BroadcastReceiver() {

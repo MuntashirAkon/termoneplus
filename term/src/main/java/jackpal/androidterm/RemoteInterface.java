@@ -33,6 +33,7 @@ import android.util.Log;
 
 import com.termoneplus.Application;
 
+import jackpal.androidterm.compat.PathSettings;
 import jackpal.androidterm.emulatorview.TermSession;
 
 import jackpal.androidterm.util.SessionList;
@@ -47,6 +48,7 @@ public class RemoteInterface extends Activity {
     protected static final String PRIVACT_ACTIVITY_ALIAS = "jackpal.androidterm.TermInternal";
 
     private TermSettings mSettings;
+    private PathSettings path_settings;
 
     private TermService mTermService;
     private Intent mTSIntent;
@@ -68,6 +70,7 @@ public class RemoteInterface extends Activity {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         mSettings = new TermSettings(getResources(), prefs);
+        path_settings = new PathSettings();
 
         Intent TSIntent = new Intent(this, TermService.class);
         mTSIntent = TSIntent;
@@ -164,7 +167,7 @@ public class RemoteInterface extends Activity {
         }
 
         try {
-            TermSession session = Term.createTermSession(this, mSettings, initialCommand);
+            TermSession session = Term.createTermSession(this, mSettings, path_settings, initialCommand);
 
             session.setFinishCallback(service);
             service.getSessions().add(session);

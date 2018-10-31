@@ -71,6 +71,7 @@ import com.termoneplus.utils.WrapOpenURL;
 import java.io.IOException;
 
 import jackpal.androidterm.compat.PathCollector;
+import jackpal.androidterm.compat.PathSettings;
 import jackpal.androidterm.emulatorview.EmulatorView;
 import jackpal.androidterm.emulatorview.TermSession;
 import jackpal.androidterm.emulatorview.UpdateCallback;
@@ -101,6 +102,7 @@ public class Term extends AppCompatActivity
     private TermViewFlipper mViewFlipper;
     private SessionList mTermSessions;
     private TermSettings mSettings;
+    private PathSettings path_settings;
     private boolean mAlreadyStarted = false;
     private boolean mStopServiceOnFinish = false;
     private Intent TSIntent;
@@ -192,8 +194,11 @@ public class Term extends AppCompatActivity
     };
     private Handler mHandler = new Handler();
 
-    protected static TermSession createTermSession(Context context, TermSettings settings, String initialCommand) throws IOException {
-        GenericTermSession session = new ShellTermSession(settings, initialCommand);
+    protected static TermSession createTermSession(
+            Context context,
+            TermSettings settings, PathSettings path_settings,
+            String initialCommand) throws IOException {
+        GenericTermSession session = new ShellTermSession(settings, path_settings, initialCommand);
         // XXX We should really be able to fetch this from within TermSession
         session.setProcessExitMessage(context.getString(R.string.process_exit_message));
 
@@ -221,8 +226,9 @@ public class Term extends AppCompatActivity
         mPrefs.registerOnSharedPreferenceChangeListener(this);
         mActionBarMode = mSettings.actionBarMode();
 
+        path_settings = new PathSettings();
         path_collected = false;
-        path_collector = new PathCollector(this, mSettings);
+        path_collector = new PathCollector(this, path_settings);
         path_collector.setOnPathsReceivedListener(new PathCollector.OnPathsReceivedListener() {
             @Override
             public void onPathsReceived() {
@@ -351,7 +357,7 @@ public class Term extends AppCompatActivity
 
     private TermSession createTermSession() throws IOException {
         TermSettings settings = mSettings;
-        TermSession session = createTermSession(this, settings, settings.getInitialCommand());
+        TermSession session = createTermSession(this, settings, path_settings, settings.getInitialCommand());
         session.setFinishCallback(mTermService);
         return session;
     }

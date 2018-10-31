@@ -20,11 +20,13 @@ package jackpal.androidterm;
 import android.os.Handler;
 import android.os.Message;
 import android.os.ParcelFileDescriptor;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.termoneplus.Application;
 import com.termoneplus.Process;
 
+import jackpal.androidterm.compat.PathSettings;
 import jackpal.androidterm.util.TermSettings;
 
 import java.io.*;
@@ -39,6 +41,7 @@ public class ShellTermSession extends GenericTermSession {
     private int mProcId;
     private Thread mWatcherThread;
 
+    private PathSettings path_settings;
     private String mInitialCommand;
 
     private static final int PROCESS_EXITED = 1;
@@ -54,10 +57,11 @@ public class ShellTermSession extends GenericTermSession {
         }
     };
 
-    public ShellTermSession(TermSettings settings, String initialCommand) throws IOException {
+    public ShellTermSession(TermSettings settings, PathSettings path_settings, String initialCommand) throws IOException {
         super(ParcelFileDescriptor.open(new File("/dev/ptmx"), ParcelFileDescriptor.MODE_READ_WRITE),
                 settings, false);
 
+        this.path_settings=path_settings;
         initializeSession();
 
         setTermOut(new ParcelFileDescriptor.AutoCloseOutputStream(mTermFd));
@@ -82,14 +86,14 @@ public class ShellTermSession extends GenericTermSession {
 
         String path = System.getenv("PATH");
         if (settings.doPathExtensions()) {
-            String appendPath = settings.getAppendPath();
-            if (appendPath != null && appendPath.length() > 0) {
+            String appendPath = path_settings.getAppendPath();
+            if (!TextUtils.isEmpty(appendPath)) {
                 path = path + ":" + appendPath;
             }
 
             if (settings.allowPathPrepend()) {
-                String prependPath = settings.getPrependPath();
-                if (prependPath != null && prependPath.length() > 0) {
+                String prependPath = path_settings.getPrependPath();
+                if (!TextUtils.isEmpty(prependPath)) {
                     path = prependPath + ":" + path;
                 }
             }

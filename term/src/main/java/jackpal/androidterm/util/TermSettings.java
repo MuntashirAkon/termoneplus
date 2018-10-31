@@ -50,9 +50,6 @@ public class TermSettings {
     private boolean mAllowPathPrepend;
     private String mHomePath;
 
-    private String mPrependPath = null;
-    private String mAppendPath = null;
-
     private boolean mAltSendsEsc;
 
     private boolean mMouseTracking;
@@ -343,22 +340,6 @@ public class TermSettings {
 
     public boolean allowPathPrepend() {
         return mAllowPathPrepend;
-    }
-
-    public void setPrependPath(String prependPath) {
-        mPrependPath = prependPath;
-    }
-
-    public String getPrependPath() {
-        return mPrependPath;
-    }
-
-    public void setAppendPath(String appendPath) {
-        mAppendPath = appendPath;
-    }
-
-    public String getAppendPath() {
-        return mAppendPath;
     }
 
     public void setHomePath(String homePath) {
