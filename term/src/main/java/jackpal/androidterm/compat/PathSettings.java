@@ -21,6 +21,7 @@ package jackpal.androidterm.compat;
 /* NOTE: refactored path settings from TermSettings.java
  * TODO: pending removal as functionality does not support multiple entries.
  */
+@Deprecated
 public class PathSettings {
     private String mPrependPath = null;
     private String mAppendPath = null;

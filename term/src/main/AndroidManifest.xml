@@ -24,14 +24,14 @@
         android:label="@string/perm_run_script"
         android:permissionGroup="android.permission-group.SYSTEM_TOOLS"
         android:protectionLevel="dangerous"/>
-    <!-- pending removal -->
+    <!-- deprecated: pending removal -->
     <permission
         android:name="com.termoneplus.permission.APPEND_TO_PATH"
         android:description="@string/permdesc_append_to_path"
         android:label="@string/perm_append_to_path"
         android:permissionGroup="android.permission-group.SYSTEM_TOOLS"
         android:protectionLevel="signature"/>
-    <!-- pending removal -->
+    <!-- deprecated: pending removal -->
     <permission
         android:name="com.termoneplus.permission.PREPEND_TO_PATH"
         android:description="@string/permdesc_prepend_to_path"

@@ -37,6 +37,7 @@ import jackpal.androidterm.util.TermSettings;
  * to receive paths from all application not only from running.
  * TODO: pending removal of deprecated path collection based on broadcasts.
  */
+@Deprecated
 public class PathCollector {
     private static final String ACTION_PATH_APPEND_BROADCAST = "com.termoneplus.broadcast.APPEND_TO_PATH";
     private static final String ACTION_PATH_PREPEND_BROADCAST = "com.termoneplus.broadcast.PREPEND_TO_PATH";
