@@ -111,7 +111,6 @@ public class Term extends AppCompatActivity
     private PowerManager.WakeLock mWakeLock;
     private WifiManager.WifiLock mWifiLock;
     private boolean path_collected;
-    private PathCollector path_collector;
     private TermService mTermService;
     private TermActionBar mActionBar;
     private int mActionBarMode;
@@ -228,15 +227,12 @@ public class Term extends AppCompatActivity
 
         path_settings = new PathSettings();
         path_collected = false;
-        path_collector = new PathCollector(this, path_settings);
-        path_collector.setOnPathsReceivedListener(new PathCollector.OnPathsReceivedListener() {
-            @Override
-            public void onPathsReceived() {
-                path_collected = true;
-                if (mTermService != null) {
-                    populateViewFlipper();
-                    populateWindowList();
-                }
+        PathCollector path_collector = new PathCollector(this, path_settings);
+        path_collector.setOnPathsReceivedListener(() -> {
+            path_collected = true;
+            if (mTermService != null) {
+                populateViewFlipper();
+                populateWindowList();
             }
         });
 

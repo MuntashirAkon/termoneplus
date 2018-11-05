@@ -27,8 +27,6 @@ import java.text.Collator;
 import java.util.Arrays;
 import java.util.Locale;
 
-import jackpal.androidterm.util.TermSettings;
-
 
 /* NOTE: refactored broadcast functionality from Term.java
  * Applications that target Android 8.0 (Oreo, API Level 26) or higher no
