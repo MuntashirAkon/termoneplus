@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2007 The Android Open Source Project
+ * Copyright (C) 2018 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -71,7 +72,6 @@ public class TermSession {
     private String mTitle;
     private TranscriptScreen mTranscriptScreen;
     private TerminalEmulator mEmulator;
-    private boolean mDefaultUTF8Mode;
     private Thread mReaderThread;
     private ByteQueue mByteQueue;
     private byte[] mReceiveBuffer;
@@ -85,6 +85,9 @@ public class TermSession {
     private boolean mIsRunning = false;
     private Handler mMsgHandler = new TermHandler(this);
     private UpdateCallback mTitleChangedListener;
+
+    boolean mDefaultUTF8Mode; /* shared with emulator instance */
+
 
     public TermSession() {
         this(false);
@@ -208,7 +211,6 @@ public class TermSession {
     public void initializeEmulator(int columns, int rows) {
         mTranscriptScreen = new TranscriptScreen(columns, TRANSCRIPT_ROWS, rows, mColorScheme);
         mEmulator = new TerminalEmulator(this, mTranscriptScreen, columns, rows, mColorScheme);
-        mEmulator.setDefaultUTF8Mode(mDefaultUTF8Mode);
         mEmulator.setKeyListener(mKeyListener);
 
         mIsRunning = true;
@@ -530,7 +532,7 @@ public class TermSession {
         if (mEmulator == null) {
             return;
         }
-        mEmulator.setDefaultUTF8Mode(utf8ByDefault);
+        mEmulator.notifyUTF8ModeDefaultChange();
     }
 
     /**
