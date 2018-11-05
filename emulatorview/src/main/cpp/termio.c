@@ -21,6 +21,8 @@
 #endif
 
 #include <pty.h>
+#include <errno.h>
+#include <stdio.h>
 
 
 static void
@@ -55,10 +57,40 @@ termios_setUTF8Input(
 }
 
 
+static void
+ioctl_setWindowSize(
+        JNIEnv *env, jobject clazz,
+        jint fd, jint row, jint col, jint xpixel, jint ypixel
+) {
+    struct winsize arg;
+
+    (void) clazz;
+
+    arg.ws_row = row;
+    arg.ws_col = col;
+    arg.ws_xpixel = xpixel;
+    arg.ws_ypixel = ypixel;
+
+/* quoted from tty_ioctl(4) manual page:
+ * TIOCSWINSZ     const struct winsize *argp
+ *   Set window size.
+ * ...
+ * When the window size changes, a SIGWINCH signal is sent to the foreground process group.
+ */
+    if (ioctl(fd, TIOCSWINSZ, &arg) != 0) {
+        char msg[1024];
+
+        snprintf(msg, sizeof(msg), "ioctl: set tty window size fail with error code %d", errno);
+        throwIOException(env, msg);
+    }
+}
+
+
 int
 register_termio(JNIEnv *env) {
     static JNINativeMethod methods[] = {
-            {"setUTF8Input", "(IZ)V", (void *) termios_setUTF8Input}
+            {"setUTF8Input", "(IZ)V", (void *) termios_setUTF8Input},
+            {"setWindowSize", "(IIIII)V", (void *) ioctl_setWindowSize}
     };
     return register_native(
             env,

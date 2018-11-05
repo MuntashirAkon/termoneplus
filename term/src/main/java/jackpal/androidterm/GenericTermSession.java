@@ -87,7 +87,7 @@ class GenericTermSession extends TermSession {
             rows = 24;
         }
         // Inform the attached pty of our new size:
-        setPtyWindowSize(rows, columns, 0, 0);
+        setPtyWindowSize(rows, columns);
         super.updateSize(columns, rows);
     }
 
@@ -160,13 +160,13 @@ class GenericTermSession extends TermSession {
      * Set the widow size for a given pty. Allows programs
      * connected to the pty learn how large their screen is.
      */
-    void setPtyWindowSize(int row, int col, int xpixel, int ypixel) {
+    private void setPtyWindowSize(int row, int col) {
         // If the tty goes away too quickly, this may get called after it's descriptor is closed
         if (!mTermFd.getFileDescriptor().valid())
             return;
 
         try {
-            Exec.setPtyWindowSizeInternal(mTermFd.getFd(), row, col, xpixel, ypixel);
+            TermIO.setWindowSize(mTermFd, row, col);
         } catch (IOException e) {
             Log.e("exec", "Failed to set window size: " + e.getMessage());
 

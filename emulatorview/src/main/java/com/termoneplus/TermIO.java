@@ -32,8 +32,15 @@ public class TermIO {
         Native.setUTF8Input(fd, flag);
     }
 
+    public static void setWindowSize(ParcelFileDescriptor masterPty, int row, int col) throws IOException {
+        int fd = masterPty.getFd();
+        Native.setWindowSize(fd, row, col, 0, 0);
+    }
+
 
     private static class Native {
         private static native void setUTF8Input(int fd, boolean flag) throws IOException;
+
+        private static native void setWindowSize(int fd, int row, int col, int xpixel, int ypixel) throws IOException;
     }
 }
