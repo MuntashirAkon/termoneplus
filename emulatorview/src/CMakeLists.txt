@@ -36,6 +36,7 @@ add_library(
         # Provides a relative path to your source file(s).
         main/cpp/registration.c
         main/cpp/process.c
+        main/cpp/termio.c
         main/cpp/compat.c
 )
 

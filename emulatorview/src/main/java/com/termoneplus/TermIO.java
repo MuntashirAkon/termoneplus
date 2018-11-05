@@ -1,5 +1,3 @@
-#ifndef TERMONEPLUS_REGISTRATION_H
-#define TERMONEPLUS_REGISTRATION_H
 /*
  * Copyright (C) 2018 Roumen Petrov.  All rights reserved.
  *
@@ -16,24 +14,26 @@
  * limitations under the License.
  */
 
-#include <jni.h>
-#include <android/log.h>
+package com.termoneplus;
+
+import android.os.ParcelFileDescriptor;
+
+import java.io.IOException;
 
 
-int register_native(
-        JNIEnv *env, const char *class_name,
-        JNINativeMethod *methods, size_t num_methods
-);
+public class TermIO {
 
-int register_process(JNIEnv *env);
-int register_termio(JNIEnv *env);
+    static {
+        System.loadLibrary("emulator-system");
+    }
+
+    public static void setUTF8Input(ParcelFileDescriptor masterPty, boolean flag) throws IOException {
+        int fd = masterPty.getFd();
+        Native.setUTF8Input(fd, flag);
+    }
 
 
-void throwOutOfMemoryError(JNIEnv *env, const char *msg) ;
-void throwIOException(JNIEnv *env, const char *msg);
-
-
-int termoneplus_log_print(int prio, const char *fmt, ...);
-#define LOGE(...) do { termoneplus_log_print(ANDROID_LOG_ERROR, __VA_ARGS__); } while(0)
-
-#endif /* ndef TERMONEPLUS_REGISTRATION_H */
+    private static class Native {
+        private static native void setUTF8Input(int fd, boolean flag) throws IOException;
+    }
+}

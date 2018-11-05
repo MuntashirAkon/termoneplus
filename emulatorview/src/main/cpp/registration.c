@@ -101,7 +101,13 @@ JNI_OnLoad(JavaVM *vm, void *reserved) {
 
     r = register_process(env.p);
     if (r != JNI_OK) {
-        LOGE("ERROR: 'console' registration fail");
+        LOGE("ERROR: 'process' registration fail");
+        return -1;
+    }
+
+    r = register_termio(env.p);
+    if (r != JNI_OK) {
+        LOGE("ERROR: 'termio' registration fail");
         return -1;
     }
 

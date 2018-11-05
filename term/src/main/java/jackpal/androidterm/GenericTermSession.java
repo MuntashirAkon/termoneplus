@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2007 The Android Open Source Project
+ * Copyright (C) 2018 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,11 +22,13 @@ import java.io.*;
 import android.os.ParcelFileDescriptor;
 import android.util.Log;
 
+import com.termoneplus.TermIO;
+
 import jackpal.androidterm.emulatorview.ColorScheme;
 import jackpal.androidterm.emulatorview.TermSession;
-import jackpal.androidterm.emulatorview.UpdateCallback;
 
 import jackpal.androidterm.util.TermSettings;
+
 
 /**
  * A terminal session, consisting of a TerminalEmulator, a TranscriptScreen,
@@ -48,8 +51,6 @@ class GenericTermSession extends TermSession {
     public static final int PROCESS_EXIT_DISPLAYS_MESSAGE = 1;
 
     private String mProcessExitMessage;
-
-    private UpdateCallback mUTF8ModeNotify = () -> setPtyUTF8Mode(getUTF8Mode());
 
     GenericTermSession(ParcelFileDescriptor mTermFd, TermSettings settings, boolean exitOnEOF) {
         super(exitOnEOF);
@@ -75,8 +76,8 @@ class GenericTermSession extends TermSession {
         }
         super.initializeEmulator(columns, rows);
 
-        setPtyUTF8Mode(getUTF8Mode());
-        setUTF8ModeUpdateCallback(mUTF8ModeNotify);
+        setPtyUTF8Mode();
+        setUTF8ModeUpdateCallback(this::setPtyUTF8Mode);
     }
 
     @Override
@@ -178,13 +179,13 @@ class GenericTermSession extends TermSession {
      * Set or clear UTF-8 mode for a given pty.  Used by the terminal driver
      * to implement correct erase behavior in cooked mode (Linux >= 2.6.4).
      */
-    void setPtyUTF8Mode(boolean utf8Mode) {
+    private void setPtyUTF8Mode() {
         // If the tty goes away too quickly, this may get called after it's descriptor is closed
         if (!mTermFd.getFileDescriptor().valid())
             return;
 
         try {
-            Exec.setPtyUTF8ModeInternal(mTermFd.getFd(), utf8Mode);
+            TermIO.setUTF8Input(mTermFd, getUTF8Mode());
         } catch (IOException e) {
             Log.e("exec", "Failed to set UTF mode: " + e.getMessage());
 
