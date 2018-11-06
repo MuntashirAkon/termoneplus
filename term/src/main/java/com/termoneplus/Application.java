@@ -24,4 +24,9 @@ public class Application extends android.app.Application {
      * classes.
      */
     public static final String APP_TAG = "TermOnePlus";
+
+    public static final String ACTION_OPEN_NEW_WINDOW = "com.termoneplus.OPEN_NEW_WINDOW";
+    public static final String ACTION_SWITCH_WINDOW = "com.termoneplus.SWITCH_WINDOW";
+
+    public static final String ARGUMENT_TARGET_WINDOW = "target_window";
 }

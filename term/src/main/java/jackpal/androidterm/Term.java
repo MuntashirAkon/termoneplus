@@ -107,7 +107,6 @@ public class Term extends AppCompatActivity
     private boolean mStopServiceOnFinish = false;
     private Intent TSIntent;
     private int onResumeSelectWindow = -1;
-    private ComponentName mPrivateAlias;
     private PowerManager.WakeLock mWakeLock;
     private WifiManager.WifiLock mWifiLock;
     private boolean path_collected;
@@ -214,8 +213,6 @@ public class Term extends AppCompatActivity
         super.onCreate(icicle);
 
         Log.v(Application.APP_TAG, "onCreate");
-
-        mPrivateAlias = new ComponentName(this, RemoteInterface.PRIVACT_ACTIVITY_ALIAS);
 
         if (icicle == null)
             onNewIntent(getIntent());
@@ -635,18 +632,20 @@ public class Term extends AppCompatActivity
         }
 
         String action = intent.getAction();
-        if (TextUtils.isEmpty(action) || !mPrivateAlias.equals(intent.getComponent())) {
+        if (TextUtils.isEmpty(action) ||
+                /* not from application */
+                !intent.getComponent().getPackageName().equals(BuildConfig.APPLICATION_ID)) {
             return;
         }
 
         // huge number simply opens new window
         // TODO: add a way to restrict max number of windows per caller (possibly via reusing BoundSession)
         switch (action) {
-            case RemoteInterface.PRIVACT_OPEN_NEW_WINDOW:
+            case Application.ACTION_OPEN_NEW_WINDOW:
                 onResumeSelectWindow = Integer.MAX_VALUE;
                 break;
-            case RemoteInterface.PRIVACT_SWITCH_WINDOW:
-                int target = intent.getIntExtra(RemoteInterface.PRIVEXTRA_TARGET_WINDOW, -1);
+            case Application.ACTION_SWITCH_WINDOW:
+                int target = intent.getIntExtra(Application.ARGUMENT_TARGET_WINDOW, -1);
                 if (target >= 0) {
                     onResumeSelectWindow = target;
                 }

@@ -40,13 +40,6 @@ import jackpal.androidterm.util.SessionList;
 import jackpal.androidterm.util.TermSettings;
 
 public class RemoteInterface extends Activity {
-    protected static final String PRIVACT_OPEN_NEW_WINDOW = "jackpal.androidterm.private.OPEN_NEW_WINDOW";
-    protected static final String PRIVACT_SWITCH_WINDOW = "jackpal.androidterm.private.SWITCH_WINDOW";
-
-    protected static final String PRIVEXTRA_TARGET_WINDOW = "jackpal.androidterm.private.target_window";
-
-    protected static final String PRIVACT_ACTIVITY_ALIAS = "jackpal.androidterm.TermInternal";
-
     private TermSettings mSettings;
     private PathSettings path_settings;
 
@@ -175,9 +168,9 @@ public class RemoteInterface extends Activity {
             String handle = UUID.randomUUID().toString();
             ((GenericTermSession) session).setHandle(handle);
 
-            Intent intent = new Intent(PRIVACT_OPEN_NEW_WINDOW);
-            intent.addCategory(Intent.CATEGORY_DEFAULT);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            Intent intent = new Intent(this, Term.class)
+                    .setAction(Application.ACTION_OPEN_NEW_WINDOW)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
 
             return handle;
@@ -212,10 +205,10 @@ public class RemoteInterface extends Activity {
             target.write('\r');
         }
 
-        Intent intent = new Intent(PRIVACT_SWITCH_WINDOW);
-        intent.addCategory(Intent.CATEGORY_DEFAULT);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra(PRIVEXTRA_TARGET_WINDOW, index);
+        Intent intent = new Intent(this, Term.class)
+                .setAction(Application.ACTION_SWITCH_WINDOW)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                .putExtra(Application.ARGUMENT_TARGET_WINDOW, index);
         startActivity(intent);
 
         return handle;

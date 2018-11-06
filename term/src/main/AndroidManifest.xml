@@ -61,22 +61,6 @@
             </intent-filter>
         </activity>
 
-        <activity-alias
-            android:name=".TermInternal"
-            android:exported="false"
-            android:targetActivity=".Term">
-            <intent-filter>
-                <action android:name="jackpal.androidterm.private.OPEN_NEW_WINDOW"/>
-
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-            <intent-filter>
-                <action android:name="jackpal.androidterm.private.SWITCH_WINDOW"/>
-
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-        </activity-alias>
-
         <activity
             android:name=".RemoteInterface"
             android:excludeFromRecents="true">
