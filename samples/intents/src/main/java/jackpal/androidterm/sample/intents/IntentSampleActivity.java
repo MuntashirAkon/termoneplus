@@ -35,7 +35,7 @@ public class IntentSampleActivity extends AppCompatActivity {
             }
         });
 
-        final EditText script = (EditText) findViewById(R.id.script);
+        final EditText script = findViewById(R.id.script);
         script.setText(getString(R.string.default_script));
         addClickListener(R.id.runScript, new OnClickListener() {
             public void onClick(View v) {
@@ -73,7 +73,7 @@ public class IntentSampleActivity extends AppCompatActivity {
     }
 
     private void addClickListener(int buttonId, OnClickListener onClickListener) {
-        ((Button) findViewById(buttonId)).setOnClickListener(onClickListener);
+        findViewById(buttonId).setOnClickListener(onClickListener);
     }
 
     protected void onActivityResult(int request, int result, Intent data) {
