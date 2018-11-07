@@ -26,49 +26,43 @@ public class IntentSampleActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        addClickListener(R.id.openNewWindow, new OnClickListener() {
-            public void onClick(View v) {
-                // Intent for opening a new window without providing script
-                Intent intent = new Intent(ACTION_OPEN_NEW_WINDOW);
-                intent.addCategory(Intent.CATEGORY_DEFAULT);
-                startActivity(intent);
-            }
+        addClickListener(R.id.openNewWindow, v -> {
+            // Intent for opening a new window without providing script
+            Intent intent = new Intent(ACTION_OPEN_NEW_WINDOW)
+                    .addCategory(Intent.CATEGORY_DEFAULT);
+            startActivity(intent);
         });
 
         final EditText script = findViewById(R.id.script);
         script.setText(getString(R.string.default_script));
-        addClickListener(R.id.runScript, new OnClickListener() {
-            public void onClick(View v) {
-                /* Intent for opening a new window and running the provided
-                   script -- you must declare the permission
-                   com.termoneplus.permission.RUN_SCRIPT in your manifest
-                   to use */
-                Intent intent = new Intent(ACTION_RUN_SCRIPT);
-                intent.addCategory(Intent.CATEGORY_DEFAULT);
-                String command = script.getText().toString();
-                intent.putExtra(RUN_SCRIPT_COMMAND, command);
-                startActivity(intent);
-            }
+        addClickListener(R.id.runScript, v -> {
+            /* Intent for opening a new window and running the provided
+               script -- you must declare the permission
+               com.termoneplus.permission.RUN_SCRIPT in your manifest
+               to use */
+            String command = script.getText().toString();
+            Intent intent = new Intent(ACTION_RUN_SCRIPT)
+                    .addCategory(Intent.CATEGORY_DEFAULT)
+                    .putExtra(RUN_SCRIPT_COMMAND, command);
+            startActivity(intent);
         });
-        addClickListener(R.id.runScriptSaveWindow, new OnClickListener() {
-            public void onClick(View v) {
-                /* Intent for running a script in a previously opened window,
-                   if it still exists
-                   This will open another window if it doesn't find a match */
-                Intent intent = new Intent(ACTION_RUN_SCRIPT);
-                intent.addCategory(Intent.CATEGORY_DEFAULT);
-                String command = script.getText().toString();
-                intent.putExtra(RUN_SCRIPT_COMMAND, command);
-                if (mHandle != null) {
-                    // Identify the targeted window by its handle
-                    intent.putExtra(RUN_SCRIPT_WINDOW_HANDLE, mHandle);
-                }
-                /* The handle for the targeted window -- whether newly opened
-                   or reused -- is returned to us via onActivityResult()
-                   You can compare it against an existing saved handle to
-                   determine whether or not a new window was opened */
-                startActivityForResult(intent, REQUEST_WINDOW_HANDLE);
+        addClickListener(R.id.runScriptSaveWindow, v -> {
+            /* Intent for running a script in a previously opened window,
+               if it still exists
+               This will open another window if it doesn't find a match */
+            String command = script.getText().toString();
+            Intent intent = new Intent(ACTION_RUN_SCRIPT)
+                    .addCategory(Intent.CATEGORY_DEFAULT)
+                    .putExtra(RUN_SCRIPT_COMMAND, command);
+            if (mHandle != null) {
+                // Identify the targeted window by its handle
+                intent.putExtra(RUN_SCRIPT_WINDOW_HANDLE, mHandle);
             }
+            /* The handle for the targeted window -- whether newly opened
+               or reused -- is returned to us via onActivityResult()
+               You can compare it against an existing saved handle to
+               determine whether or not a new window was opened */
+            startActivityForResult(intent, REQUEST_WINDOW_HANDLE);
         });
     }
 
