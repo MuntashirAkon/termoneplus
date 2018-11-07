@@ -49,7 +49,7 @@
             android:layout_marginLeft="@dimen/text2_margin"
             android:layout_marginStart="@dimen/text2_margin"
             android:hint="@string/addshortcut_command_hint"
-            android:inputType="text"
+            android:inputType="textNoSuggestions"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
         <TextView
@@ -66,7 +66,7 @@
             android:layout_marginLeft="@dimen/text2_margin"
             android:layout_marginStart="@dimen/text2_margin"
             android:hint="@string/addshortcut_example_hint"
-            android:inputType="text"
+            android:inputType="textNoSuggestions"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
         <TextView
@@ -82,7 +82,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/text2_margin"
             android:layout_marginStart="@dimen/text2_margin"
-            android:inputType="text"
+            android:inputType="textNoSuggestions"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
         <LinearLayout

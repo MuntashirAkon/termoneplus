@@ -35,6 +35,7 @@
             android:layout_gravity="center_horizontal"
             android:gravity="center_horizontal"
             android:hint="@string/colorvalue_icon_text_entry_hint"
+            android:inputType="textNoSuggestions"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
         <TextView
