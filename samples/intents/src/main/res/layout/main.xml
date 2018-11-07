@@ -30,7 +30,9 @@
     <EditText
         android:id="@+id/script"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:hint="@string/default_script"
+        android:inputType="textNoSuggestions"/>
 
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/runScript"
