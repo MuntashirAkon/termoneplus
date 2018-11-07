@@ -2,7 +2,7 @@
 
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
-    package="jackpal.androidterm.sample.intents">
+    package="com.termoneplus.sample.intents">
 
     <uses-permission android:name="com.termoneplus.permission.RUN_SCRIPT"/>
 

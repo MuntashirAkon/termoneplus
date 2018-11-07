@@ -1,4 +1,4 @@
-package jackpal.androidterm.sample.intents;
+package com.termoneplus.sample.intents;
 
 import android.content.Intent;
 import android.os.Bundle;
