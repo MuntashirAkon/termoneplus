@@ -1,43 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/help"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/help"/>
+        android:text="@string/help"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
 
-    <Button
+    <android.support.v7.widget.AppCompatButton
         android:id="@+id/openNewWindow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/open_new_window"/>
+        android:text="@string/open_new_window"
+        app:textAllCaps="false"/>
 
     <TextView
         android:id="@+id/scriptLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/script_label"/>
+        android:text="@string/script_label"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
     <EditText
         android:id="@+id/script"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"/>
 
-    <Button
+    <android.support.v7.widget.AppCompatButton
         android:id="@+id/runScript"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/run_script"/>
+        android:text="@string/run_script"
+        app:textAllCaps="false"/>
 
-    <Button
+    <android.support.v7.widget.AppCompatButton
         android:id="@+id/runScriptSaveWindow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/run_script_save_window"/>
+        android:text="@string/run_script_save_window"
+        app:textAllCaps="false"/>
 
 </LinearLayout>

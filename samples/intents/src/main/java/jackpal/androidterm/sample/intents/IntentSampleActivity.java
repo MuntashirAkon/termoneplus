@@ -1,19 +1,21 @@
 package jackpal.androidterm.sample.intents;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class IntentSampleActivity extends Activity {
-    private static final String ACTION_OPEN_NEW_WINDOW = "com.termoneplus.OPEN_NEW_WINDOW";
 
+public class IntentSampleActivity extends AppCompatActivity {
+    private static final String ACTION_OPEN_NEW_WINDOW = "com.termoneplus.OPEN_NEW_WINDOW";
     private static final String ACTION_RUN_SCRIPT = "com.termoneplus.RUN_SCRIPT";
+
     private static final String RUN_SCRIPT_WINDOW_HANDLE = "com.termoneplus.WindowHandle";
     private static final String RUN_SCRIPT_COMMAND = "com.termoneplus.Command";
+
     private static final int REQUEST_WINDOW_HANDLE = 1;
     private String mHandle;
 
