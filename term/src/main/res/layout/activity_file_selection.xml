@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
- * Copyright (c) 2017 Roumen Petrov.  All rights reserved.
+ * Copyright (c) 2017-2018 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -54,7 +54,7 @@
             android:layout_above="@+id/path"
             android:layout_alignParentTop="true"
             android:scrollbars="vertical"
-            app:layoutManager="LinearLayoutManager"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
             tools:listitem="@layout/entry_item_directory"/>
 
         <EditText
