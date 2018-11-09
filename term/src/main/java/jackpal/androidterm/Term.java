@@ -419,13 +419,14 @@ public class Term extends AppCompatActivity
             }
         }
 
+        @TermSettings.Orientation
         int orientation = mSettings.getScreenOrientation();
         int o = 0;
-        if (orientation == 0) {
+        if (orientation == TermSettings.ORIENTATION_UNSPECIFIED) {
             o = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
-        } else if (orientation == 1) {
+        } else if (orientation == TermSettings.ORIENTATION_LANDSCAPE) {
             o = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
-        } else if (orientation == 2) {
+        } else if (orientation == TermSettings.ORIENTATION_PORTRAIT) {
             o = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
         } else {
             /* Shouldn't be happened. */

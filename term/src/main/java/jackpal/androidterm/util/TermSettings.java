@@ -20,7 +20,11 @@ import jackpal.androidterm.R;
 
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.support.annotation.IntDef;
 import android.view.KeyEvent;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 /**
  * Terminal emulator settings
@@ -30,6 +34,7 @@ public class TermSettings {
 
     private int mStatusBar;
     private int mActionBarMode;
+    @Orientation
     private int mOrientation;
     private int mCursorStyle;
     private int mCursorBlink;
@@ -103,6 +108,9 @@ public class TermSettings {
     public static final int ACTION_BAR_MODE_HIDES = 2;
     private static final int ACTION_BAR_MODE_MAX = 2;
 
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({ORIENTATION_UNSPECIFIED, ORIENTATION_LANDSCAPE, ORIENTATION_PORTRAIT})
+    public @interface Orientation {}
     public static final int ORIENTATION_UNSPECIFIED = 0;
     public static final int ORIENTATION_LANDSCAPE = 1;
     public static final int ORIENTATION_PORTRAIT = 2;
@@ -226,6 +234,7 @@ public class TermSettings {
         return mActionBarMode;
     }
 
+    @Orientation
     public int getScreenOrientation() {
         return mOrientation;
     }
