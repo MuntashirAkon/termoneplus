@@ -20,7 +20,6 @@ package jackpal.androidterm;
 import android.os.Handler;
 import android.os.Message;
 import android.os.ParcelFileDescriptor;
-import android.text.TextUtils;
 import android.util.Log;
 
 import com.termoneplus.Application;
@@ -84,42 +83,12 @@ public class ShellTermSession extends GenericTermSession {
     private void initializeSession() throws IOException {
         TermSettings settings = mSettings;
 
-        String path = System.getenv("PATH");
-        if (settings.doPathExtensions()) {
-            String appendPath = path_settings.getAppendPath();
-            if (!TextUtils.isEmpty(appendPath)) {
-                path = path + ":" + appendPath;
-            }
-
-            if (settings.allowPathPrepend()) {
-                String prependPath = path_settings.getPrependPath();
-                if (!TextUtils.isEmpty(prependPath)) {
-                    path = prependPath + ":" + path;
-                }
-            }
-        }
-        if (settings.verifyPath()) {
-            path = checkPath(path);
-        }
         String[] env = new String[3];
         env[0] = "TERM=" + settings.getTermType();
-        env[1] = "PATH=" + path;
+        env[1] = "PATH=" + path_settings.buildPATH();
         env[2] = "HOME=" + settings.getHomePath();
 
         mProcId = createSubprocess(settings.getShell(), env);
-    }
-
-    private String checkPath(String path) {
-        String[] dirs = path.split(":");
-        StringBuilder checkedPath = new StringBuilder(path.length());
-        for (String dirname : dirs) {
-            File dir = new File(dirname);
-            if (dir.isDirectory() && dir.canExecute()) {
-                checkedPath.append(dirname);
-                checkedPath.append(":");
-            }
-        }
-        return checkedPath.substring(0, checkedPath.length()-1);
     }
 
     @Override

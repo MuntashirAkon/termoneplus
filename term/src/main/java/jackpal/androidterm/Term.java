@@ -206,6 +206,7 @@ public class Term extends AppCompatActivity
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
         mSettings.readPrefs(sharedPreferences);
+        path_settings.extractPreferences(sharedPreferences);
     }
 
     @Override
@@ -222,7 +223,7 @@ public class Term extends AppCompatActivity
         mPrefs.registerOnSharedPreferenceChangeListener(this);
         mActionBarMode = mSettings.actionBarMode();
 
-        path_settings = new PathSettings();
+        path_settings = new PathSettings(getResources(), mPrefs);
         path_collected = false;
         PathCollector path_collector = new PathCollector(this, path_settings);
         path_collector.setOnPathsReceivedListener(() -> {

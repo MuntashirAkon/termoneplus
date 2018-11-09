@@ -63,7 +63,7 @@ public class RemoteInterface extends Activity {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         mSettings = new TermSettings(getResources(), prefs);
-        path_settings = new PathSettings();
+        path_settings = new PathSettings(getResources(), prefs);
 
         Intent TSIntent = new Intent(this, TermService.class);
         mTSIntent = TSIntent;

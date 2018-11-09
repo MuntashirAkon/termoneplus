@@ -45,9 +45,6 @@ public class TermSettings {
     private String mInitialCommand;
     private String mTermType;
     private boolean mCloseOnExit;
-    private boolean mVerifyPath;
-    private boolean mDoPathExtensions;
-    private boolean mAllowPathPrepend;
     private String mHomePath;
 
     private boolean mAltSendsEsc;
@@ -70,9 +67,6 @@ public class TermSettings {
     private static final String INITIALCOMMAND_KEY = "initialcommand";
     private static final String TERMTYPE_KEY = "termtype";
     private static final String CLOSEONEXIT_KEY = "close_window_on_process_exit";
-    private static final String VERIFYPATH_KEY = "verify_path";
-    private static final String PATHEXTENSIONS_KEY = "do_path_extensions";
-    private static final String PATHPREPEND_KEY = "allow_prepend_path";
     private static final String HOMEPATH_KEY = "home_path";
     private static final String ALT_SENDS_ESC = "alt_sends_esc";
     private static final String MOUSE_TRACKING = "mouse_tracking";
@@ -170,9 +164,6 @@ public class TermSettings {
         mInitialCommand = res.getString(R.string.pref_initialcommand_default);
         mTermType = res.getString(R.string.pref_termtype_default);
         mCloseOnExit = res.getBoolean(R.bool.pref_close_window_on_process_exit_default);
-        mVerifyPath = res.getBoolean(R.bool.pref_verify_path_default);
-        mDoPathExtensions = res.getBoolean(R.bool.pref_do_path_extensions_default);
-        mAllowPathPrepend = res.getBoolean(R.bool.pref_allow_prepend_path_default);
         // the mHomePath default is set dynamically in readPrefs()
         mAltSendsEsc = res.getBoolean(R.bool.pref_alt_sends_esc_default);
         mMouseTracking = res.getBoolean(R.bool.pref_mouse_tracking_default);
@@ -199,9 +190,6 @@ public class TermSettings {
         mInitialCommand = readStringPref(INITIALCOMMAND_KEY, mInitialCommand);
         mTermType = readStringPref(TERMTYPE_KEY, mTermType);
         mCloseOnExit = readBooleanPref(CLOSEONEXIT_KEY, mCloseOnExit);
-        mVerifyPath = readBooleanPref(VERIFYPATH_KEY, mVerifyPath);
-        mDoPathExtensions = readBooleanPref(PATHEXTENSIONS_KEY, mDoPathExtensions);
-        mAllowPathPrepend = readBooleanPref(PATHPREPEND_KEY, mAllowPathPrepend);
         mHomePath = readStringPref(HOMEPATH_KEY, mHomePath);
         mAltSendsEsc = readBooleanPref(ALT_SENDS_ESC, mAltSendsEsc);
         mMouseTracking = readBooleanPref(MOUSE_TRACKING, mMouseTracking);
@@ -328,18 +316,6 @@ public class TermSettings {
 
     public boolean closeWindowOnProcessExit() {
         return mCloseOnExit;
-    }
-
-    public boolean verifyPath() {
-        return mVerifyPath;
-    }
-
-    public boolean doPathExtensions() {
-        return mDoPathExtensions;
-    }
-
-    public boolean allowPathPrepend() {
-        return mAllowPathPrepend;
     }
 
     public void setHomePath(String homePath) {
