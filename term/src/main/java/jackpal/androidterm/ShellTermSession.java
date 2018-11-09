@@ -40,7 +40,6 @@ public class ShellTermSession extends GenericTermSession {
     private int mProcId;
     private Thread mWatcherThread;
 
-    private PathSettings path_settings;
     private String mInitialCommand;
 
     private static final int PROCESS_EXITED = 1;
@@ -60,10 +59,9 @@ public class ShellTermSession extends GenericTermSession {
         super(ParcelFileDescriptor.open(new File("/dev/ptmx"), ParcelFileDescriptor.MODE_READ_WRITE),
                 settings, false);
 
-        this.path_settings=path_settings;
-        initializeSession();
-
         mInitialCommand = initialCommand;
+
+        mProcId = createShellProcess(settings, path_settings);
 
         mWatcherThread = new Thread() {
             @Override
@@ -75,17 +73,6 @@ public class ShellTermSession extends GenericTermSession {
             }
         };
         mWatcherThread.setName("Process watcher");
-    }
-
-    private void initializeSession() throws IOException {
-        TermSettings settings = mSettings;
-
-        String[] env = new String[3];
-        env[0] = "TERM=" + settings.getTermType();
-        env[1] = "PATH=" + path_settings.buildPATH();
-        env[2] = "HOME=" + settings.getHomePath();
-
-        mProcId = createSubprocess(settings.getShell(), env);
     }
 
     @Override
@@ -102,7 +89,9 @@ public class ShellTermSession extends GenericTermSession {
         }
     }
 
-    private int createSubprocess(String shell, String[] env) throws IOException {
+    private int createShellProcess(TermSettings settings, PathSettings path_settings) throws IOException {
+        String shell = settings.getShell();
+
         ArrayList<String> argList = parse(shell);
         String arg0;
         String[] args;
@@ -119,10 +108,15 @@ public class ShellTermSession extends GenericTermSession {
             }
             args = argList.toArray(new String[1]);
         } catch (Exception e) {
-            argList = parse(mSettings.getFailsafeShell());
+            argList = parse(settings.getFailsafeShell());
             arg0 = argList.get(0);
             args = argList.toArray(new String[1]);
         }
+
+        String[] env = new String[3];
+        env[0] = "TERM=" + settings.getTermType();
+        env[1] = "PATH=" + path_settings.buildPATH();
+        env[2] = "HOME=" + settings.getHomePath();
 
         return Process.createSubprocess(mTermFd, arg0, args, env);
     }
