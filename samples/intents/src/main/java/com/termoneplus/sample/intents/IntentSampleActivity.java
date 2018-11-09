@@ -1,12 +1,15 @@
 package com.termoneplus.sample.intents;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 
 public class IntentSampleActivity extends AppCompatActivity {
@@ -30,7 +33,13 @@ public class IntentSampleActivity extends AppCompatActivity {
             // Intent for opening a new window without providing script
             Intent intent = new Intent(ACTION_OPEN_NEW_WINDOW)
                     .addCategory(Intent.CATEGORY_DEFAULT);
-            startActivity(intent);
+            try {
+                startActivity(intent);
+            } catch (ActivityNotFoundException e) {
+                errorActivityNotFound(v);
+            } catch (Exception ignore) {
+                // nop
+            }
         });
 
         final EditText script = findViewById(R.id.script);
@@ -44,7 +53,13 @@ public class IntentSampleActivity extends AppCompatActivity {
             Intent intent = new Intent(ACTION_RUN_SCRIPT)
                     .addCategory(Intent.CATEGORY_DEFAULT)
                     .putExtra(RUN_SCRIPT_COMMAND, command);
-            startActivity(intent);
+            try {
+                startActivity(intent);
+            } catch (ActivityNotFoundException e) {
+                errorActivityNotFound(v);
+            } catch (Exception ignore) {
+                // nop
+            }
         });
         addClickListener(R.id.runScriptSaveWindow, v -> {
             /* Intent for running a script in a previously opened window,
@@ -62,12 +77,24 @@ public class IntentSampleActivity extends AppCompatActivity {
                or reused -- is returned to us via onActivityResult()
                You can compare it against an existing saved handle to
                determine whether or not a new window was opened */
-            startActivityForResult(intent, REQUEST_WINDOW_HANDLE);
+            try {
+                startActivityForResult(intent, REQUEST_WINDOW_HANDLE);
+            } catch (ActivityNotFoundException e) {
+                errorActivityNotFound(v);
+            } catch (Exception ignore) {
+                // nop
+            }
         });
     }
 
     private void addClickListener(int buttonId, OnClickListener onClickListener) {
         findViewById(buttonId).setOnClickListener(onClickListener);
+    }
+
+    private void errorActivityNotFound(View view) {
+        Toast toast = Toast.makeText(view.getContext(), R.string.error_activity_not_found, Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.BOTTOM | Gravity.START | Gravity.LEFT, 0, 0);
+        toast.show();
     }
 
     protected void onActivityResult(int request, int result, Intent data) {
