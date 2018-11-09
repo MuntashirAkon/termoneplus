@@ -56,6 +56,8 @@ class GenericTermSession extends TermSession {
         super(exitOnEOF);
 
         this.mTermFd = mTermFd;
+        setTermOut(new ParcelFileDescriptor.AutoCloseOutputStream(mTermFd));
+        setTermIn(new ParcelFileDescriptor.AutoCloseInputStream(mTermFd));
 
         this.createdAt = System.currentTimeMillis();
 

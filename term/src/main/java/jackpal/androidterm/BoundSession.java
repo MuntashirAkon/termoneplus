@@ -13,9 +13,6 @@ class BoundSession extends GenericTermSession {
         super(ptmxFd, settings, true);
 
         this.issuerTitle = issuerTitle;
-
-        setTermIn(new ParcelFileDescriptor.AutoCloseInputStream(ptmxFd));
-        setTermOut(new ParcelFileDescriptor.AutoCloseOutputStream(ptmxFd));
     }
 
     @Override

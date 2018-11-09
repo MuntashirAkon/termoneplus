@@ -63,9 +63,6 @@ public class ShellTermSession extends GenericTermSession {
         this.path_settings=path_settings;
         initializeSession();
 
-        setTermOut(new ParcelFileDescriptor.AutoCloseOutputStream(mTermFd));
-        setTermIn(new ParcelFileDescriptor.AutoCloseInputStream(mTermFd));
-
         mInitialCommand = initialCommand;
 
         mWatcherThread = new Thread() {
