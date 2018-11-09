@@ -45,11 +45,10 @@ class GenericTermSession extends TermSession {
 
     final ParcelFileDescriptor mTermFd;
 
-    TermSettings mSettings;
-
     public static final int PROCESS_EXIT_FINISHES_SESSION = 0;
     public static final int PROCESS_EXIT_DISPLAYS_MESSAGE = 1;
 
+    private boolean mCloseWindowOnProcessExit;
     private String mProcessExitMessage;
 
     GenericTermSession(ParcelFileDescriptor mTermFd, TermSettings settings, boolean exitOnEOF) {
@@ -65,9 +64,9 @@ class GenericTermSession extends TermSession {
     }
 
     public void updatePrefs(TermSettings settings) {
-        mSettings = settings;
         setColorScheme(new ColorScheme(settings.getColorScheme()));
         setDefaultUTF8Mode(settings.defaultToUTF8Mode());
+        mCloseWindowOnProcessExit = settings.closeWindowOnProcessExit();
     }
 
     @Override
@@ -101,7 +100,7 @@ class GenericTermSession extends TermSession {
 
     @Override
     protected void onProcessExit() {
-        if (mSettings.closeWindowOnProcessExit()) {
+        if (mCloseWindowOnProcessExit) {
             finish();
         } else if (mProcessExitMessage != null) {
             try {
