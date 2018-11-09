@@ -13,4 +13,8 @@
     <string name="default_script">echo \'Hello, world!\'</string>
 
     <string name="error_activity_not_found">No Activity found</string>
+
+    <string name="error_security_reinstall">Permission denial. You have to reinstall application to grant permissions.</string>
+    <string name="error_security_grant">Permission denial. You have to grant permissions.</string>
+    <string name="run_script_rationale">Permission is required to run script in a terminal window.</string>
 </resources>

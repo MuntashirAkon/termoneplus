@@ -3,6 +3,9 @@ package com.termoneplus.sample.intents;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.View;
@@ -13,14 +16,20 @@ import android.widget.Toast;
 
 
 public class IntentSampleActivity extends AppCompatActivity {
+
     private static final String ACTION_OPEN_NEW_WINDOW = "com.termoneplus.OPEN_NEW_WINDOW";
     private static final String ACTION_RUN_SCRIPT = "com.termoneplus.RUN_SCRIPT";
 
     private static final String RUN_SCRIPT_WINDOW_HANDLE = "com.termoneplus.WindowHandle";
     private static final String RUN_SCRIPT_COMMAND = "com.termoneplus.Command";
 
+    private static final String PERMISSION_RUN_SCRIPT = "com.termoneplus.permission.RUN_SCRIPT";
+    private static final int REQUEST_PERMISSION_RUN_SCRIPT = 101;
+
     private static final int REQUEST_WINDOW_HANDLE = 1;
     private String mHandle;
+
+    private View main_layout;
 
     /**
      * Called when the activity is first created.
@@ -29,6 +38,9 @@ public class IntentSampleActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+
+        main_layout = findViewById(R.id.main_layout);
+
         addClickListener(R.id.openNewWindow, v -> {
             // Intent for opening a new window without providing script
             Intent intent = new Intent(ACTION_OPEN_NEW_WINDOW)
@@ -55,6 +67,8 @@ public class IntentSampleActivity extends AppCompatActivity {
                     .putExtra(RUN_SCRIPT_COMMAND, command);
             try {
                 startActivity(intent);
+            } catch (SecurityException e) {
+                errorPermissionDenial(v);
             } catch (ActivityNotFoundException e) {
                 errorActivityNotFound(v);
             } catch (Exception ignore) {
@@ -79,6 +93,8 @@ public class IntentSampleActivity extends AppCompatActivity {
                determine whether or not a new window was opened */
             try {
                 startActivityForResult(intent, REQUEST_WINDOW_HANDLE);
+            } catch (SecurityException e) {
+                errorPermissionDenial(v);
             } catch (ActivityNotFoundException e) {
                 errorActivityNotFound(v);
             } catch (Exception ignore) {
@@ -95,6 +111,50 @@ public class IntentSampleActivity extends AppCompatActivity {
         Toast toast = Toast.makeText(view.getContext(), R.string.error_activity_not_found, Toast.LENGTH_LONG);
         toast.setGravity(Gravity.BOTTOM | Gravity.START | Gravity.LEFT, 0, 0);
         toast.show();
+    }
+
+    private void errorPermissionDenial(View view) {
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.M /*API level 23*/) {
+            Toast toast = Toast.makeText(view.getContext(), R.string.error_security_reinstall, Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.BOTTOM | Gravity.START | Gravity.LEFT, 0, 0);
+            toast.show();
+        } else {
+            // OS supports runtime permissions
+            Snackbar.make(main_layout,
+                    R.string.error_security_grant,
+                    Snackbar.LENGTH_INDEFINITE)
+                    .setAction(android.R.string.yes,
+                            v -> permissionRunScript())
+                    .show();
+        }
+    }
+
+    @RequiresApi(23)
+    private void permissionRunScript() {
+        // Check if application should show an explanation
+        // before to request grant of permission.
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                PERMISSION_RUN_SCRIPT)) {
+            // Explanation must be shown *asynchronously* -- without to block
+            // current thread waiting for the user's response!
+            // If the user confirms the explanation, try real request of permission.
+            Snackbar.make(main_layout,
+                    R.string.run_script_rationale,
+                    Snackbar.LENGTH_INDEFINITE)
+                    .setAction(android.R.string.yes,
+                            v -> requestPermissionRunScript())
+                    .show();
+        } else {
+            // If no explanation needed, application can request the permission.
+            requestPermissionRunScript();
+        }
+    }
+
+    @RequiresApi(23)
+    private void requestPermissionRunScript() {
+        ActivityCompat.requestPermissions(this,
+                new String[]{PERMISSION_RUN_SCRIPT},
+                REQUEST_PERMISSION_RUN_SCRIPT);
     }
 
     protected void onActivityResult(int request, int result, Intent data) {
