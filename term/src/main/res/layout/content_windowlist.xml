@@ -39,12 +39,13 @@
 
     <view
         android:id="@+id/close"
-        style="@style/CloseButton"
+        style="?attr/buttonStyle"
         class="com.termoneplus.WindowListFragment$CloseButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_weight="1"
+        android:minWidth="48dip"
         app:srcCompat="@drawable/ic_close_white_24dp"/>
 
 </LinearLayout>
