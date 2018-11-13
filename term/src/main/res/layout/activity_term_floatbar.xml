@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="top"
         android:background="@android:color/transparent"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:theme="?attr/actionBarTheme">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -40,7 +40,7 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@color/floatToolbar"
             app:logo="@mipmap/ic_launcher"
-            app:popupTheme="@style/AppTheme.PopupOverlay">
+            app:popupTheme="?attr/actionBarPopupTheme">
 
             <Spinner
                 android:id="@+id/spinner"
