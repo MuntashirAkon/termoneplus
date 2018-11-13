@@ -177,19 +177,17 @@ public class FileSelection extends AppCompatActivity {
     }
 
     @IntDef({
-            ViewType.UP_ENTRY,
-            ViewType.DIR_ENTRY,
-            ViewType.FILE_ENTRY,
-            ViewType.PATH_ENTRY,
-            ViewType.UNKNOWN_ENTRY
+            ViewType.ENTRY_PARENT,
+            ViewType.ENTRY_DIRECTORY,
+            ViewType.ENTRY_FILE,
+            ViewType.ENTRY_UNKNOWN
     })
     @Retention(RetentionPolicy.SOURCE)
     private @interface ViewType {
-        int UP_ENTRY = 0;
-        int DIR_ENTRY = 1;
-        int FILE_ENTRY = 2;
-        int PATH_ENTRY = 3;
-        int UNKNOWN_ENTRY = 9;
+        int ENTRY_PARENT = 0;
+        int ENTRY_DIRECTORY = 1;
+        int ENTRY_FILE = 2;
+        int ENTRY_UNKNOWN = 9; /*broken symbolic link*/
     }
 
     private class ViewHolder extends RecyclerView.ViewHolder {
@@ -251,13 +249,12 @@ public class FileSelection extends AppCompatActivity {
 
         @Override
         public int getItemViewType(int position) {
-            if (position == 0) return ViewType.UP_ENTRY;
-            if (position > entries.length) return ViewType.PATH_ENTRY;
+            if (position == 0) return ViewType.ENTRY_PARENT;
 
             File file = entries[position - 1];
-            if (file.isDirectory()) return ViewType.DIR_ENTRY;
-            if (file.isFile()) return ViewType.FILE_ENTRY;
-            return ViewType.UNKNOWN_ENTRY;
+            if (file.isDirectory()) return ViewType.ENTRY_DIRECTORY;
+            if (file.isFile()) return ViewType.ENTRY_FILE;
+            return ViewType.ENTRY_UNKNOWN;
         }
 
         @NonNull
@@ -267,28 +264,28 @@ public class FileSelection extends AppCompatActivity {
             ViewHolder holder = null;
 
             switch (viewType) {
-                case ViewType.UP_ENTRY: {
+                case ViewType.ENTRY_PARENT: {
                     view = LayoutInflater.from(parent.getContext())
                             .inflate(R.layout.entry_item_up, parent, false);
                     view.setOnClickListener(dir_listener);
                     holder = new ViewHolder(view);
                     break;
                 }
-                case ViewType.DIR_ENTRY: {
+                case ViewType.ENTRY_DIRECTORY: {
                     view = LayoutInflater.from(parent.getContext())
                             .inflate(R.layout.entry_item_directory, parent, false);
                     view.setOnClickListener(dir_listener);
                     holder = new ViewHolder(view);
                     break;
                 }
-                case ViewType.FILE_ENTRY: {
+                case ViewType.ENTRY_FILE: {
                     view = LayoutInflater.from(parent.getContext())
                             .inflate(R.layout.entry_item_file, parent, false);
                     view.setOnClickListener(file_listener);
                     holder = new ViewHolder(view);
                     break;
                 }
-                case ViewType.UNKNOWN_ENTRY: {
+                case ViewType.ENTRY_UNKNOWN: {
                     view = LayoutInflater.from(parent.getContext())
                             .inflate(R.layout.entry_item_unknown, parent, false);
                     holder = new ViewHolder(view);
@@ -301,17 +298,17 @@ public class FileSelection extends AppCompatActivity {
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             switch (holder.getItemViewType()) {
-                case ViewType.UP_ENTRY: {
+                case ViewType.ENTRY_PARENT: {
                     holder.name.setText(cwd);
                     break;
                 }
-                case ViewType.DIR_ENTRY:
-                case ViewType.FILE_ENTRY: {
+                case ViewType.ENTRY_DIRECTORY:
+                case ViewType.ENTRY_FILE: {
                     File file = entries[position - 1];
                     holder.setFile(file);
                     break;
                 }
-                case ViewType.UNKNOWN_ENTRY: {
+                case ViewType.ENTRY_UNKNOWN: {
                     File file = entries[position - 1];
                     holder.name.setText(file.getName());
                     break;
