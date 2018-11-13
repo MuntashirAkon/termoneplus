@@ -45,6 +45,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_weight="1"
-        app:srcCompat="@android:drawable/ic_menu_close_clear_cancel"/>
+        app:srcCompat="@drawable/ic_close_white_24dp"/>
 
 </LinearLayout>

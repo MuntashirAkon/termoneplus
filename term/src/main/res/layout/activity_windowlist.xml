@@ -73,7 +73,7 @@
             android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@android:drawable/ic_menu_add"/>
+            app:srcCompat="@drawable/ic_add_circle_outline_white_24dp"/>
 
     </LinearLayout>
 
