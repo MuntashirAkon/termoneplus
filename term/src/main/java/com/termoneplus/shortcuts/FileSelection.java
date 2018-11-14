@@ -192,18 +192,10 @@ public class FileSelection extends AppCompatActivity {
 
     private class ViewHolder extends RecyclerView.ViewHolder {
         public final TextView name;
-        private File file;
 
         public ViewHolder(View view) {
             super(view);
             name = itemView.findViewById(R.id.name);
-        }
-
-        public void setFile(File file) {
-            this.file = file;
-            String file_name = this.file.getName();
-            itemView.setTag(file_name);
-            name.setText(file_name);
         }
     }
 
@@ -297,23 +289,20 @@ public class FileSelection extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-            switch (holder.getItemViewType()) {
-                case ViewType.ENTRY_PARENT: {
-                    holder.name.setText(cwd);
-                    break;
-                }
-                case ViewType.ENTRY_DIRECTORY:
-                case ViewType.ENTRY_FILE: {
-                    File file = entries[position - 1];
-                    holder.setFile(file);
-                    break;
-                }
-                case ViewType.ENTRY_UNKNOWN: {
-                    File file = entries[position - 1];
-                    holder.name.setText(file.getName());
-                    break;
-                }
+            @ViewType
+            int type = holder.getItemViewType();
+
+            if (type == ViewType.ENTRY_PARENT) {
+                holder.name.setText(cwd);
+                holder.itemView.setTag("..");
+                return;
             }
+
+            File file = entries[position - 1];
+            String name = file.getName();
+            holder.name.setText(name);
+            if (type != ViewType.ENTRY_UNKNOWN)
+                holder.itemView.setTag(name);
         }
 
         @Override
