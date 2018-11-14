@@ -38,7 +38,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/floatToolbar"
+            android:background="?attr/colorFloatToolbar"
             app:logo="@mipmap/ic_launcher"
             app:popupTheme="?attr/actionBarPopupTheme">
 
