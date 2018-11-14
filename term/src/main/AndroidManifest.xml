@@ -51,7 +51,6 @@
             android:name=".Term"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:launchMode="singleTask"
-            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize|stateAlwaysVisible">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -117,8 +116,7 @@
         <activity
             android:name="com.termoneplus.WindowListActivity"
             android:label="@string/window_list"
-            android:parentActivityName=".Term"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:parentActivityName=".Term">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="jackpal.androidterm.Term"/>
@@ -158,8 +156,7 @@
             android:configChanges="orientation|keyboardHidden"
             android:exported="true"
             android:label="@string/fsnavigator_title"
-            android:launchMode="singleTop"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.PICK"/>
 
