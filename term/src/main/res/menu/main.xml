@@ -28,7 +28,7 @@
           android:title="@string/close_window"
           app:showAsAction="ifRoom"/>
     <item android:id="@+id/menu_window_list"
-          android:icon="@drawable/ic_menu_windows"
+          android:icon="@drawable/ic_windows_white_24dp"
           android:title="@string/window_list"/>
     <item android:id="@+id/menu_toggle_soft_keyboard"
           android:title="@string/toggle_soft_keyboard"/>
