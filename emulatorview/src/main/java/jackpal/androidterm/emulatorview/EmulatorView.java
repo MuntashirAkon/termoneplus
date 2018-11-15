@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2007 The Android Open Source Project
+ * Copyright (C) 2018 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -158,6 +159,7 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
     private boolean mCursorVisible = true;
 
     private boolean mIsSelectingText = false;
+    private OnToggleSelectingTextListener onToggleSelectingTextListener;
 
     private boolean mBackKeySendsCharacter = false;
     private int mControlKeyCode;
@@ -1586,6 +1588,12 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
             mSelX2 = -1;
             mSelY2 = -1;
         }
+        if (onToggleSelectingTextListener != null)
+            onToggleSelectingTextListener.onToggleSelectingText();
+    }
+
+    public void setOnToggleSelectingTextListener(OnToggleSelectingTextListener listener) {
+        onToggleSelectingTextListener = listener;
     }
 
     /**
@@ -1701,5 +1709,9 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
             return link.getURL();
         else
             return null;
+    }
+
+    public interface OnToggleSelectingTextListener {
+        void onToggleSelectingText();
     }
 }
