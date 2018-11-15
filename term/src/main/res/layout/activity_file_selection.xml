@@ -55,7 +55,7 @@
             android:layout_alignParentTop="true"
             android:scrollbars="vertical"
             app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-            tools:listitem="@layout/entry_item_directory"/>
+            tools:listitem="@layout/content_file_selection"/>
 
         <EditText
             android:id="@+id/path"

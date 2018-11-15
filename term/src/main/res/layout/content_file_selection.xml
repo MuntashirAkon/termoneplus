@@ -21,12 +21,19 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
+    <ImageView
+        android:id="@+id/entry_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/text2_margin"
+        android:layout_marginRight="@dimen/text2_margin"/>
+
+    <!-- compound drawables, i.e. android:drawable* crash on old devices
+    if support library is forced to use vector graphics -->
     <TextView
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableStart="@android:drawable/ic_delete"
-        android:drawableLeft="@android:drawable/ic_delete"
         android:textAppearance="?android:attr/textAppearanceLarge"/>
 
 </LinearLayout>

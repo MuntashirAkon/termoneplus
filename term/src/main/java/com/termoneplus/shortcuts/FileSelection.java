@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Roumen Petrov.  All rights reserved.
+ * Copyright (C) 2017-2018 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,6 +34,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.File;
@@ -42,6 +43,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.util.Arrays;
 
 import jackpal.androidterm.R;
+
 
 public class FileSelection extends AppCompatActivity {
     private final String PREFERENCES_FILE = "file_selection";
@@ -252,35 +254,27 @@ public class FileSelection extends AppCompatActivity {
         @NonNull
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view;
-            ViewHolder holder = null;
-
+            View view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.content_file_selection, parent, false);
+            ViewHolder holder = new ViewHolder(view);
+            ImageView entry_type = view.findViewById(R.id.entry_type);
             switch (viewType) {
                 case ViewType.ENTRY_PARENT: {
-                    view = LayoutInflater.from(parent.getContext())
-                            .inflate(R.layout.entry_item_up, parent, false);
+                    entry_type.setImageResource(R.drawable.ic_folderup);
                     view.setOnClickListener(dir_listener);
-                    holder = new ViewHolder(view);
                     break;
                 }
                 case ViewType.ENTRY_DIRECTORY: {
-                    view = LayoutInflater.from(parent.getContext())
-                            .inflate(R.layout.entry_item_directory, parent, false);
+                    entry_type.setImageResource(R.drawable.ic_folder);
                     view.setOnClickListener(dir_listener);
-                    holder = new ViewHolder(view);
                     break;
                 }
                 case ViewType.ENTRY_FILE: {
-                    view = LayoutInflater.from(parent.getContext())
-                            .inflate(R.layout.entry_item_file, parent, false);
                     view.setOnClickListener(file_listener);
-                    holder = new ViewHolder(view);
                     break;
                 }
                 case ViewType.ENTRY_UNKNOWN: {
-                    view = LayoutInflater.from(parent.getContext())
-                            .inflate(R.layout.entry_item_unknown, parent, false);
-                    holder = new ViewHolder(view);
+                    entry_type.setImageResource(android.R.drawable.ic_delete);
                     break;
                 }
             }
