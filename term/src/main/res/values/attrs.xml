@@ -16,6 +16,5 @@
 -->
 
 <resources>
-    <attr name="colorFloatToolbar" format="color"/>
     <attr name="colorFolder" format="color"/>
 </resources>
