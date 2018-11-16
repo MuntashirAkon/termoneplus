@@ -30,9 +30,8 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.termoneplus.R;
 import com.termoneplus.utils.TextIcon;
-
-import jackpal.androidterm.R;
 
 
 public class ColorValue {

@@ -27,7 +27,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 
-import jackpal.androidterm.R;
 
 public class WindowListFragment extends ListFragment implements AdapterView.OnItemClickListener {
     private OnItemSelectedListener listener;

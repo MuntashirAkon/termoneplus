@@ -18,7 +18,7 @@ package jackpal.androidterm;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.util.Log;
+
 
 /*
  * New procedure for launching a command in ATE.

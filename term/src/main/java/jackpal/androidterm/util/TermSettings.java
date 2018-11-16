@@ -16,15 +16,16 @@
 
 package jackpal.androidterm.util;
 
-import jackpal.androidterm.R;
-
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.support.annotation.IntDef;
 import android.view.KeyEvent;
 
+import com.termoneplus.R;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+
 
 /**
  * Terminal emulator settings

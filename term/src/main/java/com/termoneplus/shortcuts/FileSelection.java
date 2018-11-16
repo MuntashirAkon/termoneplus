@@ -37,12 +37,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.termoneplus.R;
+
 import java.io.File;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.Arrays;
-
-import jackpal.androidterm.R;
 
 
 public class FileSelection extends AppCompatActivity {

@@ -39,6 +39,7 @@ import jackpal.androidterm.emulatorview.TermSession;
 import jackpal.androidterm.util.SessionList;
 import jackpal.androidterm.util.TermSettings;
 
+
 public class RemoteInterface extends Activity {
     private TermSettings mSettings;
     private PathSettings path_settings;

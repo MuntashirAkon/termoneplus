@@ -23,8 +23,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.view.MenuItem;
 
-import jackpal.androidterm.R;
-
 
 public class TermPreferencesActivity extends AppCompatActivity {
 

@@ -31,6 +31,7 @@ import jackpal.androidterm.util.TermSettings;
 import java.io.*;
 import java.util.ArrayList;
 
+
 /**
  * A terminal session, controlling the process attached to the session (usually
  * a shell). It keeps track of process PID and destroys it's process group

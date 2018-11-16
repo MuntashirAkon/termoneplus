@@ -34,11 +34,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.termoneplus.Application;
+import com.termoneplus.R;
 import com.termoneplus.utils.TextIcon;
 
 import java.security.GeneralSecurityException;
 
-import jackpal.androidterm.R;
 import jackpal.androidterm.RemoteInterface;
 import jackpal.androidterm.RunShortcut;
 import jackpal.androidterm.compat.PRNGFixes;
@@ -182,7 +182,7 @@ public class AddShortcut extends AppCompatActivity {
         else
             wrapper.putExtra(
                     Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
-                    Intent.ShortcutIconResource.fromContext(context, jackpal.androidterm.R.mipmap.ic_launcher)
+                    Intent.ShortcutIconResource.fromContext(context, R.mipmap.ic_launcher)
             );
 
         setResult(RESULT_OK, wrapper);

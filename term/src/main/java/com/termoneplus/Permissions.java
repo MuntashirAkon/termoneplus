@@ -24,6 +24,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
+
 public class Permissions {
 
     public static final int REQUEST_EXTERNAL_STORAGE = 101;

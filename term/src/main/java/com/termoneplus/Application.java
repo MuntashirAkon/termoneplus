@@ -18,6 +18,8 @@ package com.termoneplus;
 
 
 public class Application extends android.app.Application {
+    public static final String ID = BuildConfig.APPLICATION_ID;
+
     /**
      * The tag we use when logging, so that our messages can be distinguished
      * from other messages in the log. Public because it's used by several

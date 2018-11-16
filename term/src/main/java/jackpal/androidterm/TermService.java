@@ -44,6 +44,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.termoneplus.Application;
+import com.termoneplus.R;
 
 import java.util.UUID;
 
@@ -51,6 +52,7 @@ import jackpal.androidterm.emulatorview.TermSession;
 import jackpal.androidterm.libtermexec.v1.ITerminal;
 import jackpal.androidterm.util.SessionList;
 import jackpal.androidterm.util.TermSettings;
+
 
 public class TermService extends Service implements TermSession.FinishCallback {
     private static final int RUNNING_NOTIFICATION = 1;
@@ -164,7 +166,7 @@ public class TermService extends Service implements TermSession.FinishCallback {
                         "TermOnePlus",
                         NotificationManager.IMPORTANCE_LOW);
                 channel.setDescription("TermOnePlus running notification");
-                channel.setShowBadge(false);;
+                channel.setShowBadge(false);
 
                 // Register the channel with the system ...
                 // Note we can't change the importance or other notification behaviors after this.
@@ -182,7 +184,7 @@ public class TermService extends Service implements TermSession.FinishCallback {
 
             // distinct Intent Uri and PendingIntent requestCode must be sufficient to avoid collisions
             final Intent switchIntent = new Intent()
-                    .setClassName(BuildConfig.APPLICATION_ID, Term.class.getName())
+                    .setClassName(Application.ID, Term.class.getName())
                     .setAction(Application.ACTION_OPEN_NEW_WINDOW)
                     .setData(Uri.parse(sessionHandle))
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)

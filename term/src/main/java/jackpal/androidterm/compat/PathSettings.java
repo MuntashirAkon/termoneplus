@@ -21,9 +21,9 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.text.TextUtils;
 
-import java.io.File;
+import com.termoneplus.R;
 
-import jackpal.androidterm.R;
+import java.io.File;
 
 
 /* NOTE: refactored path settings from TermSettings.java

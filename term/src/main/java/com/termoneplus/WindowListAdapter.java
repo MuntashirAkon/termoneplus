@@ -27,10 +27,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import jackpal.androidterm.R;
 import jackpal.androidterm.emulatorview.TermSession;
 import jackpal.androidterm.emulatorview.UpdateCallback;
 import jackpal.androidterm.util.SessionList;
+
 
 public class WindowListAdapter extends BaseAdapter implements UpdateCallback {
     protected final LayoutInflater inflater;

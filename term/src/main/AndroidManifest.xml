@@ -2,7 +2,7 @@
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="jackpal.androidterm"
+    package="com.termoneplus"
     android:installLocation="auto">
 
     <uses-sdk tools:overrideLibrary="android.support.graphics.drawable.animated"/>
@@ -46,9 +46,8 @@
         android:label="@string/application_terminal"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/AppTheme.NoActionBar">
-
         <activity
-            android:name=".Term"
+            android:name="jackpal.androidterm.Term"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustResize|stateAlwaysVisible">
@@ -59,9 +58,8 @@
                 <category android:name="android.intent.category.MULTIWINDOW_LAUNCHER"/>
             </intent-filter>
         </activity>
-
         <activity
-            android:name=".RemoteInterface"
+            android:name="jackpal.androidterm.RemoteInterface"
             android:excludeFromRecents="true">
             <intent-filter>
                 <action android:name="com.termoneplus.OPEN_NEW_WINDOW"/>
@@ -74,7 +72,7 @@
             android:name=".TermHere"
             android:exported="true"
             android:label="@string/activity_term_here_title"
-            android:targetActivity=".RemoteInterface">
+            android:targetActivity="jackpal.androidterm.RemoteInterface">
             <intent-filter>
                 <action android:name="android.intent.action.SEND"/>
 
@@ -85,7 +83,7 @@
         </activity-alias>
 
         <activity
-            android:name=".RunScript"
+            android:name="jackpal.androidterm.RunScript"
             android:excludeFromRecents="true"
             android:permission="com.termoneplus.permission.RUN_SCRIPT">
             <intent-filter>
@@ -94,9 +92,8 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
-
         <activity
-            android:name=".RunShortcut"
+            android:name="jackpal.androidterm.RunShortcut"
             android:excludeFromRecents="true">
             <intent-filter>
                 <action android:name="com.termoneplus.RUN_SHORTCUT"/>
@@ -105,7 +102,7 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".TermService">
+        <service android:name="jackpal.androidterm.TermService">
             <intent-filter>
                 <action android:name="jackpal.androidterm.action.START_TERM.v1"/>
 
@@ -114,26 +111,24 @@
         </service>
 
         <activity
-            android:name="com.termoneplus.WindowListActivity"
+            android:name=".WindowListActivity"
             android:label="@string/window_list"
-            android:parentActivityName=".Term">
+            android:parentActivityName="jackpal.androidterm.Term">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="jackpal.androidterm.Term"/>
         </activity>
-
         <activity
-            android:name="com.termoneplus.TermPreferencesActivity"
+            android:name=".TermPreferencesActivity"
             android:label="@string/preferences"
-            android:parentActivityName=".Term"
+            android:parentActivityName="jackpal.androidterm.Term"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="jackpal.androidterm.Term"/>
         </activity>
-
         <activity
-            android:name="com.termoneplus.shortcuts.AddShortcut"
+            android:name=".shortcuts.AddShortcut"
             android:configChanges="orientation|keyboard|keyboardHidden"
             android:label="@string/activity_shortcut_create"
             android:launchMode="singleTop"
@@ -150,9 +145,8 @@
                 <data android:mimeType="text/*"/>
             </intent-filter>
         </activity>
-
         <activity
-            android:name="com.termoneplus.shortcuts.FileSelection"
+            android:name=".shortcuts.FileSelection"
             android:configChanges="orientation|keyboardHidden"
             android:exported="true"
             android:label="@string/fsnavigator_title"

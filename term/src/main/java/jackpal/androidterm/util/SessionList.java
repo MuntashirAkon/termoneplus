@@ -23,6 +23,7 @@ import java.util.Collection;
 import jackpal.androidterm.emulatorview.TermSession;
 import jackpal.androidterm.emulatorview.UpdateCallback;
 
+
 /**
  * An ArrayList of TermSessions which allows users to register callbacks in
  * order to be notified when the list is changed.

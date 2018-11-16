@@ -61,6 +61,7 @@ import android.widget.Toast;
 
 import com.termoneplus.Application;
 import com.termoneplus.Permissions;
+import com.termoneplus.R;
 import com.termoneplus.TermActionBar;
 import com.termoneplus.TermPreferencesActivity;
 import com.termoneplus.WindowListActivity;
@@ -79,10 +80,10 @@ import jackpal.androidterm.emulatorview.compat.KeycodeConstants;
 import jackpal.androidterm.util.SessionList;
 import jackpal.androidterm.util.TermSettings;
 
+
 /**
  * A terminal emulator activity.
  */
-
 public class Term extends AppCompatActivity
         implements UpdateCallback, SharedPreferences.OnSharedPreferenceChangeListener {
     public static final int REQUEST_CHOOSE_WINDOW = 1;
@@ -636,7 +637,7 @@ public class Term extends AppCompatActivity
         String action = intent.getAction();
         if (TextUtils.isEmpty(action) ||
                 /* not from application */
-                !intent.getComponent().getPackageName().equals(BuildConfig.APPLICATION_ID)) {
+                !intent.getComponent().getPackageName().equals(Application.ID)) {
             return;
         }
 

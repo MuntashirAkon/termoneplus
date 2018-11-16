@@ -25,6 +25,7 @@ import android.util.Log;
 
 import com.termoneplus.Application;
 
+
 public final class RunShortcut extends RemoteInterface {
     public static final String ACTION_RUN_SHORTCUT = "com.termoneplus.RUN_SHORTCUT";
 

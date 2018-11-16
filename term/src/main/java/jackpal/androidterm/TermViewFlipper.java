@@ -29,11 +29,14 @@ import android.view.View;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
+import com.termoneplus.R;
+
 import jackpal.androidterm.emulatorview.EmulatorView;
 import jackpal.androidterm.emulatorview.TermSession;
 import jackpal.androidterm.emulatorview.UpdateCallback;
 
 import jackpal.androidterm.util.TermSettings;
+
 
 public class TermViewFlipper extends ViewFlipper implements Iterable<View> {
     private Context context;
