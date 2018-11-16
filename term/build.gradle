@@ -8,6 +8,8 @@ android {
         minSdkVersion project.ext.minSdkVersion
         targetSdkVersion project.ext.targetSdkVersion
 
+        vectorDrawables.useSupportLibrary = true
+
         versionCode project.ext.versionCode
         versionName project.ext.versionName
     }

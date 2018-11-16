@@ -27,6 +27,9 @@
         <item name="colorAccent">#8BC34A</item>
         <!-- custom application attributes -->
         <item name="colorFloatToolbar">#A0607D8B</item>
+        <!-- indirect reference to text color to avoid lint error
+        "Using theme reference in XML drawables requires API level 21" -->
+        <item name="colorFolder">?android:attr/textColorPrimary</item>
     </style>
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
@@ -39,6 +42,7 @@
         <item name="colorPrimaryDark">#455A64</item>
         <item name="colorAccent">#8BC34A</item>
         <item name="colorFloatToolbar">#A0607D8B</item>
+        <item name="colorFolder">?android:attr/textColorPrimary</item>
     </style>
     <style name="AppTheme.Light.NoActionBar">
         <item name="windowActionBar">false</item>

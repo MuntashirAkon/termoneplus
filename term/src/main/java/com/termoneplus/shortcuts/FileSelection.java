@@ -260,21 +260,22 @@ public class FileSelection extends AppCompatActivity {
             ImageView entry_type = view.findViewById(R.id.entry_type);
             switch (viewType) {
                 case ViewType.ENTRY_PARENT: {
-                    entry_type.setImageResource(R.drawable.ic_folderup);
+                    entry_type.setImageResource(R.drawable.fs_parent_24dp);
                     view.setOnClickListener(dir_listener);
                     break;
                 }
                 case ViewType.ENTRY_DIRECTORY: {
-                    entry_type.setImageResource(R.drawable.ic_folder);
+                    entry_type.setImageResource(R.drawable.fs_directory_24dp);
                     view.setOnClickListener(dir_listener);
                     break;
                 }
                 case ViewType.ENTRY_FILE: {
+                    entry_type.setImageResource(R.drawable.fs_file_regular);
                     view.setOnClickListener(file_listener);
                     break;
                 }
                 case ViewType.ENTRY_UNKNOWN: {
-                    entry_type.setImageResource(android.R.drawable.ic_delete);
+                    entry_type.setImageResource(R.drawable.fs_unknown_24dp);
                     break;
                 }
             }
