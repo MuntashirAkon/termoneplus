@@ -171,7 +171,7 @@
     <string name="use_keyboard_shortcuts_summary_off">Keyboard shortcuts disabled.</string>
 
     <string name="help">Help</string>
-    <string name="help_url" translatable="false">http://termoneplus.com/app/help/index.html</string>
+    <string name="help_url" translatable="false">https://termoneplus.com/app/help/index.html</string>
     <string name="activity_term_here_title">Term here</string>
     <!-- BEGIN SHORTCUT RELATED STRINGS -->
     <!-- AndroidManifest.xml -->
