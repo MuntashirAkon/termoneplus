@@ -17,6 +17,9 @@
 -->
 
 <resources>
+    <string name="application_site" translatable="false">https://www.termoneplus.com</string>
+    <string name="application_email" translatable="false">maintainer@termoneplus.com</string>
+
     <string name="application_terminal">Terminal Emulator</string>
     <string name="preferences">Preferences</string>
     <string name="new_window">New window</string>

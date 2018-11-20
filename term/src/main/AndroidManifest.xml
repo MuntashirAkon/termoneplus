@@ -47,7 +47,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/AppTheme.NoActionBar">
         <activity
-            android:name="jackpal.androidterm.Term"
+            android:name=".TermActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustResize|stateAlwaysVisible">
@@ -113,19 +113,19 @@
         <activity
             android:name=".WindowListActivity"
             android:label="@string/window_list"
-            android:parentActivityName="jackpal.androidterm.Term">
+            android:parentActivityName="com.termoneplus.TermActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="jackpal.androidterm.Term"/>
+                android:value="com.termoneplus.TermActivity"/>
         </activity>
         <activity
             android:name=".TermPreferencesActivity"
             android:label="@string/preferences"
-            android:parentActivityName="jackpal.androidterm.Term"
+            android:parentActivityName="com.termoneplus.TermActivity"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="jackpal.androidterm.Term"/>
+                android:value="com.termoneplus.TermActivity"/>
         </activity>
         <activity
             android:name=".shortcuts.AddShortcut"

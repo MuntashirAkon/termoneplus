@@ -45,6 +45,7 @@ import android.util.Log;
 
 import com.termoneplus.Application;
 import com.termoneplus.R;
+import com.termoneplus.TermActivity;
 
 import java.util.UUID;
 
@@ -133,7 +134,7 @@ public class TermService extends Service implements TermSession.FinishCallback {
     private Notification buildNotification() {
         NotificationChannelCompat.create(this);
 
-        Intent notifyIntent = new Intent(this, Term.class);
+        Intent notifyIntent = new Intent(this, TermActivity.class);
         notifyIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notifyIntent, 0);
 

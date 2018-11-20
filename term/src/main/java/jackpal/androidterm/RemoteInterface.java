@@ -32,6 +32,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.termoneplus.Application;
+import com.termoneplus.TermActivity;
 
 import jackpal.androidterm.compat.PathSettings;
 import jackpal.androidterm.emulatorview.TermSession;
@@ -161,7 +162,7 @@ public class RemoteInterface extends Activity {
         }
 
         try {
-            TermSession session = Term.createTermSession(this, mSettings, path_settings, initialCommand);
+            TermSession session = TermActivity.createTermSession(this, mSettings, path_settings, initialCommand);
 
             session.setFinishCallback(service);
             service.getSessions().add(session);
@@ -169,7 +170,7 @@ public class RemoteInterface extends Activity {
             String handle = UUID.randomUUID().toString();
             ((GenericTermSession) session).setHandle(handle);
 
-            Intent intent = new Intent(this, Term.class)
+            Intent intent = new Intent(this, TermActivity.class)
                     .setAction(Application.ACTION_OPEN_NEW_WINDOW)
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
@@ -206,7 +207,7 @@ public class RemoteInterface extends Activity {
             target.write('\r');
         }
 
-        Intent intent = new Intent(this, Term.class)
+        Intent intent = new Intent(this, TermActivity.class)
                 .setAction(Application.ACTION_SWITCH_WINDOW)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 .putExtra(Application.ARGUMENT_TARGET_WINDOW, index);
