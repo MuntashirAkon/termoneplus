@@ -31,4 +31,5 @@ public class Application extends android.app.Application {
     public static final String ACTION_SWITCH_WINDOW = "com.termoneplus.SWITCH_WINDOW";
 
     public static final String ARGUMENT_TARGET_WINDOW = "target_window";
+    public static final String ARGUMENT_WINDOW_ID = "window_id";
 }

@@ -29,7 +29,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
-import jackpal.androidterm.Term;
 import jackpal.androidterm.TermService;
 import jackpal.androidterm.util.SessionList;
 
@@ -94,7 +93,7 @@ public class WindowListActivity extends AppCompatActivity
     @Override
     public void onPositionSelected(int position) {
         Intent data = new Intent();
-        data.putExtra(Term.EXTRA_WINDOW_ID, position);
+        data.putExtra(Application.ARGUMENT_WINDOW_ID, position);
         setResult(RESULT_OK, data);
         finish();
     }

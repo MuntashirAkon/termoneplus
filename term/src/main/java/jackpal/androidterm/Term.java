@@ -87,7 +87,6 @@ import jackpal.androidterm.util.TermSettings;
 public class Term extends AppCompatActivity
         implements UpdateCallback, SharedPreferences.OnSharedPreferenceChangeListener {
     public static final int REQUEST_CHOOSE_WINDOW = 1;
-    public static final String EXTRA_WINDOW_ID = "jackpal.androidterm.window_id";
     /**
      * The name of the ViewFlipper in the resources.
      */
@@ -593,7 +592,7 @@ public class Term extends AppCompatActivity
         switch (request) {
             case REQUEST_CHOOSE_WINDOW:
                 if (result == RESULT_OK && data != null) {
-                    int position = data.getIntExtra(EXTRA_WINDOW_ID, -2);
+                    int position = data.getIntExtra(Application.ARGUMENT_WINDOW_ID, -2);
                     if (position >= 0) {
                         // Switch windows after session list is in sync, not here
                         onResumeSelectWindow = position;
