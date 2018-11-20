@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
- * Copyright (C) 2018 Roumen Petrov.  All rights reserved.
+ * Copyright (c) 2018 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,18 @@
  * limitations under the License.
 -->
 
-<resources>
-    <attr name="colorFolder" format="color"/>
-    <attr name="navigationBackground" format="reference"/>
-</resources>
+<shape
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <!-- Color details:
+      startColor : Blue Gray 50, 600 = ?attr/colorPrimaryDark
+      centerColor: Blue Gray 50, 400 = ?attr/colorPrimary
+      endColor   : Blue Gray 50, 300
+    -->
+    <gradient
+        android:angle="315"
+        android:centerColor="#78909C"
+        android:endColor="#90A4AE"
+        android:startColor="#546E7A"
+        android:type="linear"/>
+</shape>

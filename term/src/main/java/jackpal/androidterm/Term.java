@@ -251,6 +251,7 @@ public class Term extends AppCompatActivity
             if (mActionBarMode == TermSettings.ACTION_BAR_MODE_HIDES)
                 mActionBar.hide();
         });
+        mActionBar.setOnNavigationItemSelectedListener(this::onNavigationItemSelected);
 
         mViewFlipper = findViewById(VIEW_FLIPPER);
 
@@ -363,6 +364,8 @@ public class Term extends AppCompatActivity
 
         emulatorView.setExtGestureListener(new EmulatorViewGestureListener(emulatorView));
         emulatorView.setOnKeyListener(mKeyListener);
+        emulatorView.setOnToggleSelectingTextListener(
+                () -> mActionBar.lockDrawer(emulatorView.getSelectingText()));
         registerForContextMenu(emulatorView);
 
         return emulatorView;
@@ -502,37 +505,49 @@ public class Term extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.menu_preferences) {
-            doPreferences();
-        } else if (id == R.id.menu_new_window) {
+        if (id == R.id.menu_new_window) {
             doCreateNewWindow();
         } else if (id == R.id.menu_close_window) {
             confirmCloseWindow();
-        } else if (id == R.id.menu_window_list) {
-            startActivityForResult(new Intent(this, WindowListActivity.class), REQUEST_CHOOSE_WINDOW);
         } else if (id == R.id.menu_reset) {
             doResetTerminal();
             Toast toast = Toast.makeText(this, R.string.reset_toast_notification, Toast.LENGTH_LONG);
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
-        } else if (id == R.id.menu_send_email) {
-            doEmailTranscript();
-        } else if (id == R.id.menu_special_keys) {
-            doDocumentKeys();
         } else if (id == R.id.menu_toggle_soft_keyboard) {
             doToggleSoftKeyboard();
         } else if (id == R.id.menu_toggle_wakelock) {
             doToggleWakeLock();
         } else if (id == R.id.menu_toggle_wifilock) {
             doToggleWifiLock();
-        } else if (id == R.id.action_help) {
-            WrapOpenURL.launch(this, R.string.help_url);
         }
         // Hide the action bar if appropriate
         if (mActionBarMode == TermSettings.ACTION_BAR_MODE_HIDES) {
             mActionBar.hide();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.nav_window_list:
+                startActivityForResult(new Intent(this, WindowListActivity.class), REQUEST_CHOOSE_WINDOW);
+                return true;
+            case R.id.nav_preferences:
+                doPreferences();
+                return true;
+            case R.id.nav_special_keys:
+                doDocumentKeys();
+                return true;
+            case R.id.nav_action_help:
+                WrapOpenURL.launch(this, R.string.help_url);
+                return true;
+            case R.id.nav_send_email:
+                doEmailTranscript();
+                return true;
+        }
+        return false;
     }
 
     private void doCreateNewWindow() {
