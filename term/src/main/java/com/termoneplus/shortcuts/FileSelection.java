@@ -270,7 +270,7 @@ public class FileSelection extends AppCompatActivity {
                     break;
                 }
                 case ViewType.ENTRY_FILE: {
-                    entry_type.setImageResource(R.drawable.fs_file_regular);
+                    entry_type.setImageResource(R.drawable.fs_file_24dp);
                     view.setOnClickListener(file_listener);
                     break;
                 }
