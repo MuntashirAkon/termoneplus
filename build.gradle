@@ -41,6 +41,6 @@ task clean(type: Delete) {
 }
 
 apply from: 'version.gradle'
-task wrapper (type:Wrapper) {
-    distributionUrl = "https://services.gradle.org/distributions/gradle-${gradleVersion}-bin.zip"
+wrapper {
+    //distributionUrl = "https://services.gradle.org/distributions/gradle-${gradleVersion}-bin.zip"
 }
