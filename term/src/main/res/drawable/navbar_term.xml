@@ -27,7 +27,7 @@ As work-around will be used reference to drawable defined per theme.
     <!-- Color details:
       startColor : Blue Gray 50, 700 = ?attr/colorPrimaryDark
       centerColor: Blue Gray 50, 500 = ?attr/colorPrimary
-      endColor   : Blue Gray 50, 400
+      endColor   : Blue Gray 50, 400 = ?attr/colorPrimaryLight
     -->
     <gradient
         android:angle="315"

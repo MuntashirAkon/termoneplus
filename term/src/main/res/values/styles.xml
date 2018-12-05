@@ -27,6 +27,7 @@
         <!-- a secondary color for controls like checkboxes and text fields -->
         <item name="colorAccent">#8BC34A</item><!--Light Green 50, 500-->
         <!-- custom application attributes -->
+        <item name="colorPrimaryLight">#78909C</item><!--Blue Gray 50, 400-->
         <item name="navigationBackground">@drawable/navbar_term</item>
         <!-- indirect reference to text color to avoid lint error
         "Using theme reference in XML drawables requires API level 21" -->
@@ -47,6 +48,7 @@
     <style name="BaseAppTheme.Light" parent="Theme.AppCompat.Light">
         <item name="colorPrimary">#78909C</item><!--Blue Gray 50, 400-->
         <item name="colorPrimaryDark">#546E7A</item><!--Blue Gray 50, 600-->
+        <item name="colorPrimaryLight">#90A4AE</item><!--Blue Gray 50, 300-->
         <item name="colorAccent">#8BC34A</item>
         <item name="navigationBackground">@drawable/navbar_term_light</item>
         <item name="colorFolder">?android:attr/textColorPrimary</item>

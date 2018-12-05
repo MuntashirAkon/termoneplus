@@ -21,7 +21,7 @@
     <!-- Color details:
       startColor : Blue Gray 50, 600 = ?attr/colorPrimaryDark
       centerColor: Blue Gray 50, 400 = ?attr/colorPrimary
-      endColor   : Blue Gray 50, 300
+      endColor   : Blue Gray 50, 300 = ?attr/colorPrimaryLight
     -->
     <gradient
         android:angle="315"
