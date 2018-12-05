@@ -45,7 +45,7 @@
     </style>
 
     <!-- "TermOne Plus" "Light" theme -->
-    <style name="BaseAppTheme.Light" parent="Theme.AppCompat.Light">
+    <style name="BaseAppTheme.Light" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">#78909C</item><!--Blue Gray 50, 400-->
         <item name="colorPrimaryDark">#546E7A</item><!--Blue Gray 50, 600-->
         <item name="colorPrimaryLight">#90A4AE</item><!--Blue Gray 50, 300-->
