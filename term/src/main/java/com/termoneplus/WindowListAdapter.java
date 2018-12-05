@@ -38,8 +38,12 @@ public class WindowListAdapter extends BaseAdapter implements UpdateCallback {
     private SessionList sessions;
 
     public WindowListAdapter(Context context) {
+        this(context, LayoutInflater.from(context));
+    }
+
+    public WindowListAdapter(Context context, LayoutInflater inflater) {
         this.context = context;
-        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.inflater = inflater;
     }
 
     public void setSessions(SessionList sessions) {

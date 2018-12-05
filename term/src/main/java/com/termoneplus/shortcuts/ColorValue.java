@@ -97,8 +97,8 @@ public class ColorValue {
         data[2].color = Color.green(color);
         data[3].color = Color.blue(color);
 
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.activity_color_value, null);
+        View view = LayoutInflater.from(context)
+                .inflate(R.layout.activity_color_value, null);
 
         icon_text = view.findViewById(R.id.icon_text);
         icon_text.setTextColor(color);
