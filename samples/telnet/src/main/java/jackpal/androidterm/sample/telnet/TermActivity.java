@@ -1,10 +1,10 @@
 package jackpal.androidterm.sample.telnet;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.method.TextKeyListener;
 import android.util.DisplayMetrics;
@@ -21,6 +21,7 @@ import java.net.Socket;
 import jackpal.androidterm.emulatorview.EmulatorView;
 import jackpal.androidterm.emulatorview.TermSession;
 
+
 /**
  * This sample activity demonstrates the use of EmulatorView.
  * <p>
@@ -28,7 +29,7 @@ import jackpal.androidterm.emulatorview.TermSession;
  * to a local program.  The Telnet connection demonstrates a more complex case;
  * see the TelnetSession class for more details.
  */
-public class TermActivity extends Activity {
+public class TermActivity extends AppCompatActivity {
     final private static String TAG = "TermActivity";
     private static final int MSG_CONNECTED = 1;
     Socket mSocket;

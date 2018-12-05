@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ * Copyright (C) 2018 Roumen Petrov.  All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+-->
+
+<resources>
+
+    <!-- "TermOne Plus" "Dark" theme(default) -->
+    <style name="BaseAppTheme" parent="Theme.AppCompat">
+        <!-- color for the appbar and other primary UI elements -->
+        <item name="colorPrimary">#607D8B</item><!--Blue Gray 50, 500-->
+        <!-- a darker variant of the primary color, used for the status bar
+        (on Android 5.0+, API level 21) and contextual app bars -->
+        <item name="colorPrimaryDark">#455A64</item><!--Blue Gray 50, 700-->
+        <!-- a secondary color for controls like checkboxes and text fields -->
+        <item name="colorAccent">#8BC34A</item><!--Light Green 50, 500-->
+    </style>
+
+    <!-- actual theme overridden at API level -->
+    <style name="AppTheme" parent="BaseAppTheme" />
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="actionModeBackground">?attr/colorPrimary</item>
+    </style>
+
+    <!-- "TermOne Plus" "Light" theme -->
+    <style name="BaseAppTheme.Light" parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">#78909C</item><!--Blue Gray 50, 400-->
+        <item name="colorPrimaryDark">#546E7A</item><!--Blue Gray 50, 600-->
+        <item name="colorAccent">#8BC34A</item>
+    </style>
+
+    <!-- actual theme overridden at API level -->
+    <style name="AppTheme.Light" parent="BaseAppTheme.Light" />
+
+    <style name="AppTheme.Light.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="actionModeBackground">?attr/colorPrimary</item>
+    </style>
+
+</resources>

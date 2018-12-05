@@ -1,18 +1,18 @@
 package jackpal.androidterm.sample.telnet;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.EditText;
+
 
 /**
  * Provides a UI to launch the terminal emulator activity, connected to
  * either a local shell or a Telnet server.
  */
-public class LaunchActivity extends Activity {
+public class LaunchActivity extends AppCompatActivity {
     private static final String TAG = "TelnetLaunchActivity";
 
     /**
