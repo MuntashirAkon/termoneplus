@@ -59,7 +59,7 @@ public class TermActivity extends Activity {
         /* Text entry box at the bottom of the activity.  Note that you can
            also send input (whether from a hardware device or soft keyboard)
            directly to the EmulatorView. */
-        mEntry = (EditText) findViewById(R.id.term_entry);
+        mEntry = findViewById(R.id.term_entry);
         mEntry.setOnEditorActionListener((v, action, ev) -> {
             // Ignore enter-key-up events
             if (ev != null && ev.getAction() == KeyEvent.ACTION_UP) {
@@ -81,14 +81,14 @@ public class TermActivity extends Activity {
 
         /* Sends the content of the text entry box to the terminal, without
            sending a carriage return afterwards */
-        Button sendButton = (Button) findViewById(R.id.term_entry_send);
+        Button sendButton = findViewById(R.id.term_entry_send);
         sendButton.setOnClickListener(v -> {
             // Don't try to send something if we're not connected yet
             TermSession session = mSession;
             if (mSession == null) {
                 return;
             }
-            Editable e = (Editable) mEntry.getText();
+            Editable e = mEntry.getText();
             session.write(e.toString());
             TextKeyListener.clear(e);
         });
@@ -96,7 +96,7 @@ public class TermActivity extends Activity {
         /**
          * EmulatorView setup.
          */
-        EmulatorView view = (EmulatorView) findViewById(R.id.emulatorView);
+        EmulatorView view = findViewById(R.id.emulatorView);
         mEmulatorView = view;
 
         /* Let the EmulatorView know the screen's density. */

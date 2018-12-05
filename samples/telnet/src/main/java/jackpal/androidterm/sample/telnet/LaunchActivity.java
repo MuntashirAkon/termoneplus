@@ -29,7 +29,7 @@ public class LaunchActivity extends Activity {
             startActivity(intent);
         });
 
-        final EditText hostEdit = (EditText) findViewById(R.id.hostname);
+        final EditText hostEdit = findViewById(R.id.hostname);
         addClickListener(R.id.launchTelnet, v -> {
             Intent intent = new Intent(context, TermActivity.class);
             intent.putExtra("type", "telnet");
@@ -40,6 +40,6 @@ public class LaunchActivity extends Activity {
     }
 
     private void addClickListener(int buttonId, OnClickListener onClickListener) {
-        ((Button) findViewById(buttonId)).setOnClickListener(onClickListener);
+        findViewById(buttonId).setOnClickListener(onClickListener);
     }
 }
