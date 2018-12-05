@@ -21,6 +21,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
+import android.support.v7.app.AlertDialog;
 
 import java.util.List;
 
@@ -72,7 +73,7 @@ public class WrapOpenURL {
                     .setNeutralButton(android.R.string.ok, null)
                     .create().show();
         } else {
-            new android.app.AlertDialog.Builder(context)
+            new AlertDialog.Builder(context)
                     .setTitle(android.R.string.dialog_alert_title)
                     .setIcon(iconId)
                     .setMessage(message)
