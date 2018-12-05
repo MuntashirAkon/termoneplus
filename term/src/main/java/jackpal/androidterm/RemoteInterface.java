@@ -16,11 +16,6 @@
 
 package jackpal.androidterm;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.UUID;
-
-import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
@@ -29,19 +24,23 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.termoneplus.Application;
 import com.termoneplus.TermActivity;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.UUID;
+
 import jackpal.androidterm.compat.PathSettings;
 import jackpal.androidterm.emulatorview.TermSession;
-
 import jackpal.androidterm.util.SessionList;
 import jackpal.androidterm.util.TermSettings;
 
 
-public class RemoteInterface extends Activity {
+public class RemoteInterface extends AppCompatActivity {
     private TermSettings mSettings;
     private PathSettings path_settings;
 
