@@ -20,11 +20,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:paddingStart="@dimen/activity_horizontal_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingEnd="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin">
+    android:orientation="horizontal">
 
     <TextView
         android:id="@+id/title"
@@ -33,18 +29,27 @@
         android:layout_gravity="center_vertical"
         android:layout_weight="8"
         android:background="@android:color/transparent"
-        android:paddingTop="@dimen/text4_margin"
-        android:paddingBottom="@dimen/text4_margin"
+        android:paddingStart="@dimen/text2_margin"
+        android:paddingLeft="@dimen/text2_margin"
+        android:paddingTop="@dimen/text2_margin"
+        android:paddingBottom="@dimen/text2_margin"
         android:textAppearance="?android:attr/textAppearanceMedium"/>
 
-    <view
-        android:id="@+id/close"
-        class="com.termoneplus.WindowListFragment$CloseButton"
+    <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_weight="1"
-        android:background="@android:drawable/btn_default_small"
-        app:srcCompat="@drawable/ic_close_white_24dp"/>
+        android:layout_gravity="bottom"
+        android:layout_weight="1">
+
+        <view
+            android:id="@+id/close"
+            class="com.termoneplus.WindowListFragment$CloseButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|end"
+            android:background="@android:drawable/btn_default_small"
+            app:srcCompat="@drawable/ic_close_white_24dp"/>
+
+    </FrameLayout>
 
 </LinearLayout>
