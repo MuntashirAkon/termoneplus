@@ -17,6 +17,7 @@
 
 <android.support.v4.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -105,7 +106,7 @@
                 android:maxWidth="100dp"
                 android:maxHeight="100dp"
                 android:scaleType="centerInside"
-                android:src="@mipmap/ic_launcher"/>
+                app:srcCompat="@mipmap/ic_launcher"/>
 
         </LinearLayout>
 
