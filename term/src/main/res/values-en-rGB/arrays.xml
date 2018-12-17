@@ -96,6 +96,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <item>Solarised Light</item>
         <item>Solarised Dark</item>
         <item>Linux Console</item>
+        <item>Dark Pastels</item>
     </string-array>
 
     <string-array name="entries_backaction_preference">

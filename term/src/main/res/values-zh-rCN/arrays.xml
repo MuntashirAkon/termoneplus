@@ -79,6 +79,7 @@
         <item>爆光过度</item>
         <item>爆光不足</item>
         <item>Linux 终端</item>
+        <item>Dark Pastels</item>
     </string-array>
 
     <string-array name="entries_backaction_preference">

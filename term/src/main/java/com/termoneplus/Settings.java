@@ -33,6 +33,7 @@ public class Settings {
             new ColorScheme(0XFF33B5E5, 0XFF000000) /*holo-blue on black*/,
             new ColorScheme(0XFF657B83, 0XFFFDF6E3) /*solarized light*/,
             new ColorScheme(0XFF839496, 0XFF002B36) /*solarized dark*/,
-            new ColorScheme(0XFFAAAAAA, 0XFF000000) /*linux console*/
+            new ColorScheme(0XFFAAAAAA, 0XFF000000) /*linux console*/,
+            new ColorScheme(0xFFDCDCCC, 0xFF2C2C2C) /*dark pastels*/
     };
 }

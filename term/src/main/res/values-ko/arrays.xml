@@ -79,6 +79,7 @@
         <item>밝은 솔라리스</item>
         <item>어두운 솔라리스</item>
         <item>Linux Console</item>
+        <item>Dark Pastels</item>
     </string-array>
 
     <string-array name="entries_backaction_preference">

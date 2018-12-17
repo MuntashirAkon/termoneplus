@@ -89,6 +89,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <item>Осветен светъл</item>
         <item>Осветен тъмен</item>
         <item>Терминал на Линукс</item>
+        <item>Тъмни пастели</item>
     </string-array>
     <string-array name="entries_backaction_preference">
         <item>Затваряне на всички терминални прозорци</item>

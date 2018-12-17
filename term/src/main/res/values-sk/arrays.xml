@@ -78,6 +78,7 @@
         <item>Solarizovaná svetlá</item>
         <item>Solarizovaná tmavá</item>
         <item>Linuxová konzola</item>
+        <item>Dark Pastels</item>
     </string-array>
 
     <string-array name="entries_backaction_preference">

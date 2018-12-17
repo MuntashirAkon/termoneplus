@@ -79,6 +79,7 @@
         <item>Светла соларизована</item>
         <item>Тамна соларизована</item>
         <item>Линукс конзола</item>
+        <item>Dark Pastels</item>
     </string-array>
 
     <string-array name="entries_backaction_preference">

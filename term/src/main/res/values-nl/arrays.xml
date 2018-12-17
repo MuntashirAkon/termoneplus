@@ -78,6 +78,7 @@
         <item>Gesolariseerd licht</item>
         <item>Gesolariseerd donker</item>
         <item>Linux console</item>
+        <item>Dark Pastels</item>
     </string-array>
 
     <string-array name="entries_backaction_preference">

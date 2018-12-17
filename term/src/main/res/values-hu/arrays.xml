@@ -79,6 +79,7 @@
         <item>Solarized világos</item>
         <item>Solarized sötét</item>
         <item>Linux konzol</item>
+        <item>Dark Pastels</item>
     </string-array>
 
     <string-array name="entries_backaction_preference">

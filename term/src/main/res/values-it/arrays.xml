@@ -79,6 +79,7 @@
         <item>Solarizzato Chiaro</item>
         <item>Solarizzato Scuro</item>
         <item>Console Linux</item>
+        <item>Dark Pastels</item>
     </string-array>
 
     <string-array name="entries_backaction_preference">
