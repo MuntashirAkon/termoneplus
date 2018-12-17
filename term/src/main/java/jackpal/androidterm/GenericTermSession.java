@@ -64,7 +64,7 @@ class GenericTermSession extends TermSession {
     }
 
     public void updatePrefs(TermSettings settings) {
-        setColorScheme(new ColorScheme(settings.getColorScheme()));
+        setColorScheme(settings.getColorScheme());
         setDefaultUTF8Mode(settings.defaultToUTF8Mode());
         mCloseWindowOnProcessExit = settings.closeWindowOnProcessExit();
     }

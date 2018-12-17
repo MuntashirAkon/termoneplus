@@ -22,9 +22,12 @@ import android.support.annotation.IntDef;
 import android.view.KeyEvent;
 
 import com.termoneplus.R;
+import com.termoneplus.Settings;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+
+import jackpal.androidterm.emulatorview.ColorScheme;
 
 
 /**
@@ -77,33 +80,6 @@ public class TermSettings {
     private static final String ALT_SENDS_ESC = "alt_sends_esc";
     private static final String MOUSE_TRACKING = "mouse_tracking";
     private static final String USE_KEYBOARD_SHORTCUTS = "use_keyboard_shortcuts";
-
-    public static final int WHITE               = 0xffffffff;
-    public static final int BLACK               = 0xff000000;
-    public static final int BLUE                = 0xff344ebd;
-    public static final int GREEN               = 0xff00ff00;
-    public static final int AMBER               = 0xffffb651;
-    public static final int RED                 = 0xffff0113;
-    public static final int HOLO_BLUE           = 0xff33b5e5;
-    public static final int SOLARIZED_FG        = 0xff657b83;
-    public static final int SOLARIZED_BG        = 0xfffdf6e3;
-    public static final int SOLARIZED_DARK_FG   = 0xff839496;
-    public static final int SOLARIZED_DARK_BG   = 0xff002b36;
-    public static final int LINUX_CONSOLE_WHITE = 0xffaaaaaa;
-
-    // foreground color, background color
-    public static final int[][] COLOR_SCHEMES = {
-        {BLACK,             WHITE},
-        {WHITE,             BLACK},
-        {WHITE,             BLUE},
-        {GREEN,             BLACK},
-        {AMBER,             BLACK},
-        {RED,               BLACK},
-        {HOLO_BLUE,         BLACK},
-        {SOLARIZED_FG,      SOLARIZED_BG},
-        {SOLARIZED_DARK_FG, SOLARIZED_DARK_BG},
-        {LINUX_CONSOLE_WHITE, BLACK}
-    };
 
     public static final int ACTION_BAR_MODE_ALWAYS_VISIBLE = 1;
     public static final int ACTION_BAR_MODE_HIDES = 2;
@@ -187,7 +163,7 @@ public class TermSettings {
         // mCursorStyle = readIntPref(CURSORSTYLE_KEY, mCursorStyle, 2);
         // mCursorBlink = readIntPref(CURSORBLINK_KEY, mCursorBlink, 1);
         mFontSize = readIntPref(FONTSIZE_KEY, mFontSize, 288);
-        mColorId = readIntPref(COLOR_KEY, mColorId, COLOR_SCHEMES.length - 1);
+        mColorId = readIntPref(COLOR_KEY, mColorId, Settings.color_schemes.length - 1);
         mUTF8ByDefault = readBooleanPref(UTF8_KEY, mUTF8ByDefault);
         mBackKeyAction = readIntPref(BACKACTION_KEY, mBackKeyAction, BACK_KEY_MAX);
         mControlKeyId = readIntPref(CONTROLKEY_KEY, mControlKeyId,
@@ -252,8 +228,8 @@ public class TermSettings {
         return mFontSize;
     }
 
-    public int[] getColorScheme() {
-        return COLOR_SCHEMES[mColorId];
+    public ColorScheme getColorScheme() {
+        return Settings.color_schemes[mColorId];
     }
 
     public boolean defaultToUTF8Mode() {

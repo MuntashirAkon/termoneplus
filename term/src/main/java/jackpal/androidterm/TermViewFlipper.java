@@ -90,8 +90,7 @@ public class TermViewFlipper extends ViewFlipper implements Iterable<View> {
 
     public void updatePrefs(TermSettings settings) {
         boolean statusBarVisible = settings.showStatusBar();
-        int[] colorScheme = settings.getColorScheme();
-        setBackgroundColor(colorScheme[1]);
+        setBackgroundColor(settings.getColorScheme().getBackColor());
         mStatusBarVisible = statusBarVisible;
     }
 

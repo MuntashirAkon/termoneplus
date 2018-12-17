@@ -32,7 +32,7 @@ public class TermView extends EmulatorView {
 
     public void updatePrefs(TermSettings settings, ColorScheme scheme) {
         if (scheme == null) {
-            scheme = new ColorScheme(settings.getColorScheme());
+            scheme = settings.getColorScheme();
         }
 
         setTextSize(settings.getFontSize());
