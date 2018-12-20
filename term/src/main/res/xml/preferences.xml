@@ -151,6 +151,12 @@
                 android:summaryOn="@string/alt_sends_esc_summary_on"
                 android:summaryOff="@string/alt_sends_esc_summary_off" />
 
+        <CheckBoxPreference
+            android:defaultValue="@bool/pref_mouse_tracking_default"
+            android:key="mouse_tracking"
+            android:summary="@string/summary_mouse_tracking_preference"
+            android:title="@string/title_mouse_tracking_preference"/>
+
         <CheckBoxPreference android:title="@string/title_use_keyboard_shortcuts"
                 android:key="use_keyboard_shortcuts"
                 android:defaultValue="@bool/pref_use_keyboard_shortcuts_default"
@@ -182,10 +188,6 @@
             android:entries="@array/entries_termtype_preference"
             android:entryValues="@array/entries_termtype_preference"
             android:dialogTitle="@string/dialog_title_termtype_preference" />
-    <CheckBoxPreference android:title="@string/title_mouse_tracking_preference"
-            android:key="mouse_tracking"
-            android:defaultValue="@bool/pref_mouse_tracking_default"
-            android:summary="@string/summary_mouse_tracking_preference" />
     <CheckBoxPreference
             android:key="verify_path"
             android:defaultValue="@bool/pref_verify_path_default"
