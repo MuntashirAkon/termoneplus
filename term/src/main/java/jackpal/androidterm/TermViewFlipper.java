@@ -42,12 +42,9 @@ public class TermViewFlipper extends ViewFlipper implements Iterable<View> {
     private Context context;
     private Toast mToast;
     private LinkedList<UpdateCallback> callbacks;
-    private boolean mStatusBarVisible = false;
 
     private int mCurWidth;
     private int mCurHeight;
-    private Rect mVisibleRect = new Rect();
-    private Rect mWindowRect = new Rect();
     private LayoutParams mChildParams;
     private boolean mRedoLayout = false;
 
@@ -81,15 +78,10 @@ public class TermViewFlipper extends ViewFlipper implements Iterable<View> {
         this.context = context;
         callbacks = new LinkedList<>();
         mChildParams = new LayoutParams(0, 0, Gravity.TOP | Gravity.LEFT);
-
-        if (!isInEditMode())
-            updateVisibleRect();
     }
 
     public void updatePrefs(TermSettings settings) {
-        boolean statusBarVisible = settings.showStatusBar();
         setBackgroundColor(settings.getColorScheme().getBackColor());
-        mStatusBarVisible = statusBarVisible;
     }
 
     @NonNull
@@ -199,43 +191,6 @@ public class TermViewFlipper extends ViewFlipper implements Iterable<View> {
     @Override
     public void addView(View v) {
         super.addView(v, mChildParams);
-    }
-
-    private void updateVisibleRect() {
-        Rect visible = mVisibleRect;
-        Rect window = mWindowRect;
-
-        /* Get rectangle representing visible area of this view, as seen by
-           the activity (takes other views in the layout into account, but
-           not space used by the IME) */
-        getGlobalVisibleRect(visible);
-
-        /* Get rectangle representing visible area of this window (takes
-           IME into account, but not other views in the layout) */
-        getWindowVisibleDisplayFrame(window);
-        /* Work around bug in getWindowVisibleDisplayFrame on API < 10, and
-           avoid a distracting height change as status bar hides otherwise */
-        if (!mStatusBarVisible) {
-            window.top = 0;
-        }
-
-        // Clip visible rectangle's top to the visible portion of the window
-        if (visible.width() == 0 && visible.height() == 0) {
-            visible.left = window.left;
-            visible.top = window.top;
-        } else {
-            if (visible.left < window.left) {
-                visible.left = window.left;
-            }
-            if (visible.top < window.top) {
-                visible.top = window.top;
-            }
-        }
-        // Always set the bottom of the rectangle to the window bottom
-        /* XXX This breaks with a split action bar, but if we don't do this,
-           it's possible that the view won't resize correctly on IME hide */
-        visible.right = window.right;
-        visible.bottom = window.bottom;
     }
 
     /**
