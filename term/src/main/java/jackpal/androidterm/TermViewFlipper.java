@@ -17,9 +17,6 @@
 
 package jackpal.androidterm;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Rect;
@@ -32,10 +29,12 @@ import android.widget.ViewFlipper;
 
 import com.termoneplus.R;
 
+import java.util.Iterator;
+import java.util.LinkedList;
+
 import jackpal.androidterm.emulatorview.EmulatorView;
 import jackpal.androidterm.emulatorview.TermSession;
 import jackpal.androidterm.emulatorview.UpdateCallback;
-
 import jackpal.androidterm.util.TermSettings;
 
 
@@ -49,7 +48,7 @@ public class TermViewFlipper extends ViewFlipper implements Iterable<View> {
     private int mCurHeight;
     private Rect mVisibleRect = new Rect();
     private Rect mWindowRect = new Rect();
-    private LayoutParams mChildParams = null;
+    private LayoutParams mChildParams;
     private boolean mRedoLayout = false;
 
     class ViewFlipperIterator implements Iterator<View> {
@@ -81,12 +80,10 @@ public class TermViewFlipper extends ViewFlipper implements Iterable<View> {
     private void commonConstructor(Context context) {
         this.context = context;
         callbacks = new LinkedList<>();
+        mChildParams = new LayoutParams(0, 0, Gravity.TOP | Gravity.LEFT);
 
         if (!isInEditMode())
             updateVisibleRect();
-        Rect visible = mVisibleRect;
-        mChildParams = new LayoutParams(visible.width(), visible.height(),
-            Gravity.TOP|Gravity.LEFT);
     }
 
     public void updatePrefs(TermSettings settings) {
@@ -153,7 +150,7 @@ public class TermViewFlipper extends ViewFlipper implements Iterable<View> {
             return;
         }
 
-        String title = context.getString(R.string.window_title,getDisplayedChild()+1);
+        String title = context.getString(R.string.window_title, getDisplayedChild() + 1);
         if (session instanceof GenericTermSession) {
             title = ((GenericTermSession) session).getTitle(title);
         }
