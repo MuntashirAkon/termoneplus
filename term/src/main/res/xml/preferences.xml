@@ -107,6 +107,39 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:title="@string/shell_preferences">
+
+        <ListPreference
+            android:defaultValue="@string/pref_termtype_default"
+            android:dialogTitle="@string/dialog_title_termtype_preference"
+            android:entries="@array/entries_termtype_preference"
+            android:entryValues="@array/entries_termtype_preference"
+            android:key="termtype"
+            android:summary="@string/summary_termtype_preference"
+            android:title="@string/title_termtype_preference"/>
+
+        <EditTextPreference
+            android:key="home_path"
+            android:summary="@string/summary_home_path_preference"
+            android:title="@string/title_home_path_preference"/>
+
+        <EditTextPreference
+            android:defaultValue="@string/pref_shell_default"
+            android:dialogTitle="@string/dialog_title_shell_preference"
+            android:key="shell"
+            android:summary="@string/summary_shell_preference"
+            android:title="@string/title_shell_preference"/>
+
+        <EditTextPreference
+            android:defaultValue="@string/pref_initialcommand_default"
+            android:dialogTitle="@string/dialog_title_initialcommand_preference"
+            android:key="initialcommand"
+            android:summary="@string/summary_initialcommand_preference"
+            android:title="@string/title_initialcommand_preference"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
             android:title="@string/keyboard_preferences">
 
         <ListPreference
@@ -164,36 +197,6 @@
                 android:summaryOff="@string/use_keyboard_shortcuts_summary_off" />
 
         </PreferenceCategory>
-
-    <PreferenceCategory
-        android:title="@string/shell_preferences">
-
-    <EditTextPreference
-            android:key="shell"
-            android:defaultValue="@string/pref_shell_default"
-            android:title="@string/title_shell_preference"
-            android:summary="@string/summary_shell_preference"
-            android:dialogTitle="@string/dialog_title_shell_preference" />
-    <EditTextPreference
-            android:key="initialcommand"
-            android:defaultValue="@string/pref_initialcommand_default"
-            android:title="@string/title_initialcommand_preference"
-            android:summary="@string/summary_initialcommand_preference"
-            android:dialogTitle="@string/dialog_title_initialcommand_preference" />
-    <ListPreference
-            android:key="termtype"
-            android:defaultValue="@string/pref_termtype_default"
-            android:title="@string/title_termtype_preference"
-            android:summary="@string/summary_termtype_preference"
-            android:entries="@array/entries_termtype_preference"
-            android:entryValues="@array/entries_termtype_preference"
-            android:dialogTitle="@string/dialog_title_termtype_preference" />
-    <!-- the home_path default is set dynamically in Term.onResume() -->
-    <EditTextPreference
-            android:key="home_path"
-            android:title="@string/title_home_path_preference"
-            android:summary="@string/summary_home_path_preference" />
-    </PreferenceCategory>
 
     <PreferenceCategory>
 
