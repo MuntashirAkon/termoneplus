@@ -241,41 +241,6 @@ public class TermViewFlipper extends ViewFlipper implements Iterable<View> {
         visible.bottom = window.bottom;
     }
 
-    private void adjustChildSize() {
-        updateVisibleRect();
-        Rect visible = mVisibleRect;
-        int width = visible.width();
-        int height = visible.height();
-
-        if (mCurWidth != width || mCurHeight != height) {
-            mCurWidth = width;
-            mCurHeight = height;
-
-            LayoutParams params = mChildParams;
-            params.width = width;
-            params.height = height;
-            for (View v : this) {
-                updateViewLayout(v, params);
-            }
-            mRedoLayout = true;
-
-            EmulatorView currentView = (EmulatorView) getCurrentView();
-            if (currentView != null) {
-                currentView.updateSize(false);
-            }
-        }
-    }
-
-    /**
-     * Called when the view changes size.
-     * (Note: Not always called on Android < 2.2)
-     */
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        //adjustChildSize();
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-    }
-
     /**
      * "Called during layout when the size of this view has changed."
      * NOTE: Not always called when screen is rotated and soft-keyboard
