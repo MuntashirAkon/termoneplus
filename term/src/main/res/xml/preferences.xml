@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Copyright (C) 2008 The Android Open Source Project
+     Copyright (c) 2018 Roumen Petrov.  All rights reserved.
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -15,7 +16,36 @@
 -->
 
 <PreferenceScreen
-        xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="@string/text_preferences">
+
+        <ListPreference
+            android:defaultValue="@string/pref_fontsize_default"
+            android:dialogTitle="@string/dialog_title_fontsize_preference"
+            android:entries="@array/entries_fontsize_preference"
+            android:entryValues="@array/entryvalues_fontsize_preference"
+            android:key="fontsize"
+            android:summary="@string/summary_fontsize_preference"
+            android:title="@string/title_fontsize_preference"/>
+
+        <ListPreference
+            android:defaultValue="@string/pref_color_default"
+            android:dialogTitle="@string/dialog_title_color_preference"
+            android:entries="@array/entries_color_preference"
+            android:entryValues="@array/entryvalues_color_preference"
+            android:key="color"
+            android:summary="@string/summary_color_preference"
+            android:title="@string/title_color_preference"/>
+
+        <CheckBoxPreference
+            android:defaultValue="@bool/pref_utf8_by_default_default"
+            android:key="utf8_by_default"
+            android:summary="@string/summary_utf8_by_default_preference"
+            android:title="@string/title_utf8_by_default_preference"/>
+
+    </PreferenceCategory>
 
     <PreferenceCategory
             android:title="@string/screen_preferences"
@@ -67,35 +97,6 @@
                 android:entryValues="@array/entryvalues_cursorblink_preference"
                 android:dialogTitle="@string/dialog_title_cursorblink_preference" />
 -->
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-            android:title="@string/text_preferences">
-
-        <ListPreference
-                android:key="fontsize"
-                android:defaultValue="@string/pref_fontsize_default"
-                android:title="@string/title_fontsize_preference"
-                android:summary="@string/summary_fontsize_preference"
-                android:entries="@array/entries_fontsize_preference"
-                android:entryValues="@array/entryvalues_fontsize_preference"
-                android:dialogTitle="@string/dialog_title_fontsize_preference" />
-
-        <ListPreference
-                android:key="color"
-                android:defaultValue="@string/pref_color_default"
-                android:title="@string/title_color_preference"
-                android:summary="@string/summary_color_preference"
-                android:entries="@array/entries_color_preference"
-                android:entryValues="@array/entryvalues_color_preference"
-                android:dialogTitle="@string/dialog_title_color_preference" />
-
-        <CheckBoxPreference
-                android:key="utf8_by_default"
-                android:defaultValue="@bool/pref_utf8_by_default_default"
-                android:title="@string/title_utf8_by_default_preference"
-                android:summary="@string/summary_utf8_by_default_preference" />
 
     </PreferenceCategory>
 
