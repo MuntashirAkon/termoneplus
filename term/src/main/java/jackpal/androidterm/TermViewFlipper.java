@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2011 Steven Luo
+ * Copyright (C) 2018 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -271,8 +272,30 @@ public class TermViewFlipper extends ViewFlipper implements Iterable<View> {
      */
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        adjustChildSize();
+        //adjustChildSize();
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+    }
+
+    /**
+     * "Called during layout when the size of this view has changed."
+     * NOTE: Not always called when screen is rotated and soft-keyboard
+     * is shown hidden.
+     */
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        if ((w != mCurWidth) || (h != mCurHeight)) {
+            mChildParams.width = mCurWidth = w;
+            mChildParams.height = mCurHeight = h;
+
+            for (View v : this)
+                updateViewLayout(v, mChildParams);
+
+            mRedoLayout = true;
+            EmulatorView currentView = (EmulatorView) getCurrentView();
+            if (currentView != null)
+                currentView.updateSize(false);
+        }
+        super.onSizeChanged(w, h, oldw, oldh);
     }
 
     @Override
