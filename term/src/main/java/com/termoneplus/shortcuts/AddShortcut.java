@@ -27,11 +27,13 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.termoneplus.Application;
 import com.termoneplus.R;
@@ -46,7 +48,8 @@ import jackpal.androidterm.util.ShortcutEncryption;
 
 
 public class AddShortcut extends AppCompatActivity {
-    private final int OP_MAKE_SHORTCUT = 1;
+    private final int REQUEST_FIND_COMMAND = 101;
+
     private View shortcut_view;
     private SharedPreferences preferences;
     private String path = "";
@@ -87,16 +90,23 @@ public class AddShortcut extends AppCompatActivity {
         Button btn_cmd_path = shortcut_view.findViewById(R.id.btn_cmd_path);
         btn_cmd_path.setOnClickListener(
                 view -> {
-                    String lastPath = preferences.getString("lastPath", null);
-
                     Intent pickerIntent = new Intent(Intent.ACTION_PICK)
                             .putExtra("CONTENT_TYPE", "*/*");
 
                     pickerIntent.putExtra("TITLE", getString(R.string.addshortcut_button_find_command));
+
+                    String lastPath = preferences.getString("lastPath", null);
                     if (lastPath != null)
                         pickerIntent.putExtra("COMMAND_PATH", lastPath);
 
-                    startActivityForResult(pickerIntent, OP_MAKE_SHORTCUT);
+                    try {
+                        startActivityForResult(pickerIntent, REQUEST_FIND_COMMAND);
+                    } catch (Exception e) {
+                        Toast toast = Toast.makeText(AddShortcut.this,
+                                "Failed to launch pick action!", Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.show();
+                    }
                 }
         );
 
@@ -193,7 +203,7 @@ public class AddShortcut extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         switch (requestCode) {
-            case OP_MAKE_SHORTCUT: {
+            case REQUEST_FIND_COMMAND: {
                 if (resultCode != RESULT_OK) break;
                 if (data == null) break;
 
