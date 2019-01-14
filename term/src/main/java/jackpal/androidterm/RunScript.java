@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2012 Steven Luo
+ * Copyright (C) 2019 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +19,11 @@ package jackpal.androidterm;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.text.TextUtils;
+import android.util.Log;
+
+import com.termoneplus.Application;
 
 
 /*
@@ -35,52 +41,74 @@ public final class RunScript extends RemoteInterface {
     @Override
     protected void handleIntent() {
         TermService service = getTermService();
-        if (service == null) {
-            finish();
+        Intent intent = null;
+        String action = null;
+
+        if (service != null) intent = getIntent();
+        if (intent != null) action = intent.getAction();
+        if (action != null)
+            processAction(intent, action);
+
+        finish();
+    }
+
+    private void processAction(@NonNull Intent intent, @NonNull String action) {
+        switch (action) {
+            case ACTION_RUN_SCRIPT:
+                /* Someone with the appropriate permissions has asked us to run a script */
+                runScript(intent);
+                break;
+        }
+    }
+
+    private void runScript(@NonNull Intent intent) {
+        String command = null;
+
+        // First look in Intent URI (data) for the path; if not there, revert to
+        // the "shell command" location.
+        Uri uri = intent.getData();
+        if (uri != null) {
+            String s = uri.getScheme();
+            if (s != null) s = s.toLowerCase();
+            if (s != null) {
+                switch (s) {
+                    case "file":
+                        command = uri.getPath();
+                        if (TextUtils.isEmpty(command)) break;
+
+                        command = quoteForBash(command);
+
+                        // consider scheme fragment as command arguments
+                        s = uri.getFragment();
+                        if (s != null)
+                            command += " " + s;
+                        break;
+                    // TODO "context" scheme
+                }
+            }
+        }
+        if (command == null) {
+            command = intent.getStringExtra(RUN_SCRIPT_COMMAND);
+            if (command != null)
+                command = quoteForBash(command);
+        }
+
+        if (command == null) {
+            Log.e(Application.APP_TAG, "No command provided in script!");
             return;
         }
 
-        Intent myIntent = getIntent();
-        String action = myIntent.getAction();
-        if (action.equals(ACTION_RUN_SCRIPT)) {
-            /* Someone with the appropriate permissions has asked us to
-               run a script */
-            String handle = myIntent.getStringExtra(RUN_SCRIPT_WINDOW_HANDLE);
-            String command=null;
-            /*
-             * First look in Intent.data for the path; if not there, revert to
-             * the RUN_SCRIPT_COMMAND location.
-             */
-            Uri uri=myIntent.getData();
-            if(uri!=null) // scheme[path][arguments]
-            {
-              String s=uri.getScheme();
-              if(s!=null && s.toLowerCase().equals("file"))
-              {
-                command=uri.getPath();
-                // Allow for the command to be contained within the arguments string.
-                if(command==null) command="";
-                if(!command.equals("")) command=quoteForBash(command);
-                // Append any arguments.
-                if(null!=(s=uri.getFragment())) command+=" "+s;
-              }
-            }
-            // If Intent.data not used then fall back to old method.
-            if(command==null) command=myIntent.getStringExtra(RUN_SCRIPT_COMMAND);
-            if (handle != null) {
-                // Target the request at an existing window if open
-                handle = appendToWindow(handle, command);
-            } else {
-                // Open a new window
-                handle = openNewWindow(command);
-            }
-            Intent result = new Intent();
-            result.putExtra(RUN_SCRIPT_WINDOW_HANDLE, handle);
-            setResult(RESULT_OK, result);
-
-            finish();
+        String handle = intent.getStringExtra(RUN_SCRIPT_WINDOW_HANDLE);
+        if (handle != null) {
+            // Target the request at an existing window if open
+            handle = appendToWindow(handle, command);
         } else {
-            super.handleIntent();
+            // Open a new window
+            handle = openNewWindow(command);
         }
+
+        Intent result = new Intent();
+        result.putExtra(RUN_SCRIPT_WINDOW_HANDLE, handle);
+        setResult(RESULT_OK, result);
     }
 }
