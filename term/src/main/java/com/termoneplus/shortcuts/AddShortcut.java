@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017-2018 Roumen Petrov.  All rights reserved.
+ * Copyright (C) 2017-2019 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -172,9 +172,9 @@ public class AddShortcut extends AppCompatActivity {
         }
 
         Intent target = new Intent().setClass(context, RunShortcut.class);
-        target.setAction(RunShortcut.ACTION_RUN_SHORTCUT);
-        target.putExtra(RunShortcut.RUN_SHORTCUT_COMMAND, cmdEnc);
-        target.putExtra(RunShortcut.RUN_SHORTCUT_WINDOW_HANDLE, shortcutName);
+        target.setAction(Application.ACTION_RUN_SHORTCUT);
+        target.putExtra(Application.ARGUMENT_SHELL_COMMAND, cmdEnc);
+        target.putExtra(Application.ARGUMENT_WINDOW_HANDLE, shortcutName);
         target.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         Intent wrapper = new Intent();

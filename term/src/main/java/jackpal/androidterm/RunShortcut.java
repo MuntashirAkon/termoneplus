@@ -29,10 +29,6 @@ import jackpal.androidterm.util.ShortcutEncryption;
 
 
 public final class RunShortcut extends RemoteInterface {
-    public static final String ACTION_RUN_SHORTCUT = "com.termoneplus.RUN_SHORTCUT";
-
-    public static final String RUN_SHORTCUT_WINDOW_HANDLE = "com.termoneplus.WindowHandle";
-    public static final String RUN_SHORTCUT_COMMAND = "com.termoneplus.Command";
 
     @Override
     protected void handleIntent() {
@@ -50,7 +46,7 @@ public final class RunShortcut extends RemoteInterface {
 
     private void processAction(@NonNull Intent intent, @NonNull String action) {
         switch (action) {
-            case ACTION_RUN_SHORTCUT:
+            case Application.ACTION_RUN_SHORTCUT:
                 runShortcut(intent);
                 break;
         }
@@ -60,7 +56,7 @@ public final class RunShortcut extends RemoteInterface {
         // Decrypt and verify the command
         String command;
         try {
-            String request = intent.getStringExtra(RUN_SHORTCUT_COMMAND);
+            String request = intent.getStringExtra(Application.ARGUMENT_SHELL_COMMAND);
             if (request == null) {
                 Log.e(Application.APP_TAG, "No command provided in shortcut!");
                 return;
@@ -77,7 +73,7 @@ public final class RunShortcut extends RemoteInterface {
             return;
         }
 
-        String handle = intent.getStringExtra(RUN_SHORTCUT_WINDOW_HANDLE);
+        String handle = intent.getStringExtra(Application.ARGUMENT_WINDOW_HANDLE);
         if (handle != null) {
             // Target the request at an existing window if open
             handle = appendToWindow(handle, command);
@@ -87,7 +83,7 @@ public final class RunShortcut extends RemoteInterface {
         }
 
         Intent result = new Intent();
-        result.putExtra(RUN_SHORTCUT_WINDOW_HANDLE, handle);
+        result.putExtra(Application.ARGUMENT_WINDOW_HANDLE, handle);
         setResult(RESULT_OK, result);
     }
 }

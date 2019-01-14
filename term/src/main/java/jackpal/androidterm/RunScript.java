@@ -34,9 +34,6 @@ import com.termoneplus.Application;
  * The old procedure of using Intent.Extra is still available but is discouraged.
  */
 public final class RunScript extends RemoteInterface {
-    private static final String ACTION_RUN_SCRIPT = "com.termoneplus.RUN_SCRIPT";
-    private static final String RUN_SCRIPT_WINDOW_HANDLE = "com.termoneplus.WindowHandle";
-    private static final String RUN_SCRIPT_COMMAND = "com.termoneplus.Command";
 
     @Override
     protected void handleIntent() {
@@ -54,7 +51,7 @@ public final class RunScript extends RemoteInterface {
 
     private void processAction(@NonNull Intent intent, @NonNull String action) {
         switch (action) {
-            case ACTION_RUN_SCRIPT:
+            case Application.ACTION_RUN_SCRIPT:
                 /* Someone with the appropriate permissions has asked us to run a script */
                 runScript(intent);
                 break;
@@ -88,7 +85,7 @@ public final class RunScript extends RemoteInterface {
             }
         }
         if (command == null) {
-            command = intent.getStringExtra(RUN_SCRIPT_COMMAND);
+            command = intent.getStringExtra(Application.ARGUMENT_SHELL_COMMAND);
             if (command != null)
                 command = quoteForBash(command);
         }
@@ -98,7 +95,7 @@ public final class RunScript extends RemoteInterface {
             return;
         }
 
-        String handle = intent.getStringExtra(RUN_SCRIPT_WINDOW_HANDLE);
+        String handle = intent.getStringExtra(Application.ARGUMENT_WINDOW_HANDLE);
         if (handle != null) {
             // Target the request at an existing window if open
             handle = appendToWindow(handle, command);
@@ -108,7 +105,7 @@ public final class RunScript extends RemoteInterface {
         }
 
         Intent result = new Intent();
-        result.putExtra(RUN_SCRIPT_WINDOW_HANDLE, handle);
+        result.putExtra(Application.ARGUMENT_WINDOW_HANDLE, handle);
         setResult(RESULT_OK, result);
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Roumen Petrov.  All rights reserved.
+ * Copyright (C) 2018-2019 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,7 +29,12 @@ public class Application extends android.app.Application {
 
     public static final String ACTION_OPEN_NEW_WINDOW = "com.termoneplus.OPEN_NEW_WINDOW";
     public static final String ACTION_SWITCH_WINDOW = "com.termoneplus.SWITCH_WINDOW";
+    public static final String ACTION_RUN_SHORTCUT = "com.termoneplus.RUN_SHORTCUT";
+    public static final String ACTION_RUN_SCRIPT = "com.termoneplus.RUN_SCRIPT";
 
     public static final String ARGUMENT_TARGET_WINDOW = "target_window";
     public static final String ARGUMENT_WINDOW_ID = "window_id";
+    /* arguments for use by external applications */
+    public static final String ARGUMENT_SHELL_COMMAND = "com.termoneplus.Command";
+    public static final String ARGUMENT_WINDOW_HANDLE = "com.termoneplus.WindowHandle";
 }

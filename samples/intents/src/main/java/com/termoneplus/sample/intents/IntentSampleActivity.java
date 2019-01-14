@@ -20,8 +20,8 @@ public class IntentSampleActivity extends AppCompatActivity {
     private static final String ACTION_OPEN_NEW_WINDOW = "com.termoneplus.OPEN_NEW_WINDOW";
     private static final String ACTION_RUN_SCRIPT = "com.termoneplus.RUN_SCRIPT";
 
-    private static final String RUN_SCRIPT_WINDOW_HANDLE = "com.termoneplus.WindowHandle";
-    private static final String RUN_SCRIPT_COMMAND = "com.termoneplus.Command";
+    private static final String ARGUMENT_WINDOW_HANDLE = "com.termoneplus.WindowHandle";
+    private static final String ARGUMENT_SHELL_COMMAND = "com.termoneplus.Command";
 
     private static final String PERMISSION_RUN_SCRIPT = "com.termoneplus.permission.RUN_SCRIPT";
     private static final int REQUEST_PERMISSION_RUN_SCRIPT = 101;
@@ -64,7 +64,7 @@ public class IntentSampleActivity extends AppCompatActivity {
             String command = script.getText().toString();
             Intent intent = new Intent(ACTION_RUN_SCRIPT)
                     .addCategory(Intent.CATEGORY_DEFAULT)
-                    .putExtra(RUN_SCRIPT_COMMAND, command);
+                    .putExtra(ARGUMENT_SHELL_COMMAND, command);
             try {
                 startActivity(intent);
             } catch (SecurityException e) {
@@ -82,10 +82,10 @@ public class IntentSampleActivity extends AppCompatActivity {
             String command = script.getText().toString();
             Intent intent = new Intent(ACTION_RUN_SCRIPT)
                     .addCategory(Intent.CATEGORY_DEFAULT)
-                    .putExtra(RUN_SCRIPT_COMMAND, command);
+                    .putExtra(ARGUMENT_SHELL_COMMAND, command);
             if (mHandle != null) {
                 // Identify the targeted window by its handle
-                intent.putExtra(RUN_SCRIPT_WINDOW_HANDLE, mHandle);
+                intent.putExtra(ARGUMENT_WINDOW_HANDLE, mHandle);
             }
             /* The handle for the targeted window -- whether newly opened
                or reused -- is returned to us via onActivityResult()
@@ -163,7 +163,7 @@ public class IntentSampleActivity extends AppCompatActivity {
         }
 
         if (request == REQUEST_WINDOW_HANDLE && data != null) {
-            mHandle = data.getStringExtra(RUN_SCRIPT_WINDOW_HANDLE);
+            mHandle = data.getStringExtra(ARGUMENT_WINDOW_HANDLE);
             ((Button) findViewById(R.id.runScriptSaveWindow)).setText(
                     R.string.run_script_existing_window);
         }
