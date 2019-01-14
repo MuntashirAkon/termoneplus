@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2015 Steven Luo
+ * Copyright (C) 2019 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,14 +17,15 @@
 
 package jackpal.androidterm;
 
-import jackpal.androidterm.util.ShortcutEncryption;
-
-import java.security.GeneralSecurityException;
-
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.termoneplus.Application;
+
+import java.security.GeneralSecurityException;
+
+import jackpal.androidterm.util.ShortcutEncryption;
 
 
 public final class RunShortcut extends RemoteInterface {
@@ -35,51 +37,57 @@ public final class RunShortcut extends RemoteInterface {
     @Override
     protected void handleIntent() {
         TermService service = getTermService();
-        if (service == null) {
-            finish();
-            return;
-        }
+        Intent intent = null;
+        String action = null;
 
-        Intent myIntent = getIntent();
-        String action = myIntent.getAction();
-        if (action.equals(ACTION_RUN_SHORTCUT)) {
-            String encCommand = myIntent.getStringExtra(RUN_SHORTCUT_COMMAND);
-            if (encCommand == null) {
+        if (service != null) intent = getIntent();
+        if (intent != null) action = intent.getAction();
+        if (action != null)
+            processAction(intent, action);
+
+        finish();
+    }
+
+    private void processAction(@NonNull Intent intent, @NonNull String action) {
+        switch (action) {
+            case ACTION_RUN_SHORTCUT:
+                runShortcut(intent);
+                break;
+        }
+    }
+
+    private void runShortcut(@NonNull Intent intent) {
+        // Decrypt and verify the command
+        String command;
+        try {
+            String request = intent.getStringExtra(RUN_SHORTCUT_COMMAND);
+            if (request == null) {
                 Log.e(Application.APP_TAG, "No command provided in shortcut!");
-                finish();
                 return;
             }
-
-            // Decrypt and verify the command
             ShortcutEncryption.Keys keys = ShortcutEncryption.getKeys(this);
             if (keys == null) {
                 // No keys -- no valid shortcuts can exist
                 Log.e(Application.APP_TAG, "No shortcut encryption keys found!");
-                finish();
                 return;
             }
-            String command;
-            try {
-                command = ShortcutEncryption.decrypt(encCommand, keys);
-            } catch (GeneralSecurityException e) {
-                Log.e(Application.APP_TAG, "Invalid shortcut: " + e.toString());
-                finish();
-                return;
-            }
-
-            String handle = myIntent.getStringExtra(RUN_SHORTCUT_WINDOW_HANDLE);
-            if (handle != null) {
-                // Target the request at an existing window if open
-                handle = appendToWindow(handle, command);
-            } else {
-                // Open a new window
-                handle = openNewWindow(command);
-            }
-            Intent result = new Intent();
-            result.putExtra(RUN_SHORTCUT_WINDOW_HANDLE, handle);
-            setResult(RESULT_OK, result);
+            command = ShortcutEncryption.decrypt(request, keys);
+        } catch (GeneralSecurityException e) {
+            Log.e(Application.APP_TAG, "Invalid shortcut: " + e.toString());
+            return;
         }
 
-        finish();
+        String handle = intent.getStringExtra(RUN_SHORTCUT_WINDOW_HANDLE);
+        if (handle != null) {
+            // Target the request at an existing window if open
+            handle = appendToWindow(handle, command);
+        } else {
+            // Open a new window
+            handle = openNewWindow(command);
+        }
+
+        Intent result = new Intent();
+        result.putExtra(RUN_SHORTCUT_WINDOW_HANDLE, handle);
+        setResult(RESULT_OK, result);
     }
 }
