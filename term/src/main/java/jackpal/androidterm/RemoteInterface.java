@@ -24,6 +24,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
@@ -48,8 +49,11 @@ public class RemoteInterface extends AppCompatActivity {
     private Intent mTSIntent;
     private ServiceConnection mTSConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
-            TermService.TSBinder binder = (TermService.TSBinder) service;
-            mTermService = binder.getService();
+            mTermService = null;
+            if (service != null) {
+                TermService.TSBinder binder = (TermService.TSBinder) service;
+                mTermService = binder.getService();
+            }
             handleIntent();
         }
 
@@ -102,19 +106,24 @@ public class RemoteInterface extends AppCompatActivity {
 
     protected void handleIntent() {
         TermService service = getTermService();
-        if (service == null) {
-            finish();
-            return;
-        }
+        Intent intent = null;
+        String action = null;
 
-        Intent myIntent = getIntent();
-        String action = myIntent.getAction();
+        if (service != null) intent = getIntent();
+        if (intent != null) action = intent.getAction();
+        if (intent != null)
+            processAction(intent, action);
+
+        finish();
+    }
+
+    private void processAction(@NonNull Intent intent, String action) {
         Log.i(Application.APP_TAG, "RemoteInterface action: " + action);
         if (action != null
                 && action.equals(Intent.ACTION_SEND)
-                && myIntent.hasExtra(Intent.EXTRA_STREAM)) {
-          /* "permission.RUN_SCRIPT" not required as this is merely opening a new window. */
-            Object extraStream = myIntent.getExtras().get(Intent.EXTRA_STREAM);
+                && intent.hasExtra(Intent.EXTRA_STREAM)) {
+            /* "permission.RUN_SCRIPT" not required as this is merely opening a new window. */
+            Object extraStream = intent.getExtras().get(Intent.EXTRA_STREAM);
             if (extraStream instanceof Uri) {
                 String path = ((Uri) extraStream).getPath();
                 File file = new File(path);
@@ -125,12 +134,10 @@ public class RemoteInterface extends AppCompatActivity {
             // Intent sender may not have permissions, ignore any extras
             openNewWindow(null);
         }
-
-        finish();
     }
 
     /**
-     *  Quote a string so it can be used as a parameter in bash and similar shells.
+     * Quote a string so it can be used as a parameter in bash and similar shells.
      */
     public static String quoteForBash(String s) {
         StringBuilder builder = new StringBuilder();
