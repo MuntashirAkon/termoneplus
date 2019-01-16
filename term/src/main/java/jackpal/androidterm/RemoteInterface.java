@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2012 Steven Luo
+ * Copyright (C) 2019 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -138,21 +139,27 @@ public class RemoteInterface extends AppCompatActivity {
 
     private void processAction(@NonNull Intent intent, String action) {
         Log.i(Application.APP_TAG, "RemoteInterface action: " + action);
-        if (action != null
-                && action.equals(Intent.ACTION_SEND)
-                && intent.hasExtra(Intent.EXTRA_STREAM)) {
+        if (Intent.ACTION_SEND.equals(action)) {
             /* "permission.RUN_SCRIPT" not required as this is merely opening a new window. */
+            processSendAction(intent);
+            return;
+        }
+        // Intent sender may not have permissions, ignore any extras
+        openNewWindow(null);
+    }
+
+    private void processSendAction(@NonNull Intent intent) {
+        if (intent.hasExtra(Intent.EXTRA_STREAM)) {
             Object extraStream = intent.getExtras().get(Intent.EXTRA_STREAM);
             if (extraStream instanceof Uri) {
                 String path = ((Uri) extraStream).getPath();
                 File file = new File(path);
                 String dirPath = file.isDirectory() ? path : file.getParent();
                 openNewWindow("cd " + quoteForBash(dirPath));
+                return;
             }
-        } else {
-            // Intent sender may not have permissions, ignore any extras
-            openNewWindow(null);
         }
+        openNewWindow(null);
     }
 
     protected String openNewWindow(String iInitialCommand) {
