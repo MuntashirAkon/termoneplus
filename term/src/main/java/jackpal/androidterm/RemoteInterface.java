@@ -27,6 +27,7 @@ import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.termoneplus.Application;
@@ -152,11 +153,21 @@ public class RemoteInterface extends AppCompatActivity {
         if (intent.hasExtra(Intent.EXTRA_STREAM)) {
             Object extraStream = intent.getExtras().get(Intent.EXTRA_STREAM);
             if (extraStream instanceof Uri) {
-                String path = ((Uri) extraStream).getPath();
-                File file = new File(path);
-                String dirPath = file.isDirectory() ? path : file.getParent();
-                openNewWindow("cd " + quoteForBash(dirPath));
-                return;
+                Uri uri = (Uri) extraStream;
+                String scheme = uri.getScheme();
+                if (TextUtils.isEmpty(scheme)) {
+                    openNewWindow(null);
+                    return;
+                }
+                switch (scheme) {
+                    case "file": {
+                        String path = uri.getPath();
+                        File file = new File(path);
+                        String dirPath = file.isDirectory() ? path : file.getParent();
+                        openNewWindow("cd " + quoteForBash(dirPath));
+                        return;
+                    }
+                }
             }
         }
         openNewWindow(null);
