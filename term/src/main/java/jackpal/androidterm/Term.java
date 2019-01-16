@@ -303,6 +303,7 @@ public class Term extends AppCompatActivity
             updatePrefs();
 
             if (onResumeSelectWindow >= 0) {
+                onResumeSelectWindow = Math.min(onResumeSelectWindow, mViewFlipper.getChildCount() - 1);
                 mViewFlipper.setDisplayedChild(onResumeSelectWindow);
                 onResumeSelectWindow = -1;
             }
