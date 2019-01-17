@@ -180,10 +180,7 @@ public class Term extends AppCompatActivity
             Log.i(Application.APP_TAG, "Bound to TermService");
             TermService.TSBinder binder = (TermService.TSBinder) service;
             mTermService = binder.getService();
-            if (path_collected) {
-                populateViewFlipper();
-                populateWindowList();
-            }
+            populateSessions();
         }
 
         public void onServiceDisconnected(ComponentName arg0) {
@@ -228,10 +225,7 @@ public class Term extends AppCompatActivity
         PathCollector path_collector = new PathCollector(this, path_settings);
         path_collector.setOnPathsReceivedListener(() -> {
             path_collected = true;
-            if (mTermService != null) {
-                populateViewFlipper();
-                populateWindowList();
-            }
+            populateSessions();
         });
 
         TSIntent = new Intent(this, TermService.class);
@@ -279,51 +273,55 @@ public class Term extends AppCompatActivity
         }
     }
 
-    private void populateViewFlipper() {
-        if (mTermService != null) {
-            mTermSessions = mTermService.getSessions();
+    private void populateSessions() {
+        if (mTermService == null) return;
+        if (!path_collected) return;
 
-            if (mTermSessions.size() == 0) {
-                try {
-                    mTermSessions.add(createTermSession());
-                } catch (IOException e) {
-                    Toast.makeText(this, "Failed to start terminal session", Toast.LENGTH_LONG).show();
-                    finish();
-                    return;
-                }
+        mTermSessions = mTermService.getSessions();
+
+        if (mTermSessions.size() == 0) {
+            try {
+                mTermSessions.add(createTermSession());
+            } catch (IOException e) {
+                Toast.makeText(this, "Failed to start terminal session", Toast.LENGTH_LONG).show();
+                finish();
+                return;
             }
-
-            mTermSessions.addCallback(this);
-
-            for (TermSession session : mTermSessions) {
-                EmulatorView view = createEmulatorView(session);
-                mViewFlipper.addView(view);
-            }
-
-            updatePrefs();
-
-            if (onResumeSelectWindow >= 0) {
-                onResumeSelectWindow = Math.min(onResumeSelectWindow, mViewFlipper.getChildCount() - 1);
-                mViewFlipper.setDisplayedChild(onResumeSelectWindow);
-                onResumeSelectWindow = -1;
-            }
-            mViewFlipper.onResume();
         }
+
+        mTermSessions.addCallback(this);
+
+        populateViewFlipper();
+        populateWindowList();
+    }
+
+    private void populateViewFlipper() {
+        for (TermSession session : mTermSessions) {
+            EmulatorView view = createEmulatorView(session);
+            mViewFlipper.addView(view);
+        }
+
+        updatePrefs();
+
+        if (onResumeSelectWindow >= 0) {
+            onResumeSelectWindow = Math.min(onResumeSelectWindow, mViewFlipper.getChildCount() - 1);
+            mViewFlipper.setDisplayedChild(onResumeSelectWindow);
+            onResumeSelectWindow = -1;
+        }
+        mViewFlipper.onResume();
     }
 
     private void populateWindowList() {
-        if (mTermSessions != null) {
-            if (mWinListAdapter == null) {
-                mWinListAdapter = new WindowListActionBarAdapter(mTermSessions);
+        if (mWinListAdapter == null) {
+            mWinListAdapter = new WindowListActionBarAdapter(mTermSessions);
 
-                mActionBar.setAdapter(mWinListAdapter);
-            } else {
-                mWinListAdapter.setSessions(mTermSessions);
-            }
-            mViewFlipper.addCallback(mWinListAdapter);
-
-            synchronizeActionBar();
+            mActionBar.setAdapter(mWinListAdapter);
+        } else {
+            mWinListAdapter.setSessions(mTermSessions);
         }
+        mViewFlipper.addCallback(mWinListAdapter);
+
+        synchronizeActionBar();
     }
 
     @Override
