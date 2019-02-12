@@ -40,7 +40,7 @@ dup_jbyteArray(JNIEnv *env, jbyteArray array) {
     len = (*env)->GetArrayLength(env, array);
     if (len < 1) return NULL;
 
-    ret = malloc(len + 1);
+    ret = malloc((size_t)len + 1);
     if (ret == NULL) return NULL;
 
     jbyte *data = (*env)->GetByteArrayElements(env, array, NULL);
@@ -90,6 +90,8 @@ process_create_subprocess(
 ) {
     pid_t pid;
     char devname[64]; /*match bionic, see libc/unistd/ptsname_r.c*/
+
+    (void) clazz;
 
     fcntl(ptm, F_SETFD, FD_CLOEXEC);
 
@@ -231,6 +233,9 @@ process_wait_exit(
     int wstatus;
     jint result = -1;
 
+    (void) env;
+    (void) clazz;
+
     waitpid((pid_t) pid, &wstatus, 0);
     if (WIFEXITED(wstatus)) result = WEXITSTATUS(wstatus);
     else if (WIFSIGNALED(wstatus)) result = WTERMSIG(wstatus);
@@ -244,6 +249,9 @@ process_finish_childs(
         JNIEnv *env, jobject clazz,
         jint pid
 ) {
+    (void) env;
+    (void) clazz;
+
     /* send SIGHUP to process group to die child processes... */
     (void) kill(-(pid_t) pid, SIGHUP);
 }

@@ -66,10 +66,10 @@ ioctl_setWindowSize(
 
     (void) clazz;
 
-    arg.ws_row = row;
-    arg.ws_col = col;
-    arg.ws_xpixel = xpixel;
-    arg.ws_ypixel = ypixel;
+    arg.ws_row = (unsigned short) row;
+    arg.ws_col = (unsigned short) col;
+    arg.ws_xpixel = (unsigned short) xpixel;
+    arg.ws_ypixel = (unsigned short) ypixel;
 
 /* quoted from tty_ioctl(4) manual page:
  * TIOCSWINSZ     const struct winsize *argp
