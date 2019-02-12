@@ -3,10 +3,9 @@ package jackpal.androidterm.emulatorview;
 import jackpal.androidterm.emulatorview.compat.KeyCharacterMapCompat;
 
 import java.io.IOException;
-import java.util.Map;
-import java.util.HashMap;
 
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 import static jackpal.androidterm.emulatorview.compat.KeycodeConstants.*;
@@ -31,13 +30,13 @@ class TermKeyListener {
     /** Means this maps raw scancode */
     private static final int KEYMOD_SCAN  = 0x10000000;
 
-    private static Map<Integer, String> mKeyMap;
+    private static SparseArray<String> mKeyMap;
 
     private String[] mKeyCodes = new String[256];
     private String[] mAppKeyCodes = new String[256];
 
     private void initKeyCodes() {
-        mKeyMap = new HashMap<>();
+        mKeyMap = new SparseArray<>();
         mKeyMap.put(KEYMOD_SHIFT | KEYCODE_DPAD_LEFT, "\033[1;2D");
         mKeyMap.put(KEYMOD_ALT | KEYCODE_DPAD_LEFT, "\033[1;3D");
         mKeyMap.put(KEYMOD_ALT | KEYMOD_SHIFT | KEYCODE_DPAD_LEFT, "\033[1;4D");
