@@ -124,8 +124,8 @@ public class TermSession {
                                     mMsgHandler.obtainMessage(NEW_INPUT));
                         }
                     }
-                } catch (IOException e) {
-                } catch (InterruptedException e) {
+                } catch (IOException ignored) {
+                } catch (InterruptedException ignored) {
                 }
 
                 { // stop producer as well
@@ -246,7 +246,7 @@ public class TermSession {
                 count -= written;
                 notifyNewOutput();
             }
-        } catch (InterruptedException e) {
+        } catch (InterruptedException ignored) {
         }
     }
 
@@ -265,7 +265,7 @@ public class TermSession {
         try {
             byte[] bytes = data.getBytes("UTF-8");
             write(bytes, 0, bytes.length);
-        } catch (UnsupportedEncodingException e) {
+        } catch (UnsupportedEncodingException ignored) {
         }
     }
 
@@ -604,7 +604,7 @@ public class TermSession {
             mTermOut.close();
         } catch (IOException e) {
             // We don't care if this fails
-        } catch (NullPointerException e) {
+        } catch (NullPointerException ignored) {
         }
 
         if (mFinishCallback != null) {
