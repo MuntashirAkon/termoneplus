@@ -12,7 +12,7 @@ r) XCFFILE=../docs/termoneplus-launcher-round_icon.xcf;;
 *) exit 99;;
 esac
 
-for MODE in '' l m h xh xxh xxxh ; do
+for MODE in l m h xh xxh xxxh ; do
   case "$MODE" in
   l)	dpi=120;;
   m)	dpi=160;;
