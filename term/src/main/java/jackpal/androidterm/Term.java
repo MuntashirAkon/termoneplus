@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2007 The Android Open Source Project
- * Copyright (C) 2017-2018 Roumen Petrov.  All rights reserved.
+ * Copyright (C) 2017-2019 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -238,7 +238,7 @@ public class Term extends AppCompatActivity
             if (position == oldPosition) return;
 
             if (position >= mViewFlipper.getChildCount()) {
-                TermSession session = mTermSessions.get(position);
+                TermSession session = mTermService.getSession(position);
                 mViewFlipper.addView(createEmulatorView(session));
             }
             mViewFlipper.setDisplayedChild(position);
@@ -279,7 +279,7 @@ public class Term extends AppCompatActivity
 
         mTermSessions = mTermService.getSessions();
 
-        if (mTermSessions.size() == 0) {
+        if (mTermService.getSessionCount() == 0) {
             try {
                 mTermSessions.add(createTermSession());
             } catch (IOException e) {

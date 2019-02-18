@@ -39,7 +39,6 @@ import java.util.UUID;
 
 import jackpal.androidterm.compat.PathSettings;
 import jackpal.androidterm.emulatorview.TermSession;
-import jackpal.androidterm.util.SessionList;
 import jackpal.androidterm.util.TermSettings;
 
 
@@ -109,8 +108,7 @@ public class RemoteInterface extends AppCompatActivity {
             // Stop the service if no terminal sessions are running
             TermService service = mTermService;
             if (service != null) {
-                SessionList sessions = service.getSessions();
-                if (sessions == null || sessions.size() == 0) {
+                if (service.getSessionCount() == 0) {
                     stopService(mTSIntent);
                 }
             }
@@ -209,11 +207,10 @@ public class RemoteInterface extends AppCompatActivity {
         TermService service = getTermService();
 
         // Find the target window
-        SessionList sessions = service.getSessions();
         GenericTermSession target = null;
         int index;
-        for (index = 0; index < sessions.size(); ++index) {
-            GenericTermSession session = (GenericTermSession) sessions.get(index);
+        for (index = 0; index < service.getSessionCount(); ++index) {
+            GenericTermSession session = (GenericTermSession) service.getSession(index);
             String h = session.getHandle();
             if (h != null && h.equals(handle)) {
                 target = session;

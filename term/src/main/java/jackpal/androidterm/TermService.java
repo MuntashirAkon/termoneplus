@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2007 The Android Open Source Project
- * Copyright (C) 2018 Roumen Petrov.  All rights reserved.
+ * Copyright (C) 2018-2019 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -57,19 +57,12 @@ import jackpal.androidterm.util.TermSettings;
 
 public class TermService extends Service implements TermSession.FinishCallback {
     private static final int RUNNING_NOTIFICATION = 1;
-
-    public static final String NOTIFICATION_CHANNEL_APPLICATION = "com.termoneplus.application";
-
-    private SessionList mTermSessions;
-
-    public class TSBinder extends Binder {
-        public TermService getService() {
-            Log.i("TermService", "Activity binding to service");
-            return TermService.this;
-        }
-    }
+    private static final String NOTIFICATION_CHANNEL_APPLICATION = "com.termoneplus.application";
 
     private final IBinder mTSBinder = new TSBinder();
+
+    private SessionList mTermSessions = new SessionList();
+
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -99,8 +92,6 @@ public class TermService extends Service implements TermSession.FinishCallback {
         editor.putString("home_path", homePath);
         editor.commit();
 
-        mTermSessions = new SessionList();
-
         /* Put the service in the foreground. */
         Notification notification = buildNotification();
         notification.flags |= Notification.FLAG_ONGOING_EVENT;
@@ -121,6 +112,14 @@ public class TermService extends Service implements TermSession.FinishCallback {
         }
         mTermSessions.clear();
         stopForeground(true);
+    }
+
+    public int getSessionCount() {
+        return mTermSessions.size();
+    }
+
+    public TermSession getSession(int index) {
+        return mTermSessions.get(index);
     }
 
     public SessionList getSessions() {
@@ -151,6 +150,7 @@ public class TermService extends Service implements TermSession.FinishCallback {
         return builder.build();
     }
 
+
     private static class NotificationChannelCompat {
         private static void create(TermService service) {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O /*API Level 26*/) return;
@@ -163,7 +163,7 @@ public class TermService extends Service implements TermSession.FinishCallback {
         private static class Compat26 {
             private static void create(TermService service) {
                 NotificationChannel channel = new NotificationChannel(
-                        service.NOTIFICATION_CHANNEL_APPLICATION,
+                        NOTIFICATION_CHANNEL_APPLICATION,
                         "TermOnePlus",
                         NotificationManager.IMPORTANCE_LOW);
                 channel.setDescription("TermOnePlus running notification");
@@ -174,6 +174,14 @@ public class TermService extends Service implements TermSession.FinishCallback {
                 NotificationManager notificationManager = service.getSystemService(NotificationManager.class);
                 notificationManager.createNotificationChannel(channel);
             }
+        }
+    }
+
+
+    public class TSBinder extends Binder {
+        public TermService getService() {
+            Log.i("TermService", "Activity binding to service");
+            return TermService.this;
         }
     }
 
