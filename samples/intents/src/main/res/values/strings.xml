@@ -10,7 +10,11 @@
     <string name="run_script_save_window">Run Script and Save Window</string>
     <string name="run_script_existing_window">Run Script in Saved Window</string>
 
-    <string name="default_script">echo \'Hello, world!\'</string>
+    <!-- greek is not displayed properly (on some devices) -->
+    <string name="default_script">echo \'Hello world!\'
+        \necho \'Здравейте!\'
+        \necho \'Καλημέρα κόσμε!\'
+        \necho \'コンニチハ!\'</string>
 
     <string name="error_activity_not_found">No Activity found</string>
 

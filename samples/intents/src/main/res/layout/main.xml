@@ -1,53 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.v4.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="@dimen/activity_margin"
-    android:orientation="vertical">
+    android:fadeScrollbars="false"
+    android:scrollbarAlwaysDrawVerticalTrack="true"
+    android:scrollbarStyle="outsideOverlay"
+    android:scrollbars="vertical">
 
-    <TextView
-        android:id="@+id/help"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/help"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+        android:orientation="vertical">
 
-    <android.support.v7.widget.AppCompatButton
-        android:id="@+id/openNewWindow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/open_new_window"
-        app:textAllCaps="false"/>
+        <TextView
+            android:id="@+id/help"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/help"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
-    <TextView
-        android:id="@+id/scriptLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/script_label"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/openNewWindow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/open_new_window"
+            app:textAllCaps="false"/>
 
-    <EditText
-        android:id="@+id/script"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/default_script"
-        android:inputType="textNoSuggestions"/>
+        <TextView
+            android:id="@+id/scriptLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/script_label"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
-    <android.support.v7.widget.AppCompatButton
-        android:id="@+id/runScript"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/run_script"
-        app:textAllCaps="false"/>
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_margin"
+            android:fadeScrollbars="false"
+            android:scrollbarAlwaysDrawHorizontalTrack="true"
+            android:scrollbarStyle="insideInset"
+            android:scrollbars="horizontal">
 
-    <android.support.v7.widget.AppCompatButton
-        android:id="@+id/runScriptSaveWindow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/run_script_save_window"
-        app:textAllCaps="false"/>
+            <EditText
+                android:id="@+id/script"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_rectangle"
+                android:hint="@string/default_script"
+                android:inputType="textMultiLine|textNoSuggestions"
+                android:padding="4dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
 
-</LinearLayout>
+        </HorizontalScrollView>
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/runScript"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/run_script"
+            app:textAllCaps="false"/>
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/runScriptSaveWindow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/run_script_save_window"
+            app:textAllCaps="false"/>
+
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>

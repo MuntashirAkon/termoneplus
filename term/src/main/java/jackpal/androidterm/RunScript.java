@@ -86,8 +86,13 @@ public final class RunScript extends RemoteInterface {
         }
         if (command == null) {
             command = intent.getStringExtra(Application.ARGUMENT_SHELL_COMMAND);
+            /* TODO: use of quoteForBash()
+               Call of quoteForBash() was added by commit
+               "rewrite processing on RunScript similarly to RunShortcut"
+               but it breaks intents sample "Run Script".
             if (command != null)
                 command = quoteForBash(command);
+            */
         }
 
         if (command == null) {
