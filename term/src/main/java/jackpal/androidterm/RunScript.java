@@ -36,20 +36,7 @@ import com.termoneplus.Application;
 public final class RunScript extends RemoteInterface {
 
     @Override
-    protected void handleIntent() {
-        TermService service = getTermService();
-        Intent intent = null;
-        String action = null;
-
-        if (service != null) intent = getIntent();
-        if (intent != null) action = intent.getAction();
-        if (action != null)
-            processAction(intent, action);
-
-        finish();
-    }
-
-    private void processAction(@NonNull Intent intent, @NonNull String action) {
+    protected void processAction(@NonNull Intent intent, @NonNull String action) {
         switch (action) {
             case Application.ACTION_RUN_SCRIPT:
                 /* Someone with the appropriate permissions has asked us to run a script */

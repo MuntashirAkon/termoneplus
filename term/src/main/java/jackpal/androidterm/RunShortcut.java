@@ -31,20 +31,7 @@ import jackpal.androidterm.util.ShortcutEncryption;
 public final class RunShortcut extends RemoteInterface {
 
     @Override
-    protected void handleIntent() {
-        TermService service = getTermService();
-        Intent intent = null;
-        String action = null;
-
-        if (service != null) intent = getIntent();
-        if (intent != null) action = intent.getAction();
-        if (action != null)
-            processAction(intent, action);
-
-        finish();
-    }
-
-    private void processAction(@NonNull Intent intent, @NonNull String action) {
+    protected void processAction(@NonNull Intent intent, @NonNull String action) {
         switch (action) {
             case Application.ACTION_RUN_SHORTCUT:
                 runShortcut(intent);
