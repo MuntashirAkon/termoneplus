@@ -277,8 +277,6 @@ public class Term extends AppCompatActivity
         if (mTermService == null) return;
         if (!path_collected) return;
 
-        mTermSessions = mTermService.getSessions();
-
         if (mTermService.getSessionCount() == 0) {
             try {
                 mTermService.addSession(createTermSession());
@@ -289,6 +287,7 @@ public class Term extends AppCompatActivity
             }
         }
 
+        mTermSessions = mTermService.getSessions();
         mTermSessions.addCallback(this);
 
         populateViewFlipper();
@@ -369,12 +368,9 @@ public class Term extends AppCompatActivity
     }
 
     private TermSession getCurrentTermSession() {
-        SessionList sessions = mTermSessions;
-        if (sessions == null) {
-            return null;
-        } else {
-            return sessions.get(mViewFlipper.getDisplayedChild());
-        }
+        if (mTermService == null) return null;
+
+        return mTermService.getSession(mViewFlipper.getDisplayedChild());
     }
 
     private EmulatorView getCurrentEmulatorView() {
@@ -754,15 +750,16 @@ public class Term extends AppCompatActivity
 
     // Called when the list of sessions changes
     public void onUpdate() {
-        SessionList sessions = mTermSessions;
-        if (sessions == null) {
+        if (mTermService == null) return;
+
+        if (mTermService.getSessionCount() == 0) {
+            mStopServiceOnFinish = true;
+            finish();
             return;
         }
 
-        if (sessions.size() == 0) {
-            mStopServiceOnFinish = true;
-            finish();
-        } else if (sessions.size() < mViewFlipper.getChildCount()) {
+        SessionList sessions = mTermService.getSessions();
+        if (sessions.size() < mViewFlipper.getChildCount()) {
             for (int i = 0; i < mViewFlipper.getChildCount(); ++i) {
                 EmulatorView v = (EmulatorView) mViewFlipper.getChildAt(i);
                 if (!sessions.contains(v.getTermSession())) {
