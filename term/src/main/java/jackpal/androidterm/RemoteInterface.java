@@ -186,8 +186,7 @@ public class RemoteInterface extends AppCompatActivity {
         try {
             TermSession session = TermActivity.createTermSession(this, mSettings, path_settings, initialCommand);
 
-            session.setFinishCallback(service);
-            service.getSessions().add(session);
+            service.addSession(session);
 
             String handle = UUID.randomUUID().toString();
             ((GenericTermSession) session).setHandle(handle);

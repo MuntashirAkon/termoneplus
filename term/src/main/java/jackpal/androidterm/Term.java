@@ -281,7 +281,7 @@ public class Term extends AppCompatActivity
 
         if (mTermService.getSessionCount() == 0) {
             try {
-                mTermSessions.add(createTermSession());
+                mTermService.addSession(createTermSession());
             } catch (IOException e) {
                 Toast.makeText(this, "Failed to start terminal session", Toast.LENGTH_LONG).show();
                 finish();
@@ -351,9 +351,7 @@ public class Term extends AppCompatActivity
 
     private TermSession createTermSession() throws IOException {
         TermSettings settings = mSettings;
-        TermSession session = createTermSession(this, settings, path_settings, settings.getInitialCommand());
-        session.setFinishCallback(mTermService);
-        return session;
+        return createTermSession(this, settings, path_settings, settings.getInitialCommand());
     }
 
     private TermView createEmulatorView(TermSession session) {
@@ -550,15 +548,15 @@ public class Term extends AppCompatActivity
     }
 
     private void doCreateNewWindow() {
-        if (mTermSessions == null) {
-            Log.w(Application.APP_TAG, "Couldn't create new window because mTermSessions == null");
+        if (mTermService == null) {
+            Log.w(Application.APP_TAG, "Couldn't create new window because mTermService == null");
             return;
         }
 
         try {
             TermSession session = createTermSession();
 
-            mTermSessions.add(session);
+            mTermService.addSession(session);
 
             TermView view = createEmulatorView(session);
             view.updatePrefs(mSettings);
@@ -584,19 +582,17 @@ public class Term extends AppCompatActivity
     }
 
     private void doCloseWindow() {
-        if (mTermSessions == null) {
-            return;
-        }
+        if (mTermService == null) return;
 
         EmulatorView view = getCurrentEmulatorView();
-        if (view == null) {
-            return;
-        }
-        TermSession session = mTermSessions.remove(mViewFlipper.getDisplayedChild());
+        if (view == null) return;
+
+        TermSession session = mTermService.removeSession(mViewFlipper.getDisplayedChild());
         view.onPause();
         session.finish();
         mViewFlipper.removeView(view);
-        if (mTermSessions.size() != 0) {
+
+        if (mTermService.getSessionCount() != 0) {
             mViewFlipper.showNext();
         }
     }
@@ -616,11 +612,11 @@ public class Term extends AppCompatActivity
                         // Create only new session and then on service connection view
                         // flipper and etc. will be updated...
                         //doCreateNewWindow();
-                        if (mTermSessions != null) {
+                        if (mTermService != null) {
                             try {
                                 TermSession session = createTermSession();
-                                mTermSessions.add(session);
-                                onResumeSelectWindow = mTermSessions.size() - 1;
+                                mTermService.addSession(session);
+                                onResumeSelectWindow = mTermService.getSessionCount() - 1;
                             } catch (IOException e) {
                                 Toast.makeText(this, "Failed to create a session", Toast.LENGTH_SHORT).show();
                                 onResumeSelectWindow = -1;
@@ -631,7 +627,7 @@ public class Term extends AppCompatActivity
                 } else {
                     // Close the activity if user closed all sessions
                     // TODO the left path will be invoked when nothing happened, but this Activity was destroyed!
-                    if (mTermSessions == null || mTermSessions.size() == 0) {
+                    if (mTermService == null || mTermService.getSessionCount() == 0) {
                         mStopServiceOnFinish = true;
                         finish();
                     }

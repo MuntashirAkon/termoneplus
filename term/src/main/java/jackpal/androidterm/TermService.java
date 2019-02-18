@@ -55,7 +55,7 @@ import jackpal.androidterm.util.SessionList;
 import jackpal.androidterm.util.TermSettings;
 
 
-public class TermService extends Service implements TermSession.FinishCallback {
+public class TermService extends Service {
     private static final int RUNNING_NOTIFICATION = 1;
     private static final String NOTIFICATION_CHANNEL_APPLICATION = "com.termoneplus.application";
 
@@ -126,7 +126,20 @@ public class TermService extends Service implements TermSession.FinishCallback {
         return mTermSessions;
     }
 
-    public void onSessionFinish(TermSession session) {
+    public void addSession(TermSession session) {
+        addSession(session, this::onSessionFinish);
+    }
+
+    public TermSession removeSession(int index) {
+        return mTermSessions.remove(index);
+    }
+
+    private void addSession(TermSession session, TermSession.FinishCallback callback) {
+        mTermSessions.add(session);
+        session.setFinishCallback(callback);
+    }
+
+    private void onSessionFinish(TermSession session) {
         mTermSessions.remove(session);
     }
 
@@ -227,14 +240,11 @@ public class TermService extends Service implements TermSession.FinishCallback {
                                         PreferenceManager.getDefaultSharedPreferences(getApplicationContext()));
 
                                 session = new BoundSession(pseudoTerminalMultiplexerFd, settings, niceName);
-
-                                mTermSessions.add(session);
-
                                 session.setHandle(sessionHandle);
-                                session.setFinishCallback(new RBinderCleanupCallback(result, callback));
                                 session.setTitle("");
-
                                 session.initializeEmulator(80, 24);
+
+                                addSession(session, new RBinderCleanupCallback(result, callback));
                             } catch (Exception whatWentWrong) {
                                 Log.e("TermService", "Failed to bootstrap AIDL session: "
                                         + whatWentWrong.getMessage());
