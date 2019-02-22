@@ -16,7 +16,10 @@
 
 package jackpal.androidterm.emulatorview;
 
+import android.icu.lang.UCharacter;
+import android.icu.lang.UProperty;
 import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.text.AndroidCharacter;
 import android.util.Log;
 
@@ -551,10 +554,7 @@ class UnicodeTranscript {
             }
         }
         if (Character.charCount(codePoint) == 1) {
-            // Android's getEastAsianWidth() only works for BMP characters
-            switch (AndroidCharacter.getEastAsianWidth((char) codePoint)) {
-            case AndroidCharacter.EAST_ASIAN_WIDTH_FULL_WIDTH:
-            case AndroidCharacter.EAST_ASIAN_WIDTH_WIDE:
+            if (EastAsianWidthCompat.isDoubleWidth(codePoint)) {
                 return 2;
             }
         } else {
@@ -859,6 +859,41 @@ class UnicodeTranscript {
         line.setChar(column, codePoint);
         return true;
     }
+
+    private static class EastAsianWidthCompat {
+        private static boolean isDoubleWidth(int ch /*code point*/) {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N /*API Level 24*/)
+                return Compat1.isDoubleWidth(ch);
+            else
+                return Compat24.isDoubleWidth(ch);
+        }
+
+        private static class Compat1 {
+            @SuppressWarnings("deprecation")
+            private static boolean isDoubleWidth(int ch) {
+                // Android's getEastAsianWidth() only works for BMP characters
+                switch (AndroidCharacter.getEastAsianWidth((char) ch)) {
+                    case AndroidCharacter.EAST_ASIAN_WIDTH_FULL_WIDTH:
+                    case AndroidCharacter.EAST_ASIAN_WIDTH_WIDE:
+                        return true;
+                }
+                return false;
+            }
+        }
+
+        @RequiresApi(24)
+        private static class Compat24 {
+            private static boolean isDoubleWidth(int ch) {
+                int ea = UCharacter.getIntPropertyValue(ch, UProperty.EAST_ASIAN_WIDTH);
+                switch (ea) {
+                    case UCharacter.EastAsianWidth.FULLWIDTH:
+                    case UCharacter.EastAsianWidth.WIDE:
+                        return true;
+                }
+                return false;
+            }
+        }
+    }
 }
 
 /*
@@ -1137,4 +1172,3 @@ class FullUnicodeLine {
         }
     }
 }
-
