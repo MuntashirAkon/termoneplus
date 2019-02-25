@@ -343,8 +343,13 @@ public class Term extends AppCompatActivity
         }
     }
 
-    private void restart() {
-        startActivity(getIntent());
+    private void restart(int rid) {
+        Toast toast = Toast.makeText(this, rid, Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
+
+        Intent intent = Intent.makeRestartActivityTask(this.getComponentName());
+        startActivity(intent);
         finish();
     }
 
@@ -401,16 +406,26 @@ public class Term extends AppCompatActivity
             WindowManager.LayoutParams params = win.getAttributes();
             final int FULLSCREEN = WindowManager.LayoutParams.FLAG_FULLSCREEN;
             int desiredFlag = mSettings.showStatusBar() ? 0 : FULLSCREEN;
-            if (desiredFlag != (params.flags & FULLSCREEN) || (mActionBarMode != mSettings.actionBarMode())) {
+            if (desiredFlag != (params.flags & FULLSCREEN)) {
                 if (mAlreadyStarted) {
                     // Can't switch to/from fullscreen after
                     // starting the activity.
-                    restart();
+                    restart(R.string.restart_statusbar_change);
+                    return;
                 } else {
                     win.setFlags(desiredFlag, FULLSCREEN);
-                    if (mActionBarMode == TermSettings.ACTION_BAR_MODE_HIDES) {
-                        mActionBar.hide();
-                    }
+                }
+            }
+        }
+        if (mActionBarMode != mSettings.actionBarMode()) {
+            if (mAlreadyStarted) {
+                // Can't switch to new layout after
+                // starting the activity.
+                restart(R.string.restart_actionbar_change);
+                return;
+            } else {
+                if (mActionBarMode == TermSettings.ACTION_BAR_MODE_HIDES) {
+                    mActionBar.hide();
                 }
             }
         }
