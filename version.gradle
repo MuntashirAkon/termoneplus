@@ -1,1 +1,4 @@
-def gradleVersion = '5.2'
+wrapper {
+    gradleVersion = '5.2'
+    distributionSha256Sum = 'ff322863250159595e93b5a4d17a6f0d21c59a1a0497c1e1cf1d53826485503f'
+}
