@@ -119,7 +119,11 @@ public class TermService extends Service {
     }
 
     public TermSession getSession(int index) {
-        return mTermSessions.get(index);
+        try {
+            return mTermSessions.get(index);
+        } catch (IndexOutOfBoundsException e) {
+            return null;
+        }
     }
 
     public SessionList getSessions() {

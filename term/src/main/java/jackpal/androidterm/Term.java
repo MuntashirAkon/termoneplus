@@ -843,38 +843,38 @@ public class Term extends AppCompatActivity
 
     private void doResetTerminal() {
         TermSession session = getCurrentTermSession();
-        if (session != null) {
-            session.reset();
-        }
+        if (session == null) return;
+
+        session.reset();
     }
 
     private void doEmailTranscript() {
         TermSession session = getCurrentTermSession();
-        if (session != null) {
-            // Don't really want to supply an address, but
-            // currently it's required, otherwise nobody
-            // wants to handle the intent.
-            String addr = "user@example.com";
-            Intent intent =
-                    new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:"
-                            + addr));
+        if (session == null) return;
 
-            String subject = getString(R.string.email_transcript_subject);
-            String title = session.getTitle();
-            if (title != null) {
-                subject = subject + " - " + title;
-            }
-            intent.putExtra(Intent.EXTRA_SUBJECT, subject);
-            intent.putExtra(Intent.EXTRA_TEXT,
-                    session.getTranscriptText().trim());
-            try {
-                startActivity(Intent.createChooser(intent,
-                        getString(R.string.email_transcript_chooser_title)));
-            } catch (ActivityNotFoundException e) {
-                Toast.makeText(this,
-                        R.string.email_transcript_no_email_activity_found,
-                        Toast.LENGTH_LONG).show();
-            }
+        // Don't really want to supply an address, but
+        // currently it's required, otherwise nobody
+        // wants to handle the intent.
+        String addr = "user@example.com";
+        Intent intent =
+                new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:"
+                        + addr));
+
+        String subject = getString(R.string.email_transcript_subject);
+        String title = session.getTitle();
+        if (title != null) {
+            subject = subject + " - " + title;
+        }
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+        intent.putExtra(Intent.EXTRA_TEXT,
+                session.getTranscriptText().trim());
+        try {
+            startActivity(Intent.createChooser(intent,
+                    getString(R.string.email_transcript_chooser_title)));
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(this,
+                    R.string.email_transcript_no_email_activity_found,
+                    Toast.LENGTH_LONG).show();
         }
     }
 
