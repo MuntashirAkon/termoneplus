@@ -30,9 +30,6 @@ allprojects {
         compileSdkVersion = 28
         targetSdkVersion = 28
         minSdkVersion = 14
-
-        versionCode = 290
-        versionName = '2.9.0'
     }
 }
 
