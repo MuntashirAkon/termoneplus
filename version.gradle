@@ -1,4 +1,4 @@
 wrapper {
-    gradleVersion = '5.2'
-    distributionSha256Sum = 'ff322863250159595e93b5a4d17a6f0d21c59a1a0497c1e1cf1d53826485503f'
+    gradleVersion = '5.3'
+    distributionSha256Sum = 'bed2bdd3955be5a09ca7e0201e9d131f194f7f6c466e1795a733733ccfb09f25'
 }
