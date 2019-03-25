@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2007 The Android Open Source Project
+ * Copyright (C) 2018-2019 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,6 +41,7 @@ public class TermSettings {
     private int mActionBarMode;
     @Orientation
     private int mOrientation;
+    private int mSizeCalc;
     private int mCursorStyle;
     private int mCursorBlink;
     private int mFontSize;
@@ -135,6 +137,7 @@ public class TermSettings {
         mStatusBar = Integer.parseInt(res.getString(R.string.pref_statusbar_default));
         mActionBarMode = res.getInteger(R.integer.pref_actionbar_default);
         mOrientation = res.getInteger(R.integer.pref_orientation_default);
+        mSizeCalc = res.getInteger(R.integer.pref_sizecalc_default);
         mCursorStyle = Integer.parseInt(res.getString(R.string.pref_cursorstyle_default));
         mCursorBlink = Integer.parseInt(res.getString(R.string.pref_cursorblink_default));
         mFontSize = Integer.parseInt(res.getString(R.string.pref_fontsize_default));
@@ -160,6 +163,7 @@ public class TermSettings {
         mStatusBar = readIntPref(STATUSBAR_KEY, mStatusBar, 1);
         mActionBarMode = readIntPref(ACTIONBAR_KEY, mActionBarMode, ACTION_BAR_MODE_MAX);
         mOrientation = readIntPref(ORIENTATION_KEY, mOrientation, 2);
+        mSizeCalc = readIntPref("sizecalc", mSizeCalc, 1);
         // mCursorStyle = readIntPref(CURSORSTYLE_KEY, mCursorStyle, 2);
         // mCursorBlink = readIntPref(CURSORBLINK_KEY, mCursorBlink, 1);
         mFontSize = readIntPref(FONTSIZE_KEY, mFontSize, 288);
@@ -214,6 +218,10 @@ public class TermSettings {
     @Orientation
     public int getScreenOrientation() {
         return mOrientation;
+    }
+
+    public int getScreenCalcMethod() {
+        return mSizeCalc;
     }
 
     public int getCursorStyle() {

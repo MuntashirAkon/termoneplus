@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2011 Steven Luo
- * Copyright (C) 2018 Roumen Petrov.  All rights reserved.
+ * Copyright (C) 2018-2019 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -47,6 +47,8 @@ public class TermViewFlipper extends ViewFlipper implements Iterable<View> {
     private int mCurHeight;
     private LayoutParams mChildParams;
     private boolean mRedoLayout = false;
+    private boolean resize_on_measure = false;
+    private boolean full_screen = false;
 
     class ViewFlipperIterator implements Iterator<View> {
         int pos = 0;
@@ -82,6 +84,7 @@ public class TermViewFlipper extends ViewFlipper implements Iterable<View> {
 
     public void updatePrefs(TermSettings settings) {
         setBackgroundColor(settings.getColorScheme().getBackColor());
+        resize_on_measure = (settings.getScreenCalcMethod() == 1);
     }
 
     @NonNull
@@ -194,24 +197,39 @@ public class TermViewFlipper extends ViewFlipper implements Iterable<View> {
     }
 
     /**
+     * Called when the view changes size.
+     * (Note: Not always called on Android < 2.2)
+     */
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        if (full_screen || resize_on_measure) {
+            /* Get rectangle representing visible area of this window (takes
+               IME into account, but not other views in the layout) */
+            Rect win = new Rect();
+            getWindowVisibleDisplayFrame(win);
+
+            /* Get rectangle representing visible area of this view, as seen by
+               the activity (takes other views in the layout into account, but
+               not space used by the IME) */
+            Rect vis = new Rect();
+            getGlobalVisibleRect(vis);
+
+            int nw = win.width();
+            int nh = win.height() - (vis.top - win.top);
+            doSizeChanged(nw, nh);
+        }
+    }
+
+    /**
      * "Called during layout when the size of this view has changed."
-     * NOTE: Not always called when screen is rotated and soft-keyboard
-     * is shown hidden.
+     * NOTE: Not always called when screen is rotated, in landscape
+     * orientation, when IME method(soft-keyboard) is shown hidden.
      */
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        if ((w != mCurWidth) || (h != mCurHeight)) {
-            mChildParams.width = mCurWidth = w;
-            mChildParams.height = mCurHeight = h;
-
-            for (View v : this)
-                updateViewLayout(v, mChildParams);
-
-            mRedoLayout = true;
-            EmulatorView currentView = (EmulatorView) getCurrentView();
-            if (currentView != null)
-                currentView.updateSize(false);
-        }
+        if (!full_screen && !resize_on_measure)
+            doSizeChanged(w, h);
         super.onSizeChanged(w, h, oldw, oldh);
     }
 
@@ -222,5 +240,24 @@ public class TermViewFlipper extends ViewFlipper implements Iterable<View> {
             mRedoLayout = false;
         }
         super.onDraw(canvas);
+    }
+
+    private void doSizeChanged(int w, int h) {
+        if ((w == mCurWidth) && (h == mCurHeight)) return;
+
+        mChildParams.width = mCurWidth = w;
+        mChildParams.height = mCurHeight = h;
+        for (View v : this)
+            updateViewLayout(v, mChildParams);
+
+        mRedoLayout = true;
+
+        EmulatorView currentView = (EmulatorView) getCurrentView();
+        if (currentView != null)
+            currentView.updateSize(false);
+    }
+
+    public void setFullScreen(boolean flag) {
+        full_screen = flag;
     }
 }

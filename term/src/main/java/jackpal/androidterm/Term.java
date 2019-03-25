@@ -416,6 +416,7 @@ public class Term extends AppCompatActivity
                     win.setFlags(desiredFlag, FULLSCREEN);
                 }
             }
+            mViewFlipper.setFullScreen((params.flags & FULLSCREEN) != 0);
         }
         if (mActionBarMode != mSettings.actionBarMode()) {
             if (mAlreadyStarted) {

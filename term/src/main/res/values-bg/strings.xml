@@ -88,6 +88,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <string name="summary_orientation_preference">Избор на завъртане на екрана</string>
     <string name="dialog_title_orientation_preference">Поведение на завъртането на екрана</string>
 
+    <string name="title_sizecalc_preference">Изчисляване на размер</string>
+    <string name="summary_sizecalc_preference">Кога да се изчисли размера на екрана на терминала като заобикаляне за остаряли устройства или някой програмни клавиатури.</string>
+    <string name="dialog_title_sizecalc_preference">Начин за изчисляване на размер</string>
+
     <string name="title_cursorstyle_preference">Вид на показалеца</string>
     <string name="summary_cursorstyle_preference">Избор на вида на показалеца</string>
     <string name="dialog_title_cursorstyle_preference">Вид на показалеца</string>

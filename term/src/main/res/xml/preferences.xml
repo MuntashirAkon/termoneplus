@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Copyright (C) 2008 The Android Open Source Project
-     Copyright (c) 2018 Roumen Petrov.  All rights reserved.
+     Copyright (C) 2018-2019 Roumen Petrov.  All rights reserved.
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -83,6 +83,15 @@
             android:key="orientation"
             android:summary="@string/summary_orientation_preference"
             android:title="@string/title_orientation_preference"/>
+
+        <ListPreference
+            android:defaultValue="@integer/pref_sizecalc_default"
+            android:dialogTitle="@string/dialog_title_sizecalc_preference"
+            android:entries="@array/entries_sizecalc_preference"
+            android:entryValues="@array/entryvalues_sizecalc_preference"
+            android:key="sizecalc"
+            android:summary="@string/summary_sizecalc_preference"
+            android:title="@string/title_sizecalc_preference"/>
 
         <!--
         <ListPreference
