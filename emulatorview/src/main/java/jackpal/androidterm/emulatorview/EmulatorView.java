@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2007 The Android Open Source Project
- * Copyright (C) 2018 Roumen Petrov.  All rights reserved.
+ * Copyright (C) 2018-2019 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -1229,23 +1229,31 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
         int cy = Math.max(0, (int)(ev.getY() / mCharacterHeight - 0.7) + mTopRow);
         switch (action) {
         case MotionEvent.ACTION_DOWN:
-            mSelXAnchor = cx;
-            mSelYAnchor = cy;
-            mSelX1 = cx;
-            mSelY1 = cy;
-            mSelX2 = mSelX1;
-            mSelY2 = mSelY1;
+            mSelX2 = mSelX1 = mSelXAnchor = cx;
+            mSelY2 = mSelY1 = mSelYAnchor = cy;
             break;
         case MotionEvent.ACTION_MOVE:
         case MotionEvent.ACTION_UP:
-            int minx = Math.min(mSelXAnchor, cx);
-            int maxx = Math.max(mSelXAnchor, cx);
-            int miny = Math.min(mSelYAnchor, cy);
-            int maxy = Math.max(mSelYAnchor, cy);
-            mSelX1 = minx;
-            mSelY1 = miny;
-            mSelX2 = maxx;
-            mSelY2 = maxy;
+            if (cy < mSelYAnchor) {
+                mSelX1 = cx;
+                mSelY1 = cy;
+                mSelX2 = mSelXAnchor;
+                mSelY2 = mSelYAnchor;
+            } else if (cy == mSelYAnchor) {
+                if (cx < mSelXAnchor) {
+                    mSelX1 = cx;
+                    mSelX2 = mSelXAnchor;
+                } else {
+                    mSelX1 = mSelXAnchor;
+                    mSelX2 = cx;
+                }
+                mSelY2 = mSelY1 = mSelYAnchor;
+            } else /*cy > mSelYAnchor*/ {
+                mSelX1 = mSelXAnchor;
+                mSelY1 = mSelYAnchor;
+                mSelX2 = cx;
+                mSelY2 = cy;
+            }
             if (action == MotionEvent.ACTION_UP) {
                 SimpleClipboardManager clip = new SimpleClipboardManager(getContext());
                 clip.setText(getSelectedText().trim());
