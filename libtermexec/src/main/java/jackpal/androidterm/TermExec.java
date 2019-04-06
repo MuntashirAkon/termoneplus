@@ -2,7 +2,6 @@ package jackpal.androidterm;
 
 import android.os.Looper;
 import android.os.ParcelFileDescriptor;
-import android.support.annotation.NonNull;
 
 import com.termoneplus.Process;
 
@@ -12,6 +11,9 @@ import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+
+import androidx.annotation.NonNull;
+
 
 /**
  * Utility methods for creating and managing a subprocess. This class differs from

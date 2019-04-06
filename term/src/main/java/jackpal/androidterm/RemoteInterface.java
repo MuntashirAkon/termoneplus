@@ -19,7 +19,6 @@ package jackpal.androidterm;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.termoneplus.Application;
@@ -30,6 +29,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 
+import androidx.annotation.NonNull;
 import jackpal.androidterm.emulatorview.TermSession;
 
 

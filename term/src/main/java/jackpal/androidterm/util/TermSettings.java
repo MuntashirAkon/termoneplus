@@ -19,7 +19,6 @@ package jackpal.androidterm.util;
 
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.support.annotation.IntDef;
 import android.view.KeyEvent;
 
 import com.termoneplus.R;
@@ -28,6 +27,7 @@ import com.termoneplus.Settings;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
+import androidx.annotation.IntDef;
 import jackpal.androidterm.emulatorview.ColorScheme;
 
 

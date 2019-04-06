@@ -20,7 +20,6 @@ package jackpal.androidterm;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Rect;
-import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
@@ -32,6 +31,7 @@ import com.termoneplus.R;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import androidx.annotation.NonNull;
 import jackpal.androidterm.emulatorview.EmulatorView;
 import jackpal.androidterm.emulatorview.TermSession;
 import jackpal.androidterm.emulatorview.UpdateCallback;

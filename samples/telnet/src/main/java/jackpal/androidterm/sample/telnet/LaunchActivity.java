@@ -3,9 +3,10 @@ package jackpal.androidterm.sample.telnet;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 
 /**

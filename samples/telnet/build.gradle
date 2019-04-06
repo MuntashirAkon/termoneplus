@@ -27,5 +27,5 @@ android {
 
 dependencies {
     implementation project(':emulatorview')
-    implementation "com.android.support:appcompat-v7:${project.ext.supportLibVersion}"
+    implementation "androidx.appcompat:appcompat:1.0.2"
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Roumen Petrov.  All rights reserved.
+ * Copyright (C) 2017-2019 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,9 +21,11 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
-import android.support.v7.app.AlertDialog;
 
 import java.util.List;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.FragmentActivity;
 
 
 public class WrapOpenURL {
@@ -64,9 +66,9 @@ public class WrapOpenURL {
 
 
     private static void alert(Context context, int iconId, CharSequence message) {
-        Class clazz = android.support.v4.app.FragmentActivity.class;
+        Class clazz = FragmentActivity.class;
         if (clazz.isInstance(context)) {
-            new android.support.v7.app.AlertDialog.Builder(context)
+            new androidx.appcompat.app.AlertDialog.Builder(context)
                     .setTitle(android.R.string.dialog_alert_title)
                     .setIcon(iconId)
                     .setMessage(message)

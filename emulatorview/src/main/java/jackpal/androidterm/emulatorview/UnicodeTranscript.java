@@ -19,9 +19,11 @@ package jackpal.androidterm.emulatorview;
 import android.icu.lang.UCharacter;
 import android.icu.lang.UProperty;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.text.AndroidCharacter;
 import android.util.Log;
+
+import androidx.annotation.RequiresApi;
+
 
 /**
  * A backing store for a TranscriptScreen.

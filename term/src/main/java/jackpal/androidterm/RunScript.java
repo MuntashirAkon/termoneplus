@@ -19,11 +19,12 @@ package jackpal.androidterm;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 
 import com.termoneplus.Application;
+
+import androidx.annotation.NonNull;
 
 
 /*
