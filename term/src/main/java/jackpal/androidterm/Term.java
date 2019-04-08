@@ -281,7 +281,8 @@ public class Term extends AppCompatActivity
             try {
                 mTermService.addSession(createTermSession());
             } catch (IOException e) {
-                Toast.makeText(this, "Failed to start terminal session", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),
+                        "Failed to start terminal session", Toast.LENGTH_LONG).show();
                 finish();
                 return;
             }
@@ -344,7 +345,7 @@ public class Term extends AppCompatActivity
     }
 
     private void restart(int rid) {
-        Toast toast = Toast.makeText(this, rid, Toast.LENGTH_LONG);
+        Toast toast = Toast.makeText(getApplicationContext(), rid, Toast.LENGTH_LONG);
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
 
@@ -520,7 +521,7 @@ public class Term extends AppCompatActivity
             confirmCloseWindow();
         } else if (id == R.id.menu_reset) {
             doResetTerminal();
-            Toast toast = Toast.makeText(this, R.string.reset_toast_notification, Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(getApplicationContext(), R.string.reset_toast_notification, Toast.LENGTH_LONG);
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
         } else if (id == R.id.menu_toggle_soft_keyboard) {
@@ -576,7 +577,8 @@ public class Term extends AppCompatActivity
             mViewFlipper.addView(view);
             mViewFlipper.setDisplayedChild(mViewFlipper.getChildCount() - 1);
         } catch (IOException e) {
-            Toast.makeText(this, "Failed to create a session", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),
+                    "Failed to create a session", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -630,7 +632,8 @@ public class Term extends AppCompatActivity
                                 mTermService.addSession(session);
                                 onResumeSelectWindow = mTermService.getSessionCount() - 1;
                             } catch (IOException e) {
-                                Toast.makeText(this, "Failed to create a session", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(this.getApplicationContext(),
+                                        "Failed to create a session", Toast.LENGTH_SHORT).show();
                                 onResumeSelectWindow = -1;
                             }
                         } else
@@ -873,7 +876,7 @@ public class Term extends AppCompatActivity
             startActivity(Intent.createChooser(intent,
                     getString(R.string.email_transcript_chooser_title)));
         } catch (ActivityNotFoundException e) {
-            Toast.makeText(this,
+            Toast.makeText(getApplicationContext(),
                     R.string.email_transcript_no_email_activity_found,
                     Toast.LENGTH_LONG).show();
         }

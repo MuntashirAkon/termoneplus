@@ -102,7 +102,7 @@ public class AddShortcut extends AppCompatActivity {
                     try {
                         startActivityForResult(pickerIntent, REQUEST_FIND_COMMAND);
                     } catch (Exception e) {
-                        Toast toast = Toast.makeText(AddShortcut.this,
+                        Toast toast = Toast.makeText(getApplicationContext(),
                                 "Failed to launch pick action!", Toast.LENGTH_LONG);
                         toast.setGravity(Gravity.CENTER, 0, 0);
                         toast.show();
