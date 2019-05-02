@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
  * Copyright (C) 2008 The Android Open Source Project
- * Copyright (c) 2017-2018 Roumen Petrov.  All rights reserved.
+ * Copyright (c) 2017-2019 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,11 +20,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/menu_new_window"
-          android:icon="@drawable/ic_add_circle_outline_white_24dp"
+          android:icon="@drawable/ic_add_circle_outline_24dp"
           android:title="@string/new_window"
           app:showAsAction="always"/>
     <item android:id="@+id/menu_close_window"
-          android:icon="@drawable/ic_close_white_24dp"
+          android:icon="@drawable/ic_close_24dp"
           android:title="@string/close_window"
           app:showAsAction="ifRoom"/>
     <item android:id="@+id/menu_toggle_soft_keyboard"

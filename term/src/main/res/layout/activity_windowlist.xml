@@ -77,7 +77,7 @@
             android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_add_circle_outline_white_24dp"/>
+            app:srcCompat="@drawable/ic_add_circle_outline_24dp"/>
 
     </LinearLayout>
 
