@@ -37,7 +37,7 @@
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:onClick="onAppTitleClicked"
         android:text="@string/application_terminal"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -45,6 +45,7 @@
         android:layout_marginTop="@dimen/text4_margin"
         android:onClick="onEmailAddressClicked"
         android:text="@string/application_email"
+        android:textAppearance="?android:attr/textAppearanceSmall"
         android:textStyle="italic"/>
 
 </LinearLayout>
