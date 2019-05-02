@@ -55,6 +55,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.termoneplus.AppCompatActivity;
 import com.termoneplus.Application;
 import com.termoneplus.Permissions;
 import com.termoneplus.R;
@@ -70,7 +71,6 @@ import java.io.IOException;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import jackpal.androidterm.compat.PathCollector;
 import jackpal.androidterm.compat.PathSettings;
 import jackpal.androidterm.emulatorview.EmulatorView;
@@ -342,16 +342,6 @@ public class Term extends AppCompatActivity
         if (mWifiLock.isHeld()) {
             mWifiLock.release();
         }
-    }
-
-    private void restart(int rid) {
-        Toast toast = Toast.makeText(getApplicationContext(), rid, Toast.LENGTH_LONG);
-        toast.setGravity(Gravity.CENTER, 0, 0);
-        toast.show();
-
-        Intent intent = Intent.makeRestartActivityTask(this.getComponentName());
-        startActivity(intent);
-        finish();
     }
 
     private TermSession createTermSession() throws IOException {
