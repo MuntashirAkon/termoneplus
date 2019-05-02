@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Copyright (C) 2007 The Android Open Source Project
-     Copyright (c) 2017-2018 Roumen Petrov.  All rights reserved.
+     Copyright (c) 2017-2019 Roumen Petrov.  All rights reserved.
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -31,7 +31,7 @@
         <item name="navigationBackground">@drawable/navbar_term</item>
         <!-- indirect reference to text color to avoid lint error
         "Using theme reference in XML drawables requires API level 21" -->
-        <item name="colorFolder">?android:attr/textColorPrimary</item>
+        <item name="themeTextColor">?android:attr/textColorPrimary</item>
     </style>
 
     <!-- actual theme overridden at API level -->
@@ -51,7 +51,7 @@
         <item name="colorPrimaryLight">#90A4AE</item><!--Blue Gray 50, 300-->
         <item name="colorAccent">#8BC34A</item>
         <item name="navigationBackground">@drawable/navbar_term_light</item>
-        <item name="colorFolder">?android:attr/textColorPrimary</item>
+        <item name="themeTextColor">?android:attr/textColorPrimary</item>
     </style>
 
     <!-- actual theme overridden at API level -->
