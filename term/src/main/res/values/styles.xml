@@ -35,7 +35,7 @@
     </style>
 
     <!-- actual theme overridden at API level -->
-    <style name="AppTheme" parent="BaseAppTheme" />
+    <style name="AppTheme" parent="BaseAppTheme"/>
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
@@ -45,17 +45,17 @@
     </style>
 
     <!-- "TermOne Plus" "Light" theme -->
-    <style name="BaseAppTheme.Light" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">#78909C</item><!--Blue Gray 50, 400-->
-        <item name="colorPrimaryDark">#546E7A</item><!--Blue Gray 50, 600-->
-        <item name="colorPrimaryLight">#90A4AE</item><!--Blue Gray 50, 300-->
-        <item name="colorAccent">#8BC34A</item>
+    <style name="BaseAppTheme.Light" parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">#90A4AE</item><!--Blue Gray 50, 300-->
+        <item name="colorPrimaryDark">#78909C</item><!--Blue Gray 50, 400-->
+        <item name="colorPrimaryLight">#B0BEC5</item><!--Blue Gray 50, 200-->
+        <item name="colorAccent">#AED581</item><!--Light Green 50, 300-->
         <item name="navigationBackground">@drawable/navbar_term_light</item>
         <item name="themeTextColor">?android:attr/textColorPrimary</item>
     </style>
 
     <!-- actual theme overridden at API level -->
-    <style name="AppTheme.Light" parent="BaseAppTheme.Light" />
+    <style name="AppTheme.Light" parent="BaseAppTheme.Light"/>
 
     <style name="AppTheme.Light.NoActionBar">
         <item name="windowActionBar">false</item>

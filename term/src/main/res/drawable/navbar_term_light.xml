@@ -19,14 +19,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
     <!-- Color details:
-      startColor : Blue Gray 50, 300 = ?attr/colorPrimaryLight
-      centerColor: Blue Gray 50, 400 = ?attr/colorPrimary
-      endColor   : Blue Gray 50, 600 = ?attr/colorPrimaryDark
+      startColor : Blue Gray 50, 200 = ?attr/colorPrimaryLight
+      centerColor: Blue Gray 50, 300 = ?attr/colorPrimary
+      endColor   : Blue Gray 50, 400 = ?attr/colorPrimaryDark
     -->
     <gradient
         android:angle="315"
-        android:centerColor="#78909C"
-        android:endColor="#546E7A"
-        android:startColor="#90A4AE"
+        android:centerColor="#90A4AE"
+        android:endColor="#78909C"
+        android:startColor="#B0BEC5"
         android:type="linear"/>
 </shape>
