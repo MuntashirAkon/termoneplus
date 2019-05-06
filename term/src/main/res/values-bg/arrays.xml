@@ -41,6 +41,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <item>Винаги да се показва лента за действия</item>
         <item>Скриване на лента за действия/докоснете върха на екрана или клавиша \"Меню\" за показване</item>
     </string-array>
+    <string-array name="entries_thememode_preference">
+        <item>Тъмна</item>
+        <item>Светла</item>
+        <item>Системна</item>
+    </string-array>
     <string-array name="entries_orientation_preference">
         <item>Автоматично</item>
         <item>Водоравно</item>

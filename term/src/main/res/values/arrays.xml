@@ -28,6 +28,12 @@
         <item>Hide action bar (touch top of screen or Menu key to show)</item>
     </string-array>
 
+    <string-array name="entries_thememode_preference">
+        <item>Dark</item>
+        <item>Light</item>
+        <item>System</item>
+    </string-array>
+
     <string-array name="entries_orientation_preference">
         <item>Automatic</item>
         <item>Landscape</item>

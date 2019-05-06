@@ -3,6 +3,7 @@
    <!-- Don't localize these default values -->
    <string name="pref_statusbar_default" translatable="false">1</string>
    <integer name="pref_actionbar_default">1</integer>
+   <string name="pref_thememode_default" translatable="false">dark</string>
    <integer name="pref_orientation_default">0</integer>
    <integer name="pref_sizecalc_default">0</integer>
    <string name="pref_cursorstyle_default" translatable="false">0</string>

@@ -16,15 +16,20 @@
 
 package com.termoneplus;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
+
+import com.termoneplus.utils.ThemeManager;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.core.app.NavUtils;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.PreferenceManager;
 
 
-public class TermPreferencesActivity extends AppCompatActivity {
+public class TermPreferencesActivity extends AppCompatActivity
+        implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +41,21 @@ public class TermPreferencesActivity extends AppCompatActivity {
             }
         }
 
+        {
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+            prefs.registerOnSharedPreferenceChangeListener(this);
+        }
+
         loadPreferences();
+    }
+
+    @Override
+    protected void onDestroy() {
+        {
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+            prefs.unregisterOnSharedPreferenceChangeListener(this);
+        }
+        super.onDestroy();
     }
 
     @Override
@@ -55,6 +74,14 @@ public class TermPreferencesActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction()
                 .replace(android.R.id.content, new TermPreferencesFragment())
                 .commit();
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (ThemeManager.PREF_THEME_MODE.equals(key)) {
+            // Do no not inform user!
+            restart(0);
+        }
     }
 
     public static class TermPreferencesFragment extends PreferenceFragmentCompat {

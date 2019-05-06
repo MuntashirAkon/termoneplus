@@ -69,6 +69,15 @@
             android:summary="@string/summary_actionbar_preference_compat"
             android:title="@string/title_actionbar_preference"/>
 
+        <ListPreference
+            android:defaultValue="@string/pref_thememode_default"
+            android:dialogTitle="@string/dialog_title_thememode_preference"
+            android:entries="@array/entries_thememode_preference"
+            android:entryValues="@array/entryvalues_thememode_preference"
+            android:key="thememode"
+            android:summary="@string/summary_thememode_preference"
+            android:title="@string/title_thememode_preference"/>
+
         <CheckBoxPreference
             android:defaultValue="@bool/pref_close_window_on_process_exit_default"
             android:key="close_window_on_process_exit"

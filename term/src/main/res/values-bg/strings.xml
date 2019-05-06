@@ -84,6 +84,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <string name="dialog_title_actionbar_preference">Поведение на лентата за действия</string>
     <string name="restart_actionbar_change">Започване наново ...\n(нов вид на лентата за действие)</string>
 
+    <string name="title_thememode_preference">Вид основа/Тема</string>
+    <string name="summary_thememode_preference">Смяна на вида на основата.</string>
+    <string name="dialog_title_thememode_preference">Вид основа</string>
+    <string name="restart_thememode_change">Започване наново ...\n(нов вид на основата)</string>
+
     <string name="title_orientation_preference">Завъртане на екрана</string>
     <string name="summary_orientation_preference">Избор на завъртане на екрана</string>
     <string name="dialog_title_orientation_preference">Поведение на завъртането на екрана</string>

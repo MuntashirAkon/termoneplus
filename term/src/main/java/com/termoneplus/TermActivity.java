@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Roumen Petrov.  All rights reserved.
+ * Copyright (C) 2018-2019 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,12 +16,22 @@
 
 package com.termoneplus;
 
+import android.content.SharedPreferences;
 import android.view.View;
 
+import com.termoneplus.utils.ThemeManager;
 import com.termoneplus.utils.WrapOpenURL;
 
 
 public class TermActivity extends jackpal.androidterm.Term {
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        // do not process preference "Theme Mode"
+        if (ThemeManager.PREF_THEME_MODE.equals(key)) return;
+
+        super.onSharedPreferenceChanged(sharedPreferences, key);
+    }
 
     public void onAppIconClicked(View view) {
         WrapOpenURL.launch(this, urlApplicationSite());
@@ -35,6 +45,17 @@ public class TermActivity extends jackpal.androidterm.Term {
         WrapOpenURL.launch(this, urlApplicationMail());
     }
 
+    @Override
+    protected void updatePrefs() {
+        Integer theme_resid = getThemeId();
+        if (theme_resid != null) {
+            if (theme_resid != ThemeManager.presetTheme(this, false, theme_resid)) {
+                restart(R.string.restart_thememode_change);
+                return;
+            }
+        }
+        super.updatePrefs();
+    }
 
     private String urlApplicationSite() {
         return getResources().getString(R.string.application_site);

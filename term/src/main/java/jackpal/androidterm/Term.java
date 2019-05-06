@@ -373,7 +373,7 @@ public class Term extends AppCompatActivity
         return (EmulatorView) mViewFlipper.getCurrentView();
     }
 
-    private void updatePrefs() {
+    protected void updatePrefs() {
         mUseKeyboardShortcuts = mSettings.getUseKeyboardShortcutsFlag();
 
         DisplayMetrics metrics = new DisplayMetrics();

@@ -33,7 +33,25 @@
         <item name="themeTextColor">?android:attr/textColorPrimary</item>
     </style>
 
-    <!-- actual theme overridden at API level -->
+    <!-- "TermOne Plus" "Light" theme -->
+    <style name="BaseAppTheme.Light" parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">#90A4AE</item><!--Blue Gray 50, 300-->
+        <item name="colorPrimaryDark">#78909C</item><!--Blue Gray 50, 400-->
+        <item name="colorAccent">#AED581</item><!--Light Green 50, 300-->
+        <item name="colorPrimaryLight">#B0BEC5</item><!--Blue Gray 50, 200-->
+        <item name="themeTextColor">?android:attr/textColorPrimary</item>
+    </style>
+
+    <!-- "TermOne Plus" "DayNight" theme(system) -->
+    <style name="BaseAppTheme.DayNight" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <item name="colorPrimary">#607D8B</item><!--Blue Gray 50, 500-->
+        <item name="colorPrimaryDark">#455A64</item><!--Blue Gray 50, 700-->
+        <item name="colorAccent">#8BC34A</item><!--Light Green 50, 500-->
+        <item name="colorPrimaryLight">#78909C</item><!--Blue Gray 50, 400-->
+        <item name="themeTextColor">?android:attr/textColorPrimary</item>
+    </style>
+
+    <!-- actual "Dark" theme overridden at API level -->
     <style name="AppTheme" parent="BaseAppTheme"/>
 
     <style name="AppTheme.NoActionBar">
@@ -43,19 +61,20 @@
         <item name="actionModeBackground">?attr/colorPrimary</item>
     </style>
 
-    <!-- "TermOne Plus" "Light" theme -->
-    <style name="BaseAppTheme.Light" parent="Theme.AppCompat.Light">
-        <item name="colorPrimary">#90A4AE</item><!--Blue Gray 50, 300-->
-        <item name="colorPrimaryDark">#78909C</item><!--Blue Gray 50, 400-->
-        <item name="colorPrimaryLight">#B0BEC5</item><!--Blue Gray 50, 200-->
-        <item name="colorAccent">#AED581</item><!--Light Green 50, 300-->
-        <item name="themeTextColor">?android:attr/textColorPrimary</item>
-    </style>
-
-    <!-- actual theme overridden at API level -->
+    <!-- actual "Light" theme overridden at API level -->
     <style name="AppTheme.Light" parent="BaseAppTheme.Light"/>
 
     <style name="AppTheme.Light.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="actionModeBackground">?attr/colorPrimary</item>
+    </style>
+
+    <!-- actual "DayNight" theme overridden at API level -->
+    <style name="AppTheme.DayNight" parent="BaseAppTheme.DayNight"/>
+
+    <style name="AppTheme.DayNight.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="windowActionModeOverlay">true</item>
