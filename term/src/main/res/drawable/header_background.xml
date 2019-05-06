@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
- * Copyright (c) 2018 Roumen Petrov.  All rights reserved.
+ * Copyright (c) 2018-2019 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,18 +15,24 @@
  * limitations under the License.
 -->
 
+<!-- Remark:
+Support for referencing theme attributes in a shape drawable
+does not work on devices before Android 5.0 (Lollipop, API Level 21).
+See https://issuetracker.google.com/issues/36941443 .
+As work-around on earlier versions colors will be set by program code.
+-->
 <shape
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
     <!-- Color details:
-      startColor : Blue Gray 50, 200 = ?attr/colorPrimaryLight
-      centerColor: Blue Gray 50, 300 = ?attr/colorPrimary
-      endColor   : Blue Gray 50, 400 = ?attr/colorPrimaryDark
+      startColor : Blue Gray 50, 400 = ?attr/colorPrimaryLight
+      centerColor: Blue Gray 50, 500 = ?attr/colorPrimary
+      endColor   : Blue Gray 50, 700 = ?attr/colorPrimaryDark
     -->
     <gradient
         android:angle="315"
-        android:centerColor="#90A4AE"
-        android:endColor="#78909C"
-        android:startColor="#B0BEC5"
+        android:centerColor="#607D8B"
+        android:endColor="#455A64"
+        android:startColor="#78909C"
         android:type="linear"/>
 </shape>

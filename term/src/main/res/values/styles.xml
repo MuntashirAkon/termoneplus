@@ -28,7 +28,6 @@
         <item name="colorAccent">#8BC34A</item><!--Light Green 50, 500-->
         <!-- custom application attributes -->
         <item name="colorPrimaryLight">#78909C</item><!--Blue Gray 50, 400-->
-        <item name="navigationBackground">@drawable/navbar_term</item>
         <!-- indirect reference to text color to avoid lint error
         "Using theme reference in XML drawables requires API level 21" -->
         <item name="themeTextColor">?android:attr/textColorPrimary</item>
@@ -50,7 +49,6 @@
         <item name="colorPrimaryDark">#78909C</item><!--Blue Gray 50, 400-->
         <item name="colorPrimaryLight">#B0BEC5</item><!--Blue Gray 50, 200-->
         <item name="colorAccent">#AED581</item><!--Light Green 50, 300-->
-        <item name="navigationBackground">@drawable/navbar_term_light</item>
         <item name="themeTextColor">?android:attr/textColorPrimary</item>
     </style>
 

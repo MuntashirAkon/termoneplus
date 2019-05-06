@@ -18,5 +18,4 @@
 <resources>
     <attr name="colorPrimaryLight" format="color"/>
     <attr name="themeTextColor" format="color"/>
-    <attr name="navigationBackground" format="reference"/>
 </resources>
