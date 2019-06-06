@@ -591,14 +591,13 @@ public class Term extends AppCompatActivity
         EmulatorView view = getCurrentEmulatorView();
         if (view == null) return;
 
-        TermSession session = mTermService.removeSession(mViewFlipper.getDisplayedChild());
         view.onPause();
-        session.finish();
         mViewFlipper.removeView(view);
+        TermSession session = view.getTermSession();
+        if (session != null) session.finish();
 
-        if (mTermService.getSessionCount() != 0) {
+        if (mTermService.getSessionCount() > 0)
             mViewFlipper.showNext();
-        }
     }
 
     @Override

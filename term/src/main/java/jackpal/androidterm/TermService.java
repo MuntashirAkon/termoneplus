@@ -134,10 +134,6 @@ public class TermService extends Service {
         addSession(session, this::onSessionFinish);
     }
 
-    public TermSession removeSession(int index) {
-        return mTermSessions.remove(index);
-    }
-
     private void addSession(TermSession session, TermSession.FinishCallback callback) {
         mTermSessions.add(session);
         session.setFinishCallback(callback);
