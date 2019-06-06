@@ -19,12 +19,48 @@ package com.termoneplus.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.view.Gravity;
+import android.widget.Toast;
 
 import com.termoneplus.R;
+
+import java.io.File;
 
 
 public class ThemeManager {
     public static final String PREF_THEME_MODE = "thememode";
+    private static final String PREFERENCES_FILE = "file_selection"; /*obsolete*/
+    private static final String PREFERENCE_LIGHT_THEME = "light_theme";  /*obsolete*/
+
+    public static void migrateFileSelectionThemeMode(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_FILE, Context.MODE_PRIVATE);
+
+        if (!preferences.contains(PREFERENCE_LIGHT_THEME)) return;
+
+        boolean light_theme = preferences.getBoolean(PREFERENCE_LIGHT_THEME, false);
+
+        Toast toast = Toast.makeText(context.getApplicationContext(),
+                "Migrate \"File Selection\" theme mode", Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
+
+        preferences.edit().remove(PREFERENCE_LIGHT_THEME).commit();
+        // Note obsolete "FileSelection" preferences have only one item - light_theme!
+        {
+            File prefs_path = new File(context.getFilesDir().getParentFile(), "shared_prefs");
+            for (String name : prefs_path.list((dir, name) -> name.startsWith(PREFERENCES_FILE)))
+                //noinspection ResultOfMethodCallIgnored
+                new File(prefs_path, name).delete();
+        }
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor prefs_editor = prefs.edit();
+        if (light_theme)
+            prefs_editor.putString(PREF_THEME_MODE, "light");
+        else
+            prefs_editor.putString(PREF_THEME_MODE, "dark");
+        prefs_editor.apply();
+    }
 
     public static int presetTheme(Context context, boolean actionbar, int resid) {
         final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);

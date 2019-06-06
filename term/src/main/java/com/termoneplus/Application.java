@@ -16,6 +16,8 @@
 
 package com.termoneplus;
 
+import com.termoneplus.utils.ThemeManager;
+
 
 public class Application extends android.app.Application {
     public static final String ID = BuildConfig.APPLICATION_ID;
@@ -37,4 +39,11 @@ public class Application extends android.app.Application {
     /* arguments for use by external applications */
     public static final String ARGUMENT_SHELL_COMMAND = "com.termoneplus.Command";
     public static final String ARGUMENT_WINDOW_HANDLE = "com.termoneplus.WindowHandle";
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        ThemeManager.migrateFileSelectionThemeMode(this);
+    }
 }

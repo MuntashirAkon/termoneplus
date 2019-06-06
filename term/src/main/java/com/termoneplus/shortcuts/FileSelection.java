@@ -31,6 +31,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.termoneplus.AppCompatActivity;
 import com.termoneplus.R;
 
 import java.io.File;
@@ -41,15 +42,11 @@ import java.util.Arrays;
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
 
 public class FileSelection extends AppCompatActivity {
-    private final String PREFERENCES_FILE = "file_selection";
-    private final String PREFERENCE_LIGHT_THEME = "light_theme";
-
     private final String STATE_CWD = "CWD";
 
     private String cwd; // current working directory
@@ -57,14 +54,6 @@ public class FileSelection extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        {
-            SharedPreferences preferences = getSharedPreferences(PREFERENCES_FILE, MODE_PRIVATE);
-            boolean light = preferences.getBoolean(PREFERENCE_LIGHT_THEME, false);
-
-            // override activity theme defined in manifest file
-            if (light)
-                setTheme(R.style.AppTheme_Light_NoActionBar);
-        }
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_file_selection);
@@ -138,19 +127,10 @@ public class FileSelection extends AppCompatActivity {
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_file_selection, menu);
-        return true;
-    }
-
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home: // Action bar home/up button selected
                 finish();
-                return true;
-            case R.id.menu_switch_theme:
-                onSwitchTheme();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -160,23 +140,6 @@ public class FileSelection extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString(STATE_CWD, cwd);
-    }
-
-    private void onSwitchTheme() {
-        SharedPreferences preferences = getSharedPreferences(PREFERENCES_FILE, MODE_PRIVATE);
-        boolean light = preferences.getBoolean(PREFERENCE_LIGHT_THEME, false);
-
-        {
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.putBoolean("light_theme", !light);
-            editor.apply();
-        }
-
-        Intent intent = getIntent();
-        intent.addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
-        intent.putExtra("COMMAND_PATH", cwd);
-        startActivityForResult(intent, -1);
-        finish();
     }
 
     @IntDef({
