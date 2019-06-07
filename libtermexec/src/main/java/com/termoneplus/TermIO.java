@@ -24,7 +24,7 @@ import java.io.IOException;
 public class TermIO {
 
     static {
-        System.loadLibrary("emulator-system");
+        System.loadLibrary("term-system");
     }
 
     public static void setUTF8Input(ParcelFileDescriptor masterPty, boolean flag) throws IOException {

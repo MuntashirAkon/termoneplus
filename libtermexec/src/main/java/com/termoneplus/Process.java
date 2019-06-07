@@ -25,7 +25,7 @@ import java.io.UnsupportedEncodingException;
 public class Process {
 
     static {
-        System.loadLibrary("emulator-system");
+        System.loadLibrary("term-system");
     }
 
     public static int createSubprocess(

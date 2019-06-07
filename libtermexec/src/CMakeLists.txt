@@ -28,7 +28,7 @@ cmake_minimum_required(VERSION 2.4)
 
 add_library(
         # Specifies the name of the library.
-        emulator-system
+        term-system
 
         # Sets the library as a shared library.
         SHARED
@@ -53,7 +53,7 @@ find_library(
 # Links your native library against one or more other native libraries.
 target_link_libraries(
         # Specifies the target library.
-        emulator-system
+        term-system
 
         # Links the log library to the target library.
         ${log-lib}
