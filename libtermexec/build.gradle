@@ -45,5 +45,5 @@ android.libraryVariants.all { variant ->
 dependencies {
     implementation project(':emulatorview')
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation "androidx.annotation:annotation:1.0.2"
+    implementation "androidx.annotation:annotation:1.1.0"
 }
