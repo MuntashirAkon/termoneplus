@@ -11,6 +11,11 @@ android {
         versionCode 10001
         versionName '1.0.1'
     }
+    externalNativeBuild {
+        cmake {
+            path "src/CMakeLists.txt"
+        }
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -43,7 +48,6 @@ android.libraryVariants.all { variant ->
 }
 
 dependencies {
-    implementation project(':emulatorview')
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "androidx.annotation:annotation:1.1.0"
 }

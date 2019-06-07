@@ -1,5 +1,6 @@
 include ':term'
-include ':emulatorview', ':libtermexec'
+include ':libtermexec'
+include ':emulatorview'
 include ':samples:intents'
 include ':samples:pathbroadcasts'
 include ':samples:telnet'
