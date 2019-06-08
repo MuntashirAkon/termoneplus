@@ -10,8 +10,8 @@ android {
 
         vectorDrawables.useSupportLibrary = true
 
-        versionCode 291
-        versionName '2.9.1'
+        versionCode 300
+        versionName '3.0.0'
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
