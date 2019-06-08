@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2007 The Android Open Source Project
- * Copyright (C) 2018 Roumen Petrov.  All rights reserved.
+ * Copyright (C) 2018-2019 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,6 +29,7 @@ import jackpal.androidterm.compat.PathSettings;
 import jackpal.androidterm.util.TermSettings;
 
 import java.io.*;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 
@@ -44,17 +45,8 @@ public class ShellTermSession extends GenericTermSession {
     private String mInitialCommand;
 
     private static final int PROCESS_EXITED = 1;
-    private Handler mMsgHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            if (!isRunning()) {
-                return;
-            }
-            if (msg.what == PROCESS_EXITED) {
-                onProcessExit((Integer) msg.obj);
-            }
-        }
-    };
+    private Handler mMsgHandler = new ProcessHandler(this);
+
 
     public ShellTermSession(TermSettings settings, PathSettings path_settings, String initialCommand) throws IOException {
         super(ParcelFileDescriptor.open(new File("/dev/ptmx"), ParcelFileDescriptor.MODE_READ_WRITE),
@@ -178,5 +170,23 @@ public class ShellTermSession extends GenericTermSession {
     public void finish() {
         Process.finishChilds(mProcId);
         super.finish();
+    }
+
+    private static class ProcessHandler extends Handler {
+        private final WeakReference<ShellTermSession> reference;
+
+        ProcessHandler(ShellTermSession session) {
+            reference = new WeakReference<>(session);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            ShellTermSession session = reference.get();
+            if (session == null) return;
+            if (!session.isRunning()) return;
+
+            if (msg.what == PROCESS_EXITED)
+                session.onProcessExit((Integer) msg.obj);
+        }
     }
 }
