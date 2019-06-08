@@ -143,56 +143,7 @@ public class TermSession {
         mReaderThread.setName("TermSession input reader");
 
         mWriteQueue = new ByteQueue(4096);
-        mWriterThread = new Thread() {
-            private byte[] mBuffer = new byte[4096];
-
-            @Override
-            public void run() {
-                Looper.prepare();
-
-                mWriterHandler = new Handler() {
-                    @Override
-                    public void handleMessage(Message msg) {
-                        if (msg.what == NEW_OUTPUT) {
-                            writeToOutput();
-                        } else if (msg.what == FINISH) {
-                            Looper.myLooper().quit();
-                        }
-                    }
-                };
-
-                // Drain anything in the queue from before we started
-                writeToOutput();
-
-                Looper.loop();
-            }
-
-            private void writeToOutput() {
-                ByteQueue writeQueue = mWriteQueue;
-                byte[] buffer = mBuffer;
-                OutputStream termOut = mTermOut;
-
-                int bytesAvailable = writeQueue.getBytesAvailable();
-                int bytesToWrite = Math.min(bytesAvailable, buffer.length);
-
-                if (bytesToWrite == 0) {
-                    return;
-                }
-
-                try {
-                    writeQueue.read(buffer, 0, bytesToWrite);
-                    termOut.write(buffer, 0, bytesToWrite);
-                    termOut.flush();
-                } catch (IOException e) {
-                    // Ignore exception
-                    // We don't really care if the receiver isn't listening.
-                    // We just make a best effort to answer the query.
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
+        mWriterThread = new WriterThread();
         mWriterThread.setName("TermSession output writer");
     }
 
@@ -655,6 +606,62 @@ public class TermSession {
                 session.readFromProcess();
             } else if (msg.what == EOF) {
                 new Handler(Looper.getMainLooper()).post(session::onProcessExit);
+            }
+        }
+    }
+
+    private class WriterThread extends Thread {
+        private byte[] buffer = new byte[4096];
+
+        @Override
+        public void run() {
+            Looper.prepare();
+
+            mWriterHandler = new WriterHandler(this);
+
+            // Drain anything in the queue from before we started
+            writeToOutput();
+
+            Looper.loop();
+        }
+
+        private void writeToOutput() {
+            int bytesAvailable = mWriteQueue.getBytesAvailable();
+            int bytesToWrite = Math.min(bytesAvailable, buffer.length);
+
+            if (bytesToWrite == 0) return;
+
+            try {
+                mWriteQueue.read(buffer, 0, bytesToWrite);
+                mTermOut.write(buffer, 0, bytesToWrite);
+                mTermOut.flush();
+            } catch (IOException e) {
+                // Ignore exception
+                // We don't really care if the receiver isn't listening.
+                // We just make a best effort to answer the query.
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    };
+
+    private static class WriterHandler extends Handler {
+        private final WeakReference<WriterThread> reference;
+
+        WriterHandler(WriterThread thread) {
+            reference = new WeakReference<>(thread);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            WriterThread thread = reference.get();
+            if (thread == null) return;
+
+            if (msg.what == NEW_OUTPUT) {
+                thread.writeToOutput();
+            } else if (msg.what == FINISH) {
+                Looper.myLooper().quit();
             }
         }
     }
