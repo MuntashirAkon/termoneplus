@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2007 The Android Open Source Project
- * Copyright (C) 2018 Roumen Petrov.  All rights reserved.
+ * Copyright (C) 2018-2019 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -135,7 +135,9 @@ public class TermSession {
                         writer.sendEmptyMessage(FINISH);
                 }
 
-                if (exitOnEOF) mMsgHandler.sendMessage(mMsgHandler.obtainMessage(EOF));
+                if (exitOnEOF)
+                    mMsgHandler.sendMessage(
+                            mMsgHandler.obtainMessage(EOF));
             }
         };
         mReaderThread.setName("TermSession input reader");
@@ -586,10 +588,13 @@ public class TermSession {
      */
     public void finish() {
         mIsRunning = false;
-        if (mEmulator != null)
-            mEmulator.finish();
-        if (mTranscriptScreen != null) {
-            mTranscriptScreen.finish();
+        finalizeEmulator();
+    }
+
+    private synchronized void finalizeEmulator() {
+        if (mFinishCallback != null) {
+            mFinishCallback.onSessionFinish(this);
+            mFinishCallback = null;
         }
 
         // Stop the reader and writer threads, and close the I/O streams
@@ -607,8 +612,14 @@ public class TermSession {
         } catch (NullPointerException ignored) {
         }
 
-        if (mFinishCallback != null) {
-            mFinishCallback.onSessionFinish(this);
+        if (mEmulator != null) {
+            mEmulator.finish();
+            mEmulator = null;
+        }
+
+        if (mTranscriptScreen != null) {
+            mTranscriptScreen.finish();
+            mTranscriptScreen = null;
         }
     }
 
@@ -638,7 +649,7 @@ public class TermSession {
         public void handleMessage(Message msg) {
             TermSession session = reference.get();
             if (session == null) return;
-            if (!session.mIsRunning) return;
+            if (!session.isRunning()) return;
 
             if (msg.what == NEW_INPUT) {
                 session.readFromProcess();
