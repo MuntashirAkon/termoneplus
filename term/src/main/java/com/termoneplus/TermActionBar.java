@@ -177,7 +177,7 @@ public class TermActionBar {
                 return;
             }
 
-            @ColorInt final int colors[] = {
+            @ColorInt final int[] colors = {
                     // see header_background
                     0x78909C /* Blue Gray 50, 400 */,
                     0x607D8B /* Blue Gray 50, 500 */,
