@@ -227,8 +227,7 @@ public class TermService extends Service {
                         new Handler(Looper.getMainLooper()).post(() -> {
                             GenericTermSession session = null;
                             try {
-                                final TermSettings settings = new TermSettings(getResources(),
-                                        PreferenceManager.getDefaultSharedPreferences(getApplicationContext()));
+                                final TermSettings settings = new TermSettings(getApplicationContext());
 
                                 session = new BoundSession(pseudoTerminalMultiplexerFd, settings, niceName);
                                 session.setHandle(sessionHandle);

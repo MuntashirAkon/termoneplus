@@ -17,6 +17,7 @@
 
 package jackpal.androidterm.util;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.view.KeyEvent;
@@ -28,6 +29,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 import androidx.annotation.IntDef;
+import androidx.preference.PreferenceManager;
 import jackpal.androidterm.emulatorview.ColorScheme;
 
 
@@ -127,6 +129,10 @@ public class TermSettings {
     public static final int BACK_KEY_SENDS_ESC = 3;
     public static final int BACK_KEY_SENDS_TAB = 4;
     private static final int BACK_KEY_MAX = 4;
+
+    public TermSettings(Context context) {
+        this(context.getResources(), PreferenceManager.getDefaultSharedPreferences(context));
+    }
 
     public TermSettings(Resources res, SharedPreferences prefs) {
         readDefaultPrefs(res);

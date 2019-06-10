@@ -16,14 +16,14 @@
 
 package com.termoneplus.shortcuts;
 
+import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,9 +41,11 @@ import java.util.Arrays;
 
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
+import jackpal.androidterm.util.TermSettings;
 
 
 public class FileSelection extends AppCompatActivity {
@@ -89,10 +91,8 @@ public class FileSelection extends AppCompatActivity {
         } else {
             cwd = savedInstanceState.getString(STATE_CWD);
         }
-        if (cwd == null) {
-            File path = Environment.getExternalStorageDirectory();
-            cwd = path.getAbsolutePath();
-        }
+        if (cwd == null)
+            cwd = DefaultPath.get(getApplicationContext());
 
         final Adapter adapter = new Adapter(cwd);
 
@@ -154,6 +154,33 @@ public class FileSelection extends AppCompatActivity {
         int ENTRY_DIRECTORY = 1;
         int ENTRY_FILE = 2;
         int ENTRY_UNKNOWN = 9; /*broken symbolic link*/
+    }
+
+    private static class DefaultPath {
+        private static String get(Context context) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q /*API Level 29 */)
+                return Compat29.get(context);
+            else
+                return Compat1.get(context);
+        }
+
+        @RequiresApi(29)
+        static class Compat29 {
+            private static String get(Context context) {
+                // TODO keep backward compatibility with getExternalStorageDirectory()
+                TermSettings settings = new TermSettings(context);
+                return settings.getHomePath();
+            }
+        }
+
+        static class Compat1 {
+            private static String get(@SuppressWarnings("unused") Context context) {
+                /* getExternalStorageDirectory() was deprecated in API level 29. */
+                @SuppressWarnings("deprecation")
+                File path = Environment.getExternalStorageDirectory();
+                return path.getAbsolutePath();
+            }
+        }
     }
 
     private class ViewHolder extends RecyclerView.ViewHolder {
