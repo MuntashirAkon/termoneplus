@@ -16,7 +16,11 @@
 
 package com.termoneplus;
 
+import android.content.SharedPreferences;
+
 import com.termoneplus.utils.ThemeManager;
+
+import androidx.preference.PreferenceManager;
 
 
 public class Application extends android.app.Application {
@@ -43,6 +47,14 @@ public class Application extends android.app.Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        if (!prefs.contains("home_path")) {
+            SharedPreferences.Editor editor = prefs.edit();
+            String path = getDir("HOME", MODE_PRIVATE).getAbsolutePath();
+            editor.putString("home_path", path);
+            editor.apply();
+        }
 
         ThemeManager.migrateFileSelectionThemeMode(this);
     }
