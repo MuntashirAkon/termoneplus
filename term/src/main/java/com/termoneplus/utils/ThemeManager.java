@@ -18,13 +18,14 @@ package com.termoneplus.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.view.Gravity;
 import android.widget.Toast;
 
 import com.termoneplus.R;
 
 import java.io.File;
+
+import androidx.preference.PreferenceManager;
 
 
 public class ThemeManager {

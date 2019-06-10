@@ -16,11 +16,11 @@
 
 package jackpal.androidterm.util;
 
+import androidx.preference.PreferenceManager;
 import jackpal.androidterm.compat.Base64;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;

@@ -22,11 +22,11 @@ import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.preference.PreferenceManager;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 import jackpal.androidterm.TermService;
 import jackpal.androidterm.compat.PathCollector;
 import jackpal.androidterm.compat.PathSettings;

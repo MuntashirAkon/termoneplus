@@ -22,7 +22,6 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -41,6 +40,7 @@ import java.security.GeneralSecurityException;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 import jackpal.androidterm.RemoteInterface;
 import jackpal.androidterm.RunShortcut;
 import jackpal.androidterm.compat.PRNGFixes;
