@@ -8,15 +8,15 @@ Each android device has a build-in born shell and a number of shell command that
 Application supports multiple terminal windows(screens). Each terminal starts own console session with build-in shell (by default).
 Terminal emulates large subset of Digital Equipment Corporation VT-100 terminal capabilities - supported are following terminal types: vt100, screen (default), linux, screen-256color, xterm and xterm-256color. Also it supports UTF-8 console text mode by default.
 For instance supported terminal capabilities allows users fully to use textual interface in remote login programs (ssh connections).
+Terminal screen support color schemes like "Dark Pastels", "Solarized Light", "Solarized Dark" and etc. Also user could chose size of text.
 
-Functionality "prepend/append path" allows external applications to enhance set of available commands.
+"TermOne Plus" user interface is based on material design - icons, colors. It uses navigation drawer as main menu. Also user could switch between "Light" and "Dark" theme mode.
 
 Launcher short-cut functionality allows user to create "button"(android short-cut widget) to a command or shell script.
 Build-in file selector (aka file explorer) is exported and so allows other applications easy to pick a file.
 
 Application is localized in many languages and/or territories (locales).
 
-
-"TermOne Plus" is successor of excellent but un-maintained since 2015 "Terminal Emulator for Android". This new application includes many compatibility and portability improvements, stability and defect fixes, and localization enhancements. As result it works fine with recent android releases like Oreo(8.1). Even on ancient like Gingerbread(2.3) it looks and works the same as for recent one.
+"TermOne Plus" is successor of excellent but un-maintained since 2015 "Terminal Emulator for Android". This new application includes rewritten user interface, many compatibility and portability improvements, stability and defect fixes, and localization enhancements. As result it works fine with recent android releases like Pie(9.0). Even on ancient like Gingerbread(2.3) it looks and works the same as for recent one.
 
 Please visit application site to find out how to participate into development and/or localization, how to request new or enhanced functionality.
