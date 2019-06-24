@@ -18,6 +18,8 @@
 package jackpal.androidterm.emulatorview;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.charset.Charset;
@@ -26,6 +28,8 @@ import java.nio.charset.CodingErrorAction;
 import java.util.Locale;
 
 import android.util.Log;
+
+import androidx.annotation.IntDef;
 
 /**
  * Renders text into a screen. Contains all the terminal-specific knowledge and
@@ -102,58 +106,6 @@ class TerminalEmulator {
      */
     private static final int MAX_OSC_STRING_LENGTH = 512;
 
-    // Escape processing states:
-
-    /**
-     * Escape processing state: Not currently in an escape sequence.
-     */
-    private static final int ESC_NONE = 0;
-
-    /**
-     * Escape processing state: Have seen an ESC character
-     */
-    private static final int ESC = 1;
-
-    /**
-     * Escape processing state: Have seen ESC POUND
-     */
-    private static final int ESC_POUND = 2;
-
-    /**
-     * Escape processing state: Have seen ESC and a character-set-select char
-     */
-    private static final int ESC_SELECT_LEFT_PAREN = 3;
-
-    /**
-     * Escape processing state: Have seen ESC and a character-set-select char
-     */
-    private static final int ESC_SELECT_RIGHT_PAREN = 4;
-
-    /**
-     * Escape processing state: ESC [
-     */
-    private static final int ESC_LEFT_SQUARE_BRACKET = 5;
-
-    /**
-     * Escape processing state: ESC [ ?
-     */
-    private static final int ESC_LEFT_SQUARE_BRACKET_QUESTION_MARK = 6;
-
-    /**
-     * Escape processing state: ESC %
-     */
-    private static final int ESC_PERCENT = 7;
-
-    /**
-     * Escape processing state: ESC ] (AKA OSC - Operating System Controls)
-     */
-    private static final int ESC_RIGHT_SQUARE_BRACKET = 8;
-
-    /**
-     * Escape processing state: ESC ] (AKA OSC - Operating System Controls)
-     */
-    private static final int ESC_RIGHT_SQUARE_BRACKET_ESC = 9;
-
     /**
      * True if the current escape sequence should continue, false if the current
      * escape sequence should be terminated. Used when parsing a single
@@ -164,6 +116,7 @@ class TerminalEmulator {
     /**
      * The current state of the escape sequence state machine.
      */
+    @EscapeProcessingState
     private int mEscapeState;
 
     /**
@@ -704,7 +657,7 @@ class TerminalEmulator {
         case 7: // BEL
             /* If in an OSC sequence, BEL may terminate a string; otherwise do
              * nothing */
-            if (mEscapeState == ESC_RIGHT_SQUARE_BRACKET) {
+            if (mEscapeState == EscapeProcessingState.RIGHT_SQUARE_BRACKET) {
                 doEscRightSquareBracket(b);
             }
             break;
@@ -739,7 +692,7 @@ class TerminalEmulator {
 
         case 24: // CAN
         case 26: // SUB
-            if (mEscapeState != ESC_NONE) {
+            if (mEscapeState != EscapeProcessingState.NONE) {
                 finishSequence();
                 emit((byte) 127);
             }
@@ -747,7 +700,7 @@ class TerminalEmulator {
 
         case 27: // ESC
             // Starts an escape sequence unless we're parsing a string
-            if (mEscapeState != ESC_RIGHT_SQUARE_BRACKET) {
+            if (mEscapeState != EscapeProcessingState.RIGHT_SQUARE_BRACKET) {
                 startSequence();
             } else {
                 doEscRightSquareBracket(b);
@@ -757,45 +710,45 @@ class TerminalEmulator {
         default:
             mContinueSequence = false;
             switch (mEscapeState) {
-            case ESC_NONE:
+            case EscapeProcessingState.NONE:
                 if (b >= 32) {
                     emit(b);
                 }
                 break;
 
-            case ESC:
+            case EscapeProcessingState.START:
                 doEsc(b);
                 break;
 
-            case ESC_POUND:
+            case EscapeProcessingState.POUND:
                 doEscPound(b);
                 break;
 
-            case ESC_SELECT_LEFT_PAREN:
+            case EscapeProcessingState.SELECT_LEFT_PAREN:
                 doEscSelectLeftParen(b);
                 break;
 
-            case ESC_SELECT_RIGHT_PAREN:
+            case EscapeProcessingState.SELECT_RIGHT_PAREN:
                 doEscSelectRightParen(b);
                 break;
 
-            case ESC_LEFT_SQUARE_BRACKET:
+            case EscapeProcessingState.LEFT_SQUARE_BRACKET:
                 doEscLeftSquareBracket(b); // CSI
                 break;
 
-            case ESC_LEFT_SQUARE_BRACKET_QUESTION_MARK:
+            case EscapeProcessingState.LEFT_SQUARE_BRACKET_QUESTION_MARK:
                 doEscLSBQuest(b); // CSI ?
                 break;
 
-            case ESC_PERCENT:
+            case EscapeProcessingState.PERCENT:
                 doEscPercent(b);
                 break;
 
-            case ESC_RIGHT_SQUARE_BRACKET:
+            case EscapeProcessingState.RIGHT_SQUARE_BRACKET:
                 doEscRightSquareBracket(b);
                 break;
 
-            case ESC_RIGHT_SQUARE_BRACKET_ESC:
+            case EscapeProcessingState.RIGHT_SQUARE_BRACKET_ESC:
                 doEscRightSquareBracketEsc(b);
                 break;
 
@@ -810,14 +763,14 @@ class TerminalEmulator {
     }
 
     private void startSequence() {
-        mEscapeState = ESC;
+        mEscapeState = EscapeProcessingState.START;
         mArgIndex = 0;
         for (int j = 0; j < MAX_ESCAPE_PARAMETERS; j++)
             mArgs[j] = -1;
     }
 
     private void finishSequence() {
-        mEscapeState = ESC_NONE;
+        mEscapeState = EscapeProcessingState.NONE;
     }
 
     private boolean handleUTF8Sequence(byte b) {
@@ -1074,15 +1027,15 @@ class TerminalEmulator {
     private void doEsc(byte b) {
         switch (b) {
         case '#':
-            continueSequence(ESC_POUND);
+            continueSequence(EscapeProcessingState.POUND);
             break;
 
         case '(':
-            continueSequence(ESC_SELECT_LEFT_PAREN);
+            continueSequence(EscapeProcessingState.SELECT_LEFT_PAREN);
             break;
 
         case ')':
-            continueSequence(ESC_SELECT_RIGHT_PAREN);
+            continueSequence(EscapeProcessingState.SELECT_RIGHT_PAREN);
             break;
 
         case '7': // DECSC save cursor
@@ -1144,7 +1097,7 @@ class TerminalEmulator {
             break;
 
         case '[':
-            continueSequence(ESC_LEFT_SQUARE_BRACKET);
+            continueSequence(EscapeProcessingState.LEFT_SQUARE_BRACKET);
             break;
 
         case '=': // DECKPAM
@@ -1153,7 +1106,7 @@ class TerminalEmulator {
 
         case ']': // OSC
             startCollectingOSCArgs();
-            continueSequence(ESC_RIGHT_SQUARE_BRACKET);
+            continueSequence(EscapeProcessingState.RIGHT_SQUARE_BRACKET);
             break;
 
         case '>' : // DECKPNM
@@ -1294,7 +1247,7 @@ class TerminalEmulator {
             break;
 
         case '?': // Esc [ ? -- start of a private mode set
-            continueSequence(ESC_LEFT_SQUARE_BRACKET_QUESTION_MARK);
+            continueSequence(EscapeProcessingState.LEFT_SQUARE_BRACKET_QUESTION_MARK);
             break;
 
         case 'c': // Send device attributes
@@ -1495,7 +1448,7 @@ class TerminalEmulator {
             doOSC();
             break;
         case 0x1b: // Esc, probably start of Esc \ sequence
-            continueSequence(ESC_RIGHT_SQUARE_BRACKET_ESC);
+            continueSequence(EscapeProcessingState.RIGHT_SQUARE_BRACKET_ESC);
             break;
         default:
             collectOSCArgs(b);
@@ -1514,7 +1467,7 @@ class TerminalEmulator {
             // the current character in arg buffer.
             collectOSCArgs((byte) 0x1b);
             collectOSCArgs(b);
-            continueSequence(ESC_RIGHT_SQUARE_BRACKET);
+            continueSequence(EscapeProcessingState.RIGHT_SQUARE_BRACKET);
             break;
         }
     }
@@ -1917,7 +1870,7 @@ class TerminalEmulator {
         mCursorCol = 0;
         mArgIndex = 0;
         mContinueSequence = false;
-        mEscapeState = ESC_NONE;
+        mEscapeState = EscapeProcessingState.NONE;
         mSavedCursorRow = 0;
         mSavedCursorCol = 0;
         mSavedEffect = 0;
@@ -1994,5 +1947,31 @@ class TerminalEmulator {
             mAltBuffer.finish();
             mAltBuffer = null;
         }
+    }
+
+    @IntDef({
+            EscapeProcessingState.NONE,
+            EscapeProcessingState.START,
+            EscapeProcessingState.POUND,
+            EscapeProcessingState.SELECT_LEFT_PAREN,
+            EscapeProcessingState.SELECT_RIGHT_PAREN,
+            EscapeProcessingState.LEFT_SQUARE_BRACKET,
+            EscapeProcessingState.LEFT_SQUARE_BRACKET_QUESTION_MARK,
+            EscapeProcessingState.PERCENT,
+            EscapeProcessingState.RIGHT_SQUARE_BRACKET,
+            EscapeProcessingState.RIGHT_SQUARE_BRACKET_ESC
+    })
+    @Retention(RetentionPolicy.SOURCE)
+    private @interface EscapeProcessingState {
+        int NONE = 0; // Not currently in an escape sequence
+        int START = 1; // Have seen an ESC character
+        int POUND = 2; // ESC #
+        int SELECT_LEFT_PAREN = 3; // ESC (
+        int SELECT_RIGHT_PAREN = 4; // ESC )
+        int LEFT_SQUARE_BRACKET = 5; // ESC [
+        int LEFT_SQUARE_BRACKET_QUESTION_MARK = 6; // ESC [ ?
+        int PERCENT = 7; // ESC %
+        int RIGHT_SQUARE_BRACKET = 8; // ESC ] (AKA OSC - Operating System Controls)
+        int RIGHT_SQUARE_BRACKET_ESC = 9; //ESC ] (AKA OSC - Operating System Controls)
     }
 }
