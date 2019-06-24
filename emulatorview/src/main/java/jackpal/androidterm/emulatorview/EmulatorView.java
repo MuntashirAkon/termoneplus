@@ -99,6 +99,11 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
     private int mTopOfScreenMargin;
 
     /**
+     * Left padding of text
+     */
+    private int mLeftPadding;
+
+    /**
      * Used to render text
      */
     private TextRenderer mTextRenderer;
@@ -1088,8 +1093,8 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
      * Send a single mouse event code to the terminal.
      */
     private void sendMouseEventCode(MotionEvent e, int button_code) {
-        int x = (int)(e.getX() / mCharacterWidth) + 1;
-        int y = (int)((e.getY()-mTopOfScreenMargin) / mCharacterHeight) + 1;
+        int x = (int)((e.getX() - mLeftPadding) / mCharacterWidth) + 1;
+        int y = (int)((e.getY() - mTopOfScreenMargin) / mCharacterHeight) + 1;
         // Clip to screen, and clip to the limits of 8-bit data.
         boolean out_of_bounds =
             x < 1 || y < 1 ||
@@ -1473,8 +1478,11 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
         mVisibleColumns = Math.max(1, (int) (((float) mVisibleWidth) / mCharacterWidth));
 
         mTopOfScreenMargin = mTextRenderer.getTopMargin();
+        mLeftPadding = (w -  mColumns * (int)mCharacterWidth) / 2;
+
         mRows = Math.max(1, (h - mTopOfScreenMargin) / mCharacterHeight);
         mVisibleRows = Math.max(1, (mVisibleHeight - mTopOfScreenMargin) / mCharacterHeight);
+
         mTermSession.updateSize(mColumns, mRows);
 
         // Reset our paging:
@@ -1528,7 +1536,7 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
         Paint backgroundPaint =
                 reverseVideo ? mForegroundPaint : mBackgroundPaint;
         canvas.drawRect(0, 0, w, h, backgroundPaint);
-        float x = -mLeftColumn * mCharacterWidth;
+        float x = -mLeftColumn * mCharacterWidth + mLeftPadding;
         float y = mCharacterHeight + mTopOfScreenMargin;
         int endLine = mTopRow + mRows;
         int cx = mEmulator.getCursorCol();
