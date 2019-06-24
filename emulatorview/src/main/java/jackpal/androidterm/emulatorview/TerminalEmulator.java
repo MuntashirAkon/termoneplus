@@ -740,7 +740,7 @@ class TerminalEmulator {
         case 24: // CAN
         case 26: // SUB
             if (mEscapeState != ESC_NONE) {
-                mEscapeState = ESC_NONE;
+                finishSequence();
                 emit((byte) 127);
             }
             break;
@@ -748,7 +748,7 @@ class TerminalEmulator {
         case 27: // ESC
             // Starts an escape sequence unless we're parsing a string
             if (mEscapeState != ESC_RIGHT_SQUARE_BRACKET) {
-                startEscapeSequence(ESC);
+                startSequence();
             } else {
                 doEscRightSquareBracket(b);
             }
@@ -803,11 +803,21 @@ class TerminalEmulator {
                 unknownSequence(b);
                 break;
             }
-            if (!mContinueSequence) {
-                mEscapeState = ESC_NONE;
-            }
+            if (!mContinueSequence)
+                finishSequence();
             break;
         }
+    }
+
+    private void startSequence() {
+        mEscapeState = ESC;
+        mArgIndex = 0;
+        for (int j = 0; j < MAX_ESCAPE_PARAMETERS; j++)
+            mArgs[j] = -1;
+    }
+
+    private void finishSequence() {
+        mEscapeState = ESC_NONE;
     }
 
     private boolean handleUTF8Sequence(byte b) {
@@ -994,14 +1004,6 @@ class TerminalEmulator {
         }
 
         return 0;
-    }
-
-    private void startEscapeSequence(int escapeState) {
-        mEscapeState = escapeState;
-        mArgIndex = 0;
-        for (int j = 0; j < MAX_ESCAPE_PARAMETERS; j++) {
-            mArgs[j] = -1;
-        }
     }
 
     private void doLinefeed() {
@@ -1776,10 +1778,6 @@ class TerminalEmulator {
             Log.e(EmulatorDebug.LOG_TAG, error);
         }
         finishSequence();
-    }
-
-    private void finishSequence() {
-        mEscapeState = ESC_NONE;
     }
 
     private boolean autoWrapEnabled() {
