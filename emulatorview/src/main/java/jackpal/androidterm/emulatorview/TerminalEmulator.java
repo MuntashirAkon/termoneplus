@@ -1790,8 +1790,7 @@ class TerminalEmulator {
      * Send a Unicode code point to the screen.
      *
      * @param c The code point of the character to display
-     * @param foreColor The foreground color of the character
-     * @param backColor The background color of the character
+     * @param style The encoded text style (effects, foreground and background colors)
      */
     private void emit(int c, int style) {
         boolean autoWrap = autoWrapEnabled();
