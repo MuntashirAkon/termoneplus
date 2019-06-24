@@ -1,0 +1,14 @@
+# https://gitlab.com/termapps/termoneplus/issues/14
+# Remark   : repeat test until last line is scrolled
+# Expected : default background from ':' until end of line
+# Result   : background with color #160
+
+ESC=$'\033'
+CSI="${ESC}["
+RST="${CSI}m"
+
+# 6 × 6 × 6 cube (0 ≤ r, g, b ≤ 5)
+color=196 # 16 + 36 * {r} + 6 * {g} + {b}
+
+echo "${CSI}48;5;${color}mL1"
+echo "L2${RST}:"

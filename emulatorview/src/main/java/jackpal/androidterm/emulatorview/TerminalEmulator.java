@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2007 The Android Open Source Project
- * Copyright (C) 2018 Roumen Petrov.  All rights reserved.
+ * Copyright (C) 2018-2019 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -1563,6 +1563,10 @@ class TerminalEmulator {
         return TextStyle.encode(getForeColor(), getBackColor(),  getEffect());
     }
 
+    private int getDefaultStyle() {
+        return TextStyle.encode(mDefaultForeColor, mDefaultBackColor,  TextStyle.fxNormal);
+    }
+
     private void doSetMode(boolean newValue) {
         int modeBit = getArg0(0);
         switch (modeBit) {
@@ -1624,9 +1628,8 @@ class TerminalEmulator {
     }
 
     private void scroll() {
-        //System.out.println("Scroll(): mTopMargin " + mTopMargin + " mBottomMargin " + mBottomMargin);
         mScrollCounter ++;
-        mScreen.scroll(mTopMargin, mBottomMargin, getStyle());
+        mScreen.scroll(mTopMargin, mBottomMargin, getDefaultStyle());
     }
 
     /**
