@@ -1547,20 +1547,8 @@ class TerminalEmulator {
         mScreen.blockSet(sx, sy, w, h, ' ', getStyle());
     }
 
-    private int getForeColor() {
-        return mForeColor;
-    }
-
-    private int getBackColor() {
-        return mBackColor;
-    }
-
-    private int getEffect() {
-        return mEffect;
-    }
-
     private int getStyle() {
-        return TextStyle.encode(getForeColor(), getBackColor(),  getEffect());
+        return TextStyle.encode(mForeColor, mBackColor,  mEffect);
     }
 
     private int getDefaultStyle() {
