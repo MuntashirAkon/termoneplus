@@ -162,13 +162,7 @@ public class TermSession {
      * @param rows    The number of rows in the terminal window.
      */
     public void initializeEmulator(int columns, int rows) {
-        mTranscriptScreen = new TranscriptScreen(columns, TRANSCRIPT_ROWS, rows, mColorScheme);
-        mEmulator = new TerminalEmulator(this, mTranscriptScreen, columns, rows, mColorScheme);
-        mEmulator.setKeyListener(mKeyListener);
-
-        mIsRunning = true;
-        mReaderThread.start();
-        mWriterThread.start();
+        initializeEmulatorLocal(columns, rows);
     }
 
     /**
@@ -540,6 +534,20 @@ public class TermSession {
     public void finish() {
         mIsRunning = false;
         finalizeEmulator();
+    }
+
+    private synchronized void initializeEmulatorLocal(int columns, int rows) {
+        if (mIsRunning) return;
+
+        mTranscriptScreen = new TranscriptScreen(columns, TRANSCRIPT_ROWS, rows, mColorScheme);
+
+        mEmulator = new TerminalEmulator(this, mTranscriptScreen, columns, rows, mColorScheme);
+        mEmulator.setKeyListener(mKeyListener);
+
+        mReaderThread.start();
+        mWriterThread.start();
+
+        mIsRunning = true;
     }
 
     private synchronized void finalizeEmulator() {
