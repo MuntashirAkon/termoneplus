@@ -5,8 +5,6 @@
     package="com.termoneplus"
     android:installLocation="auto">
 
-    <uses-sdk tools:overrideLibrary="android.support.graphics.drawable.animated"/>
-
     <uses-feature
         android:name="android.hardware.touchscreen"
         android:required="false"/>
@@ -46,7 +44,8 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/application_terminal"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:theme="@style/AppTheme.NoActionBar">
+        android:theme="@style/AppTheme.NoActionBar"
+        tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".TermActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
