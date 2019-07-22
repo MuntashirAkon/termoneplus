@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.termoneplus"
-    android:installLocation="auto">
+    android:installLocation="auto"
+    android:sharedUserId="com.termoneplus">
 
     <uses-feature
         android:name="android.hardware.touchscreen"
