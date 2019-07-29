@@ -48,14 +48,33 @@ public class Application extends android.app.Application {
     public void onCreate() {
         super.onCreate();
 
+        setupPreferences();
+        ThemeManager.migrateFileSelectionThemeMode(this);
+    }
+
+    private void setupPreferences() {
+        boolean updated = false;
+
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = prefs.edit();
+
         if (!prefs.contains("home_path")) {
-            SharedPreferences.Editor editor = prefs.edit();
             String path = getDir("HOME", MODE_PRIVATE).getAbsolutePath();
             editor.putString("home_path", path);
-            editor.apply();
+            updated = true;
+        }
+        // remove obsolete preferences:
+        // - after v3.0.0, TODO remove string resources in next major
+        if (prefs.contains("allow_prepend_path")) {
+            // Note depends from do_path_extensions
+            editor.remove("allow_prepend_path");
+            updated = true;
+        }
+        if (prefs.contains("do_path_extensions")) {
+            editor.remove("do_path_extensions");
+            updated = true;
         }
 
-        ThemeManager.migrateFileSelectionThemeMode(this);
+        if (updated) editor.apply();
     }
 }

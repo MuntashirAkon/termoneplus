@@ -35,14 +35,10 @@ public class PathSettings {
     private String mAppendPath = null;
 
     // extracted from SharedPreferences
-    private boolean path_extend;
-    private boolean path_prepend;
     private boolean path_verify;
 
 
     private PathSettings(Resources res) {
-        path_extend = res.getBoolean(R.bool.pref_do_path_extensions_default);
-        path_prepend = res.getBoolean(R.bool.pref_allow_prepend_path_default);
         path_verify = res.getBoolean(R.bool.pref_verify_path_default);
     }
 
@@ -52,8 +48,6 @@ public class PathSettings {
     }
 
     public void extractPreferences(SharedPreferences prefs) {
-        path_extend = prefs.getBoolean("do_path_extensions", path_extend);
-        path_prepend = prefs.getBoolean("allow_prepend_path", path_prepend);
         path_verify = prefs.getBoolean("verify_path", path_verify);
     }
 
@@ -75,10 +69,8 @@ public class PathSettings {
 
     public String buildPATH() {
         String path = System.getenv("PATH");
-        if (path == null)
-            path = "";
-        if (path_extend)
-            path = extendPath(path);
+        if (path == null) path = "";
+        path = extendPath(path);
         if (path_verify)
             path = preservePath(path);
         return path;
@@ -90,8 +82,6 @@ public class PathSettings {
         s = getAppendPath();
         if (!TextUtils.isEmpty(s))
             path = path + ":" + s;
-
-        if (!path_prepend) return path;
 
         s = getPrependPath();
         if (!TextUtils.isEmpty(s))
