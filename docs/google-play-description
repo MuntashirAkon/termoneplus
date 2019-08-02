@@ -20,3 +20,7 @@ Application is localized in many languages and/or territories (locales).
 "TermOne Plus" is successor of excellent but un-maintained since 2015 "Terminal Emulator for Android". This new application includes rewritten user interface, many compatibility and portability improvements, stability and defect fixes, and localization enhancements. As result it works fine with recent android releases like Pie(9.0). Even on ancient like Gingerbread(2.3) it looks and works the same as for recent one.
 
 Please visit application site to find out how to participate into development and/or localization, how to request new or enhanced functionality.
+
+WARNING: Upgrade from pre 3.1.0  versions:
+Due to hardened SE Linux rules on Android 9.0 (Pie) and to allow use of executables provided by other applications TermOnePlus start to use "shared user id" functionality. Unfortunately Android package manager (PM) consider this as incompatible change and does not allow automatic upgrade. The only way to bay-pass limitation of Android PM is to reinstall application.
+Advantage is that now on Android Pie(.0) executables provided by SecureBox are again available for use in terminal application.
