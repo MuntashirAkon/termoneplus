@@ -1,5 +1,5 @@
 allprojects {
     project.ext {
-        buildToolsVersion = '29.0.1'
+        buildToolsVersion = '29.0.2'
     }
 }
