@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.termoneplus"
     android:installLocation="auto"
-    android:sharedUserId="com.termoneplus">
+    android:sharedUserId="${applicationId}">
 
     <uses-feature
         android:name="android.hardware.touchscreen"
@@ -18,21 +18,21 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
 
     <permission
-        android:name="com.termoneplus.permission.RUN_SCRIPT"
+        android:name="${applicationId}.permission.RUN_SCRIPT"
         android:description="@string/permdesc_run_script"
         android:label="@string/perm_run_script"
         android:permissionGroup="android.permission-group.SYSTEM_TOOLS"
         android:protectionLevel="dangerous"/>
     <!-- deprecated: pending removal -->
     <permission
-        android:name="com.termoneplus.permission.APPEND_TO_PATH"
+        android:name="${applicationId}.permission.APPEND_TO_PATH"
         android:description="@string/permdesc_append_to_path"
         android:label="@string/perm_append_to_path"
         android:permissionGroup="android.permission-group.SYSTEM_TOOLS"
         android:protectionLevel="signature"/>
     <!-- deprecated: pending removal -->
     <permission
-        android:name="com.termoneplus.permission.PREPEND_TO_PATH"
+        android:name="${applicationId}.permission.PREPEND_TO_PATH"
         android:description="@string/permdesc_prepend_to_path"
         android:label="@string/perm_prepend_to_path"
         android:permissionGroup="android.permission-group.SYSTEM_TOOLS"
@@ -86,7 +86,7 @@
         <activity
             android:name="jackpal.androidterm.RunScript"
             android:excludeFromRecents="true"
-            android:permission="com.termoneplus.permission.RUN_SCRIPT">
+            android:permission="${applicationId}.permission.RUN_SCRIPT">
             <intent-filter>
                 <action android:name="com.termoneplus.RUN_SCRIPT"/>
 

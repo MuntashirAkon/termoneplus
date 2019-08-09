@@ -22,6 +22,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.termoneplus.BuildConfig;
+
 import java.text.Collator;
 import java.util.Arrays;
 import java.util.Locale;
@@ -38,10 +40,11 @@ import androidx.appcompat.app.AppCompatActivity;
  */
 @Deprecated
 public class PathCollector {
-    private static final String ACTION_PATH_APPEND_BROADCAST = "com.termoneplus.broadcast.APPEND_TO_PATH";
-    private static final String ACTION_PATH_PREPEND_BROADCAST = "com.termoneplus.broadcast.PREPEND_TO_PATH";
-    private static final String PERMISSION_PATH_APPEND_BROADCAST = "com.termoneplus.permission.APPEND_TO_PATH";
-    private static final String PERMISSION_PATH_PREPEND_BROADCAST = "com.termoneplus.permission.PREPEND_TO_PATH";
+    // NOTE: use termoneplus development broadcasts!
+    private static final String ACTION_PATH_APPEND_BROADCAST = BuildConfig.APPLICATION_ID + ".broadcast.APPEND_TO_PATH";
+    private static final String ACTION_PATH_PREPEND_BROADCAST = BuildConfig.APPLICATION_ID + ".broadcast.PREPEND_TO_PATH";
+    private static final String PERMISSION_PATH_APPEND_BROADCAST = BuildConfig.APPLICATION_ID + ".permission.APPEND_TO_PATH";
+    private static final String PERMISSION_PATH_PREPEND_BROADCAST = BuildConfig.APPLICATION_ID + ".permission.PREPEND_TO_PATH";
 
     private int pending;
     private OnPathsReceivedListener callback;
