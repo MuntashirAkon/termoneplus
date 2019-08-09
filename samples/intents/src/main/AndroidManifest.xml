@@ -4,7 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.termoneplus.sample.intents">
 
-    <uses-permission android:name="com.termoneplus.permission.RUN_SCRIPT"/>
+    <uses-permission android:name="${termApplicationId}.permission.RUN_SCRIPT"/>
 
     <application
         android:allowBackup="false"

@@ -25,7 +25,7 @@ public class IntentSampleActivity extends AppCompatActivity {
     private static final String ARGUMENT_WINDOW_HANDLE = "com.termoneplus.WindowHandle";
     private static final String ARGUMENT_SHELL_COMMAND = "com.termoneplus.Command";
 
-    private static final String PERMISSION_RUN_SCRIPT = "com.termoneplus.permission.RUN_SCRIPT";
+    private static final String PERMISSION_RUN_SCRIPT = BuildConfig.TERM_APPLICATION_ID + ".permission.RUN_SCRIPT";
     private static final int REQUEST_PERMISSION_RUN_SCRIPT = 101;
 
     private static final int REQUEST_WINDOW_HANDLE = 1;

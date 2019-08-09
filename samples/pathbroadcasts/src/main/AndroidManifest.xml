@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="jackpal.androidterm.sample.pathbroadcasts">
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="jackpal.androidterm.sample.pathbroadcasts">
 
-    <uses-permission android:name="com.termoneplus.permission.APPEND_TO_PATH"/>
+    <uses-permission android:name="${termApplicationId}.permission.APPEND_TO_PATH"/>
     <!-- Declare this if you want to receive PATH prepend broadcasts -->
-    <uses-permission android:name="com.termoneplus.permission.PREPEND_TO_PATH"/>
+    <uses-permission android:name="${termApplicationId}.permission.PREPEND_TO_PATH"/>
 
     <application android:label="@string/app_name">
         <receiver android:name=".PathReceiver">
             <intent-filter>
-                <action android:name="com.termoneplus.broadcast.APPEND_TO_PATH"/>
+                <action android:name="${termApplicationId}.broadcast.APPEND_TO_PATH"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="com.termoneplus.broadcast.PREPEND_TO_PATH"/>
+                <action android:name="${termApplicationId}.broadcast.PREPEND_TO_PATH"/>
             </intent-filter>
         </receiver>
     </application>

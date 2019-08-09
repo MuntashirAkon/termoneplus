@@ -33,8 +33,8 @@ import java.io.OutputStream;
 @Deprecated
 public class PathReceiver extends BroadcastReceiver {
 
-    public static final String ACTION_PATH_APPEND_BROADCAST = "com.termoneplus.broadcast.APPEND_TO_PATH";
-    public static final String ACTION_PATH_PREPEND_BROADCAST = "com.termoneplus.broadcast.PREPEND_TO_PATH";
+    public static final String ACTION_PATH_APPEND_BROADCAST = BuildConfig.TERM_APPLICATION_ID + ".broadcast.APPEND_TO_PATH";
+    public static final String ACTION_PATH_PREPEND_BROADCAST = BuildConfig.TERM_APPLICATION_ID + ".broadcast.PREPEND_TO_PATH";
 
     /**
      * Called when a broadcast matching the declared intent filters is

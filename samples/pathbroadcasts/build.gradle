@@ -10,6 +10,10 @@ android {
 
         versionCode 210
         versionName '2.1.0'
+
+        // TermOnePlus applicationId
+        manifestPlaceholders = [ termApplicationId:"com.termoneplus"]
+        buildConfigField("String", "TERM_APPLICATION_ID", "\"com.termoneplus\"")
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
