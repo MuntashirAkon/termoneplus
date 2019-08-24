@@ -82,7 +82,7 @@ public class TermSession {
     private ByteBuffer mWriteByteBuffer;
     private CharsetEncoder mUTF8Encoder;
     private FinishCallback mFinishCallback;
-    private boolean mIsRunning = false;
+    private volatile boolean is_running = false;
     private Handler mMsgHandler = new TermHandler(this);
     private UpdateCallback mTitleChangedListener;
 
@@ -300,7 +300,7 @@ public class TermSession {
      * @return Whether the terminal emulation is currently running.
      */
     public boolean isRunning() {
-        return mIsRunning;
+        return is_running;
     }
 
     TranscriptScreen getTranscriptScreen() {
@@ -532,12 +532,12 @@ public class TermSession {
      * <code>OutputStream</code>.
      */
     public void finish() {
-        mIsRunning = false;
+        is_running = false;
         finalizeEmulator();
     }
 
     private synchronized void initializeEmulatorLocal(int columns, int rows) {
-        if (mIsRunning) return;
+        if (is_running) return;
 
         mTranscriptScreen = new TranscriptScreen(columns, TRANSCRIPT_ROWS, rows, mColorScheme);
 
@@ -547,7 +547,7 @@ public class TermSession {
         mReaderThread.start();
         mWriterThread.start();
 
-        mIsRunning = true;
+        is_running = true;
     }
 
     private synchronized void finalizeEmulator() {
@@ -608,7 +608,7 @@ public class TermSession {
         public void handleMessage(Message msg) {
             TermSession session = reference.get();
             if (session == null) return;
-            if (!session.isRunning()) return;
+            if (!session.is_running) return;
 
             if (msg.what == NEW_INPUT) {
                 session.readFromProcess();
