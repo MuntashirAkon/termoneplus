@@ -8,8 +8,8 @@ android {
         targetSdkVersion project.ext.targetSdkVersion
 
         //Major.Minor.Patch
-        versionCode 10401
-        versionName '1.4.1'
+        versionCode 10402
+        versionName '1.4.2'
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
