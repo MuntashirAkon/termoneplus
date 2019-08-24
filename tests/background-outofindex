@@ -1,0 +1,13 @@
+# https://gitlab.com/termapps/termoneplus/issues/19
+# Expected : ignore sequence and continue output with current background
+# Result   : crash
+
+ESC=$'\033'
+CSI="${ESC}["
+RST="${CSI}m"
+
+# output four lines with background color #160(hex):
+echo "${CSI}48;5;196m"L1
+echo "${CSI}48;5;256m"L2	# incorrect
+echo "${CSI}48;5;260m"L3	# crash
+echo L4"${RST}"

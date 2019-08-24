@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2007 The Android Open Source Project
+ * Copyright (C) 2019 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -377,18 +378,12 @@ abstract class BaseTextRenderer implements TextRenderer {
     }
 
     private void setDefaultColors(ColorScheme scheme) {
-        mPalette = cloneDefaultColors();
+        mPalette = new int[TextStyle.ciColorLength];
+        System.arraycopy(sXterm256Paint, 0, mPalette, 0, sXterm256Paint.length);
         mPalette[TextStyle.ciForeground] = scheme.getForeColor();
         mPalette[TextStyle.ciBackground] = scheme.getBackColor();
         mPalette[TextStyle.ciCursorForeground] = scheme.getCursorForeColor();
         mPalette[TextStyle.ciCursorBackground] = scheme.getCursorBackColor();
-    }
-
-    private static int[] cloneDefaultColors() {
-        int length = sXterm256Paint.length;
-        int[] clone = new int[TextStyle.ciColorLength];
-        System.arraycopy(sXterm256Paint, 0, clone, 0, length);
-        return clone;
     }
 
     protected void drawCursorImp(Canvas canvas, float x, float y, float charWidth, float charHeight,
