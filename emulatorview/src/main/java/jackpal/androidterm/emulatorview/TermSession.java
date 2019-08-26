@@ -83,7 +83,6 @@ public class TermSession {
     private CharsetEncoder mUTF8Encoder;
     private FinishCallback mFinishCallback;
     private volatile boolean is_running = false;
-    private Handler mMsgHandler = new TermHandler(this);
     private UpdateCallback mTitleChangedListener;
 
     boolean mDefaultUTF8Mode; /* shared with emulator instance */
@@ -93,7 +92,7 @@ public class TermSession {
         this(false);
     }
 
-    public TermSession(final boolean exitOnEOF) {
+    public TermSession(boolean exitOnEOF) {
         mWriteCharBuffer = CharBuffer.allocate(2);
         mWriteByteBuffer = ByteBuffer.allocate(4);
         mUTF8Encoder = Charset.forName("UTF-8").newEncoder();
@@ -102,44 +101,9 @@ public class TermSession {
 
         mReceiveBuffer = new byte[4 * 1024];
         mByteQueue = new ByteQueue(4 * 1024);
-        mReaderThread = new Thread() {
-            private byte[] mBuffer = new byte[4096];
-
-            @Override
-            public void run() {
-                try {
-                    while (true) {
-                        int read = mTermIn.read(mBuffer);
-                        if (read == -1) {
-                            // EOF -- process exited
-                            break;
-                        }
-                        int offset = 0;
-                        while (read > 0) {
-                            int written = mByteQueue.write(mBuffer,
-                                    offset, read);
-                            offset += written;
-                            read -= written;
-                            mMsgHandler.sendMessage(
-                                    mMsgHandler.obtainMessage(NEW_INPUT));
-                        }
-                    }
-                } catch (IOException ignored) {
-                } catch (InterruptedException ignored) {
-                }
-
-                { // stop producer as well
-                    Handler writer = mWriterHandler;
-                    mWriterHandler = null;
-                    if (writer != null)
-                        writer.sendEmptyMessage(FINISH);
-                }
-
-                if (exitOnEOF)
-                    mMsgHandler.sendMessage(
-                            mMsgHandler.obtainMessage(EOF));
-            }
-        };
+        // Note if exitOnEOF is set at end of reader thread run is send EOF message
+        // and then handler on EOF message calls onProcessExit().
+        mReaderThread = new ReaderThread(exitOnEOF);
         mReaderThread.setName("TermSession input reader");
 
         mWriteQueue = new ByteQueue(4096);
@@ -596,6 +560,54 @@ public class TermSession {
         void onSessionFinish(TermSession session);
     }
 
+
+    private class ReaderThread extends Thread {
+        private byte[] buffer = new byte[4096];
+        private boolean notify_eof;
+        private Handler handler;
+
+        ReaderThread(boolean notify_eof) {
+            this.notify_eof = notify_eof;
+            handler = new TermHandler(TermSession.this);
+        }
+
+        @Override
+        public void run() {
+            try {
+                while (true) {
+                    int read = mTermIn.read(buffer);
+                    if (read == -1) {
+                        // EOF -- process exited
+                        break;
+                    }
+                    int offset = 0;
+                    while (read > 0) {
+                        int written = mByteQueue.write(buffer,
+                                offset, read);
+                        offset += written;
+                        read -= written;
+                        handlerMessage(NEW_INPUT);
+                    }
+                }
+            } catch (IOException ignored) {
+            } catch (InterruptedException ignored) {
+            }
+
+            { // stop producer as well
+                Handler writer = mWriterHandler;
+                mWriterHandler = null;
+                if (writer != null)
+                    writer.sendEmptyMessage(FINISH);
+            }
+
+            if (notify_eof)
+                handlerMessage(EOF);
+        }
+
+        private void handlerMessage(int code) {
+            handler.sendMessage(handler.obtainMessage(code));
+        }
+    }
 
     private static class TermHandler extends Handler {
         private final WeakReference<TermSession> reference;
