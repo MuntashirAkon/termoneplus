@@ -66,25 +66,6 @@ public class TermSettings {
 
     private boolean mUseKeyboardShortcuts;
 
-    private static final String STATUSBAR_KEY = "statusbar";
-    private static final String ACTIONBAR_KEY = "actionbar";
-    private static final String ORIENTATION_KEY = "orientation";
-    private static final String FONTSIZE_KEY = "fontsize";
-    private static final String COLOR_KEY = "color";
-    private static final String UTF8_KEY = "utf8_by_default";
-    private static final String BACKACTION_KEY = "backaction";
-    private static final String CONTROLKEY_KEY = "controlkey";
-    private static final String FNKEY_KEY = "fnkey";
-    private static final String IME_KEY = "ime";
-    private static final String SHELL_KEY = "shell";
-    private static final String INITIALCOMMAND_KEY = "initialcommand";
-    private static final String TERMTYPE_KEY = "termtype";
-    private static final String CLOSEONEXIT_KEY = "close_window_on_process_exit";
-    private static final String HOMEPATH_KEY = "home_path";
-    private static final String ALT_SENDS_ESC = "alt_sends_esc";
-    private static final String MOUSE_TRACKING = "mouse_tracking";
-    private static final String USE_KEYBOARD_SHORTCUTS = "use_keyboard_shortcuts";
-
     public static final int ACTION_BAR_MODE_ALWAYS_VISIBLE = 1;
     public static final int ACTION_BAR_MODE_HIDES = 2;
     private static final int ACTION_BAR_MODE_MAX = 2;
@@ -162,29 +143,29 @@ public class TermSettings {
 
     public void readPrefs(SharedPreferences prefs) {
         mPrefs = prefs;
-        mStatusBar = readIntPref(STATUSBAR_KEY, mStatusBar, 1);
-        mActionBarMode = readIntPref(ACTIONBAR_KEY, mActionBarMode, ACTION_BAR_MODE_MAX);
-        mOrientation = readIntPref(ORIENTATION_KEY, mOrientation, 2);
+        mStatusBar = readIntPref("statusbar", mStatusBar, 1);
+        mActionBarMode = readIntPref("actionbar", mActionBarMode, ACTION_BAR_MODE_MAX);
+        mOrientation = readIntPref("orientation", mOrientation, 2);
         mSizeCalc = readIntPref("sizecalc", mSizeCalc, 1);
         // mCursorStyle = readIntPref(CURSORSTYLE_KEY, mCursorStyle, 2);
         // mCursorBlink = readIntPref(CURSORBLINK_KEY, mCursorBlink, 1);
-        mFontSize = readIntPref(FONTSIZE_KEY, mFontSize, 288);
-        mColorId = readIntPref(COLOR_KEY, mColorId, Settings.color_schemes.length - 1);
-        mUTF8ByDefault = readBooleanPref(UTF8_KEY, mUTF8ByDefault);
-        mBackKeyAction = readIntPref(BACKACTION_KEY, mBackKeyAction, BACK_KEY_MAX);
-        mControlKeyId = readIntPref(CONTROLKEY_KEY, mControlKeyId,
+        mFontSize = readIntPref("fontsize", mFontSize, 288);
+        mColorId = readIntPref("color", mColorId, Settings.color_schemes.length - 1);
+        mUTF8ByDefault = readBooleanPref("utf8_by_default", mUTF8ByDefault);
+        mBackKeyAction = readIntPref("backaction", mBackKeyAction, BACK_KEY_MAX);
+        mControlKeyId = readIntPref("controlkey", mControlKeyId,
                 CONTROL_KEY_SCHEMES.length - 1);
-        mFnKeyId = readIntPref(FNKEY_KEY, mFnKeyId,
+        mFnKeyId = readIntPref("fnkey", mFnKeyId,
                 FN_KEY_SCHEMES.length - 1);
-        mUseCookedIME = readIntPref(IME_KEY, mUseCookedIME, 1);
-        mShell = readStringPref(SHELL_KEY, mShell);
-        mInitialCommand = readStringPref(INITIALCOMMAND_KEY, mInitialCommand);
-        mTermType = readStringPref(TERMTYPE_KEY, mTermType);
-        mCloseOnExit = readBooleanPref(CLOSEONEXIT_KEY, mCloseOnExit);
-        mHomePath = readStringPref(HOMEPATH_KEY, mHomePath);
-        mAltSendsEsc = readBooleanPref(ALT_SENDS_ESC, mAltSendsEsc);
-        mMouseTracking = readBooleanPref(MOUSE_TRACKING, mMouseTracking);
-        mUseKeyboardShortcuts = readBooleanPref(USE_KEYBOARD_SHORTCUTS,
+        mUseCookedIME = readIntPref("ime", mUseCookedIME, 1);
+        mShell = readStringPref("shell", mShell);
+        mInitialCommand = readStringPref("initialcommand", mInitialCommand);
+        mTermType = readStringPref("termtype", mTermType);
+        mCloseOnExit = readBooleanPref("close_window_on_process_exit", mCloseOnExit);
+        mHomePath = readStringPref("home_path", mHomePath);
+        mAltSendsEsc = readBooleanPref("alt_sends_esc", mAltSendsEsc);
+        mMouseTracking = readBooleanPref("mouse_tracking", mMouseTracking);
+        mUseKeyboardShortcuts = readBooleanPref("use_keyboard_shortcuts",
                 mUseKeyboardShortcuts);
         mPrefs = null;  // we leak a Context if we hold on to this
     }
