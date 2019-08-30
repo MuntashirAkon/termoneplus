@@ -26,10 +26,5 @@ add_library(
 )
 target_link_libraries(
         term-system
-        ${log-lib}
-)
-
-find_library(
-        log-lib
         log
 )
