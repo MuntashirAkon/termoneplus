@@ -215,18 +215,20 @@ public class Term extends AppCompatActivity
         if (icicle == null)
             onNewIntent(getIntent());
 
-        final SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-        mSettings = new TermSettings(getResources(), mPrefs);
-        mPrefs.registerOnSharedPreferenceChangeListener(this);
+        mSettings = new TermSettings(this);
+        path_settings = new PathSettings(this);
+
         mActionBarMode = mSettings.actionBarMode();
 
-        path_settings = new PathSettings(getResources(), mPrefs);
         path_collected = false;
         PathCollector path_collector = new PathCollector(this, path_settings);
         path_collector.setOnPathsReceivedListener(() -> {
             path_collected = true;
             populateSessions();
         });
+
+        PreferenceManager.getDefaultSharedPreferences(this)
+                .registerOnSharedPreferenceChangeListener(this);
 
         TSIntent = new Intent(this, TermService.class);
         startService(TSIntent);

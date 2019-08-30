@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2007 The Android Open Source Project
- * Copyright (C) 2018 Roumen Petrov.  All rights reserved.
+ * Copyright (C) 2018-2019 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 
 package jackpal.androidterm.compat;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.text.TextUtils;
@@ -24,6 +25,8 @@ import android.text.TextUtils;
 import com.termoneplus.R;
 
 import java.io.File;
+
+import androidx.preference.PreferenceManager;
 
 
 /* NOTE: refactored path settings from TermSettings.java
@@ -42,9 +45,9 @@ public class PathSettings {
         path_verify = res.getBoolean(R.bool.pref_verify_path_default);
     }
 
-    public PathSettings(Resources res, SharedPreferences prefs) {
-        this(res);
-        extractPreferences(prefs);
+    public PathSettings(Context context) {
+        this(context.getResources());
+        extractPreferences(PreferenceManager.getDefaultSharedPreferences(context));
     }
 
     public void extractPreferences(SharedPreferences prefs) {

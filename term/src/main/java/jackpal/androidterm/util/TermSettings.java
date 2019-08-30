@@ -131,12 +131,8 @@ public class TermSettings {
     private static final int BACK_KEY_MAX = 4;
 
     public TermSettings(Context context) {
-        this(context.getResources(), PreferenceManager.getDefaultSharedPreferences(context));
-    }
-
-    public TermSettings(Resources res, SharedPreferences prefs) {
-        readDefaultPrefs(res);
-        readPrefs(prefs);
+        readDefaultPrefs(context.getResources());
+        readPrefs(PreferenceManager.getDefaultSharedPreferences(context));
     }
 
     private void readDefaultPrefs(Resources res) {

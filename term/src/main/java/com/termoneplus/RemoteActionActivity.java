@@ -71,10 +71,8 @@ public class RemoteActionActivity extends AppCompatActivity {
             return;
         }
 
-        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
-        mSettings = new TermSettings(getResources(), pref);
-
-        path_settings = new PathSettings(getResources(), pref);
+        mSettings = new TermSettings(this);
+        path_settings = new PathSettings(this);
         PathCollector path_collector = new PathCollector(this, path_settings);
         path_collector.setOnPathsReceivedListener(() -> {
             path_collected = true;
