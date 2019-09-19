@@ -20,6 +20,8 @@ import android.content.SharedPreferences;
 
 import com.termoneplus.utils.ThemeManager;
 
+import java.io.File;
+
 import androidx.preference.PreferenceManager;
 
 
@@ -44,9 +46,22 @@ public class Application extends android.app.Application {
     public static final String ARGUMENT_SHELL_COMMAND = "com.termoneplus.Command";
     public static final String ARGUMENT_WINDOW_HANDLE = "com.termoneplus.WindowHandle";
 
+    private static File cachedir;
+
+
+    public static File getTmpDir() {
+        return cachedir;
+    }
+
+    public static String getTmpPath() {
+        return getTmpDir().getAbsolutePath();
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
+
+        cachedir = getCacheDir();
 
         setupPreferences();
         ThemeManager.migrateFileSelectionThemeMode(this);
