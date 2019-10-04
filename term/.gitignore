@@ -1,1 +1,5 @@
 /build
+# Android Studio < 3.5
+/.externalNativeBuild
+# Android Studio >= 3.5
+/.cxx
