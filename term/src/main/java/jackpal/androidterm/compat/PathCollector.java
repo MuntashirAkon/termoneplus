@@ -24,6 +24,7 @@ import android.os.Bundle;
 
 import com.termoneplus.BuildConfig;
 
+import java.io.File;
 import java.text.Collator;
 import java.util.Arrays;
 import java.util.Locale;
@@ -102,7 +103,7 @@ public class PathCollector {
             String dir = extras.getString(key);
             if (dir != null && !dir.equals("")) {
                 path.append(dir);
-                path.append(":");
+                path.append(File.pathSeparator);
             }
         }
 

@@ -84,23 +84,23 @@ public class PathSettings {
 
         s = getAppendPath();
         if (!TextUtils.isEmpty(s))
-            path = path + ":" + s;
+            path = path + File.pathSeparator + s;
 
         s = getPrependPath();
         if (!TextUtils.isEmpty(s))
-            path = s + ":" + path;
+            path = s + File.pathSeparator + path;
 
         return path;
     }
 
     private String preservePath(String path) {
-        String[] entries = path.split(":");
+        String[] entries = path.split(File.pathSeparator);
         StringBuilder new_path = new StringBuilder(path.length());
         for (String entry : entries) {
             File dir = new File(entry);
             if (dir.isDirectory() && dir.canExecute()) {
                 new_path.append(entry);
-                new_path.append(":");
+                new_path.append(File.pathSeparator);
             }
         }
         return new_path.substring(0, new_path.length() - 1);
