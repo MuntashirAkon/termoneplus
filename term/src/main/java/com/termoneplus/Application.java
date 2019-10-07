@@ -46,6 +46,9 @@ public class Application extends android.app.Application {
     public static final String ARGUMENT_SHELL_COMMAND = "com.termoneplus.Command";
     public static final String ARGUMENT_WINDOW_HANDLE = "com.termoneplus.WindowHandle";
 
+    private static File rootdir;
+    private static File etcdir;
+    private static File libdir;
     private static File cachedir;
 
 
@@ -57,14 +60,37 @@ public class Application extends android.app.Application {
         return getTmpDir().getAbsolutePath();
     }
 
+    public static File getLibDir() {
+        return libdir;
+    }
+
+    public static String getLibPath() {
+        return getLibDir().getPath();
+    }
+
+    public static File getScriptFile() {
+        return new File(etcdir, "mkshrc");
+    }
+
+    public static String getScriptFilePath() {
+        return getScriptFile().getPath();
+    }
+
+
     @Override
     public void onCreate() {
         super.onCreate();
 
+        rootdir = getFilesDir().getParentFile();
+        etcdir = new File(rootdir, "etc");
+        libdir = new File(getApplicationInfo().nativeLibraryDir);
         cachedir = getCacheDir();
 
         setupPreferences();
         ThemeManager.migrateFileSelectionThemeMode(this);
+
+        Installer.install_directory(etcdir, false);
+        Installer.installAppScriptFile();
     }
 
     private void setupPreferences() {

@@ -42,12 +42,12 @@ import android.util.Log;
 import com.termoneplus.Application;
 import com.termoneplus.R;
 import com.termoneplus.TermActivity;
+import com.termoneplus.services.PathResolver;
 
 import java.util.UUID;
 
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
-import androidx.preference.PreferenceManager;
 import jackpal.androidterm.emulatorview.TermSession;
 import jackpal.androidterm.libtermexec.v1.ITerminal;
 import jackpal.androidterm.util.SessionList;
@@ -59,9 +59,8 @@ public class TermService extends Service {
     private static final String NOTIFICATION_CHANNEL_APPLICATION = "com.termoneplus.application";
 
     private final IBinder mTSBinder = new TSBinder();
-
     private SessionList mTermSessions = new SessionList();
-
+    private PathResolver path_resolver;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -89,11 +88,15 @@ public class TermService extends Service {
 
         startForeground(RUNNING_NOTIFICATION, notification);
 
+        path_resolver = new PathResolver();
+
         Log.d(Application.APP_TAG, "TermService started");
     }
 
     @Override
     public void onDestroy() {
+        path_resolver.stop();
+
         for (TermSession session : mTermSessions) {
             /* Don't automatically remove from list of sessions -- we clear the
              * list below anyway and we could trigger

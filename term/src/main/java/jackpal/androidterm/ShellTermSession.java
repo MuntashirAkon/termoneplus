@@ -106,11 +106,12 @@ public class ShellTermSession extends GenericTermSession {
             args = argList.toArray(new String[1]);
         }
 
-        String[] env = new String[4];
+        String[] env = new String[5];
         env[0] = "TERM=" + settings.getTermType();
-        env[1] = "PATH=" + path_settings.buildPATH();
+        env[1] = "PATH=" + Application.getLibPath() + File.pathSeparator + path_settings.buildPATH();
         env[2] = "HOME=" + settings.getHomePath();
         env[3] = "TMPDIR=" + Application.getTmpPath();
+        env[4] = "ENV=" + Application.getScriptFilePath();
 
         return Process.createSubprocess(mTermFd, arg0, args, env);
     }
