@@ -70,8 +70,6 @@
     <string name="summary_close_window_on_process_exit_preference">Вікно закриється якщо вийти з оболонки.</string>
     <string name="title_verify_path_preference">Перевіряти ШЛЯХ даних</string>
     <string name="summary_verify_path_preference">Видаляти недоступні директорії з ШЛЯХУ.</string>
-    <string name="title_do_path_extensions_preference">Допустимі дозволи ШЛЯХУ</string>
-    <string name="summary_do_path_extensions_preference">Дозволити іншим програмам забезпечувати додаткові команди (додавання до ШЛЯХУ).</string>
     <string name="title_allow_prepend_path_preference">Допускати ШЛЯХ додавання</string>
     <string name="summary_allow_prepend_path_preference">Дозволити іншим програмам анулювати існуючі команди (додавання до початку ШЛЯХУ).</string>
     <string name="control_key_dialog_title">Керуючі та Функціональні Клавіші</string>

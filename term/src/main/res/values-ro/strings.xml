@@ -106,9 +106,6 @@
     <string name="title_verify_path_preference">Verificați intrările PATH</string>
     <string name="summary_verify_path_preference">Dacă directoare inaccesibile ar trebui să fie eliminate din PATH.</string>
 
-    <string name="title_do_path_extensions_preference">Permiteți extensii PATH</string>
-    <string name="summary_do_path_extensions_preference">Dacă altor aplicații ar trebui să li se permită să furnizeze comenzi suplimentare.</string>
-
     <string name="title_allow_prepend_path_preference">Permiteți prefix PATH</string>
     <string name="summary_allow_prepend_path_preference">Dacă altor aplicații ar trebui să li se permită să suprascrie comenzile existente.</string>
 

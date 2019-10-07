@@ -155,9 +155,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <string name="title_verify_path_preference">Vérifier le PATH</string>
     <string name="summary_verify_path_preference">Les répertoires inaccessibles seront retirés de PATH</string>
 
-    <string name="title_do_path_extensions_preference">Extensions de PATH</string>
-    <string name="summary_do_path_extensions_preference">D\'autres applications sont autorisées à fournir des commandes supplémentaires (à ajouter au PATH)</string>
-
     <string name="title_allow_prepend_path_preference">Préfixe de PATH</string>
     <string name="summary_allow_prepend_path_preference">D\'autres applications sont autorisées à remplacer les commandes existantes (à ajouter au début de PATH)</string>
 

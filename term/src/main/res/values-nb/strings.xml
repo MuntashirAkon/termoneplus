@@ -122,9 +122,6 @@
     <string name="title_verify_path_preference">Kontroller oppføringer i PATH</string>
     <string name="summary_verify_path_preference">Velg om utilgjengelige mapper skal fjernes fra PATH.</string>
 
-    <string name="title_do_path_extensions_preference">Tillat utvidelse av PATH</string>
-    <string name="summary_do_path_extensions_preference">Velg om andre apper skal kunne tilby flere kommandoer (legge til i PATH).</string>
-
     <string name="title_allow_prepend_path_preference">Tillat overstyring av PATH</string>
     <string name="summary_allow_prepend_path_preference">Velg om andre apper skal kunne overstyre eksisterende kommandoer (legge til i begynnelsen av PATH).</string>
 

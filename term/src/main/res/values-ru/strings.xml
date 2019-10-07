@@ -107,9 +107,6 @@
     <string name="title_verify_path_preference">Проверять пути в PATH</string>
     <string name="summary_verify_path_preference">Удалять недоступные каталоги из PATH</string>
 
-    <string name="title_do_path_extensions_preference">Включить расширения PATH</string>
-    <string name="summary_do_path_extensions_preference">Разрешить другим приложениям обеспечивать дополнительные команды (добавление к PATH)</string>
-
     <string name="title_allow_prepend_path_preference">Разрешить перезапись PATH</string>
     <string name="summary_allow_prepend_path_preference">Разрешить другим приложениям изменять существующие команды (добавление к началу PATH)</string>
 

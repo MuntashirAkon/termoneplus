@@ -122,9 +122,6 @@
     <string name="title_verify_path_preference">Overiť položky v PATH</string>
     <string name="summary_verify_path_preference">Odstrániť neprístupné priečinky z PATH.</string>
 
-    <string name="title_do_path_extensions_preference">Povoliť rozšírenia PATH</string>
-    <string name="summary_do_path_extensions_preference">Umožniť ostatným aplikáciám poskytnúť ďalšie príkazy (pridať do PATH).</string>
-
     <string name="title_allow_prepend_path_preference">Povoliť podradenie PATH</string>
     <string name="summary_allow_prepend_path_preference">Umožniť ostatným aplikáciám prepísať existujúce príkazy (pridať na začiatok PATH).</string>
 

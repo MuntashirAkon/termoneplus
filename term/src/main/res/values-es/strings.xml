@@ -122,9 +122,6 @@
     <string name="title_verify_path_preference">Verificar entradas de PATH</string>
     <string name="summary_verify_path_preference">Los directorios inaccesibles serán eliminados de PATH.</string>
 
-    <string name="title_do_path_extensions_preference">Permitir adiciones</string>
-    <string name="summary_do_path_extensions_preference">Se permite a otras aplicaciones añadir entradas al PATH.</string>
-
     <string name="title_allow_prepend_path_preference">Permitir anteponer adiciones</string>
     <string name="summary_allow_prepend_path_preference">Otras aplicaciones pueden sobreescribir entradas ya existentes del PATH</string>
 

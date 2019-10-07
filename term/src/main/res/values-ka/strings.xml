@@ -118,9 +118,6 @@
     <string name="title_verify_path_preference">გარსის ცვლად PATH-ის გადამოწმება</string>
     <string name="summary_verify_path_preference">უნდა იყოს თუ არა ამოღებული PATH-დან მიუწვდომელი დასტები.</string>
 
-    <string name="title_do_path_extensions_preference">PATH-ის გავრცობის ნების დართვა</string>
-    <string name="summary_do_path_extensions_preference">უნდა იყვნენ თუ არა აპლიკაციები ნებადართული, რომ შეცვალონ გარსის ცვლადი PATH.</string>
-
     <string name="title_allow_prepend_path_preference">PATH-ის დასაწყისში ჩამატება</string>
     <string name="summary_allow_prepend_path_preference">უნდა იყვნენ თუ არა აპლიკაციები ნებადართული, რომ შეცვალონ გარსის ცვლადი PATH მის დასაწყისში დასტების ჩამატებით.</string>
 

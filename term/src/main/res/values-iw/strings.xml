@@ -94,8 +94,6 @@
     <string name="summary_close_window_on_process_exit_preference">האם בסגירת shell חלון ייסגר.</string>
     <string name="title_verify_path_preference">אמת ערך PATH</string>
     <string name="summary_verify_path_preference">האם תיקיות בלתי נגישות צריכות לרדת מ-PATH.</string>
-    <string name="title_do_path_extensions_preference">אפשר הרחבות PATH</string>
-    <string name="summary_do_path_extensions_preference">האם יישומים אחרים יקבלו גישה להוסיף פקודות (להוסיף ל-PATH).</string>
     <string name="title_allow_prepend_path_preference">אפשר שינוי נתיב PATH</string>
     <string name="summary_allow_prepend_path_preference">האם יישומים אחרים יוכלו לשנות פקודות קיימות (להוסיף לתחילת PATH).</string>
     <string name="title_home_path_preference">תיקיית HOME</string>

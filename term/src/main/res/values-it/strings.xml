@@ -122,9 +122,6 @@
     <string name="title_verify_path_preference">Verifica voci PATH</string>
     <string name="summary_verify_path_preference">Rimuovi cartelle inaccessibili da PATH.</string>
 
-    <string name="title_do_path_extensions_preference">Estensioni PATH</string>
-    <string name="summary_do_path_extensions_preference">Permetti ad altre applicazioni di fornire comandi aggiuntivi (aggiungi a PATH).</string>
-
     <string name="title_allow_prepend_path_preference">Anteposizione PATH</string>
     <string name="summary_allow_prepend_path_preference">Permetti ad altre applicazioni di sovrascrivere comandi esistenti (aggiungi all\'inizio di PATH).</string>
 

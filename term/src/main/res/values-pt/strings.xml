@@ -118,9 +118,6 @@
     <string name="title_verify_path_preference">Verificar as entradas PATH</string>
     <string name="summary_verify_path_preference">Se os diretórios inacessíveis devem ser removidos do PATH.</string>
 
-    <string name="title_do_path_extensions_preference">Permitir extensões PATH</string>
-    <string name="summary_do_path_extensions_preference">Se outras aplicações podem enviar comandos adicionais (adicionar a PATH).</string>
-
     <string name="title_allow_prepend_path_preference">Permitir preceder PATH</string>
     <string name="summary_allow_prepend_path_preference">Se outras aplicações podem substituir os comandos existentes (anteceder a PATH).</string>
 

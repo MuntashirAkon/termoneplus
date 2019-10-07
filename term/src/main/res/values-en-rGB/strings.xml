@@ -139,9 +139,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <string name="title_verify_path_preference">Verify PATH entries</string>
     <string name="summary_verify_path_preference">Whether inaccessible directories should be removed from the PATH.</string>
 
-    <string name="title_do_path_extensions_preference">Allow PATH extensions</string>
-    <string name="summary_do_path_extensions_preference">Whether other apps should be allowed to provide additional commands (add to PATH).</string>
-
     <string name="title_allow_prepend_path_preference">Allow PATH prepend</string>
     <string name="summary_allow_prepend_path_preference">Whether other apps should be allowed to override existing commands (add to the beginning of PATH).</string>
 

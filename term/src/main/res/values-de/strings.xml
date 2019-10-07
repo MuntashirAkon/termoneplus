@@ -154,9 +154,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <string name="title_verify_path_preference">Überprüfe PATH Einträge</string>
     <string name="summary_verify_path_preference">Sollen Verzeichnisse, auf welche nicht zugegriffen werden kann, vom PATH entfernt werden?</string>
 
-    <string name="title_do_path_extensions_preference">Erlaube PATH Erweiterungen</string>
-    <string name="summary_do_path_extensions_preference">Soll es anderen Apps erlaubt sein zusätliche Befehle zur Verfügung zu stellen? (An PATH anfügen)</string>
-
     <string name="summary_allow_prepend_path_preference">Soll es anderen Apps erlaubt sein, existierende Befehle zu überschreiben (Vor PATH einfügen).</string>
 
     <string name="title_home_path_preference">HOME Verzeichniss</string>

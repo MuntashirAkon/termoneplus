@@ -122,9 +122,6 @@
     <string name="title_verify_path_preference">PATH bejegyzések ellenőrzése</string>
     <string name="summary_verify_path_preference">A nem hozzáférhető útvonalak eltávolítása a PATH változóból.</string>
 
-    <string name="title_do_path_extensions_preference">PATH kiterjesztésének engedélyezése</string>
-    <string name="summary_do_path_extensions_preference">Az alkalmazások felvehetnek új parancsokat (hozzáfűzhetnek a PATH változóhoz).</string>
-
     <string name="title_allow_prepend_path_preference">PATH felülírásának engedélyezése</string>
     <string name="summary_allow_prepend_path_preference">Az alkalmazások felülírhatják a meglévő parancsokat (hozzáfűzhetnek a PATH változó elejéhez).</string>
 
