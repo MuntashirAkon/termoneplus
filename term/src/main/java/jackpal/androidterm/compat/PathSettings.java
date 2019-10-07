@@ -34,11 +34,11 @@ import androidx.preference.PreferenceManager;
  */
 @Deprecated
 public class PathSettings {
-    private String mPrependPath = null;
-    private String mAppendPath = null;
+    private static String mPrependPath = null;
+    private static String mAppendPath = null;
 
     // extracted from SharedPreferences
-    private boolean path_verify;
+    private static boolean path_verify;
 
 
     private PathSettings(Resources res) {
@@ -54,7 +54,7 @@ public class PathSettings {
         path_verify = prefs.getBoolean("verify_path", path_verify);
     }
 
-    public String getPrependPath() {
+    public static String getPrependPath() {
         return mPrependPath;
     }
 
@@ -62,7 +62,7 @@ public class PathSettings {
         mPrependPath = prependPath;
     }
 
-    public String getAppendPath() {
+    public static String getAppendPath() {
         return mAppendPath;
     }
 
@@ -70,7 +70,7 @@ public class PathSettings {
         mAppendPath = appendPath;
     }
 
-    public String buildPATH() {
+    public static String buildPATH() {
         String path = System.getenv("PATH");
         if (path == null) path = "";
         path = extendPath(path);
@@ -79,7 +79,7 @@ public class PathSettings {
         return path;
     }
 
-    private String extendPath(String path) {
+    private static String extendPath(String path) {
         String s;
 
         s = getAppendPath();
@@ -93,7 +93,7 @@ public class PathSettings {
         return path;
     }
 
-    private String preservePath(String path) {
+    private static String preservePath(String path) {
         String[] entries = path.split(File.pathSeparator);
         StringBuilder new_path = new StringBuilder(path.length());
         for (String entry : entries) {
