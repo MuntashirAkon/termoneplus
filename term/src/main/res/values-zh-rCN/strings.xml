@@ -122,9 +122,6 @@
     <string name="title_verify_path_preference">验证 PATH 路径</string>
     <string name="summary_verify_path_preference">是否将 PATH 中无效的路径清除</string>
 
-    <string name="title_allow_prepend_path_preference">允许 PATH 前置</string>
-    <string name="summary_allow_prepend_path_preference">是否允许程序覆盖 PATH 中已有命令</string>
-
     <string name="title_home_path_preference">HOME 文件夹</string>
     <string name="summary_home_path_preference">用作 HOME 的可写文件夹路径</string>
 

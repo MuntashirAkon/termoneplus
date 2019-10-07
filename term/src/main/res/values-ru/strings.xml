@@ -107,9 +107,6 @@
     <string name="title_verify_path_preference">Проверять пути в PATH</string>
     <string name="summary_verify_path_preference">Удалять недоступные каталоги из PATH</string>
 
-    <string name="title_allow_prepend_path_preference">Разрешить перезапись PATH</string>
-    <string name="summary_allow_prepend_path_preference">Разрешить другим приложениям изменять существующие команды (добавление к началу PATH)</string>
-
     <string name="title_home_path_preference">Домашняя папка</string>
     <string name="summary_home_path_preference">Установка пути к папке, которая будет использована в качестве домашней (должны быть права записи)</string>
 

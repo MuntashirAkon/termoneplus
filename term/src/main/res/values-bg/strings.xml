@@ -154,9 +154,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <string name="title_verify_path_preference">Проверка на пътищата в PATH</string>
     <string name="summary_verify_path_preference">Премахване на недостъпните пътища от PATH</string>
 
-    <string name="title_allow_prepend_path_preference">Разрешаване на добавяне на пътища в началото на PATH</string>
-
-    <string name="summary_allow_prepend_path_preference">Дали другите приложения могат да припокрият съществуващите команди, т.е. да вмъкнат пътища в началото на PATH.</string>
     <string name="title_home_path_preference">Домашна директория</string>
     <string name="summary_home_path_preference">Път към разрешена за запис директория, която да се използва като домашна</string>
 

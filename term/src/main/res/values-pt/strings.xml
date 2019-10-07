@@ -118,9 +118,6 @@
     <string name="title_verify_path_preference">Verificar as entradas PATH</string>
     <string name="summary_verify_path_preference">Se os diretórios inacessíveis devem ser removidos do PATH.</string>
 
-    <string name="title_allow_prepend_path_preference">Permitir preceder PATH</string>
-    <string name="summary_allow_prepend_path_preference">Se outras aplicações podem substituir os comandos existentes (anteceder a PATH).</string>
-
     <string name="control_key_dialog_title">Teclas Control e Fn</string>
     <!-- The word CTRLKEY should be left un-translated. It will be replaced at run-time with the
          actual control key key name. -->

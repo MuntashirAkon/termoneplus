@@ -122,9 +122,6 @@
     <string name="title_verify_path_preference">PATH 경로 확인</string>
     <string name="summary_verify_path_preference">액세스할 수 없는 경로가 PATH에서 제거되어야할지 확인합니다.</string>
 
-    <string name="title_allow_prepend_path_preference">PATH 경로 덮어쓰기 허용</string>
-    <string name="summary_allow_prepend_path_preference">다른 어플리케이션에서 이미 존재하는 경로를 덮어씌울 수 있는지 설정합니다.</string>
-
     <string name="title_home_path_preference">HOME 경로</string>
     <string name="summary_home_path_preference">HOME으로 설정 가능한 경로 (쓰기 가능한 경로)를 설정합니다.</string>
 

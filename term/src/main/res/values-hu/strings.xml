@@ -122,9 +122,6 @@
     <string name="title_verify_path_preference">PATH bejegyzések ellenőrzése</string>
     <string name="summary_verify_path_preference">A nem hozzáférhető útvonalak eltávolítása a PATH változóból.</string>
 
-    <string name="title_allow_prepend_path_preference">PATH felülírásának engedélyezése</string>
-    <string name="summary_allow_prepend_path_preference">Az alkalmazások felülírhatják a meglévő parancsokat (hozzáfűzhetnek a PATH változó elejéhez).</string>
-
     <string name="title_home_path_preference">HOME könyvtár</string>
     <string name="summary_home_path_preference">Egy írható könyvtár útvonala, amely HOME-ként szolgál.</string>
 

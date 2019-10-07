@@ -118,9 +118,6 @@
     <string name="title_verify_path_preference">Weryfikuj ścieżki PATH</string>
     <string name="summary_verify_path_preference">Czy niedostępne katalogi powinny być usunięte z PATH.</string>
 
-    <string name="title_allow_prepend_path_preference">Zazwól na dodawanie na początku PATH</string>
-    <string name="summary_allow_prepend_path_preference">Czy inne aplikacje powinny mieć możliwość nadpisywania istniejących komend (dodawanie na początku PATH).</string>
-
     <string name="control_key_dialog_title">Przyciski Control i Fn</string>
     <!-- The word CTRLKEY should be left un-translated. It will be replaced at run-time with the
          actual control key key name. -->

@@ -122,9 +122,6 @@
     <string name="title_verify_path_preference">Kontroller oppføringer i PATH</string>
     <string name="summary_verify_path_preference">Velg om utilgjengelige mapper skal fjernes fra PATH.</string>
 
-    <string name="title_allow_prepend_path_preference">Tillat overstyring av PATH</string>
-    <string name="summary_allow_prepend_path_preference">Velg om andre apper skal kunne overstyre eksisterende kommandoer (legge til i begynnelsen av PATH).</string>
-
     <string name="title_home_path_preference">HOME-mappe</string>
     <string name="summary_home_path_preference">Sti til en skrivbar mappe som skal brukes som HOME.</string>
 

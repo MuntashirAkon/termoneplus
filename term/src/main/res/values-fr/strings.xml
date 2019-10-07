@@ -155,9 +155,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <string name="title_verify_path_preference">Vérifier le PATH</string>
     <string name="summary_verify_path_preference">Les répertoires inaccessibles seront retirés de PATH</string>
 
-    <string name="title_allow_prepend_path_preference">Préfixe de PATH</string>
-    <string name="summary_allow_prepend_path_preference">D\'autres applications sont autorisées à remplacer les commandes existantes (à ajouter au début de PATH)</string>
-
     <string name="title_home_path_preference">Dossier HOME</string>
     <string name="summary_home_path_preference">Chemin vers un dossier accessible en écriture pour être utilisé comme HOME.</string>
 

@@ -122,9 +122,6 @@
     <string name="title_verify_path_preference">Overiť položky v PATH</string>
     <string name="summary_verify_path_preference">Odstrániť neprístupné priečinky z PATH.</string>
 
-    <string name="title_allow_prepend_path_preference">Povoliť podradenie PATH</string>
-    <string name="summary_allow_prepend_path_preference">Umožniť ostatným aplikáciám prepísať existujúce príkazy (pridať na začiatok PATH).</string>
-
     <string name="title_home_path_preference">Domovský priečinok</string>
     <string name="summary_home_path_preference">Umiestnenie zapisovateľného priečinka, ktorý bude použitý ako domovský.</string>
 

@@ -118,9 +118,6 @@
     <string name="title_verify_path_preference">გარსის ცვლად PATH-ის გადამოწმება</string>
     <string name="summary_verify_path_preference">უნდა იყოს თუ არა ამოღებული PATH-დან მიუწვდომელი დასტები.</string>
 
-    <string name="title_allow_prepend_path_preference">PATH-ის დასაწყისში ჩამატება</string>
-    <string name="summary_allow_prepend_path_preference">უნდა იყვნენ თუ არა აპლიკაციები ნებადართული, რომ შეცვალონ გარსის ცვლადი PATH მის დასაწყისში დასტების ჩამატებით.</string>
-
     <string name="control_key_dialog_title">Control და Function ღილაკები</string>
     <!-- The word CTRLKEY should be left un-translated. It will be replaced at run-time with the
          actual control key key name. -->

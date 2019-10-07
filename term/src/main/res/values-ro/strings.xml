@@ -106,9 +106,6 @@
     <string name="title_verify_path_preference">Verificați intrările PATH</string>
     <string name="summary_verify_path_preference">Dacă directoare inaccesibile ar trebui să fie eliminate din PATH.</string>
 
-    <string name="title_allow_prepend_path_preference">Permiteți prefix PATH</string>
-    <string name="summary_allow_prepend_path_preference">Dacă altor aplicații ar trebui să li se permită să suprascrie comenzile existente.</string>
-
     <string name="control_key_dialog_title">Tastele control şi funcționale</string>
     <string name="control_key_dialog_control_disabled_text">Nici o tastă control setată.</string>
     <string name="control_key_dialog_fn_disabled_text">Nici o tastă funcţie setată.</string>

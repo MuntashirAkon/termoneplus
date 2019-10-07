@@ -118,9 +118,6 @@
     <string name="title_verify_path_preference">PATHエントリを照合</string>
     <string name="summary_verify_path_preference">アクセス不可ディレクトリをPATHから取り除くべきか否か.</string>
 
-    <string name="title_allow_prepend_path_preference">PATHへのプリペンドの許可</string>
-    <string name="summary_allow_prepend_path_preference">他のアプリから既存のコマンドの上書きを許可するか否か (PATHの先頭に追加).</string>
-
     <string name="control_key_dialog_title">コントロールキーとファンクションキー</string>
     <!-- The word CTRLKEY should be left un-translated. It will be replaced at run-time with the
          actual control key key name. -->

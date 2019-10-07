@@ -114,9 +114,6 @@
     <string name="title_verify_path_preference">PATH entries controleren</string>
     <string name="summary_verify_path_preference">Controleren of ontoegankelijk directories verwijderd moeten worden uit het PATH</string>
 
-    <string name="title_allow_prepend_path_preference">PATH prepend toestaan</string>
-    <string name="summary_allow_prepend_path_preference">Andere apps toestaan om bestaande opdrachten te overschrijven (voor PATH invoegen).</string>
-
     <string name="title_home_path_preference">HOME folder</string>
     <string name="summary_home_path_preference">Pad naar een beschrijfbare map te gebruiken als HOME</string>
 
