@@ -27,6 +27,12 @@ target_compile_definitions(
         PRIVATE
         PACKAGE_NAME="${APPLICATION_ID}"
 )
+target_compile_options(
+        libexec-t1plus.so
+        PRIVATE
+        -fPIC
+)
 target_link_libraries(
         libexec-t1plus.so
+        -pie
 )
