@@ -16,12 +16,11 @@
 
 package com.termoneplus;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+
 
 public class Installer {
 
@@ -48,12 +47,14 @@ public class Installer {
     }
 
     public static boolean installAppScriptFile() {
-        File file = Application.getScriptFile();
+        ArrayList<String> shell_script = new ArrayList<>();
 
-        String[] shell_script = {
-                ". /system/etc/mkshrc",
-                ". /proc/self/fd/0 <<< \"$(libexec-t1plus.so aliases)\""
-        };
-        return install_text_file(shell_script, file);
+        String sysmkshrc = "/system/etc/mkshrc";
+        if (new File(sysmkshrc).exists())
+            shell_script.add(". " + sysmkshrc);
+
+        shell_script.add(". /proc/self/fd/0 <<< \"$(libexec-t1plus.so aliases)\"");
+
+        return install_text_file(shell_script.toArray(new String[0]), Application.getScriptFile());
     }
 }
