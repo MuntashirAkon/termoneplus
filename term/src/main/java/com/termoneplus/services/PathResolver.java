@@ -84,8 +84,15 @@ public class PathResolver implements UnixSocketServer.ConnectionHandler {
 
         for (String entry : PathSettings.buildPATH().split(File.pathSeparator)) {
             File dir = new File(entry);
-            for (File cmd : dir.listFiles(file -> pattern.matcher(file.getName()).matches())) {
 
+            File[] cmdlist = null;
+            try {
+                cmdlist = dir.listFiles(file -> pattern.matcher(file.getName()).matches());
+            } catch (Exception ignore) {
+            }
+            if (cmdlist == null) continue;
+
+            for (File cmd : cmdlist) {
                 ProcessBuilder pb = new ProcessBuilder(cmd.getPath(), "aliases");
                 try {
                     java.lang.Process p = pb.start();
