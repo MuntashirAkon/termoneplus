@@ -108,7 +108,7 @@ public class ShellTermSession extends GenericTermSession {
 
         String[] env = new String[5];
         env[0] = "TERM=" + settings.getTermType();
-        env[1] = "PATH=" + Application.getLibPath() + File.pathSeparator + path_settings.buildPATH();
+        env[1] = "PATH=" + Application.xbindir.getPath() + File.pathSeparator + path_settings.buildPATH();
         env[2] = "HOME=" + settings.getHomePath();
         env[3] = "TMPDIR=" + Application.getTmpPath();
         env[4] = "ENV=" + Application.getScriptFilePath();

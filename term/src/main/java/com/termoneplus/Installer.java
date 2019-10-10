@@ -17,7 +17,11 @@
 package com.termoneplus;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
@@ -63,5 +67,36 @@ public class Installer {
         shell_script.add("EOF");
 
         return install_text_file(shell_script.toArray(new String[0]), Application.getScriptFile());
+    }
+
+    public static boolean copy_executable(File source, File target_path) {
+        int buflen = 32 * 1024; // 32k
+        byte[] buf = new byte[buflen];
+
+        File target = new File(target_path, source.getName());
+        File backup = new File(target.getAbsolutePath() + "-bak");
+        if (target.exists())
+            if (!target.renameTo(backup))
+                return false;
+
+        try {
+            OutputStream os = new FileOutputStream(target);
+            InputStream is = new FileInputStream(source);
+            int len;
+            while ((len = is.read(buf, 0, buflen)) > 0) {
+                os.write(buf, 0, len);
+            }
+            os.close();
+            is.close();
+
+            if (backup.exists())
+                backup.delete();
+
+            // always preset executable permissions
+            return target.setReadable(true) &&
+                    target.setExecutable(true, false);
+        } catch (Exception ignore) {
+        }
+        return false;
     }
 }

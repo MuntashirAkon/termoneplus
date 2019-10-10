@@ -46,6 +46,8 @@ public class Application extends android.app.Application {
     public static final String ARGUMENT_SHELL_COMMAND = "com.termoneplus.Command";
     public static final String ARGUMENT_WINDOW_HANDLE = "com.termoneplus.WindowHandle";
 
+    public static File xbindir;
+
     private static File rootdir;
     private static File etcdir;
     private static File libdir;
@@ -58,14 +60,6 @@ public class Application extends android.app.Application {
 
     public static String getTmpPath() {
         return getTmpDir().getAbsolutePath();
-    }
-
-    public static File getLibDir() {
-        return libdir;
-    }
-
-    public static String getLibPath() {
-        return getLibDir().getPath();
     }
 
     public static File getScriptFile() {
@@ -84,12 +78,24 @@ public class Application extends android.app.Application {
         rootdir = getFilesDir().getParentFile();
         etcdir = new File(rootdir, "etc");
         libdir = new File(getApplicationInfo().nativeLibraryDir);
+        xbindir = libdir;
         cachedir = getCacheDir();
 
         setupPreferences();
         ThemeManager.migrateFileSelectionThemeMode(this);
 
         Installer.install_directory(etcdir, false);
+
+        // Note at this point xbindir == libdir
+        File exe = new File(xbindir, Installer.APPINFO_COMMAND);
+        if (!exe.canExecute()) {
+            // Old Android (API Level < 17) - libraries are without executable bit set
+            xbindir = new File(rootdir, ".x");
+            Installer.install_directory(xbindir, false);
+
+            Installer.copy_executable(exe, xbindir);
+        }
+
         Installer.installAppScriptFile();
     }
 
