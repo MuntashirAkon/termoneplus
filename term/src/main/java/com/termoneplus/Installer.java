@@ -24,6 +24,8 @@ import java.util.ArrayList;
 
 public class Installer {
 
+    public static final String APPINFO_COMMAND = "libexec-t1plus.so";
+
     public static boolean install_directory(File dir, boolean share) {
         if (!(dir.exists() || dir.mkdir())) return false;
 
@@ -50,10 +52,15 @@ public class Installer {
         ArrayList<String> shell_script = new ArrayList<>();
 
         String sysmkshrc = "/system/etc/mkshrc";
-        if (new File(sysmkshrc).exists())
+        if (!Application.getScriptFilePath().equals(sysmkshrc) &&
+                new File(sysmkshrc).exists())
             shell_script.add(". " + sysmkshrc);
 
-        shell_script.add(". /proc/self/fd/0 <<< \"$(libexec-t1plus.so aliases)\"");
+        //Next work fine with mksh but fail with ash.
+        //shell_script.add(". /proc/self/fd/0 <<< \"$(libexec-t1plus.so aliases)\"");
+        shell_script.add(". /proc/self/fd/0 <<EOF");
+        shell_script.add("$(" + APPINFO_COMMAND + " aliases)");
+        shell_script.add("EOF");
 
         return install_text_file(shell_script.toArray(new String[0]), Application.getScriptFile());
     }
