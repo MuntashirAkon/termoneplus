@@ -110,13 +110,15 @@ public class Application extends android.app.Application {
             editor.putString("home_path", path);
             updated = true;
         }
-        // remove obsolete preferences:
-        // - after v3.0.0, TODO remove string resources in next major
+
+        // clean-up obsolete preferences:
+        // "allow_prepend_path" was removed in 3.1.0
         if (prefs.contains("allow_prepend_path")) {
             // Note depends from do_path_extensions
             editor.remove("allow_prepend_path");
             updated = true;
         }
+        // "do_path_extensions" was removed in 3.1.0
         if (prefs.contains("do_path_extensions")) {
             editor.remove("do_path_extensions");
             updated = true;
