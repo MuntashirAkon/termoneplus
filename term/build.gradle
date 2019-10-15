@@ -46,3 +46,14 @@ dependencies {
     implementation "androidx.preference:preference:1.1.0"
     implementation "com.google.android.material:material:1.0.0"
 }
+
+task elfcleaner(type: Exec) {
+    // only unix
+    commandLine 'sh', '-c', 'find build/*/stripped* -name lib*.so -exec elf-cleaner {} \\;'
+}
+
+tasks.whenTaskAdded { task ->
+    if (task.name.matches('strip.*DebugSymbols')) {
+        task.finalizedBy elfcleaner
+    }
+}
