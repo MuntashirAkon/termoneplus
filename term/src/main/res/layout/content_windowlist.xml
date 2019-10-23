@@ -27,18 +27,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
+        android:layout_margin="@dimen/text_margin"
         android:layout_weight="8"
         android:background="@android:color/transparent"
-        android:paddingStart="@dimen/text2_margin"
-        android:paddingLeft="@dimen/text2_margin"
-        android:paddingTop="@dimen/text2_margin"
-        android:paddingBottom="@dimen/text2_margin"
         android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+    <Space
+        android:layout_width="24dp"
+        android:layout_height="wrap_content"/>
 
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
+        android:layout_gravity="center_vertical"
         android:layout_weight="1">
 
         <view
