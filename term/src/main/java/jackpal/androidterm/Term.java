@@ -33,7 +33,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
-import android.os.PowerManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -63,6 +62,7 @@ import com.termoneplus.TermPreferencesActivity;
 import com.termoneplus.WindowListActivity;
 import com.termoneplus.WindowListAdapter;
 import com.termoneplus.utils.SimpleClipboardManager;
+import com.termoneplus.utils.WakeLock;
 import com.termoneplus.utils.WrapOpenURL;
 
 import java.io.IOException;
@@ -107,7 +107,6 @@ public class Term extends AppCompatActivity
     private boolean mStopServiceOnFinish = false;
     private Intent TSIntent;
     private int onResumeSelectWindow = -1;
-    private PowerManager.WakeLock mWakeLock;
     private WifiManager.WifiLock mWifiLock;
     private boolean path_collected;
     private TermService mTermService;
@@ -256,8 +255,7 @@ public class Term extends AppCompatActivity
 
         Context app = getApplicationContext();
 
-        PowerManager pm = (PowerManager) app.getSystemService(Context.POWER_SERVICE);
-        mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, Application.APP_TAG + ":");
+        WakeLock.create(this);
 
         WifiManager wm = (WifiManager) app.getSystemService(Context.WIFI_SERVICE);
         mWifiLock = wm.createWifiLock(WifiManager.WIFI_MODE_FULL_HIGH_PERF, Application.APP_TAG);
@@ -341,9 +339,7 @@ public class Term extends AppCompatActivity
         }
         mTermService = null;
         mTSConnection = null;
-        if (mWakeLock.isHeld()) {
-            mWakeLock.release();
-        }
+        WakeLock.release();
         if (mWifiLock.isHeld()) {
             mWifiLock.release();
         }
@@ -678,7 +674,7 @@ public class Term extends AppCompatActivity
     public boolean onPrepareOptionsMenu(Menu menu) {
         MenuItem wakeLockItem = menu.findItem(R.id.menu_toggle_wakelock);
         MenuItem wifiLockItem = menu.findItem(R.id.menu_toggle_wifilock);
-        if (mWakeLock.isHeld()) {
+        if (WakeLock.isHeld()) {
             wakeLockItem.setTitle(R.string.disable_wakelock);
         } else {
             wakeLockItem.setTitle(R.string.enable_wakelock);
@@ -943,11 +939,7 @@ public class Term extends AppCompatActivity
     }
 
     private void doToggleWakeLock() {
-        if (mWakeLock.isHeld()) {
-            mWakeLock.release();
-        } else {
-            mWakeLock.acquire();
-        }
+        WakeLock.toggle(this);
         invalidateOptionsMenu();
     }
 

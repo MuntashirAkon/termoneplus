@@ -49,6 +49,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
     <string name="enable_wakelock">Прихващане на съживяването</string>
     <string name="disable_wakelock">Освобождаване на съживяването</string>
+    <string name="ignore_battery_optimizations">Разрешаване на \"%1$s\" да пренебрегва оптимизации за батерията?</string>
     <string name="enable_wifilock">Прихващане на безжичната мрежа</string>
     <string name="disable_wifilock">Освобождаване на безжичната мрежа</string>
 
