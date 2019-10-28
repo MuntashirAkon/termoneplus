@@ -56,7 +56,6 @@ import jackpal.androidterm.util.TermSettings;
 
 public class TermService extends Service {
     private static final int RUNNING_NOTIFICATION = 1;
-    private static final String NOTIFICATION_CHANNEL_APPLICATION = "com.termoneplus.application";
 
     private final IBinder mTSBinder = new TSBinder();
     private SessionList mTermSessions = new SessionList();
@@ -145,7 +144,7 @@ public class TermService extends Service {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notifyIntent, 0);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this,
-                NOTIFICATION_CHANNEL_APPLICATION)
+                Application.NOTIFICATION_CHANNEL_SESSIONS)
                 .setSmallIcon(R.drawable.ic_stat_service_notification_icon)
                 .setContentTitle(getText(R.string.application_terminal))
                 .setContentText(getText(R.string.service_notify_text))
@@ -170,7 +169,7 @@ public class TermService extends Service {
         private static class Compat26 {
             private static void create(TermService service) {
                 NotificationChannel channel = new NotificationChannel(
-                        NOTIFICATION_CHANNEL_APPLICATION,
+                        Application.NOTIFICATION_CHANNEL_SESSIONS,
                         "TermOnePlus",
                         NotificationManager.IMPORTANCE_LOW);
                 channel.setDescription("TermOnePlus running notification");

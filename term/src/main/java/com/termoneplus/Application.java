@@ -35,6 +35,8 @@ public class Application extends android.app.Application {
      */
     public static final String APP_TAG = "TermOnePlus";
 
+    public static final String NOTIFICATION_CHANNEL_SESSIONS = BuildConfig.APPLICATION_ID + ".sessions";
+
     public static final String ACTION_OPEN_NEW_WINDOW = "com.termoneplus.OPEN_NEW_WINDOW";
     public static final String ACTION_SWITCH_WINDOW = "com.termoneplus.SWITCH_WINDOW";
     public static final String ACTION_RUN_SHORTCUT = "com.termoneplus.RUN_SHORTCUT";
