@@ -1,8 +1,10 @@
 wrapper {
-    gradleVersion = '5.6.3'
-/* Temporary exclude distribution checksum due to issue:
-     https://github.com/gradle/gradle/issues/9361
-   Note that Android Studio 3.5 explicitly require checksum to be removed!
-    distributionSha256Sum = '60a6d8f687e3e7a4bc901cc6bc3db190efae0f02f0cc697e323e0f9336f224a3'
-*/
+    gradleVersion = '6.0'
+    distributionSha256Sum = '5a3578b9f0bb162f5e08cf119f447dfb8fa950cedebb4d2a977e912a11a74b91'
 }
+/* Notes for distributionSha256Sum
+   Android Studio 3.5 explicitly require checksum to be removed, see
+     https://github.com/gradle/gradle/issues/9361 !
+   Restored for Android Studio 3.5.2, see
+     https://issuetracker.google.com/issues/129261435 !
+*/
