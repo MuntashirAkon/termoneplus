@@ -602,10 +602,15 @@ public class Term extends AppCompatActivity
     }
 
     @Override
-    protected void onActivityResult(int request, int result, Intent data) {
-        switch (request) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode != RESULT_OK) return;
+
+        //noinspection SwitchStatementWithTooFewBranches
+        switch (requestCode) {
             case REQUEST_CHOOSE_WINDOW:
-                if (result == RESULT_OK && data != null) {
+                if (data != null) {
                     int position = data.getIntExtra(Application.ARGUMENT_WINDOW_ID, -2);
                     if (position >= 0) {
                         // Switch windows after session list is in sync, not here
@@ -637,7 +642,8 @@ public class Term extends AppCompatActivity
                         finish();
                     }
                 }
-                break;
+                //noinspection UnnecessaryReturnStatement
+                return;
         }
     }
 

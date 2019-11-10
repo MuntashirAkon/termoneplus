@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -159,12 +160,13 @@ public class IntentSampleActivity extends AppCompatActivity {
                 REQUEST_PERMISSION_RUN_SCRIPT);
     }
 
-    protected void onActivityResult(int request, int result, Intent data) {
-        if (result != RESULT_OK) {
-            return;
-        }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-        if (request == REQUEST_WINDOW_HANDLE && data != null) {
+        if (resultCode != RESULT_OK) return;
+
+        if (requestCode == REQUEST_WINDOW_HANDLE && data != null) {
             mHandle = data.getStringExtra(ARGUMENT_WINDOW_HANDLE);
             ((Button) findViewById(R.id.runScriptSaveWindow)).setText(
                     R.string.run_script_existing_window);
