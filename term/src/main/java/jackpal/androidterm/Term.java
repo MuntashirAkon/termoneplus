@@ -605,12 +605,10 @@ public class Term extends AppCompatActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode != RESULT_OK) return;
-
         //noinspection SwitchStatementWithTooFewBranches
         switch (requestCode) {
             case REQUEST_CHOOSE_WINDOW:
-                if (data != null) {
+                if (resultCode == RESULT_OK && data != null) {
                     int position = data.getIntExtra(Application.ARGUMENT_WINDOW_ID, -2);
                     if (position >= 0) {
                         // Switch windows after session list is in sync, not here
