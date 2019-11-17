@@ -1134,11 +1134,11 @@ class TerminalEmulator {
             break;
 
         case 'A': // ESC [ Pn A - Cursor Up
-            setCursorRow(Math.max(mTopMargin, mCursorRow - getArg0(1)));
+            setCursorRow(Math.max(0, mCursorRow - getArg0(1)));
             break;
 
         case 'B': // ESC [ Pn B - Cursor Down
-            setCursorRow(Math.min(mBottomMargin - 1, mCursorRow + getArg0(1)));
+            setCursorRow(Math.min(mRows - 1, mCursorRow + getArg0(1)));
             break;
 
         case 'C': // ESC [ Pn C - Cursor Right
@@ -1337,7 +1337,8 @@ class TerminalEmulator {
             mBottomMargin = bottom;
 
             // The cursor is placed in the home position
-            setCursorRowCol(mTopMargin, 0);
+            // column 1, line 1 of the page(numbering from 1).
+            setCursorRowCol(0, 0);
         }
             break;
 

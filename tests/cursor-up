@@ -1,0 +1,34 @@
+ESC=$'\033'
+CSI="${ESC}["
+
+# // ESC [ Pn J - ED - Erase in Display
+echo -n "${CSI}2J"	# // Clear all
+
+# // Esc [ Pn ; Pn r - set top and bottom margins
+echo -n "${CSI}4;7r"
+
+# // ESC [ Pn ; H - Cursor Position
+echo -n "${CSI}3;1H"
+
+# // ESC [ Pn A - Cursor Up
+echo -n "L1${CSI}AL2"
+
+cat <<EOF
+text1
+text2
+text3
+text4
+text5
+text6
+text7
+EOF
+
+#expected screen:
+#<empty line>
+#  L2
+#text2
+#text5
+#text6
+#text7
+#<PS1 prompt>
+#<... empty lines ...>
