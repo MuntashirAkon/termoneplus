@@ -1052,6 +1052,11 @@ class TerminalEmulator {
                     | mSavedDecFlags_DECSC_DECRC;
             break;
 
+        case 'c': // ESC c - RIS - Reset to Initial State
+            reset();
+            setCursorPosition(0, 0);
+            break;
+
         case 'D': // INDEX
             doLinefeed();
             break;

@@ -1,0 +1,2 @@
+ESC=$'\033'
+echo -n "${ESC}c" # // ESC c - RIS - Reset to Initial State
