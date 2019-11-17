@@ -82,6 +82,7 @@ public class TermSession {
     private ByteBuffer mWriteByteBuffer;
     private CharsetEncoder mUTF8Encoder;
     private FinishCallback mFinishCallback;
+    private volatile boolean is_initialized = false;
     private volatile boolean is_running = false;
     private UpdateCallback mTitleChangedListener;
 
@@ -127,7 +128,7 @@ public class TermSession {
      */
     public void initializeEmulator(int columns, int rows) {
         synchronized (this) {
-            if (is_running) return;
+            if (is_initialized) return;
 
             mTranscriptScreen = new TranscriptScreen(columns, TRANSCRIPT_ROWS, rows, mColorScheme);
 
@@ -138,6 +139,8 @@ public class TermSession {
 
             mReaderThread.start();
             mWriterThread.start();
+
+            is_initialized = true;
         }
     }
 
@@ -509,10 +512,15 @@ public class TermSession {
      */
     public void finish() {
         is_running = false;
-        finalizeEmulator();
+        synchronized (this) {
+            if (!is_initialized) return;
+
+            finalizeEmulator();
+            is_initialized = false;
+        }
     }
 
-    private synchronized void finalizeEmulator() {
+    private void finalizeEmulator() {
         if (mFinishCallback != null) {
             mFinishCallback.onSessionFinish(this);
             mFinishCallback = null;
