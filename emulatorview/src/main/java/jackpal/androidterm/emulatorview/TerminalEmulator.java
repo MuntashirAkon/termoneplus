@@ -1572,7 +1572,7 @@ class TerminalEmulator {
 
     private void scroll() {
         mScrollCounter ++;
-        mScreen.scroll(mTopMargin, mBottomMargin, getDefaultStyle());
+        mScreen.scroll(mTopMargin, mBottomMargin, getStyle());
     }
 
     /**

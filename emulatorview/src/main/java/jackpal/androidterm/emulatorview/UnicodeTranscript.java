@@ -22,6 +22,8 @@ import android.os.Build;
 import android.text.AndroidCharacter;
 import android.util.Log;
 
+import java.util.Arrays;
+
 import androidx.annotation.RequiresApi;
 
 
@@ -317,11 +319,7 @@ class UnicodeTranscript {
                 ++mActiveTranscriptRows;
             }
 
-            // Blank the bottom margin
-            int blankRow = externalToInternalRow(bottomMargin - 1);
-            mLines[blankRow] = null;
-            mColor[blankRow] = new StyleRow(style, mColumns);
-            mLineWrap[blankRow] = false;
+            blankBottomMargin(bottomMargin, style);
 
             return;
         }
@@ -351,11 +349,7 @@ class UnicodeTranscript {
             ++mActiveTranscriptRows;
         }
 
-        // Blank the bottom margin
-        int blankRow = externalToInternalRow(bottomMargin - 1);
-        lines[blankRow] = null;
-        color[blankRow] = new StyleRow(style, mColumns);
-        lineWrap[blankRow] = false;
+        blankBottomMargin(bottomMargin, style);
 
         return;
     }
@@ -780,9 +774,7 @@ class UnicodeTranscript {
         char[] line = new char[columns];
 
         // Fill the line with blanks
-        for (int i = 0; i < columns; ++i) {
-            line[i] = ' ';
-        }
+        Arrays.fill(line, ' ');
 
         mLines[row] = line;
         if (mColor[row] == null) {
@@ -799,6 +791,19 @@ class UnicodeTranscript {
             mColor[row] = new StyleRow(0, columns);
         }
         return line;
+    }
+
+    private void blankBottomMargin(int bottomMargin, int style) {
+        int row = externalToInternalRow(bottomMargin - 1);
+
+        // Note TranscriptScreen.drawText does not draw empty lines!
+        // So on scroll we will fill "blank" line.
+        // TODO: avoid allocation of "blank" line
+        char[] line = new char[mColumns];
+        Arrays.fill(line, ' ');
+        mLines[row] = line;
+        mColor[row] = new StyleRow(style, mColumns);
+        mLineWrap[row] = false;
     }
 
     public boolean setChar(int column, int row, int codePoint, int style) {

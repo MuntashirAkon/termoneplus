@@ -1,0 +1,53 @@
+BS=$'\010'
+ESC=$'\033'
+CSI="${ESC}["
+
+# // Esc [ Pn ; Pn r - set top and bottom margins
+echo -n "${CSI}1;10r"
+
+# Select default (ISO 8859-1 mapping)
+echo -n "${ESC}(B"
+
+# Select Graphic Rendition / Default foreground and background color
+echo -n "${CSI}39;49m"
+
+# Set foreground color / White
+echo -n "${CSI}37m"
+
+# Set background color / Black
+echo -n "${CSI}40m"
+
+# Cursor Position
+echo -n "${CSI}H"
+
+# Erase in Display / clear entire screen(2)
+echo -n "${CSI}2J"
+
+# Cursor Position / 3x3
+echo -n "${CSI}3;3H"
+
+echo -n "X"
+
+# Cursor Horizontal Absolute / 9
+echo -n "${CSI}9G"
+
+echo -n "Z"
+
+# // Esc [ Pn ; Pn r - set top and bottom margins
+echo -n "${CSI}1;5r"
+
+# Cursor Position / 5x1
+echo -n "${CSI}5;1H"
+
+echo -n o
+
+sleep 2	# wait before to scroll (better visibility)
+
+# expected is White on Black line on scroll
+echo
+
+# move down to avoid shell prompt to override line
+# // ESC [ Pn B - Cursor Down
+echo -n "${CSI}B"
+
+sleep 2	# wait before to exit (better visibility)
