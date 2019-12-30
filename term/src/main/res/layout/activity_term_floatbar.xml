@@ -25,6 +25,8 @@
         android:id="@+id/view_flipper"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginStart="1dp"
+        android:layout_marginLeft="1dp"
         android:background="@android:color/black"/>
 
     <com.google.android.material.appbar.AppBarLayout
