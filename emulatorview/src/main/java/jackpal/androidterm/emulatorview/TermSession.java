@@ -581,6 +581,8 @@ public class TermSession {
         public void run() {
             try {
                 while (true) {
+                    if (isInterrupted())
+                        break;
                     int read = mTermIn.read(buffer);
                     if (read == -1) {
                         // EOF -- process exited
@@ -670,7 +672,7 @@ public class TermSession {
                 e.printStackTrace();
             }
         }
-    };
+    }
 
     private static class WriterHandler extends Handler {
         private final WeakReference<WriterThread> reference;
