@@ -276,7 +276,7 @@ public class Term extends AppCompatActivity
         }
     }
 
-    private void populateSessions() {
+    private synchronized void populateSessions() {
         if (mTermService == null) return;
         if (!path_collected) return;
 
