@@ -29,6 +29,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 import androidx.annotation.IntDef;
+import androidx.annotation.NonNull;
 import androidx.preference.PreferenceManager;
 import jackpal.androidterm.emulatorview.ColorScheme;
 
@@ -283,8 +284,9 @@ public class TermSettings {
         return mFailsafeShell;
     }
 
+    @NonNull
     public String getInitialCommand() {
-        return mInitialCommand;
+        return mInitialCommand != null ? mInitialCommand : "";
     }
 
     public String getTermType() {

@@ -191,7 +191,12 @@ public class Term extends AppCompatActivity
     protected static TermSession createTermSession(
             Context context,
             TermSettings settings, PathSettings path_settings,
-            String initialCommand) throws IOException {
+            String extraCommand) throws IOException {
+
+        String initialCommand = settings.getInitialCommand();
+        if (!TextUtils.isEmpty(extraCommand))
+            initialCommand += "\r" + extraCommand;
+
         GenericTermSession session = new ShellTermSession(settings, path_settings, initialCommand);
         // XXX We should really be able to fetch this from within TermSession
         session.setProcessExitMessage(context.getString(R.string.process_exit_message));
@@ -346,8 +351,7 @@ public class Term extends AppCompatActivity
     }
 
     private TermSession createTermSession() throws IOException {
-        TermSettings settings = mSettings;
-        return createTermSession(this, settings, path_settings, settings.getInitialCommand());
+        return createTermSession(this, mSettings, path_settings, null);
     }
 
     private TermView createEmulatorView(TermSession session) {

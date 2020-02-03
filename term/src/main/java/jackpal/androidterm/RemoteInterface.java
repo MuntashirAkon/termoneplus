@@ -92,17 +92,8 @@ public class RemoteInterface extends RemoteActionActivity {
     protected String openNewWindow(String iInitialCommand) {
         TermService service = getTermService();
 
-        String initialCommand = mSettings.getInitialCommand();
-        if (iInitialCommand != null) {
-            if (initialCommand != null) {
-                initialCommand += "\r" + iInitialCommand;
-            } else {
-                initialCommand = iInitialCommand;
-            }
-        }
-
         try {
-            TermSession session = TermActivity.createTermSession(this, mSettings, path_settings, initialCommand);
+            TermSession session = TermActivity.createTermSession(this, mSettings, path_settings, iInitialCommand);
 
             service.addSession(session);
 
