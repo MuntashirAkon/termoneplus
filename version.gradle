@@ -1,6 +1,6 @@
 wrapper {
-    gradleVersion = '6.0.1'
-    distributionSha256Sum = 'd364b7098b9f2e58579a3603dc0a12a1991353ac58ed339316e6762b21efba44'
+    gradleVersion = '6.1.1'
+    distributionSha256Sum = '9d94e6e4a28ad328072ef6e56bce79a810494ae756751fdcedffdeaf27c093b1'
 }
 /* Notes for distributionSha256Sum
    Android Studio 3.5 explicitly require checksum to be removed, see
