@@ -97,6 +97,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <string name="summary_orientation_preference">Choisir le comportement de rotation d\'écran.</string>
     <string name="dialog_title_orientation_preference">Comportement de rotation d\'écran</string>
 
+    <string name="title_sizecalc_preference">Calcul de la taille</string>
+    <string name="dialog_title_sizecalc_preference">Méthode de calcul de la taille</string>
+
     <string name="title_cursorstyle_preference">Style du curseur</string>
     <string name="summary_cursorstyle_preference">Choisir le style du curseur</string>
     <string name="dialog_title_cursorstyle_preference">Style du curseur</string>

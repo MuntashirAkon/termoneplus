@@ -15,7 +15,7 @@
  * limitations under the License.
  -->
 <!--
-Copyright (c) 2017, Jean-Marc
+Copyright (c) 2017-2019, Jean-Marc
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -59,10 +59,21 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <item>Masquer la barre d\'actions (touche Haut de l\'écran ou touche Menu de l\'appareil pour afficher)</item>
     </string-array>
 
+    <string-array name="entries_thememode_preference">
+        <item>Sombre</item>
+        <item>Clair</item>
+        <item>Système</item>
+    </string-array>
+
     <string-array name="entries_orientation_preference">
         <item>Automatique</item>
         <item>Paysage</item>
         <item>Portrait</item>
+    </string-array>
+
+    <string-array name="entries_sizecalc_preference">
+        <item>Après changement de taille</item>
+        <item>Pendant la mesure de la taille (ancien)</item>
     </string-array>
 
     <string-array name="entries_cursorblink_preference">
