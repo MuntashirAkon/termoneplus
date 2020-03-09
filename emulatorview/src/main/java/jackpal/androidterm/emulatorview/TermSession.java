@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2007 The Android Open Source Project
- * Copyright (C) 2018-2019 Roumen Petrov.  All rights reserved.
+ * Copyright (C) 2018-2020 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -233,7 +233,7 @@ public class TermSession {
     private void notifyNewOutput() {
         Handler writerHandler = mWriterHandler;
         if (writerHandler == null) {
-           /* Writer thread isn't started -- will pick up data once it does */
+            /* Writer thread isn't started -- will pick up data once it does */
             return;
         }
         writerHandler.sendEmptyMessage(NEW_OUTPUT);
@@ -645,7 +645,7 @@ public class TermSession {
         public void run() {
             Looper.prepare();
 
-            mWriterHandler = new WriterHandler(this);
+            mWriterHandler = new WriterHandler(Looper.myLooper(), this);
 
             // Drain anything in the queue from before we started
             writeToOutput();
@@ -677,7 +677,8 @@ public class TermSession {
     private static class WriterHandler extends Handler {
         private final WeakReference<WriterThread> reference;
 
-        WriterHandler(WriterThread thread) {
+        WriterHandler(Looper looper, WriterThread thread) {
+            super(looper);
             reference = new WeakReference<>(thread);
         }
 
@@ -689,7 +690,7 @@ public class TermSession {
             if (msg.what == NEW_OUTPUT) {
                 thread.writeToOutput();
             } else if (msg.what == FINISH) {
-                Looper.myLooper().quit();
+                getLooper().quit();
             }
         }
     }
