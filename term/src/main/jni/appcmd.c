@@ -33,8 +33,8 @@ get_info(const char *info) {
     size_t len, res;
 
     if (snprintf(sockname, sizeof(sockname), SOCKET_PREFIX "%ld", (long) getuid())
-        >= sizeof(sockname))
-        return 0;
+    >= sizeof(sockname))
+    return 0;
 
     if (snprintf(msg, sizeof(msg), "get %s\n", info) >= sizeof(msg))
         return 0;
@@ -52,15 +52,17 @@ get_info(const char *info) {
         len = atomicio(read, sock, buf, sizeof(buf));
         read_errno = errno;
         if (len > 0) {
+            ret = 1;
             errno = 0;
             res = atomicio(vwrite, STDOUT_FILENO, buf, len);
-            if (res != len) goto done;
+            if (res != len) {
+                ret = 0;
+                goto done;
+            }
         }
         if (read_errno == EPIPE) break;
     }
     (void) fsync(STDOUT_FILENO);
-
-    ret = 1;
 
     done:
     close(sock);
