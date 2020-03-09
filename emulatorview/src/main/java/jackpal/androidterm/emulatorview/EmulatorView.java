@@ -549,17 +549,10 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
         setFocusable(true);
         setFocusableInTouchMode(true);
 
-        mTermSession = session;
-
         mKeyListener = new TermKeyListener(session);
         session.setKeyListener(mKeyListener);
 
-        // Do init now if it was deferred until a TermSession was attached
-        if (mDeferInit) {
-            mDeferInit = false;
-            mKnownSize = true;
-            initialize();
-        }
+        finish_initialization(session);
     }
 
     /**
@@ -968,6 +961,40 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
     @Override
     protected int computeVerticalScrollOffset() {
         return mEmulator.getScreen().getActiveRows() + mTopRow - mRows;
+    }
+
+    private synchronized boolean finish_initialization(TermSession session) {
+        // if session is not attached yet
+        if (session == null) {
+            // event onSizeChanged is triggered ...
+            mDeferInit = true;
+            return false;
+        }
+
+        // when session is just attached
+        if (mTermSession == null) {
+            mTermSession = session;
+            // if event onSizeChanged was triggered
+            if (mDeferInit) {
+                mDeferInit = false;
+                // finish initialization
+                mKnownSize = true;
+                initialize();
+            }
+            // else
+            //   event onSizeChanged is not triggered yet
+            return false;
+        }
+
+        // with attached session
+        if (!mKnownSize) {
+            // finish initialization
+            mKnownSize = true;
+            initialize();
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -1454,18 +1481,8 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
      */
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        if (mTermSession == null) {
-            // Not ready, defer until TermSession is attached
-            mDeferInit = true;
-            return;
-        }
-
-        if (!mKnownSize) {
-            mKnownSize = true;
-            initialize();
-        } else {
+        if (finish_initialization(mTermSession))
             updateSize(false);
-        }
     }
 
     private void updateSize(int w, int h) {
