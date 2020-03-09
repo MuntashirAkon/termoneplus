@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2007 The Android Open Source Project
- * Copyright (C) 2018-2019 Roumen Petrov.  All rights reserved.
+ * Copyright (C) 2018-2020 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -196,7 +196,7 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
         public void run() {
             if (mCursorBlink != 0) {
                 mCursorVisible = ! mCursorVisible;
-                mHandler.postDelayed(this, CURSOR_BLINK_PERIOD);
+                getHandler().postDelayed(this, CURSOR_BLINK_PERIOD);
             } else {
                 mCursorVisible = true;
             }
@@ -470,11 +470,6 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
     private String mImeBuffer = "";
 
     /**
-     * Our message handler class. Implements a periodic callback.
-     */
-    private final Handler mHandler = new Handler();
-
-    /**
      * Called by the TermSession when the contents of the view need updating
      */
     private final UpdateCallback mUpdateNotify = new UpdateCallback() {
@@ -586,7 +581,7 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
     public void onResume() {
         updateSize(false);
         if (mCursorBlink != 0) {
-            mHandler.postDelayed(mBlinkCursor, CURSOR_BLINK_PERIOD);
+            getHandler().postDelayed(mBlinkCursor, CURSOR_BLINK_PERIOD);
         }
         if (mKeyListener != null) {
             mKeyListener.onResume();
@@ -598,7 +593,7 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
      */
     public void onPause() {
         if (mCursorBlink != 0) {
-            mHandler.removeCallbacks(mBlinkCursor);
+            getHandler().removeCallbacks(mBlinkCursor);
         }
         if (mKeyListener != null) {
             mKeyListener.onPause();
