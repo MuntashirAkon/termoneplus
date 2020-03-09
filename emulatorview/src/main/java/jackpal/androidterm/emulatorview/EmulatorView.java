@@ -29,7 +29,6 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.URLSpan;
@@ -193,7 +192,7 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
      */
     private final static boolean sTrapAltAndMeta = Build.MODEL.contains("Transformer TF101");
 
-    private Runnable mBlinkCursor = new Runnable() {
+    private final Runnable mBlinkCursor = new Runnable() {
         public void run() {
             if (mCursorBlink != 0) {
                 mCursorVisible = ! mCursorVisible;
@@ -209,7 +208,7 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
     private GestureDetector mGestureDetector;
     private GestureDetector.OnGestureListener mExtGestureListener;
     private Scroller mScroller;
-    private Runnable mFlingRunner = new Runnable() {
+    private final Runnable mFlingRunner = new Runnable() {
         public void run() {
             if (mScroller.isFinished()) {
                 return;
@@ -237,7 +236,7 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
      *
      * A hash table of underlying URLs to implement clickable links.
      */
-    private Hashtable<Integer,URLSpan[]> mLinkLayer = new Hashtable<>();
+    private final Hashtable<Integer,URLSpan[]> mLinkLayer = new Hashtable<>();
 
     /**
      * Accept links that start with http[s]:
@@ -264,7 +263,7 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
         }
     }
 
-    private static MatchFilter sHttpMatchFilter = new HttpMatchFilter();
+    private static final MatchFilter sHttpMatchFilter = new HttpMatchFilter();
 
     /**
      * Convert any URLs in the current row into a URLSpan,
@@ -461,8 +460,9 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
                 post(this);
             }
         }
-    };
-    private MouseTrackingFlingRunner mMouseTrackingFlingRunner = new MouseTrackingFlingRunner();
+    }
+
+    private final MouseTrackingFlingRunner mMouseTrackingFlingRunner = new MouseTrackingFlingRunner();
 
     private float mScrollRemainder;
     private TermKeyListener mKeyListener;
@@ -477,7 +477,7 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
     /**
      * Called by the TermSession when the contents of the view need updating
      */
-    private UpdateCallback mUpdateNotify = new UpdateCallback() {
+    private final UpdateCallback mUpdateNotify = new UpdateCallback() {
         public void onUpdate() {
             if ( mIsSelectingText ) {
                 int rowShift = mEmulator.getScrollCounter();
@@ -1378,7 +1378,7 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
         }
 
         return super.onKeyPreIme(keyCode, event);
-    };
+    }
 
     private boolean handleControlKey(int keyCode, boolean down) {
         if (keyCode == mControlKeyCode) {
