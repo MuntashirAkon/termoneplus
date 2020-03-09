@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 Roumen Petrov.  All rights reserved.
+ * Copyright (C) 2019-2020 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,37 +30,38 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.regex.Pattern;
 
+import jackpal.androidterm.TermService;
 import jackpal.androidterm.compat.PathSettings;
 
 
-public class PathResolver implements UnixSocketServer.ConnectionHandler {
-    private static String socket_prefix = BuildConfig.APPLICATION_ID + "-app_paths-";
+public class CommandService implements UnixSocketServer.ConnectionHandler {
+    private static String socket_prefix = BuildConfig.APPLICATION_ID + "-app_info-";
 
+    private TermService service;
     private UnixSocketServer socket;
 
-    public PathResolver() {
-        new Thread(() -> {
-            try {
-                socket = new UnixSocketServer(socket_prefix + Process.myUid(), this);
-                socket.start();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }).start();
+    public CommandService(TermService service) {
+        this.service = service;
+        try {
+            socket = new UnixSocketServer(socket_prefix + Process.myUid(), this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void start() {
+        if (socket == null) return;
+        socket.start();
     }
 
     public void stop() {
-        UnixSocketServer socket;
-        synchronized (this) {
-            socket = this.socket;
-            this.socket = null;
-        }
-        if (socket != null)
-            socket.stop();
+        if (socket == null) return;
+        socket.stop();
+        socket = null;
     }
 
     @Override
-    public synchronized void handle(InputStream basein, OutputStream baseout) throws IOException {
+    public void handle(InputStream basein, OutputStream baseout) throws IOException {
         BufferedReader in = new BufferedReader(new InputStreamReader(basein));
 
         // Note only one command per connection!

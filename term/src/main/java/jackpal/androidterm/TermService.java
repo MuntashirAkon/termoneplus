@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2007 The Android Open Source Project
- * Copyright (C) 2018-2019 Roumen Petrov.  All rights reserved.
+ * Copyright (C) 2018-2020 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,7 +42,7 @@ import android.util.Log;
 import com.termoneplus.Application;
 import com.termoneplus.R;
 import com.termoneplus.TermActivity;
-import com.termoneplus.services.PathResolver;
+import com.termoneplus.services.CommandService;
 
 import java.util.UUID;
 
@@ -59,7 +59,7 @@ public class TermService extends Service {
 
     private final IBinder mTSBinder = new TSBinder();
     private SessionList mTermSessions = new SessionList();
-    private PathResolver path_resolver;
+    private CommandService command_service;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -87,14 +87,15 @@ public class TermService extends Service {
 
         startForeground(RUNNING_NOTIFICATION, notification);
 
-        path_resolver = new PathResolver();
+        command_service = new CommandService(this);
+        command_service.start();
 
         Log.d(Application.APP_TAG, "TermService started");
     }
 
     @Override
     public void onDestroy() {
-        path_resolver.stop();
+        command_service.stop();
 
         for (TermSession session : mTermSessions) {
             /* Don't automatically remove from list of sessions -- we clear the
