@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 Roumen Petrov.  All rights reserved.
+ * Copyright (C) 2019-2020 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,11 +18,17 @@
 #include <sys/socket.h>
 #include <sys/un.h>
 #include <memory.h>
+#include <stdio.h>
 #include <string.h>
 #include <unistd.h>
 
 #include "appinfo.h"
 
+
+int/*bool*/
+get_socketname(char *buf, size_t len) {
+    return snprintf(buf, len, "%s-app_paths-%ld", PACKAGE_NAME, (long) getuid()) < len;
+}
 
 int
 open_socket(const char *name) {

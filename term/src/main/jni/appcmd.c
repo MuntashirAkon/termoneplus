@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 Roumen Petrov.  All rights reserved.
+ * Copyright (C) 2019-2020 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,9 +32,8 @@ get_info(const char *info) {
     int sock;
     size_t len, res;
 
-    if (snprintf(sockname, sizeof(sockname), SOCKET_PREFIX "%ld", (long) getuid())
-    >= sizeof(sockname))
-    return 0;
+    if (!get_socketname(sockname, sizeof(sockname)))
+        return 0;
 
     if (snprintf(msg, sizeof(msg), "get %s\n", info) >= sizeof(msg))
         return 0;
