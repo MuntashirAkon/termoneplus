@@ -24,8 +24,8 @@
 
 
 static int/*bool*/
-get_info(const char *info) {
-    int ret = 0;
+get_info(int argc, char *argv[]) {
+    int ret = 0, k = 0;
     char sockname[PATH_MAX + 1];
     char msg[1024];
     char buf[4096];
@@ -35,7 +35,7 @@ get_info(const char *info) {
     if (!get_socketname(sockname, sizeof(sockname)))
         return 0;
 
-    if (snprintf(msg, sizeof(msg), "get %s\n", info) >= sizeof(msg))
+    if (snprintf(msg, sizeof(msg), "get %s\n", argv[k]) >= sizeof(msg))
         return 0;
 
     sock = open_socket(sockname);
@@ -44,6 +44,21 @@ get_info(const char *info) {
     len = strlen(msg);
     res = atomicio(vwrite, sock, (void *) msg, len);
     if (res != len) goto done;
+
+    for (k++; k < argc; k++) {
+        if (snprintf(msg, sizeof(msg), "%s\n", argv[k]) >= sizeof(msg))
+            goto done;
+        len = strlen(msg);
+        res = atomicio(vwrite, sock, (void *) msg, len);
+        if (res != len) goto done;
+    }
+    if (k > 1) {
+        if (snprintf(msg, sizeof(msg), "%s\n", "<eol>") >= sizeof(msg))
+            goto done;
+        len = strlen(msg);
+        res = atomicio(vwrite, sock, (void *) msg, len);
+        if (res != len) goto done;
+    }
 
     while (1) {
         int read_errno;
@@ -75,9 +90,9 @@ int
 main(int argc, char *argv[]) {
     int ret;
 
-    if (argc != 2) exit(EX_USAGE);
+    if (argc < 2) exit(EX_USAGE);
 
-    ret = get_info(argv[1]);
+    ret = get_info(argc - 1, argv + 1);
 
     return ret ? 0 : EX_SOFTWARE;
 }
