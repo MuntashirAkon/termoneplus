@@ -27,7 +27,8 @@
 
 int/*bool*/
 get_socketname(char *buf, size_t len) {
-    return snprintf(buf, len, "%s-app_info-%ld", PACKAGE_NAME, (long) getuid()) < len;
+    int ret = snprintf(buf, len, "%s-app_info-%ld", PACKAGE_NAME, (long) getuid());
+    return 0 < ret && ret < len;
 }
 
 int
