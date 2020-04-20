@@ -82,7 +82,7 @@ public class TermSession {
     private ByteBuffer mWriteByteBuffer;
     private CharsetEncoder mUTF8Encoder;
     private FinishCallback mFinishCallback;
-    private volatile boolean is_running = false;
+    private boolean mIsRunning = false;
     private UpdateCallback mTitleChangedListener;
 
     boolean mDefaultUTF8Mode; /* shared with emulator instance */
@@ -131,7 +131,7 @@ public class TermSession {
         mEmulator = new TerminalEmulator(this, mTranscriptScreen, columns, rows, mColorScheme);
         mEmulator.setKeyListener(mKeyListener);
 
-        is_running = true;
+        mIsRunning = true;
 
         mReaderThread.start();
         mWriterThread.start();
@@ -272,7 +272,7 @@ public class TermSession {
      * @return Whether the terminal emulation is currently running.
      */
     public boolean isRunning() {
-        return is_running;
+        return mIsRunning;
     }
 
     TranscriptScreen getTranscriptScreen() {
@@ -377,7 +377,7 @@ public class TermSession {
     private void readFromProcess() {
         int bytesAvailable = mByteQueue.getBytesAvailable();
         int bytesToRead = Math.min(bytesAvailable, mReceiveBuffer.length);
-        int bytesRead = 0;
+        int bytesRead;
         try {
             bytesRead = mByteQueue.read(mReceiveBuffer, 0, bytesToRead);
         } catch (InterruptedException e) {
@@ -505,7 +505,7 @@ public class TermSession {
      * <code>OutputStream</code>.
      */
     public void finish() {
-        is_running = false;
+        mIsRunning = false;
         finalizeEmulator();
     }
 
@@ -525,7 +525,7 @@ public class TermSession {
         try {
             mTermIn.close();
             mTermOut.close();
-        } catch (IOException e) {
+        } catch (IOException ignored) {
             // We don't care if this fails
         } catch (NullPointerException ignored) {
         }
@@ -617,7 +617,7 @@ public class TermSession {
         public void handleMessage(Message msg) {
             TermSession session = reference.get();
             if (session == null) return;
-            if (!session.is_running) return;
+            if (!session.mIsRunning) return;
 
             if (msg.what == NEW_INPUT) {
                 session.readFromProcess();
