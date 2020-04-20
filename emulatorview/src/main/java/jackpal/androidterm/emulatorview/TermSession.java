@@ -82,7 +82,6 @@ public class TermSession {
     private ByteBuffer mWriteByteBuffer;
     private CharsetEncoder mUTF8Encoder;
     private FinishCallback mFinishCallback;
-    private volatile boolean is_initialized = false;
     private volatile boolean is_running = false;
     private UpdateCallback mTitleChangedListener;
 
@@ -127,21 +126,15 @@ public class TermSession {
      * @param rows    The number of rows in the terminal window.
      */
     public void initializeEmulator(int columns, int rows) {
-        synchronized (this) {
-            if (is_initialized) return;
+        mTranscriptScreen = new TranscriptScreen(columns, TRANSCRIPT_ROWS, rows, mColorScheme);
 
-            mTranscriptScreen = new TranscriptScreen(columns, TRANSCRIPT_ROWS, rows, mColorScheme);
+        mEmulator = new TerminalEmulator(this, mTranscriptScreen, columns, rows, mColorScheme);
+        mEmulator.setKeyListener(mKeyListener);
 
-            mEmulator = new TerminalEmulator(this, mTranscriptScreen, columns, rows, mColorScheme);
-            mEmulator.setKeyListener(mKeyListener);
+        is_running = true;
 
-            is_running = true;
-
-            mReaderThread.start();
-            mWriterThread.start();
-
-            is_initialized = true;
-        }
+        mReaderThread.start();
+        mWriterThread.start();
     }
 
     /**
@@ -348,7 +341,7 @@ public class TermSession {
 
     /**
      * Change the terminal's window size.  Will call {@link #initializeEmulator}
-     * if the emulator is not yet running.
+     * if the emulator is not yet initialized.
      * <p>
      * You should override this method if your application needs to be notified
      * when the screen size changes (for example, if you need to issue
@@ -360,10 +353,11 @@ public class TermSession {
      * @param rows    The number of rows in the terminal window.
      */
     public void updateSize(int columns, int rows) {
-        if (mEmulator == null) {
-            initializeEmulator(columns, rows);
-        } else {
-            mEmulator.updateSize(columns, rows);
+        synchronized (this) {
+            if (mEmulator == null)
+                initializeEmulator(columns, rows);
+            else
+                mEmulator.updateSize(columns, rows);
         }
     }
 
@@ -512,12 +506,7 @@ public class TermSession {
      */
     public void finish() {
         is_running = false;
-        synchronized (this) {
-            if (!is_initialized) return;
-
-            finalizeEmulator();
-            is_initialized = false;
-        }
+        finalizeEmulator();
     }
 
     private void finalizeEmulator() {
