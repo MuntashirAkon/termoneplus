@@ -1485,7 +1485,7 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
             updateSize(false);
     }
 
-    private void updateSize(int w, int h) {
+    private void updateTermSize(int w, int h) {
         mColumns = Math.max(1, (int) (((float) w) / mCharacterWidth));
         mVisibleColumns = Math.max(1, (int) (((float) mVisibleWidth) / mCharacterWidth));
 
@@ -1513,15 +1513,25 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
     public void updateSize(boolean force) {
         //Need to clear saved links on each display refresh
         mLinkLayer.clear();
-        if (mKnownSize) {
-            int w = getWidth();
-            int h = getHeight();
-            // Log.w("Term", "(" + w + ", " + h + ")");
-            if (force || w != mVisibleWidth || h != mVisibleHeight) {
-                mVisibleWidth = w;
-                mVisibleHeight = h;
-                updateSize(mVisibleWidth, mVisibleHeight);
-            }
+
+        // Initialization is not started if mKnownSize is not set.
+        if (!mKnownSize) return;
+
+        // Initialization is not finished if mEmulator is not set.
+        // If we are in initialization then force is set:
+        //   mKnownSize=true
+        //   => initialize()
+        //     => updateText()
+        //       => updateSize(true) /* force */
+        //     mEmulator = session.getEmulator();
+        if (mEmulator == null && !force) return;
+
+        int w = getWidth();
+        int h = getHeight();
+        if (force || w != mVisibleWidth || h != mVisibleHeight) {
+            mVisibleWidth = w;
+            mVisibleHeight = h;
+            updateTermSize(mVisibleWidth, mVisibleHeight);
         }
     }
 
