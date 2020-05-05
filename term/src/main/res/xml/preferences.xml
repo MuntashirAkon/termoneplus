@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Copyright (C) 2008 The Android Open Source Project
-     Copyright (C) 2018-2019 Roumen Petrov.  All rights reserved.
+     Copyright (C) 2018-2020 Roumen Petrov.  All rights reserved.
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -147,6 +147,12 @@
             android:key="shell"
             android:summary="@string/summary_shell_preference"
             android:title="@string/title_shell_preference"/>
+
+        <CheckBoxPreference
+            android:defaultValue="@bool/pref_source_sys_shrc_default"
+            android:key="source_sys_shrc"
+            android:summary="@string/summary_source_sys_shrc_preference"
+            android:title="@string/title_source_sys_shrc_preference"/>
 
         <EditTextPreference
             android:defaultValue="@string/pref_initialcommand_default"

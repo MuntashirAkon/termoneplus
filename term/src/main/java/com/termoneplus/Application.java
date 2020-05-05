@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2019 Roumen Petrov.  All rights reserved.
+ * Copyright (C) 2018-2020 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -47,6 +47,8 @@ public class Application extends android.app.Application {
     /* arguments for use by external applications */
     public static final String ARGUMENT_SHELL_COMMAND = "com.termoneplus.Command";
     public static final String ARGUMENT_WINDOW_HANDLE = "com.termoneplus.WindowHandle";
+
+    public static Settings settings;
 
     public static File xbindir;
 
@@ -127,5 +129,7 @@ public class Application extends android.app.Application {
         }
 
         if (updated) editor.apply();
+
+        settings = new Settings(getResources(), prefs);
     }
 }

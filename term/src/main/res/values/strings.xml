@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
  * Copyright (C) 2008 The Android Open Source Project
- * Copyright (C) 2018-2019 Roumen Petrov.  All rights reserved.
+ * Copyright (C) 2018-2020 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -133,6 +133,12 @@
     <string name="title_shell_preference">Command line</string>
     <string name="summary_shell_preference">Specify the shell command line.</string>
     <string name="dialog_title_shell_preference">Shell</string>
+
+    <string name="title_source_sys_shrc_preference">Source system mkshrc</string>
+    <string name="summary_source_sys_shrc_preference">
+        In application specific shell statup script source commands from system shell startup file (/system/etc/mkshrc).
+        Depends from shell command line.
+    </string>
 
     <string name="title_initialcommand_preference">Initial command</string>
     <string name="summary_initialcommand_preference">Sent to the shell when it starts.</string>

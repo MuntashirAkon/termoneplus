@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Roumen Petrov.  All rights reserved.
+ * Copyright (C) 2018-2020 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,10 @@
  */
 
 package com.termoneplus;
+
+import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.text.TextUtils;
 
 import jackpal.androidterm.emulatorview.ColorScheme;
 
@@ -36,4 +40,44 @@ public class Settings {
             new ColorScheme(0xFFAAAAAA, 0xFF000000) /*linux console*/,
             new ColorScheme(0xFFDCDCCC, 0xFF2C2C2C) /*dark pastels*/
     };
+
+    private static final String SOURCE_SYS_SHRC_KEY = "source_sys_shrc";
+
+    private boolean source_sys_shrc;
+
+
+    public Settings(Resources r, SharedPreferences preferences) {
+        source_sys_shrc = parseBoolean(preferences, SOURCE_SYS_SHRC_KEY,
+                r.getBoolean(R.bool.pref_source_sys_shrc_default));
+    }
+
+    public boolean parsePreference(SharedPreferences preferences, String key) {
+        if (TextUtils.isEmpty(key)) return true;
+
+        //noinspection SwitchStatementWithTooFewBranches
+        switch (key) {
+            case SOURCE_SYS_SHRC_KEY:
+                boolean value = parseBoolean(preferences, key, source_sys_shrc);
+                if (value != source_sys_shrc) {
+                    source_sys_shrc = value;
+                    Installer.installAppScriptFile();
+                }
+                break;
+            default:
+                return false;
+        }
+        return true;
+    }
+
+    public boolean sourceSystemShellStartupFile() {
+        return source_sys_shrc;
+    }
+
+    private boolean parseBoolean(SharedPreferences preferences, String key, boolean def) {
+        try {
+            return preferences.getBoolean(key, def);
+        } catch (Exception ignored) {
+        }
+        return def;
+    }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 Roumen Petrov.  All rights reserved.
+ * Copyright (C) 2019-2020 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -66,6 +66,7 @@ public class Installer {
 
         String sysmkshrc = "/system/etc/mkshrc";
         if (!Application.getScriptFilePath().equals(sysmkshrc) &&
+                Application.settings.sourceSystemShellStartupFile() &&
                 new File(sysmkshrc).exists())
             shell_script.add(". " + sysmkshrc);
 

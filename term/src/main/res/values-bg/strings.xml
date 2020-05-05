@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-Copyright (c) 2017-2019, Roumen Petrov <rpetrov@termoneplus.com>
+Copyright (c) 2017-2020, Roumen Petrov <rpetrov@termoneplus.com>
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -140,6 +140,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <string name="title_shell_preference">Команден ред</string>
     <string name="summary_shell_preference">Задаване на команден ред за обвивката</string>
     <string name="dialog_title_shell_preference">Обвивка</string>
+
+    <string name="title_source_sys_shrc_preference">Обработване на системния mkshrc</string>
+    <string name="summary_source_sys_shrc_preference">
+        В зареждащия скрипт на обвивката, присъщ на приложението, обработи командите от системния (/system/etc/mkshrc).
+        Зависи от командния ред на обвивката.
+    </string>
 
     <string name="title_initialcommand_preference">Начална команда</string>
     <string name="summary_initialcommand_preference">Изпращане към обвивката при пускане на терминала</string>
