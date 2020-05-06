@@ -104,12 +104,10 @@ public class TermSession {
         mByteQueue = new ByteQueue(4 * 1024);
         // Note if exitOnEOF is set at end of reader thread run is send EOF message
         // and then handler on EOF message calls onProcessExit().
-        mReaderThread = new ReaderThread(exitOnEOF);
-        mReaderThread.setName("TermSession input reader");
+        mReaderThread = new ReaderThread("TermSession input reader", exitOnEOF);
 
         mWriteQueue = new ByteQueue(4096);
-        mWriterThread = new WriterThread();
-        mWriterThread.setName("TermSession output writer");
+        mWriterThread = new WriterThread("TermSession output writer");
     }
 
     public void setKeyListener(TermKeyListener l) {
@@ -554,12 +552,13 @@ public class TermSession {
     }
 
 
-    private class ReaderThread extends Thread {
+    private class ReaderThread extends TraceThread {
         private byte[] buffer = new byte[4096];
         private boolean notify_eof;
         private Handler handler;
 
-        ReaderThread(boolean notify_eof) {
+        ReaderThread(String name, boolean notify_eof) {
+            super(name);;
             this.notify_eof = notify_eof;
             handler = new TermHandler(TermSession.this);
         }
@@ -625,8 +624,12 @@ public class TermSession {
         }
     }
 
-    private class WriterThread extends Thread {
+    private class WriterThread extends TraceThread {
         private byte[] buffer = new byte[4096];
+
+        private WriterThread(String name) {
+            super(name);
+        }
 
         @Override
         public void run() {
@@ -678,6 +681,22 @@ public class TermSession {
                 thread.writeToOutput();
             } else if (msg.what == FINISH) {
                 getLooper().quit();
+            }
+        }
+    }
+
+    private class TraceThread extends Thread {
+        private TraceThread(String name) {
+            super(name);
+        }
+
+        @Override
+        public synchronized void start() {
+            String msg = "thread: " + getName() + ", state: " + getState() + ", isAlive: " + isAlive();
+            try {
+                super.start();
+            } catch (IllegalThreadStateException e) {
+                throw new IllegalThreadStateException(msg);
             }
         }
     }
