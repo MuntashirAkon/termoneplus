@@ -375,7 +375,8 @@ class TerminalEmulator {
 
         mUTF8ByteBuffer = ByteBuffer.allocate(4);
         mInputCharBuffer = CharBuffer.allocate(2);
-        mUTF8Decoder = Charset.forName("UTF-8").newDecoder();
+        // on Android default charset is always UTF-8
+        mUTF8Decoder = Charset.defaultCharset().newDecoder();
         mUTF8Decoder.onMalformedInput(CodingErrorAction.REPLACE);
         mUTF8Decoder.onUnmappableCharacter(CodingErrorAction.REPLACE);
 
@@ -1651,11 +1652,7 @@ class TerminalEmulator {
         if (start == end) {
             return "";
         }
-        try {
-            return new String(mOSCArg, start, end-start, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            return new String(mOSCArg, start, end-start);
-        }
+        return new String(mOSCArg, start, end-start, mUTF8Decoder.charset());
     }
 
     private int nextOSCInt(int delimiter) {

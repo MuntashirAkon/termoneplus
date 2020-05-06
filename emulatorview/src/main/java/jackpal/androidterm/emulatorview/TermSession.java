@@ -95,7 +95,8 @@ public class TermSession {
     public TermSession(boolean exitOnEOF) {
         mWriteCharBuffer = CharBuffer.allocate(2);
         mWriteByteBuffer = ByteBuffer.allocate(4);
-        mUTF8Encoder = Charset.forName("UTF-8").newEncoder();
+        // on Android default charset is always UTF-8
+        mUTF8Encoder = Charset.defaultCharset().newEncoder();
         mUTF8Encoder.onMalformedInput(CodingErrorAction.REPLACE);
         mUTF8Encoder.onUnmappableCharacter(CodingErrorAction.REPLACE);
 
@@ -181,11 +182,8 @@ public class TermSession {
      * @param data The String to write to the terminal.
      */
     public void write(String data) {
-        try {
-            byte[] bytes = data.getBytes("UTF-8");
-            write(bytes, 0, bytes.length);
-        } catch (UnsupportedEncodingException ignored) {
-        }
+        byte[] bytes = data.getBytes(mUTF8Encoder.charset());
+        write(bytes, 0, bytes.length);
     }
 
     /**
