@@ -363,6 +363,11 @@ class TerminalEmulator {
      * @param scheme the default color scheme of this emulator
      */
     public TerminalEmulator(TermSession session, TranscriptScreen screen, int columns, int rows, ColorScheme scheme) {
+        // on Android default charset is always UTF-8
+        mUTF8Decoder = Charset.defaultCharset().newDecoder();
+        mUTF8Decoder.onMalformedInput(CodingErrorAction.REPLACE);
+        mUTF8Decoder.onUnmappableCharacter(CodingErrorAction.REPLACE);
+
         mSession = session;
         mMainBuffer = screen;
         mScreen = mMainBuffer;
@@ -375,10 +380,6 @@ class TerminalEmulator {
 
         mUTF8ByteBuffer = ByteBuffer.allocate(4);
         mInputCharBuffer = CharBuffer.allocate(2);
-        // on Android default charset is always UTF-8
-        mUTF8Decoder = Charset.defaultCharset().newDecoder();
-        mUTF8Decoder.onMalformedInput(CodingErrorAction.REPLACE);
-        mUTF8Decoder.onUnmappableCharacter(CodingErrorAction.REPLACE);
 
         reset();
     }

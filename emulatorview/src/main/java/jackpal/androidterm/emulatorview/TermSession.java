@@ -93,12 +93,13 @@ public class TermSession {
     }
 
     public TermSession(boolean exitOnEOF) {
-        mWriteCharBuffer = CharBuffer.allocate(2);
-        mWriteByteBuffer = ByteBuffer.allocate(4);
         // on Android default charset is always UTF-8
         mUTF8Encoder = Charset.defaultCharset().newEncoder();
         mUTF8Encoder.onMalformedInput(CodingErrorAction.REPLACE);
         mUTF8Encoder.onUnmappableCharacter(CodingErrorAction.REPLACE);
+
+        mWriteCharBuffer = CharBuffer.allocate(2);
+        mWriteByteBuffer = ByteBuffer.allocate(4);
 
         mReceiveBuffer = new byte[4 * 1024];
         mByteQueue = new ByteQueue(4 * 1024);
