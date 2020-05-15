@@ -1,0 +1,14 @@
+Terminal Emulator for Android
+=============================
+
+https://termoneplus.com/
+
+*"TermOne Plus"* is an Android application that turns your Android device into an computer terminal. It is successor of abandoned Jack Palevich's terminal emulator.
+
+Terminal is useful for accessing the command line shell (built into every Android phone) or use custom one (installed separately).
+This allows you to run various command line utilities.
+It emulates a reasonably large subset of Digital Equipment Corporation VT-100 terminal codes.
+Supported terminal types include *vt100*, *screen* (default), *linux* and *xterm*.
+As result console programs like *ssh* (PKIX-SSH), *vi* (unix visual editor), *emacs*, *mc* (Midnight Commander file manager), *nano* (Nano's ANOther editor), and other work smoothly.
+
+Code of "TermOne Plus" is hosted in https://gitlab.com/termapps/termoneplus[public repository].
