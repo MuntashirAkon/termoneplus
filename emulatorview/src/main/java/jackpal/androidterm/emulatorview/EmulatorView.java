@@ -940,7 +940,7 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
      */
     @Override
     protected int computeVerticalScrollRange() {
-        return mEmulator.getScreen().getActiveRows();
+        return getActiveRows();
     }
 
     /**
@@ -960,7 +960,7 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
      */
     @Override
     protected int computeVerticalScrollOffset() {
-        return mEmulator.getScreen().getActiveRows() + mTopRow - mRows;
+        return getActiveRows() + mTopRow - mRows;
     }
 
     private synchronized boolean finish_initialization(TermSession session) {
@@ -1057,6 +1057,14 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
       return mVisibleColumns;
     }
 
+    private int getActiveRows() {
+        return mEmulator.getScreen().getActiveRows();
+    }
+
+    private int getActiveTranscriptRows() {
+        return mEmulator.getScreen().getActiveTranscriptRows();
+    }
+
 
     /**
      * Page the terminal view (scroll it up or down by <code>delta</code>
@@ -1066,10 +1074,12 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
      *        negative means scroll up.
      */
     public void page(int delta) {
-        mTopRow =
-                Math.min(0, Math.max(-(mEmulator.getScreen()
-                        .getActiveTranscriptRows()), mTopRow + mRows * delta));
+        updateTopRow(delta * mRows);
         invalidate();
+    }
+
+    private void updateTopRow(int deltaRows) {
+        mTopRow = Math.min(0, Math.max(-getActiveTranscriptRows(), mTopRow + deltaRows));
     }
 
     /**
@@ -1079,10 +1089,12 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
      *        the right.
      */
     public void pageHorizontal(int deltaColumns) {
-        mLeftColumn =
-                Math.max(0, Math.min(mLeftColumn + deltaColumns, mColumns
-                        - mVisibleColumns));
+        updateLeftColumn(deltaColumns);
         invalidate();
+    }
+
+    private void updateLeftColumn(int deltaColumns) {
+        mLeftColumn = Math.max(0, Math.min(mLeftColumn + deltaColumns, mColumns - mVisibleColumns));
     }
 
     /**
@@ -1179,9 +1191,7 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
             return true;
         }
 
-        mTopRow =
-            Math.min(0, Math.max(-(mEmulator.getScreen()
-                    .getActiveTranscriptRows()), mTopRow + deltaRows));
+        updateTopRow(deltaRows);
         invalidate();
 
         return true;
@@ -1199,7 +1209,7 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
 
     public boolean onJumpTapUp(MotionEvent e1, MotionEvent e2) {
         // Scroll to top
-        mTopRow = -mEmulator.getScreen().getActiveTranscriptRows();
+        mTopRow = -getActiveTranscriptRows();
         invalidate();
         return true;
     }
@@ -1218,7 +1228,7 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
             mScroller.fling(0, mTopRow,
                     -(int) (velocityX * SCALE), -(int) (velocityY * SCALE),
                     0, 0,
-                    -mEmulator.getScreen().getActiveTranscriptRows(), 0);
+                    -getActiveTranscriptRows(), 0);
             // onScroll(e1, e2, 0.1f * velocityX, -0.1f * velocityY);
             post(mFlingRunner);
         }
