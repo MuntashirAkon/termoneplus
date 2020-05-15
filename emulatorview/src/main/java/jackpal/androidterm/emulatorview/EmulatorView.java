@@ -1490,7 +1490,7 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
         mVisibleColumns = Math.max(1, (int) (((float) mVisibleWidth) / mCharacterWidth));
 
         mTopOfScreenMargin = mTextRenderer.getTopMargin();
-        mLeftPadding = (w -  mColumns * (int)mCharacterWidth) / 2;
+        mLeftPadding = (w -  mVisibleColumns * (int)mCharacterWidth) / 2;
 
         mRows = Math.max(1, (h - mTopOfScreenMargin) / mCharacterHeight);
         mVisibleRows = Math.max(1, (mVisibleHeight - mTopOfScreenMargin) / mCharacterHeight);
