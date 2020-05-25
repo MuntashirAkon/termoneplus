@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 Copyright (c) 2018, Andi Chandler
+Copyright (c) 2020, Anthony Harrington
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -44,10 +45,21 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <item>Hide action bar (touch top of screen or Menu key to show)</item>
     </string-array>
 
+    <string-array name="entries_thememode_preference">
+        <item>Dark</item>
+        <item>Light</item>
+        <item>System</item>
+    </string-array>
+
     <string-array name="entries_orientation_preference">
         <item>Automatic</item>
         <item>Landscape</item>
         <item>Portrait</item>
+    </string-array>
+
+    <string-array name="entries_sizecalc_preference">
+        <item>After size change</item>
+        <item>During size measure(old)</item>
     </string-array>
 
     <string-array name="entries_cursorblink_preference">
@@ -93,8 +105,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <item>Amber text on black</item>
         <item>Red text on black</item>
         <item>Holo blue text on black</item>
-        <item>Solarised Light</item>
-        <item>Solarised Dark</item>
+        <item>\'Solarized Light\'</item>
+        <item>\'Solarized Dark\'</item>
         <item>Linux Console</item>
         <item>Dark Pastels</item>
     </string-array>
