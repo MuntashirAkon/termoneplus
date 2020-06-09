@@ -24,7 +24,6 @@ import android.os.Message;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.lang.ref.WeakReference;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
@@ -553,13 +552,90 @@ public class TermSession {
     }
 
 
+    private static class TermHandler extends Handler {
+        private final WeakReference<TermSession> reference;
+
+        TermHandler(TermSession session) {
+            reference = new WeakReference<>(session);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            TermSession session = reference.get();
+            if (session == null) return;
+            if (!session.mIsRunning) return;
+
+            if (msg.what == NEW_INPUT) {
+                session.readFromProcess();
+            } else if (msg.what == EOF) {
+                new Handler(Looper.getMainLooper()).post(session::onProcessExit);
+            }
+        }
+    }
+
+    private static class WriterHandler extends Handler {
+        private final WeakReference<WriterThread> reference;
+
+        WriterHandler(Looper looper, WriterThread thread) {
+            super(looper);
+            reference = new WeakReference<>(thread);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            WriterThread thread = reference.get();
+            if (thread == null) return;
+
+            if (msg.what == NEW_OUTPUT) {
+                thread.writeToOutput();
+            } else if (msg.what == FINISH) {
+                getLooper().quit();
+            }
+        }
+    }
+
+    private static class TraceThread extends Thread {
+        private TraceThread(String name) {
+            super(name);
+        }
+
+        @Override
+        public synchronized void start() {
+            Thread.State state = getState();
+            boolean is_alive = isAlive();
+            String msg = "thread: " + getName() + ", state: " + state + ", isAlive: " + is_alive;
+            try {
+                super.start();
+            } catch (IllegalThreadStateException e) {
+                if (state == State.NEW)
+                    throw new ExceptionStateNew(msg);
+                else if (is_alive)
+                    throw new ExceptionisAlive(msg);
+                else
+                    throw new IllegalThreadStateException(msg);
+            }
+        }
+
+        private class ExceptionStateNew extends IllegalThreadStateException {
+            private ExceptionStateNew(String msg) {
+                super(msg);
+            }
+        }
+
+        private class ExceptionisAlive extends IllegalThreadStateException {
+            private ExceptionisAlive(String msg) {
+                super(msg);
+            }
+        }
+    }
+
     private class ReaderThread extends TraceThread {
         private byte[] buffer = new byte[4096];
         private boolean notify_eof;
         private Handler handler;
 
         ReaderThread(String name, boolean notify_eof) {
-            super(name);;
+            super(name);
             this.notify_eof = notify_eof;
             handler = new TermHandler(TermSession.this);
         }
@@ -604,27 +680,6 @@ public class TermSession {
         }
     }
 
-    private static class TermHandler extends Handler {
-        private final WeakReference<TermSession> reference;
-
-        TermHandler(TermSession session) {
-            reference = new WeakReference<>(session);
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            TermSession session = reference.get();
-            if (session == null) return;
-            if (!session.mIsRunning) return;
-
-            if (msg.what == NEW_INPUT) {
-                session.readFromProcess();
-            } else if (msg.what == EOF) {
-                new Handler(Looper.getMainLooper()).post(session::onProcessExit);
-            }
-        }
-    }
-
     private class WriterThread extends TraceThread {
         private byte[] buffer = new byte[4096];
 
@@ -661,43 +716,6 @@ public class TermSession {
                 e.printStackTrace();
             } catch (InterruptedException e) {
                 e.printStackTrace();
-            }
-        }
-    }
-
-    private static class WriterHandler extends Handler {
-        private final WeakReference<WriterThread> reference;
-
-        WriterHandler(Looper looper, WriterThread thread) {
-            super(looper);
-            reference = new WeakReference<>(thread);
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            WriterThread thread = reference.get();
-            if (thread == null) return;
-
-            if (msg.what == NEW_OUTPUT) {
-                thread.writeToOutput();
-            } else if (msg.what == FINISH) {
-                getLooper().quit();
-            }
-        }
-    }
-
-    private class TraceThread extends Thread {
-        private TraceThread(String name) {
-            super(name);
-        }
-
-        @Override
-        public synchronized void start() {
-            String msg = "thread: " + getName() + ", state: " + getState() + ", isAlive: " + isAlive();
-            try {
-                super.start();
-            } catch (IllegalThreadStateException e) {
-                throw new IllegalThreadStateException(msg);
             }
         }
     }
