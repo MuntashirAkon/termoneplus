@@ -45,6 +45,7 @@
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/application_terminal"
+        android:resizeableActivity="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/AppTheme.NoActionBar"
         tools:ignore="GoogleAppIndexingWarning">
@@ -172,10 +173,14 @@
             android:name="com.sec.android.support.multiwindow"
             android:value="true">
         </meta-data>
+        <!-- Note unused if resizeableActivity is true (default).
+        Render on full screen up to screen aspect ratio of "value"
+        Use a letterbox on screens larger than "value".
+        Recommend a ratio of 2.4 (12:5 > 21:9). -->
         <meta-data
             android:name="android.max_aspect"
-            android:value="2.1"/>
-        <!-- Note (Samsung DEX Version >= 3.0. DeX Dual Mode support):
+            android:value="2.4"/>
+        <!-- NOTE: Samsung DEX Version >= 3.0. DeX Dual Mode support.
         Declares keepalive in the android manifest file, to avoid the process being killed
         when switching between mobile and Samsung DeX. In addition, set the android:configChanges
         to avoid restarting the app during the switching process.
