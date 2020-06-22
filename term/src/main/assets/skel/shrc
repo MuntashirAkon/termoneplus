@@ -1,0 +1,4 @@
+# Note build-in shell startup script sets unconditionally variable PS1
+
+#PS1='$ '
+#export PS1

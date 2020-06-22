@@ -151,6 +151,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <string name="summary_initialcommand_preference">Изпращане към обвивката при пускане на терминала</string>
     <string name="dialog_title_initialcommand_preference">Начална команда</string>
 
+    <string name="title_shellrc_preference">Зареждане на обвивката</string>
+    <string name="summary_shellrc_preference">Команди при зареждане на обвивката.</string>
+    <string name="dialog_title_shellrc_preference">Зареждане на обвивката</string>
+    <string name="hint_shellrc_preference">(команди при зареждане)</string>
+
     <string name="title_termtype_preference">Модел терминал</string>
     <string name="summary_termtype_preference">Модел терминал за обвивката</string>
     <string name="dialog_title_termtype_preference">Модел терминал</string>

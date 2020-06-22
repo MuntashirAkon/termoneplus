@@ -161,6 +161,13 @@
             android:summary="@string/summary_initialcommand_preference"
             android:title="@string/title_initialcommand_preference"/>
 
+        <EditTextPreference
+            android:dialogLayout="@layout/pref_shell_script"
+            android:dialogTitle="@string/dialog_title_shellrc_preference"
+            android:key="@string/key_shellrc_preference"
+            android:summary="@string/summary_shellrc_preference"
+            android:title="@string/title_shellrc_preference"/>
+
     </PreferenceCategory>
 
     <PreferenceCategory

@@ -71,6 +71,9 @@ public class Installer {
                 new File(sysmkshrc).exists())
             shell_script.add(". " + sysmkshrc);
 
+        // Source application startup script
+        shell_script.add(". ~/.shrc");
+
         //Next work fine with mksh but fail with ash.
         //shell_script.add(". /proc/self/fd/0 <<< \"$(libexec-t1plus.so aliases)\"");
         shell_script.add(". /proc/self/fd/0 <<EOF");

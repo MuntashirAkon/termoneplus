@@ -61,6 +61,7 @@ import com.termoneplus.TermActionBar;
 import com.termoneplus.TermPreferencesActivity;
 import com.termoneplus.WindowListActivity;
 import com.termoneplus.WindowListAdapter;
+import com.termoneplus.utils.ConsoleStartupScript;
 import com.termoneplus.utils.SimpleClipboardManager;
 import com.termoneplus.utils.WakeLock;
 import com.termoneplus.utils.WrapOpenURL;
@@ -207,6 +208,21 @@ public class Term extends AppCompatActivity
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         Application.settings.parsePreference(this, sharedPreferences, key);
+
+        if (key.equals(getString(R.string.key_shellrc_preference))) {
+            String value = sharedPreferences.getString(key, null);
+            ConsoleStartupScript.write(mSettings.getHomePath(), value);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.remove(key);
+            editor.apply();
+        }
+
+        if (key.equals(getString(R.string.key_home_path_preference))) {
+            String value = sharedPreferences.getString(key, null);
+            ConsoleStartupScript.rename(mSettings.getHomePath(), value);
+            mSettings.setHomePath(value);
+        }
+
         mSettings.readPrefs(this, sharedPreferences);
         path_settings.extractPreferences(sharedPreferences);
     }
