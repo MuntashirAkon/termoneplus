@@ -137,7 +137,7 @@
             android:title="@string/title_termtype_preference"/>
 
         <EditTextPreference
-            android:key="home_path"
+            android:key="@string/key_home_path_preference"
             android:summary="@string/summary_home_path_preference"
             android:title="@string/title_home_path_preference"/>
 

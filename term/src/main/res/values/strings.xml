@@ -155,6 +155,7 @@
     <string name="title_verify_path_preference">Verify PATH entries</string>
     <string name="summary_verify_path_preference">Whether inaccessible directories should be removed from the PATH.</string>
 
+    <string name="key_home_path_preference" translatable="false">home_path</string>
     <string name="title_home_path_preference">HOME folder</string>
     <string name="summary_home_path_preference">Path to a writable folder to be used as HOME.</string>
 

@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2007 The Android Open Source Project
- * Copyright (C) 2018-2019 Roumen Petrov.  All rights reserved.
+ * Copyright (C) 2018-2020 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -114,7 +114,7 @@ public class TermSettings {
 
     public TermSettings(Context context) {
         readDefaultPrefs(context.getResources());
-        readPrefs(PreferenceManager.getDefaultSharedPreferences(context));
+        readPrefs(context, PreferenceManager.getDefaultSharedPreferences(context));
     }
 
     private void readDefaultPrefs(Resources res) {
@@ -142,7 +142,7 @@ public class TermSettings {
         mUseKeyboardShortcuts = res.getBoolean(R.bool.pref_use_keyboard_shortcuts_default);
     }
 
-    public void readPrefs(SharedPreferences prefs) {
+    public void readPrefs(Context context, SharedPreferences prefs) {
         mPrefs = prefs;
         mStatusBar = readIntPref("statusbar", mStatusBar, 1);
         mActionBarMode = readIntPref("actionbar", mActionBarMode, ACTION_BAR_MODE_MAX);
@@ -163,7 +163,7 @@ public class TermSettings {
         mInitialCommand = readStringPref("initialcommand", mInitialCommand);
         mTermType = readStringPref("termtype", mTermType);
         mCloseOnExit = readBooleanPref("close_window_on_process_exit", mCloseOnExit);
-        mHomePath = readStringPref("home_path", mHomePath);
+        mHomePath = readStringPref(context.getString(R.string.key_home_path_preference), mHomePath);
         mAltSendsEsc = readBooleanPref("alt_sends_esc", mAltSendsEsc);
         mMouseTracking = readBooleanPref("mouse_tracking", mMouseTracking);
         mUseKeyboardShortcuts = readBooleanPref("use_keyboard_shortcuts",

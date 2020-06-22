@@ -207,7 +207,7 @@ public class Term extends AppCompatActivity
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         Application.settings.parsePreference(this, sharedPreferences, key);
-        mSettings.readPrefs(sharedPreferences);
+        mSettings.readPrefs(this, sharedPreferences);
         path_settings.extractPreferences(sharedPreferences);
     }
 

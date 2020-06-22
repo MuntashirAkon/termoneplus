@@ -111,9 +111,10 @@ public class Application extends android.app.Application {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor editor = prefs.edit();
 
-        if (!prefs.contains("home_path")) {
+        String pref_home_path = getString(R.string.key_home_path_preference);
+        if (!prefs.contains(pref_home_path)) {
             String path = getDir("HOME", MODE_PRIVATE).getAbsolutePath();
-            editor.putString("home_path", path);
+            editor.putString(pref_home_path, path);
             updated = true;
         }
 
