@@ -16,6 +16,7 @@
 
 package com.termoneplus;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.text.TextUtils;
@@ -46,27 +47,17 @@ public class Settings {
     private boolean source_sys_shrc;
 
 
-    public Settings(Resources r, SharedPreferences preferences) {
-        source_sys_shrc = parseBoolean(preferences, SOURCE_SYS_SHRC_KEY,
+    public Settings(Context context, SharedPreferences preferences) {
+        Resources r = context.getResources();
+        source_sys_shrc = parseBoolean(preferences,
+                context.getString(R.string.key_source_sys_shrc_preference),
                 r.getBoolean(R.bool.pref_source_sys_shrc_default));
     }
 
-    public boolean parsePreference(SharedPreferences preferences, String key) {
-        if (TextUtils.isEmpty(key)) return true;
+    public boolean parsePreference(Context context, SharedPreferences preferences, String key) {
+        if (TextUtils.isEmpty(key)) return false;
 
-        //noinspection SwitchStatementWithTooFewBranches
-        switch (key) {
-            case SOURCE_SYS_SHRC_KEY:
-                boolean value = parseBoolean(preferences, key, source_sys_shrc);
-                if (value != source_sys_shrc) {
-                    source_sys_shrc = value;
-                    Installer.installAppScriptFile();
-                }
-                break;
-            default:
-                return false;
-        }
-        return true;
+        return parseSourceSysRC(context, preferences, key);
     }
 
     public boolean sourceSystemShellStartupFile() {
@@ -79,5 +70,17 @@ public class Settings {
         } catch (Exception ignored) {
         }
         return def;
+    }
+
+    private boolean parseSourceSysRC(Context context, SharedPreferences preferences, String key) {
+        String pref = context.getString(R.string.key_source_sys_shrc_preference);
+        if (!key.equals(pref)) return false;
+
+        boolean value = parseBoolean(preferences, key, source_sys_shrc);
+        if (value != source_sys_shrc) {
+            source_sys_shrc = value;
+            Installer.installAppScriptFile();
+        }
+        return true;
     }
 }

@@ -132,7 +132,7 @@ public class Application extends android.app.Application {
 
         if (updated) editor.apply();
 
-        settings = new Settings(getResources(), prefs);
+        settings = new Settings(this, prefs);
     }
 
     private boolean install_skeleton() {

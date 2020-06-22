@@ -134,6 +134,7 @@
     <string name="summary_shell_preference">Specify the shell command line.</string>
     <string name="dialog_title_shell_preference">Shell</string>
 
+    <string name="key_source_sys_shrc_preference" translatable="false">source_sys_shrc</string>
     <string name="title_source_sys_shrc_preference">Source system mkshrc</string>
     <string name="summary_source_sys_shrc_preference">
         In application specific shell statup script source commands from system shell startup file (/system/etc/mkshrc).

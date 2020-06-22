@@ -150,7 +150,7 @@
 
         <CheckBoxPreference
             android:defaultValue="@bool/pref_source_sys_shrc_default"
-            android:key="source_sys_shrc"
+            android:key="@string/key_source_sys_shrc_preference"
             android:summary="@string/summary_source_sys_shrc_preference"
             android:title="@string/title_source_sys_shrc_preference"/>
 
