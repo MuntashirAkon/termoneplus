@@ -17,6 +17,7 @@
 package com.termoneplus;
 
 import android.content.SharedPreferences;
+import android.content.res.AssetManager;
 
 import com.termoneplus.utils.ThemeManager;
 
@@ -89,6 +90,7 @@ public class Application extends android.app.Application {
         ThemeManager.migrateFileSelectionThemeMode(this);
 
         Installer.install_directory(etcdir, false);
+        install_skeleton();
 
         // Note at this point xbindir == libdir
         File exe = new File(xbindir, Installer.APPINFO_COMMAND);
@@ -131,5 +133,31 @@ public class Application extends android.app.Application {
         if (updated) editor.apply();
 
         settings = new Settings(getResources(), prefs);
+    }
+
+    private boolean install_skeleton() {
+        String asset_path = "skel";
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String homedir = prefs.getString(getString(R.string.key_home_path_preference), "");
+
+        AssetManager am = getAssets();
+        try {
+            String[] list = am.list(asset_path);
+            if (list == null) return true;
+            for (String item : list)
+                if (!install_skeleton(homedir, am, asset_path, item))
+                    return false;
+        } catch (Exception ignore) {
+        }
+        return true;
+    }
+
+    protected final boolean install_skeleton(String homedir, AssetManager am, String asset_path, String item) {
+        File target = new File(homedir, "." + item);
+
+        if (target.exists()) return true;
+
+        return Installer.install_asset(am, asset_path + "/" + item, target);
     }
 }

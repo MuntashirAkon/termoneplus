@@ -16,6 +16,7 @@
 
 package com.termoneplus;
 
+import android.content.res.AssetManager;
 import android.os.Build;
 
 import java.io.File;
@@ -106,6 +107,26 @@ public class Installer {
             return target.setReadable(true) &&
                     target.setExecutable(true, false);
         } catch (Exception ignore) {
+        }
+        return false;
+    }
+
+    public static boolean install_asset(AssetManager am, String asset, File target) {
+        int buflen = 32 * 1024; // 32k
+        byte[] buf = new byte[buflen];
+
+        try {
+            OutputStream os = new FileOutputStream(target);
+            InputStream is = am.open(asset, AssetManager.ACCESS_STREAMING);
+            int len;
+            while ((len = is.read(buf, 0, buflen)) > 0) {
+                os.write(buf, 0, len);
+            }
+            is.close();
+            os.close();
+
+            return true;
+        } catch (IOException ignore) {
         }
         return false;
     }
