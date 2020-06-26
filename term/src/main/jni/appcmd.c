@@ -24,13 +24,21 @@
 
 
 static int/*bool*/
+msg_write(int sock, const char *msg) {
+    size_t len, res;
+    len = strlen(msg);
+    res = atomicio(vwrite, sock, (void *) msg, len);
+    return res == len;
+}
+
+
+static int/*bool*/
 get_info(int argc, char *argv[]) {
     int ret = 0, k = 0;
     char sockname[PATH_MAX + 1];
     char msg[1024];
     char buf[4096];
     int sock;
-    size_t len, res;
 
     if (!get_socketname(sockname, sizeof(sockname)))
         return 0;
@@ -41,31 +49,27 @@ get_info(int argc, char *argv[]) {
     sock = open_socket(sockname);
     if (sock == -1) return 0;
 
-    len = strlen(msg);
-    res = atomicio(vwrite, sock, (void *) msg, len);
-    if (res != len) goto done;
+    if (!msg_write(sock, msg)) goto done;
 
     for (k++; k < argc; k++) {
         if (snprintf(msg, sizeof(msg), "%s\n", argv[k]) >= sizeof(msg))
             goto done;
-        len = strlen(msg);
-        res = atomicio(vwrite, sock, (void *) msg, len);
-        if (res != len) goto done;
+        if (!msg_write(sock, msg)) goto done;
     }
     if (k > 1) {
         if (snprintf(msg, sizeof(msg), "%s\n", "<eol>") >= sizeof(msg))
             goto done;
-        len = strlen(msg);
-        res = atomicio(vwrite, sock, (void *) msg, len);
-        if (res != len) goto done;
+        if (!msg_write(sock, msg)) goto done;
     }
 
     while (1) {
+        size_t len;
         int read_errno;
         errno = 0;
         len = atomicio(read, sock, buf, sizeof(buf));
         read_errno = errno;
         if (len > 0) {
+            size_t res;
             ret = 1;
             errno = 0;
             res = atomicio(vwrite, STDOUT_FILENO, buf, len);
