@@ -28,13 +28,15 @@ get_info(int argc, char *argv[]) {
     int ret = 0, k = 0;
     char sockname[PATH_MAX + 1];
     char msg[1024];
+    int msgres;
     char buf[4096];
     int sock;
 
     if (!get_socketname(sockname, sizeof(sockname)))
         return 0;
 
-    if (snprintf(msg, sizeof(msg), "get %s\n", argv[k]) >= sizeof(msg))
+    msgres = snprintf(msg, sizeof(msg), "get %s\n", argv[k]);
+    if (msgres < 0 || msgres >= sizeof(msg))
         return 0;
 
     sock = open_socket(sockname);
@@ -43,12 +45,14 @@ get_info(int argc, char *argv[]) {
     if (!write_msg(sock, msg)) goto done;
 
     for (k++; k < argc; k++) {
-        if (snprintf(msg, sizeof(msg), "%s\n", argv[k]) >= sizeof(msg))
+        msgres = snprintf(msg, sizeof(msg), "%s\n", argv[k]);
+        if (msgres < 0 || msgres >= sizeof(msg))
             goto done;
         if (!write_msg(sock, msg)) goto done;
     }
     if (k > 1) {
-        if (snprintf(msg, sizeof(msg), "%s\n", "<eol>") >= sizeof(msg))
+        msgres = snprintf(msg, sizeof(msg), "%s\n", "<eol>");
+        if (msgres < 0 || msgres >= sizeof(msg))
             goto done;
         if (!write_msg(sock, msg)) goto done;
     }
