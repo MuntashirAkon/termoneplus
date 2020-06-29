@@ -26,9 +26,11 @@ int open_socket(const char *name);
 
 
 typedef ssize_t (*atomicio_f)(int fd, void *buf, size_t count);
-
 #define vwrite (atomicio_f)write
 
 size_t atomicio(atomicio_f f, int fd, void *buf, size_t count);
+
+
+int/*bool*/ write_msg(int sock, const char *msg);
 
 #endif /*TERMONEPLUS_APPINFO_H*/

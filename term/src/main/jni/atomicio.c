@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 Roumen Petrov.  All rights reserved.
+ * Copyright (C) 2019-2020 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -52,4 +52,13 @@ atomicio(atomicio_f f, int fd, void *_buf, size_t n) {
         }
     }
     return pos;
+}
+
+
+int/*bool*/
+write_msg(int sock, const char *msg) {
+    size_t len, res;
+    len = strlen(msg);
+    res = atomicio(vwrite, sock, (void *) msg, len);
+    return res == len;
 }

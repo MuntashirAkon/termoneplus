@@ -24,15 +24,6 @@
 
 
 static int/*bool*/
-msg_write(int sock, const char *msg) {
-    size_t len, res;
-    len = strlen(msg);
-    res = atomicio(vwrite, sock, (void *) msg, len);
-    return res == len;
-}
-
-
-static int/*bool*/
 get_info(int argc, char *argv[]) {
     int ret = 0, k = 0;
     char sockname[PATH_MAX + 1];
@@ -49,17 +40,17 @@ get_info(int argc, char *argv[]) {
     sock = open_socket(sockname);
     if (sock == -1) return 0;
 
-    if (!msg_write(sock, msg)) goto done;
+    if (!write_msg(sock, msg)) goto done;
 
     for (k++; k < argc; k++) {
         if (snprintf(msg, sizeof(msg), "%s\n", argv[k]) >= sizeof(msg))
             goto done;
-        if (!msg_write(sock, msg)) goto done;
+        if (!write_msg(sock, msg)) goto done;
     }
     if (k > 1) {
         if (snprintf(msg, sizeof(msg), "%s\n", "<eol>") >= sizeof(msg))
             goto done;
-        if (!msg_write(sock, msg)) goto done;
+        if (!write_msg(sock, msg)) goto done;
     }
 
     while (1) {
