@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Roumen Petrov.  All rights reserved.
+ * Copyright (C) 2018-2020 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@
 #include <pty.h>
 #include <errno.h>
 #include <stdio.h>
+#include <string.h>
 
 
 static void
@@ -78,10 +79,8 @@ ioctl_setWindowSize(
  * When the window size changes, a SIGWINCH signal is sent to the foreground process group.
  */
     if (ioctl(fd, TIOCSWINSZ, &arg) != 0) {
-        char msg[1024];
-
-        snprintf(msg, sizeof(msg), "ioctl: set tty window size fail with error code %d", errno);
-        throwIOException(env, msg);
+        throwIOException(env, "ioctl: set tty window size fail / error %d/%s",
+                errno, strerror(errno));
     }
 }
 

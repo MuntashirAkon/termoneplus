@@ -102,28 +102,22 @@ process_create_subprocess(
     }
 
     if (unlockpt(ptm) < 0) {
-        char msg[1024];
-        snprintf(msg, sizeof(msg), "unlockpt fail / error %d/%s",
+        throwIOException(env, "unlockpt fail / error %d/%s",
                  errno, strerror(errno));
-        throwIOException(env, msg);
         return -1;
     }
 
     memset(devname, 0, sizeof(devname));
     if (ptsname_r(ptm, devname, sizeof(devname)) != 0) {
-        char msg[1024];
-        snprintf(msg, sizeof(msg), "ptsname_r fail / error %d/%s",
+        throwIOException(env, "ptsname_r fail / error %d/%s",
                  errno, strerror(errno));
-        throwIOException(env, msg);
         return -1;
     }
 
     pid = fork();
     if (pid < 0) {
-        char msg[1024];
-        snprintf(msg, sizeof(msg), "fork fail / error %d/%s",
+        throwIOException(env, "fork fail / error %d/%s",
                  errno, strerror(errno));
-        throwIOException(env, msg);
         return -1;
     }
 
@@ -139,29 +133,23 @@ process_create_subprocess(
 
         /* required by TIOCSCTTY */
         if (setsid() < 0) {
-            char msg[1024];
-            snprintf(msg, sizeof(msg), "setsid fail / error %d/%s",
+            throwIOException(env, "setsid fail / error %d/%s",
                      errno, strerror(errno));
-            throwIOException(env, msg);
             exit(-1);
         }
 
         /* openpty part for aslave ... */
         pts = open(devname, O_RDWR | O_NOCTTY);
         if (pts < 0) {
-            char msg[1024];
-            snprintf(msg, sizeof(msg), "open pty fail / error %d/%s",
+            throwIOException(env, "open pty fail / error %d/%s",
                      errno, strerror(errno));
-            throwIOException(env, msg);
             exit(-1);
         }
 
         /* set controlling tty */
         if (ioctl(pts, TIOCSCTTY, 0) < 0) {
-            char msg[1024];
-            snprintf(msg, sizeof(msg), "ioctl for TIOCSCTTY fail / error %d/%s",
+            throwIOException(env, "ioctl for TIOCSCTTY fail / error %d/%s",
                      errno, strerror(errno));
-            throwIOException(env, msg);
             exit(-1);
         }
 
@@ -175,9 +163,8 @@ process_create_subprocess(
         execve(path, argv, envp);
         /* NOTE On success, execve() does not return */
         {
-            char msg[1024];
-            snprintf(msg, sizeof(msg), "execve fail / error %d/%s", errno, strerror(errno));
-            throwIOException(env, msg);
+            throwIOException(env, "execve fail / error %d/%s",
+                    errno, strerror(errno));
             exit(-1);
         }
     }

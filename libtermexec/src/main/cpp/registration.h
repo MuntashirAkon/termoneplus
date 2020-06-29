@@ -1,7 +1,7 @@
 #ifndef TERMONEPLUS_REGISTRATION_H
 #define TERMONEPLUS_REGISTRATION_H
 /*
- * Copyright (C) 2018 Roumen Petrov.  All rights reserved.
+ * Copyright (C) 2018-2020 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ int register_termio(JNIEnv *env);
 
 
 void throwOutOfMemoryError(JNIEnv *env, const char *msg) ;
-void throwIOException(JNIEnv *env, const char *msg);
+void throwIOException(JNIEnv *env, const char *fmt, ...);
 
 
 int termoneplus_log_print(int prio, const char *fmt, ...);

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Roumen Petrov.  All rights reserved.
+ * Copyright (C) 2018-2020 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,8 @@
 #if defined(__cplusplus)
 # error "__cplusplus"
 #endif
+
+#include <stdlib.h>
 
 
 /*
@@ -65,7 +67,14 @@ throwOutOfMemoryError(JNIEnv *env, const char *msg)  {
 }
 
 void
-throwIOException(JNIEnv *env, const char *msg) {
+throwIOException(JNIEnv *env, const char *fmt, ...) {
+    char msg[1024];
+    va_list args;
+
+    va_start(args, fmt);
+    (void)vsnprintf(msg, sizeof(msg), fmt, args);
+    va_end(args);
+
     throwNewException(env, "java/io/IOException", msg);
 }
 
