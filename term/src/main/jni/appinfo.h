@@ -23,6 +23,7 @@
 
 int/*bool*/ get_socketname(char *buf, size_t len) ;
 int open_socket(const char *name);
+int open_appsocket(void);
 
 
 typedef ssize_t (*atomicio_f)(int fd, void *buf, size_t count);

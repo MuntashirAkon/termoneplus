@@ -59,3 +59,14 @@ open_socket(const char *name) {
 
     return sock;
 }
+
+
+int
+open_appsocket() {
+    char sockname[PATH_MAX + 1];
+
+    if (!get_socketname(sockname, sizeof(sockname)))
+        return -1;
+
+    return open_socket(sockname);
+}

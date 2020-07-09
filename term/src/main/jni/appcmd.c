@@ -26,20 +26,16 @@
 static int/*bool*/
 get_info(int argc, char *argv[]) {
     int ret = 0, k = 0;
-    char sockname[PATH_MAX + 1];
     char msg[1024];
     int msgres;
     char buf[4096];
     int sock;
 
-    if (!get_socketname(sockname, sizeof(sockname)))
-        return 0;
-
     msgres = snprintf(msg, sizeof(msg), "get %s\n", argv[k]);
     if (msgres < 0 || msgres >= sizeof(msg))
         return 0;
 
-    sock = open_socket(sockname);
+    sock = open_appsocket();
     if (sock == -1) return 0;
 
     if (!write_msg(sock, msg)) goto done;
