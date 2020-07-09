@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 Roumen Petrov.  All rights reserved.
+ * Copyright (C) 2019-2020 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,9 +49,11 @@ public class ThemeManager {
         // Note obsolete "FileSelection" preferences have only one item - light_theme!
         {
             File prefs_path = new File(context.getFilesDir().getParentFile(), "shared_prefs");
-            for (String name : prefs_path.list((dir, name) -> name.startsWith(PREFERENCES_FILE)))
-                //noinspection ResultOfMethodCallIgnored
-                new File(prefs_path, name).delete();
+            File[] list = prefs_path.listFiles((dir, name) -> name.startsWith(PREFERENCES_FILE));
+            if (list != null)
+                for (File file : list)
+                    //noinspection ResultOfMethodCallIgnored
+                    file.delete();
         }
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
