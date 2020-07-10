@@ -155,13 +155,6 @@
             android:title="@string/title_source_sys_shrc_preference"/>
 
         <EditTextPreference
-            android:defaultValue="@string/pref_initialcommand_default"
-            android:dialogTitle="@string/dialog_title_initialcommand_preference"
-            android:key="initialcommand"
-            android:summary="@string/summary_initialcommand_preference"
-            android:title="@string/title_initialcommand_preference"/>
-
-        <EditTextPreference
             android:dialogLayout="@layout/pref_shell_script"
             android:dialogTitle="@string/dialog_title_shellrc_preference"
             android:key="@string/key_shellrc_preference"

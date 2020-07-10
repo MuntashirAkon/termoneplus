@@ -16,11 +16,15 @@
 
 package com.termoneplus.utils;
 
+import android.text.TextUtils;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 
 
 public class ConsoleStartupScript {
@@ -64,5 +68,21 @@ public class ConsoleStartupScript {
 
     public static File getScriptFile(String homedir) {
         return new File(homedir, ".shrc");
+    }
+
+    public static void migrateInitialCommand(String homedir, String cmd) {
+        if (TextUtils.isEmpty(cmd)) return;
+
+        try {
+            PrintWriter out = new PrintWriter(
+                    new FileWriter(getScriptFile(homedir), true));
+            out.println("");
+            String timestamp = java.text.DateFormat.getDateTimeInstance().format(new Date());
+            out.println("# migrated initial command (" + timestamp + "):");
+            out.println(cmd);
+            out.flush();
+            out.close();
+        } catch (IOException ignored) {
+        }
     }
 }

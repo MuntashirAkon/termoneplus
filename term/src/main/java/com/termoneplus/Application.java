@@ -19,6 +19,7 @@ package com.termoneplus;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 
+import com.termoneplus.utils.ConsoleStartupScript;
 import com.termoneplus.utils.ThemeManager;
 
 import java.io.File;
@@ -103,6 +104,7 @@ public class Application extends android.app.Application {
         }
 
         Installer.installAppScriptFile();
+        migrateInitialCommand();
     }
 
     private void setupPreferences() {
@@ -134,6 +136,22 @@ public class Application extends android.app.Application {
         if (updated) editor.apply();
 
         settings = new Settings(this, prefs);
+    }
+
+    private void migrateInitialCommand() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        // "Shell startup command" replace "Initial Command" after 3.3.5
+        if (!prefs.contains("initialcommand")) return;
+
+        String pref_home_path = getString(R.string.key_home_path_preference);
+        // just in case
+        if (!prefs.contains(pref_home_path)) return;
+
+        String homedir = prefs.getString(pref_home_path, "");
+        String cmd = prefs.getString("initialcommand", null);
+        ConsoleStartupScript.migrateInitialCommand(homedir, cmd);
+
+        prefs.edit().remove("initialcommand").apply();
     }
 
     private boolean install_skeleton() {

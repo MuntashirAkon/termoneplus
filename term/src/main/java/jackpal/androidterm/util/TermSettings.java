@@ -56,7 +56,6 @@ public class TermSettings {
     private int mUseCookedIME;
     private String mShell;
     private String mFailsafeShell;
-    private String mInitialCommand;
     private String mTermType;
     private boolean mCloseOnExit;
     private String mHomePath;
@@ -133,7 +132,6 @@ public class TermSettings {
         mUseCookedIME = Integer.parseInt(res.getString(R.string.pref_ime_default));
         mFailsafeShell = res.getString(R.string.pref_shell_default);
         mShell = mFailsafeShell;
-        mInitialCommand = res.getString(R.string.pref_initialcommand_default);
         mTermType = res.getString(R.string.pref_termtype_default);
         mCloseOnExit = res.getBoolean(R.bool.pref_close_window_on_process_exit_default);
         // the mHomePath default is set dynamically in readPrefs()
@@ -160,7 +158,6 @@ public class TermSettings {
                 FN_KEY_SCHEMES.length - 1);
         mUseCookedIME = readIntPref("ime", mUseCookedIME, 1);
         mShell = readStringPref("shell", mShell);
-        mInitialCommand = readStringPref("initialcommand", mInitialCommand);
         mTermType = readStringPref("termtype", mTermType);
         mCloseOnExit = readBooleanPref("close_window_on_process_exit", mCloseOnExit);
         mHomePath = readStringPref(context.getString(R.string.key_home_path_preference), mHomePath);
@@ -282,11 +279,6 @@ public class TermSettings {
 
     public String getFailsafeShell() {
         return mFailsafeShell;
-    }
-
-    @NonNull
-    public String getInitialCommand() {
-        return mInitialCommand != null ? mInitialCommand : "";
     }
 
     public String getTermType() {

@@ -194,9 +194,7 @@ public class Term extends AppCompatActivity
             TermSettings settings, PathSettings path_settings,
             String extraCommand) throws IOException {
 
-        String initialCommand = settings.getInitialCommand();
-        if (!TextUtils.isEmpty(extraCommand))
-            initialCommand += "\r" + extraCommand;
+        String initialCommand = !TextUtils.isEmpty(extraCommand) ? extraCommand: "";
 
         GenericTermSession session = new ShellTermSession(settings, path_settings, initialCommand);
         // XXX We should really be able to fetch this from within TermSession
