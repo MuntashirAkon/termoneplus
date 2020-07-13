@@ -46,7 +46,7 @@
     <string name="summary_statusbar_preference">הצגת/הסתרת שורת מצב.</string>
     <string name="dialog_title_statusbar_preference">שורת מצב</string>
     <string name="title_actionbar_preference">בר הפעלות</string>
-    <string name="summary_actionbar_preference">בחר התנהגות של בר הפעלה (אנרואיד 3.0 ומעלה).</string>
+    <string name="summary_actionbar_preference">בחר התנהגות של בר הפעלה.</string>
     <string name="summary_actionbar_preference_compat">בחר התנהגות של בר הפעלה.</string>
     <string name="dialog_title_actionbar_preference">התנהגות בר הפעלה</string>
     <string name="title_orientation_preference">כיוון מסך</string>

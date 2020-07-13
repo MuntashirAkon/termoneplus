@@ -56,7 +56,7 @@
     <string name="dialog_title_statusbar_preference">Трака стања</string>
 
     <string name="title_actionbar_preference">Трака радњи</string>
-    <string name="summary_actionbar_preference">Одредите понашање траке радњи (Андроид 3.0 и новији).</string>
+    <string name="summary_actionbar_preference">Одредите понашање траке радњи.</string>
     <string name="summary_actionbar_preference_compat">Одредите понашање траке радњи.</string>
     <string name="dialog_title_actionbar_preference">Понашање траке радњи</string>
 

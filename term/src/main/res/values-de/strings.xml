@@ -88,7 +88,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <string name="dialog_title_statusbar_preference">Statuszeile</string>
 
     <string name="title_actionbar_preference">Aktionsleiste</string>
-    <string name="summary_actionbar_preference">Wählen sie das Verhalten der Aktionsleiste (ab Android 3.0).</string>
+    <string name="summary_actionbar_preference">Wählen sie das Verhalten der Aktionsleiste.</string>
     <string name="summary_actionbar_preference_compat">Wählen sie das Verhalten der Aktionsleiste.</string>
     <string name="dialog_title_actionbar_preference">Verhalten der Aktionsleiste</string>
 

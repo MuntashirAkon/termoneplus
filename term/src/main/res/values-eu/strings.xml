@@ -56,7 +56,7 @@
     <string name="dialog_title_statusbar_preference">Egoera-barra</string>
 
     <string name="title_actionbar_preference">Ekintza-barra</string>
-    <string name="summary_actionbar_preference">Aukeratu ekintza-barraren portaera (Android 3.0tik aurrera).</string>
+    <string name="summary_actionbar_preference">Aukeratu ekintza-barraren portaera.</string>
     <string name="summary_actionbar_preference_compat">Aukeratu ekintza-barraren portaera.</string>
     <string name="dialog_title_actionbar_preference">Ekintza-barraren portaera</string>
 

@@ -56,7 +56,7 @@
     <string name="dialog_title_statusbar_preference">მდგომარეობის ხაზი</string>
 
     <string name="title_actionbar_preference">მოქმედების ხაზი</string>
-    <string name="summary_actionbar_preference">აირჩიეთ მოქმედების ხაზის ქცევის პარამეტრები(Android 3.0 და ზემოთ).</string>
+    <string name="summary_actionbar_preference">აირჩიეთ მოქმედების ხაზის ქცევის პარამეტრები.</string>
     <string name="summary_actionbar_preference_compat">აირჩიეთ მოქმედების ხაზის ქცევის პარამეტრები.</string>
     <string name="dialog_title_actionbar_preference">მოქმედების ხაზის ქცევა</string>
 

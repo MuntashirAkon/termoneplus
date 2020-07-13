@@ -80,7 +80,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <string name="restart_statusbar_change">Започване наново ...\n(нов вид на лентата за състояние)</string>
 
     <string name="title_actionbar_preference">Лента за действия</string>
-    <string name="summary_actionbar_preference">Избор на поведение на лентата за действия (Android 3.0 и по-нов)</string>
+    <string name="summary_actionbar_preference">Избор на поведение на лентата за действия</string>
     <string name="summary_actionbar_preference_compat">Избор на поведение на лентата за действия</string>
     <string name="dialog_title_actionbar_preference">Поведение на лентата за действия</string>
     <string name="restart_actionbar_change">Започване наново ...\n(нов вид на лентата за действие)</string>

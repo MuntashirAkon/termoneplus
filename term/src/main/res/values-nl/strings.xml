@@ -48,7 +48,7 @@
     <string name="dialog_title_statusbar_preference">Statusbalk</string>
 
     <string name="title_actionbar_preference">Menubalk</string>
-    <string name="summary_actionbar_preference">Gedrag van menubalk kiezen (Android 3.0 en hoger)</string>
+    <string name="summary_actionbar_preference">Gedrag van menubalk kiezen</string>
     <string name="summary_actionbar_preference_compat">Gedrag van menubalk kiezen</string>
     <string name="dialog_title_actionbar_preference">Gedrag menubalk</string>
 

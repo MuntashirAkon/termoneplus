@@ -73,7 +73,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <string name="dialog_title_statusbar_preference">Status bar</string>
 
     <string name="title_actionbar_preference">Action bar</string>
-    <string name="summary_actionbar_preference">Choose the action bar\'s behaviour (Android 3.0 and up).</string>
+    <string name="summary_actionbar_preference">Choose the action bar\'s behaviour.</string>
     <string name="summary_actionbar_preference_compat">Choose the action bar\'s behaviour.</string>
     <string name="dialog_title_actionbar_preference">Action bar behaviour</string>
 

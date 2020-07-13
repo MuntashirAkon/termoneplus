@@ -50,7 +50,7 @@
     <string name="dialog_title_statusbar_preference">Bara de stare</string>
 
     <string name="title_actionbar_preference">Bara de acţiuni</string>
-    <string name="summary_actionbar_preference">Alegeți comportamentul barei de acțiuni (Android 3.0 și mai sus).</string>
+    <string name="summary_actionbar_preference">Alegeți comportamentul barei de acțiuni.</string>
     <string name="summary_actionbar_preference_compat">Alegeți comportamentul barei de acțiuni.</string>
     <string name="dialog_title_actionbar_preference">Comportament bară de acţiune</string>
 

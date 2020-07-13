@@ -56,7 +56,7 @@
     <string name="dialog_title_statusbar_preference">Stavový řádek</string>
 
     <string name="title_actionbar_preference">Panel akcí</string>
-    <string name="summary_actionbar_preference">Vyberte chování panelu akcí (Android 3.0 a novější).</string>
+    <string name="summary_actionbar_preference">Vyberte chování panelu akcí.</string>
     <string name="summary_actionbar_preference_compat">Vyberte chování panelu akcí.</string>
     <string name="dialog_title_actionbar_preference">Chování panelu akcí</string>
 

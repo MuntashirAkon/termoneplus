@@ -89,7 +89,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <string name="dialog_title_statusbar_preference">Barre d\'état</string>
 
     <string name="title_actionbar_preference">Barre d\'actions</string>
-    <string name="summary_actionbar_preference">Choisir le comportement de la barre d\'actions (à partir d\'Android 3.0)</string>
+    <string name="summary_actionbar_preference">Choisir le comportement de la barre d\'actions</string>
     <string name="summary_actionbar_preference_compat">Choisir le comportement de la barre d\'actions</string>
     <string name="dialog_title_actionbar_preference">Barre d\'actions</string>
 

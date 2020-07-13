@@ -56,7 +56,7 @@
     <string name="dialog_title_statusbar_preference">Barra di stato</string>
 
     <string name="title_actionbar_preference">Barra di azione</string>
-    <string name="summary_actionbar_preference">Scegli il comportamento della barra di azione (da Android 3.0 in su).</string>
+    <string name="summary_actionbar_preference">Scegli il comportamento della barra di azione.</string>
     <string name="summary_actionbar_preference_compat">Scegli il comportamento della barra di azione.</string>
     <string name="dialog_title_actionbar_preference">Comportamento barra di azione</string>
 

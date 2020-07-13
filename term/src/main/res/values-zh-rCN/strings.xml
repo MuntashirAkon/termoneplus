@@ -56,7 +56,7 @@
     <string name="dialog_title_statusbar_preference">状态栏</string>
 
     <string name="title_actionbar_preference">操作栏</string>
-    <string name="summary_actionbar_preference">选择操作栏行为 (Android 3.0 及以上)</string>
+    <string name="summary_actionbar_preference">选择操作栏行为</string>
     <string name="summary_actionbar_preference_compat">选择操作栏行为</string>
     <string name="dialog_title_actionbar_preference">操作栏行为</string>
 
