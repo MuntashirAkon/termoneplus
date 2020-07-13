@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+#include <string.h>
 #include <unistd.h>
 #include <poll.h>
 #include <errno.h>
