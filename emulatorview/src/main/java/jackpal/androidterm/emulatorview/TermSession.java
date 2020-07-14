@@ -609,6 +609,8 @@ public class TermSession {
             } catch (IllegalThreadStateException e) {
                 if (state == State.NEW)
                     throw new ExceptionStateNew(msg);
+                else if (state == State.TERMINATED)
+                    throw new ExceptionStateTerminated(msg);
                 else if (is_alive)
                     throw new ExceptionisAlive(msg);
                 else
@@ -618,6 +620,12 @@ public class TermSession {
 
         private class ExceptionStateNew extends IllegalThreadStateException {
             private ExceptionStateNew(String msg) {
+                super(msg);
+            }
+        }
+
+        private class ExceptionStateTerminated extends IllegalThreadStateException {
+            private ExceptionStateTerminated(String msg) {
                 super(msg);
             }
         }
