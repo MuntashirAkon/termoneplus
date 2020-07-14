@@ -23,3 +23,7 @@
 # gradle wrapper shell script must have unix(LF) end-of-line conversion
 
 gradlew eol=lf
+
+# skeleton files must have end-of-line conversion as shell script, i.e. unix(LF)
+
+/**/assets/skel/* eol=lf
