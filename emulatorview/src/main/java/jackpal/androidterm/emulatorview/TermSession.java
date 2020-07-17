@@ -501,15 +501,14 @@ public class TermSession {
      * <code>OutputStream</code>.
      */
     public void finish() {
-        mIsRunning = false;
         finalizeEmulator();
     }
 
-    private void finalizeEmulator() {
-        if (mFinishCallback != null) {
-            mFinishCallback.onSessionFinish(this);
-            mFinishCallback = null;
-        }
+    private synchronized void finalizeEmulator() {
+        if (!mIsRunning) return;
+        mIsRunning = false;
+
+        if (mFinishCallback != null) mFinishCallback.onSessionFinish(this);
 
         // Stop the reader and writer threads, and close the I/O streams
         // Reader thread, if running, will be terminated indirectly by closed
@@ -526,15 +525,8 @@ public class TermSession {
         } catch (NullPointerException ignored) {
         }
 
-        if (mEmulator != null) {
-            mEmulator.finish();
-            mEmulator = null;
-        }
-
-        if (mTranscriptScreen != null) {
-            mTranscriptScreen.finish();
-            mTranscriptScreen = null;
-        }
+        if (mEmulator != null) mEmulator.finish();
+        if (mTranscriptScreen != null) mTranscriptScreen.finish();
     }
 
     /**
