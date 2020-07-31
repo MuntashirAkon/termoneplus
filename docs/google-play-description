@@ -8,7 +8,9 @@ Each android device has a build-in born shell and a number of shell command that
 Application supports multiple terminal windows(screens). Each terminal starts own console session with build-in shell (by default).
 Terminal emulates large subset of Digital Equipment Corporation VT-100 terminal capabilities - supported are following terminal types: vt100, screen (default), linux, screen-256color, xterm and xterm-256color. Also it supports UTF-8 console text mode by default.
 For instance supported terminal capabilities allows users fully to use textual interface in remote login programs (ssh connections).
-Terminal screen support color schemes like "Dark Pastels", "Solarized Light", "Solarized Dark" and etc. Also user could chose size of text.
+Terminal screen support color schemes like "Dark Pastels", "Solarized Light", "Solarized Dark", "Linux Console" and etc. Also user could chose size of text.
+
+Terminal session use "shell start-up script" where you could tune environment setting, add shell functions or command aliases.
 
 "TermOne Plus" user interface is based on material design - icons, colors. It uses navigation drawer as main menu. Also user could switch between "Light" and "Dark" theme mode.
 
