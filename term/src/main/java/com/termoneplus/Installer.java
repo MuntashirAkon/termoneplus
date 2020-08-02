@@ -72,7 +72,12 @@ public class Installer {
             shell_script.add(". " + sysmkshrc);
 
         // Source application startup script
-        shell_script.add(". ~/.shrc");
+        // Test command is not supported by built-in shell on devices before API Level 16("Jelly Bean"/4.1).
+        // Jelly Bean switchs to "MIRBSD KSH R40 2011/10/07" where test is a shell built-in.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN /*API level 16*/)
+            shell_script.add("test -f ~/.shrc && . ~/.shrc");
+        else
+            shell_script.add(". ~/.shrc");
 
         //Next work fine with mksh but fail with ash.
         //shell_script.add(". /proc/self/fd/0 <<< \"$(libexec-t1plus.so aliases)\"");
