@@ -139,5 +139,6 @@
         <item>screen-256color</item>
         <item>xterm</item>
         <item>xterm-256color</item>
+        <item>xterm-noapp</item>
     </string-array>
 </resources>
