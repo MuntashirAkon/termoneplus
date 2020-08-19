@@ -31,6 +31,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.CharsetEncoder;
 import java.nio.charset.CodingErrorAction;
 
+
 /**
  * A terminal session, consisting of a VT100 terminal emulator and its
  * input and output streams.
@@ -63,7 +64,6 @@ public class TermSession {
     private static final int NEW_OUTPUT = 2;
     private static final int FINISH = 3;
     private static final int EOF = 4;
-    private TermKeyListener mKeyListener;
     private ColorScheme mColorScheme = BaseTextRenderer.defaultColorScheme;
     private UpdateCallback mNotify;
     private OutputStream mTermOut;
@@ -110,10 +110,6 @@ public class TermSession {
         mWriterThread = new WriterThread("TermSession output writer");
     }
 
-    public void setKeyListener(TermKeyListener l) {
-        mKeyListener = l;
-    }
-
     protected void onProcessExit() {
         finish();
     }
@@ -128,7 +124,6 @@ public class TermSession {
         mTranscriptScreen = new TranscriptScreen(columns, TRANSCRIPT_ROWS, rows, mColorScheme);
 
         mEmulator = new TerminalEmulator(this, mTranscriptScreen, columns, rows, mColorScheme);
-        mEmulator.setKeyListener(mKeyListener);
 
         mIsRunning = true;
 

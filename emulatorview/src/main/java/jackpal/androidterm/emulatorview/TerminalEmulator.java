@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2007 The Android Open Source Project
- * Copyright (C) 2018-2019 Roumen Petrov.  All rights reserved.
+ * Copyright (C) 2018-2020 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,6 @@
 
 package jackpal.androidterm.emulatorview;
 
-import java.io.UnsupportedEncodingException;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.nio.ByteBuffer;
@@ -31,6 +30,7 @@ import android.util.Log;
 
 import androidx.annotation.IntDef;
 
+
 /**
  * Renders text into a screen. Contains all the terminal-specific knowledge and
  * state. Emulates a subset of the X Window System xterm terminal, which in turn
@@ -39,9 +39,6 @@ import androidx.annotation.IntDef;
  * video, color) alternate screen cursor key and keypad escape sequences.
  */
 class TerminalEmulator {
-    public void setKeyListener(TermKeyListener l) {
-        mKeyListener = l;
-    }
     private TermKeyListener mKeyListener;
     /**
      * The cursor row. Numbered 0..mRows-1.
@@ -363,6 +360,8 @@ class TerminalEmulator {
      * @param scheme the default color scheme of this emulator
      */
     public TerminalEmulator(TermSession session, TranscriptScreen screen, int columns, int rows, ColorScheme scheme) {
+        mKeyListener = new TermKeyListener(session);
+
         // on Android default charset is always UTF-8
         mUTF8Decoder = Charset.defaultCharset().newDecoder();
         mUTF8Decoder.onMalformedInput(CodingErrorAction.REPLACE);
@@ -382,6 +381,10 @@ class TerminalEmulator {
         mInputCharBuffer = CharBuffer.allocate(2);
 
         reset();
+    }
+
+    public TermKeyListener getKeyListener() {
+        return mKeyListener;
     }
 
     public TranscriptScreen getScreen() {

@@ -97,7 +97,21 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
     private int mVisibleWidth;
     private int mVisibleHeight;
 
+    /**
+     * Our terminal session.
+     */
     private TermSession mTermSession;
+
+    /**
+     * Our terminal session emulator.
+     */
+    private TerminalEmulator mEmulator;
+
+    /**
+     * Our terminal emulator key listener.
+     */
+    private TermKeyListener mKeyListener;
+    private KeyListenerParam key_listener_param = new KeyListenerParam();
 
     /**
      * Total width of each character, in pixels
@@ -141,11 +155,6 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
     private Paint mBackgroundPaint;
 
     private boolean mUseCookedIme;
-
-    /**
-     * Our terminal emulator.
-     */
-    private TerminalEmulator mEmulator;
 
     /**
      * The number of rows of text to display.
@@ -397,7 +406,6 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
     }
 
     private float mScrollRemainder;
-    private TermKeyListener mKeyListener;
 
     private String mImeBuffer = "";
 
@@ -480,9 +488,6 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
         setVerticalScrollBarEnabled(true);
         setFocusable(true);
         setFocusableInTouchMode(true);
-
-        mKeyListener = new TermKeyListener(session);
-        session.setKeyListener(mKeyListener);
 
         finish_initialization(session);
     }
@@ -940,6 +945,14 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
 
         mEmulator = session.getEmulator();
         session.setUpdateCallback(mUpdateNotify);
+
+        mKeyListener = mEmulator.getKeyListener();
+        if (key_listener_param.BackKeyCharacter != null)
+            setBackKeyCharacter(key_listener_param.BackKeyCharacter);
+        if (key_listener_param.AltSendsEsc != null)
+            setAltSendsEsc(key_listener_param.AltSendsEsc);
+        if (key_listener_param.TermType != null)
+            setTermType(key_listener_param.TermType);
 
         requestFocus();
     }
@@ -1613,6 +1626,10 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
      * Set the key code to be sent when the Back key is pressed.
      */
     public void setBackKeyCharacter(int keyCode) {
+        if (mKeyListener == null) {
+            key_listener_param.BackKeyCharacter = keyCode;
+            return;
+        }
         mKeyListener.setBackKeyCharacter(keyCode);
         mBackKeySendsCharacter = (keyCode != 0);
     }
@@ -1623,6 +1640,10 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
      * @param flag
      */
     public void setAltSendsEsc(boolean flag) {
+        if (mKeyListener == null) {
+            key_listener_param.AltSendsEsc = flag;
+            return;
+        }
         mKeyListener.setAltSendsEsc(flag);
     }
 
@@ -1641,7 +1662,11 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
     }
 
     public void setTermType(String termType) {
-         mKeyListener.setTermType(termType);
+        if (mKeyListener == null) {
+            key_listener_param.TermType = termType;
+            return;
+        }
+        mKeyListener.setTermType(termType);
     }
 
     /**
@@ -1691,6 +1716,12 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
 
     public interface OnToggleSelectingTextListener {
         void onToggleSelectingText();
+    }
+
+    private static class KeyListenerParam {
+        Integer BackKeyCharacter;
+        Boolean AltSendsEsc;
+        String TermType;
     }
 
     /**
