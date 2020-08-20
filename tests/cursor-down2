@@ -13,9 +13,9 @@ echo -n "${CSI}7;1H"
 # // ESC [ Pn B - Cursor Down
 echo -n "L1${CSI}BL2"
 
-echo text1
-echo text2
-echo text3
+sleep 1; echo text1
+sleep 1; echo text2
+sleep 1; echo text3
 
 #expected screen:
 #<empty line>
