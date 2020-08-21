@@ -8,7 +8,8 @@ echo -n "${CSI}2J"	# // Clear all
 echo -n "${CSI}4;7r"
 
 # // ESC [ Pn ; H - Cursor Position
-echo -n "${CSI}3;1H"
+echo -n "${CSI}4;1H"	# at top margins
+
 
 # // ESC [ Pn A - Cursor Up
 echo -n "L1${CSI}AL2"
@@ -16,17 +17,13 @@ echo -n "L1${CSI}AL2"
 sleep 1; echo text1
 sleep 1; echo text2
 sleep 1; echo text3
-sleep 1; echo text4
-sleep 1; echo text5
-sleep 1; echo text6
-sleep 1; echo text7
 
 #expected screen:
 #<empty line>
-#  L2text1
+#<empty line>
+#<empty line>
+#L1L2text1
 #text2
-#text5
-#text6
-#text7
+#text3
 #<PS1 prompt>
 #<... empty lines ...>

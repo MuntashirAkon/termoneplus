@@ -966,11 +966,10 @@ class TerminalEmulator {
 
     private void doLinefeed() {
         int newCursorRow = mCursorRow + 1;
-        if (newCursorRow >= mBottomMargin) {
+        if (newCursorRow == mBottomMargin)
             scroll();
-            newCursorRow = mBottomMargin - 1;
-        }
-        setCursorRow(newCursorRow);
+        else
+            setCursorRow(Math.min(newCursorRow, mRows - 1));
     }
 
     private void continueSequence() {
@@ -1144,12 +1143,26 @@ class TerminalEmulator {
         }
 
         case 'A': // ESC [ Pn A - Cursor Up
-            setCursorRow(Math.max(0, mCursorRow - getArg0(1)));
+        {
+            int row = mCursorRow - getArg0(1);
+            if (mCursorRow < mTopMargin)
+                row = Math.max(0, row);
+            else
+                row = Math.max(mTopMargin, row);
+            setCursorRow(row);
             break;
+        }
 
         case 'B': // ESC [ Pn B - Cursor Down
-            setCursorRow(Math.min(mRows - 1, mCursorRow + getArg0(1)));
+        {
+            int row = mCursorRow + getArg0(1);
+            if (mCursorRow >= mBottomMargin)
+                row = Math.min(mRows - 1, row);
+            else
+                row = Math.min(mBottomMargin - 1, row);
+            setCursorRow(row);
             break;
+        }
 
         case 'C': // ESC [ Pn C - Cursor Right
             setCursorCol(Math.min(mColumns - 1, mCursorCol + getArg0(1)));

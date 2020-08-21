@@ -8,7 +8,8 @@ echo -n "${CSI}2J"	# // Clear all
 echo -n "${CSI}4;7r"
 
 # // ESC [ Pn ; H - Cursor Position
-echo -n "${CSI}6;1H"
+echo -n "${CSI}7;1H"	# at bottom margins
+
 
 # // ESC [ Pn B - Cursor Down
 echo -n "L1${CSI}BL2"
@@ -21,7 +22,7 @@ sleep 1; echo text3
 #<empty line>
 #<empty line>
 #<empty line>
-#  L2text1
+#L1L2text1
 #text2
 #text3
 #<PS1 prompt>

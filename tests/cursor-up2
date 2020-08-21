@@ -11,19 +11,23 @@ echo -n "${CSI}4;7r"
 echo -n "${CSI}2;1H"	# above top margin
 
 
-# // ESC [ Pn B - Cursor Down
-echo -n "L1${CSI}6BL2"	# stop at bottom margin!
+# // ESC [ Pn A - Cursor Up
+echo -n "L1${CSI}AL2"
 
 sleep 1; echo text1
 sleep 1; echo text2
 sleep 1; echo text3
+sleep 1; echo text4
+sleep 1; echo text5
+sleep 1; echo text6
+sleep 1; echo text7
 
 #expected screen:
-#<empty line>
-#L1
-#<empty line>
 #  L2text1
 #text2
 #text3
+#text5
+#text6
+#text7
 #<PS1 prompt>
 #<... empty lines ...>
