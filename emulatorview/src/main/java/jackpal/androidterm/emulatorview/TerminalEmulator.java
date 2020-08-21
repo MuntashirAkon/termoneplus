@@ -412,7 +412,7 @@ class TerminalEmulator {
         }
 
         // Try to resize the screen without getting the transcript
-        int[] cursor = { mCursorCol, mCursorRow };
+        int[] cursor = {mCursorCol, mCursorRow};
         boolean fastResize = screen.fastResize(columns, rows, cursor);
 
         GrowableIntArray cursorColor = null;
@@ -469,7 +469,7 @@ class TerminalEmulator {
             mCursorCol = 0;
             mAboutToAutoWrap = false;
 
-            int end = altTranscriptText.length()-1;
+            int end = altTranscriptText.length() - 1;
             /* Unlike for the main transcript below, don't trim off trailing
              * newlines -- the alternate transcript lacks a cursor marking, so
              * we might introduce an unwanted vertical shift in the screen
@@ -478,7 +478,7 @@ class TerminalEmulator {
             int colorOffset = 0;
             for (int i = 0; i <= end; i++) {
                 c = altTranscriptText.charAt(i);
-                int style = altColors.at(i-colorOffset);
+                int style = altColors.at(i - colorOffset);
                 if (Character.isHighSurrogate(c)) {
                     cLow = altTranscriptText.charAt(++i);
                     emit(Character.toCodePoint(c, cLow), style);
@@ -516,15 +516,15 @@ class TerminalEmulator {
         int newCursorRow = -1;
         int newCursorCol = -1;
         int newCursorTranscriptPos = -1;
-        int end = transcriptText.length()-1;
+        int end = transcriptText.length() - 1;
         while ((end >= 0) && transcriptText.charAt(end) == '\n') {
             end--;
         }
         char c, cLow;
         int colorOffset = 0;
-        for(int i = 0; i <= end; i++) {
+        for (int i = 0; i <= end; i++) {
             c = transcriptText.charAt(i);
-            int style = colors.at(i-colorOffset);
+            int style = colors.at(i - colorOffset);
             if (Character.isHighSurrogate(c)) {
                 cLow = transcriptText.charAt(++i);
                 emit(Character.toCodePoint(c, cLow), style);
@@ -872,15 +872,15 @@ class TerminalEmulator {
     private void doEscPercent(byte b) {
         switch (b) {
         case '@': // Esc % @ -- return to ISO 2022 mode
-           setUTF8Mode(false);
-           mUTF8EscapeUsed = true;
-           break;
+            setUTF8Mode(false);
+            mUTF8EscapeUsed = true;
+            break;
         case 'G': // Esc % G -- UTF-8 mode
-           setUTF8Mode(true);
-           mUTF8EscapeUsed = true;
-           break;
+            setUTF8Mode(true);
+            mUTF8EscapeUsed = true;
+            break;
         default: // unimplemented character set
-           break;
+            break;
         }
     }
 
@@ -1053,7 +1053,7 @@ class TerminalEmulator {
         case '8': // DECRC restore cursor
             setCursorRowCol(mSavedCursorRow, mSavedCursorCol);
             mEffect = mSavedEffect;
-            mDecFlags = (mDecFlags & ~ K_DECSC_DECRC_MASK)
+            mDecFlags = (mDecFlags & ~K_DECSC_DECRC_MASK)
                     | mSavedDecFlags_DECSC_DECRC;
             break;
 
@@ -1119,7 +1119,7 @@ class TerminalEmulator {
             continueSequence(EscapeProcessingState.RIGHT_SQUARE_BRACKET);
             break;
 
-        case '>' : // DECKPNM
+        case '>': // DECKPNM
             mbKeypadApplicationMode = false;
             break;
 
@@ -1140,8 +1140,8 @@ class TerminalEmulator {
             mScreen.blockCopy(mCursorCol, mCursorRow, charsToMove, 1,
                     mCursorCol + charsToInsert, mCursorRow);
             blockClear(mCursorCol, mCursorRow, charsToInsert);
-        }
             break;
+        }
 
         case 'A': // ESC [ Pn A - Cursor Up
             setCursorRow(Math.max(0, mCursorRow - getArg0(1)));
@@ -1219,8 +1219,8 @@ class TerminalEmulator {
             mScreen.blockCopy(0, mCursorRow, mColumns, linesToMove, 0,
                     mCursorRow + linesToInsert);
             blockClear(0, mCursorRow, mColumns, linesToInsert);
-        }
             break;
+        }
 
         case 'M': // Delete Lines
         {
@@ -1230,8 +1230,8 @@ class TerminalEmulator {
             mScreen.blockCopy(0, mCursorRow + linesToDelete, mColumns,
                     linesToMove, 0, mCursorRow);
             blockClear(0, mCursorRow + linesToMove, mColumns, linesToDelete);
-        }
             break;
+        }
 
         case 'P': // Delete Characters
         {
@@ -1241,8 +1241,8 @@ class TerminalEmulator {
             mScreen.blockCopy(mCursorCol + charsToDelete, mCursorRow,
                     charsToMove, 1, mCursorCol, mCursorRow);
             blockClear(mCursorCol + charsToMove, mCursorRow, charsToDelete);
-        }
             break;
+        }
 
         case 'T': // Mouse tracking
             unimplementedSequence(b);
@@ -1308,7 +1308,7 @@ class TerminalEmulator {
             switch (getArg0(0)) {
             case 5: // Device status report (DSR):
                     // Answer is ESC [ 0 n (Terminal OK).
-                byte[] dsr = { (byte) 27, (byte) '[', (byte) '0', (byte) 'n' };
+                byte[] dsr = {(byte) 27, (byte) '[', (byte) '0', (byte) 'n'};
                 mSession.write(dsr, 0, dsr.length);
                 break;
 
@@ -1349,8 +1349,8 @@ class TerminalEmulator {
             // The cursor is placed in the home position
             // column 1, line 1 of the page(numbering from 1).
             setCursorRowCol(0, 0);
-        }
             break;
+        }
 
         default:
             parseArg(b);
@@ -1362,7 +1362,7 @@ class TerminalEmulator {
         // SGR
         for (int i = 0; i <= mArgIndex; i++) {
             int code = mArgs[i];
-            if ( code < 0) {
+            if (code < 0) {
                 if (mArgIndex > 0) {
                     continue;
                 } else {
@@ -1407,8 +1407,8 @@ class TerminalEmulator {
                 mEffect &= ~TextStyle.fxInvisible;
             } else if (code >= 30 && code <= 37) { // foreground color
                 mForeColor = code - 30;
-            } else if (code == 38 && i+2 <= mArgIndex && mArgs[i+1] == 5) { // foreground 256 color
-                int color = mArgs[i+2];
+            } else if (code == 38 && (i + 2) <= mArgIndex && mArgs[i + 1] == 5) { // foreground 256 color
+                int color = mArgs[i + 2];
                 if (isValidColorIndex(color))
                     mForeColor = color;
                 i += 2;
@@ -1416,8 +1416,8 @@ class TerminalEmulator {
                 mForeColor = mDefaultForeColor;
             } else if (code >= 40 && code <= 47) { // background color
                 mBackColor = code - 40;
-            } else if (code == 48 && i+2 <= mArgIndex && mArgs[i+1] == 5) { // background 256 color
-                int color = mArgs[i+2];
+            } else if (code == 48 && (i + 2) <= mArgIndex && mArgs[i + 1] == 5) { // background 256 color
+                int color = mArgs[i + 2];
                 if (isValidColorIndex(color))
                     mBackColor = color;
                 i += 2;
@@ -1508,11 +1508,11 @@ class TerminalEmulator {
     }
 
     private int getStyle() {
-        return TextStyle.encode(mForeColor, mBackColor,  mEffect);
+        return TextStyle.encode(mForeColor, mBackColor, mEffect);
     }
 
     private int getDefaultStyle() {
-        return TextStyle.encode(mDefaultForeColor, mDefaultBackColor,  TextStyle.fxNormal);
+        return TextStyle.encode(mDefaultForeColor, mDefaultBackColor, TextStyle.fxNormal);
     }
 
     private void doSetMode(boolean newValue) {
@@ -1576,7 +1576,7 @@ class TerminalEmulator {
     }
 
     private void scroll() {
-        mScrollCounter ++;
+        mScrollCounter++;
         mScreen.scroll(mTopMargin, mBottomMargin, getStyle());
     }
 
@@ -1656,7 +1656,7 @@ class TerminalEmulator {
         if (start == end) {
             return "";
         }
-        return new String(mOSCArg, start, end-start, mUTF8Decoder.charset());
+        return new String(mOSCArg, start, end - start, mUTF8Decoder.charset());
     }
 
     private int nextOSCInt(int delimiter) {
@@ -1785,7 +1785,7 @@ class TerminalEmulator {
             mAboutToAutoWrap = (mCursorCol == mColumns - 1);
 
             //Force line-wrap flag to trigger even for lines being typed
-            if(mAboutToAutoWrap)
+            if (mAboutToAutoWrap)
                 mScreen.setLineWrap(mCursorRow);
         }
 
@@ -1831,7 +1831,7 @@ class TerminalEmulator {
                 break;
             }
             if (Character.isHighSurrogate(c[i])) {
-                emit(Character.toCodePoint(c[i], c[i+1]), style);
+                emit(Character.toCodePoint(c[i], c[i + 1]), style);
                 ++i;
             } else {
                 emit((int) c[i], style);
@@ -1850,8 +1850,8 @@ class TerminalEmulator {
     }
 
     private void setCursorRowCol(int row, int col) {
-        mCursorRow = Math.min(row, mRows-1);
-        mCursorCol = Math.min(col, mColumns-1);
+        mCursorRow = Math.min(row, mRows - 1);
+        mCursorCol = Math.min(col, mColumns - 1);
         mAboutToAutoWrap = false;
     }
 
