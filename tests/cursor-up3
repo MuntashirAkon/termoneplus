@@ -23,9 +23,9 @@ sleep 2; echo text4
 #<empty line>
 #<empty line>
 #<empty line>
+#text2
 #text3
 #text4
-#text5
 #<PS1 prompt>
 #L1
 #<... empty lines ...>
