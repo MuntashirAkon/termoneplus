@@ -17,6 +17,8 @@
 
 package jackpal.androidterm.emulatorview;
 
+import android.util.Log;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.nio.ByteBuffer;
@@ -25,8 +27,6 @@ import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CodingErrorAction;
 import java.util.Locale;
-
-import android.util.Log;
 
 import androidx.annotation.IntDef;
 
@@ -39,6 +39,109 @@ import androidx.annotation.IntDef;
  * video, color) alternate screen cursor key and keypad escape sequences.
  */
 class TerminalEmulator {
+    /**
+     * The number of parameter arguments. This name comes from the ANSI standard
+     * for terminal escape codes.
+     */
+    private static final int MAX_ESCAPE_PARAMETERS = 16;
+
+    /**
+     * Don't know what the actual limit is, this seems OK for now.
+     */
+    private static final int MAX_OSC_STRING_LENGTH = 512;
+
+    /**
+     * This is not accurate, but it makes the terminal more useful on
+     * small screens.
+     */
+    private static final boolean DEFAULT_TO_AUTOWRAP_ENABLED = true;
+
+    // DecSet flags
+    /**
+     * This mask indicates 132-column mode is set. (As opposed to 80-column
+     * mode.)
+     */
+    private static final int K_132_COLUMN_MODE_MASK = 1 << 3;
+    /**
+     * DECSCNM - set means reverse video (light background.)
+     */
+    private static final int K_REVERSE_VIDEO_MASK = 1 << 5;
+    /**
+     * This mask indicates that origin mode is set. (Cursor addressing is
+     * relative to the absolute screen size, rather than the currently set top
+     * and bottom margins.)
+     */
+    private static final int K_ORIGIN_MODE_MASK = 1 << 6;
+    /**
+     * This mask indicates that wraparound mode is set. (As opposed to
+     * stop-at-right-column mode.)
+     */
+    private static final int K_WRAPAROUND_MODE_MASK = 1 << 7;
+    /**
+     * This mask indicates that the cursor should be shown. DECTCEM
+     */
+    private static final int K_SHOW_CURSOR_MASK = 1 << 25;
+    /**
+     * This mask is the subset of DecSet bits that are saved / restored by
+     * the DECSC / DECRC commands
+     */
+    private static final int K_DECSC_DECRC_MASK = K_ORIGIN_MODE_MASK | K_WRAPAROUND_MODE_MASK;
+
+    private static final int UNICODE_REPLACEMENT_CHAR = 0xfffd;
+
+    // graphics character set constants
+    private static final int CHAR_SET_UK = 0;
+    private static final int CHAR_SET_ASCII = 1;
+    private static final int CHAR_SET_SPECIAL_GRAPHICS = 2;
+    private static final int CHAR_SET_ALT_STANDARD = 3;
+    private static final int CHAR_SET_ALT_SPECIAL_GRAPICS = 4;
+
+    // special graphics character set
+    private static final char[] mSpecialGraphicsCharMap = new char[128];
+
+    static {
+        for (char i = 0; i < 128; ++i)
+            mSpecialGraphicsCharMap[i] = i;
+        mSpecialGraphicsCharMap['_'] = ' ';     // Blank
+        mSpecialGraphicsCharMap['b'] = 0x2409;  // Tab
+        mSpecialGraphicsCharMap['c'] = 0x240C;  // Form feed
+        mSpecialGraphicsCharMap['d'] = 0x240D;  // Carriage return
+        mSpecialGraphicsCharMap['e'] = 0x240A;  // Line feed
+        mSpecialGraphicsCharMap['h'] = 0x2424;  // New line
+        mSpecialGraphicsCharMap['i'] = 0x240B;  // Vertical tab/"lantern"
+        mSpecialGraphicsCharMap['}'] = 0x00A3;  // Pound sterling symbol
+        mSpecialGraphicsCharMap['f'] = 0x00B0;  // Degree symbol
+        mSpecialGraphicsCharMap['`'] = 0x2B25;  // Diamond
+        mSpecialGraphicsCharMap['~'] = 0x2022;  // Bullet point
+        mSpecialGraphicsCharMap['y'] = 0x2264;  // Less-than-or-equals sign (<=)
+        mSpecialGraphicsCharMap['|'] = 0x2260;  // Not equals sign (!=)
+        mSpecialGraphicsCharMap['z'] = 0x2265;  // Greater-than-or-equals sign (>=)
+        mSpecialGraphicsCharMap['g'] = 0x00B1;  // Plus-or-minus sign (+/-)
+        mSpecialGraphicsCharMap['{'] = 0x03C0;  // Lowercase Greek letter pi
+        mSpecialGraphicsCharMap['.'] = 0x25BC;  // Down arrow
+        mSpecialGraphicsCharMap[','] = 0x25C0;  // Left arrow
+        mSpecialGraphicsCharMap['+'] = 0x25B6;  // Right arrow
+        mSpecialGraphicsCharMap['-'] = 0x25B2;  // Up arrow
+        mSpecialGraphicsCharMap['h'] = '#';     // Board of squares
+        mSpecialGraphicsCharMap['a'] = 0x2592;  // Checkerboard
+        mSpecialGraphicsCharMap['0'] = 0x2588;  // Solid block
+        mSpecialGraphicsCharMap['q'] = 0x2500;  // Horizontal line (box drawing)
+        mSpecialGraphicsCharMap['x'] = 0x2502;  // Vertical line (box drawing)
+        mSpecialGraphicsCharMap['m'] = 0x2514;  // Lower left hand corner (box drawing)
+        mSpecialGraphicsCharMap['j'] = 0x2518;  // Lower right hand corner (box drawing)
+        mSpecialGraphicsCharMap['l'] = 0x250C;  // Upper left hand corner (box drawing)
+        mSpecialGraphicsCharMap['k'] = 0x2510;  // Upper right hand corner (box drawing)
+        mSpecialGraphicsCharMap['w'] = 0x252C;  // T pointing downwards (box drawing)
+        mSpecialGraphicsCharMap['u'] = 0x2524;  // T pointing leftwards (box drawing)
+        mSpecialGraphicsCharMap['t'] = 0x251C;  // T pointing rightwards (box drawing)
+        mSpecialGraphicsCharMap['v'] = 0x2534;  // T pointing upwards (box drawing)
+        mSpecialGraphicsCharMap['n'] = 0x253C;  // Large plus/lines crossing (box drawing)
+        mSpecialGraphicsCharMap['o'] = 0x23BA;  // Horizontal scanline 1
+        mSpecialGraphicsCharMap['p'] = 0x23BB;  // Horizontal scanline 3
+        mSpecialGraphicsCharMap['r'] = 0x23BC;  // Horizontal scanline 7
+        mSpecialGraphicsCharMap['s'] = 0x23BD;  // Horizontal scanline 9
+    }
+
     private TermKeyListener mKeyListener;
     /**
      * The cursor row. Numbered 0..mRows-1.
@@ -79,12 +182,6 @@ class TerminalEmulator {
     private int mArgIndex;
 
     /**
-     * The number of parameter arguments. This name comes from the ANSI standard
-     * for terminal escape codes.
-     */
-    private static final int MAX_ESCAPE_PARAMETERS = 16;
-
-    /**
      * Holds the arguments of the current escape sequence.
      */
     private int[] mArgs = new int[MAX_ESCAPE_PARAMETERS];
@@ -97,11 +194,6 @@ class TerminalEmulator {
     private int mOSCArgLength;
 
     private int mOSCArgTokenizerIndex;
-
-    /**
-     * Don't know what the actual limit is, this seems OK for now.
-     */
-    private static final int MAX_OSC_STRING_LENGTH = 512;
 
     /**
      * True if the current escape sequence should continue, false if the current
@@ -133,44 +225,6 @@ class TerminalEmulator {
     private int mSavedDecFlags_DECSC_DECRC;
 
 
-    // DecSet booleans
-
-    /**
-     * This mask indicates 132-column mode is set. (As opposed to 80-column
-     * mode.)
-     */
-    private static final int K_132_COLUMN_MODE_MASK = 1 << 3;
-
-    /**
-     * DECSCNM - set means reverse video (light background.)
-     */
-    private static final int K_REVERSE_VIDEO_MASK = 1 << 5;
-
-    /**
-     * This mask indicates that origin mode is set. (Cursor addressing is
-     * relative to the absolute screen size, rather than the currently set top
-     * and bottom margins.)
-     */
-    private static final int K_ORIGIN_MODE_MASK = 1 << 6;
-
-    /**
-     * This mask indicates that wraparound mode is set. (As opposed to
-     * stop-at-right-column mode.)
-     */
-    private static final int K_WRAPAROUND_MODE_MASK = 1 << 7;
-
-    /**
-     * This mask indicates that the cursor should be shown. DECTCEM
-     */
-
-    private static final int K_SHOW_CURSOR_MASK = 1 << 25;
-
-    /** This mask is the subset of DecSet bits that are saved / restored by
-     * the DECSC / DECRC commands
-     */
-    private static final int K_DECSC_DECRC_MASK =
-            K_ORIGIN_MODE_MASK | K_WRAPAROUND_MODE_MASK;
-
     /**
      * Holds multiple DECSET flags. The data is stored this way, rather than in
      * separate booleans, to make it easier to implement the save-and-restore
@@ -185,12 +239,11 @@ class TerminalEmulator {
      */
     private int mSavedDecFlags;
 
+    // Modes set with Set Mode / Reset Mode
     /**
      * The current DECSET mouse tracking mode, zero for no mouse tracking.
      */
     private int mMouseTrackingMode;
-
-    // Modes set with Set Mode / Reset Mode
 
     /**
      * True if insert mode (as opposed to replace mode) is active. In insert
@@ -205,7 +258,6 @@ class TerminalEmulator {
     private boolean[] mTabStop;
 
     // The margins allow portions of the screen to be locked.
-
     /**
      * The top margin of the screen, for scrolling purposes. Ranges from 0 to
      * mRows-2.
@@ -263,70 +315,17 @@ class TerminalEmulator {
 
     private boolean mbKeypadApplicationMode;
 
-    /** false == G0, true == G1 */
+    // false == G0, true == G1
     private boolean mAlternateCharSet;
 
-    private final static int CHAR_SET_UK = 0;
-    private final static int CHAR_SET_ASCII = 1;
-    private final static int CHAR_SET_SPECIAL_GRAPHICS = 2;
-    private final static int CHAR_SET_ALT_STANDARD = 3;
-    private final static int CHAR_SET_ALT_SPECIAL_GRAPICS = 4;
-
-    /** What is the current graphics character set. [0] == G0, [1] == G1 */
+    // What is the current graphics character set. [0] == G0, [1] == G1
     private int[] mCharSet = new int[2];
 
-    /** Derived from mAlternateCharSet and mCharSet.
-     *  True if we're supposed to be drawing the special graphics.
+    /**
+     * Derived from mAlternateCharSet and mCharSet.
+     * True if we're supposed to be drawing the special graphics.
      */
     private boolean mUseAlternateCharSet;
-
-    /**
-     * Special graphics character set
-     */
-    private static final char[] mSpecialGraphicsCharMap = new char[128];
-    static {
-        for (char i = 0; i < 128; ++i) {
-            mSpecialGraphicsCharMap[i] = i;
-        }
-        mSpecialGraphicsCharMap['_'] = ' ';	// Blank
-        mSpecialGraphicsCharMap['b'] = 0x2409;	// Tab
-        mSpecialGraphicsCharMap['c'] = 0x240C;	// Form feed
-        mSpecialGraphicsCharMap['d'] = 0x240D;	// Carriage return
-        mSpecialGraphicsCharMap['e'] = 0x240A;	// Line feed
-        mSpecialGraphicsCharMap['h'] = 0x2424;	// New line
-        mSpecialGraphicsCharMap['i'] = 0x240B;	// Vertical tab/"lantern"
-        mSpecialGraphicsCharMap['}'] = 0x00A3;	// Pound sterling symbol
-        mSpecialGraphicsCharMap['f'] = 0x00B0;	// Degree symbol
-        mSpecialGraphicsCharMap['`'] = 0x2B25;	// Diamond
-        mSpecialGraphicsCharMap['~'] = 0x2022;	// Bullet point
-        mSpecialGraphicsCharMap['y'] = 0x2264;	// Less-than-or-equals sign (<=)
-        mSpecialGraphicsCharMap['|'] = 0x2260;	// Not equals sign (!=)
-        mSpecialGraphicsCharMap['z'] = 0x2265;	// Greater-than-or-equals sign (>=)
-        mSpecialGraphicsCharMap['g'] = 0x00B1;	// Plus-or-minus sign (+/-)
-        mSpecialGraphicsCharMap['{'] = 0x03C0;	// Lowercase Greek letter pi
-        mSpecialGraphicsCharMap['.'] = 0x25BC;	// Down arrow
-        mSpecialGraphicsCharMap[','] = 0x25C0;	// Left arrow
-        mSpecialGraphicsCharMap['+'] = 0x25B6;	// Right arrow
-        mSpecialGraphicsCharMap['-'] = 0x25B2;	// Up arrow
-        mSpecialGraphicsCharMap['h'] = '#';	// Board of squares
-        mSpecialGraphicsCharMap['a'] = 0x2592;	// Checkerboard
-        mSpecialGraphicsCharMap['0'] = 0x2588;	// Solid block
-        mSpecialGraphicsCharMap['q'] = 0x2500;	// Horizontal line (box drawing)
-        mSpecialGraphicsCharMap['x'] = 0x2502;	// Vertical line (box drawing)
-        mSpecialGraphicsCharMap['m'] = 0x2514;	// Lower left hand corner (box drawing)
-        mSpecialGraphicsCharMap['j'] = 0x2518;	// Lower right hand corner (box drawing)
-        mSpecialGraphicsCharMap['l'] = 0x250C;	// Upper left hand corner (box drawing)
-        mSpecialGraphicsCharMap['k'] = 0x2510;	// Upper right hand corner (box drawing)
-        mSpecialGraphicsCharMap['w'] = 0x252C;	// T pointing downwards (box drawing)
-        mSpecialGraphicsCharMap['u'] = 0x2524;	// T pointing leftwards (box drawing)
-        mSpecialGraphicsCharMap['t'] = 0x251C;	// T pointing rightwards (box drawing)
-        mSpecialGraphicsCharMap['v'] = 0x2534;	// T pointing upwards (box drawing)
-        mSpecialGraphicsCharMap['n'] = 0x253C;	// Large plus/lines crossing (box drawing)
-        mSpecialGraphicsCharMap['o'] = 0x23BA;	// Horizontal scanline 1
-        mSpecialGraphicsCharMap['p'] = 0x23BB;	// Horizontal scanline 3
-        mSpecialGraphicsCharMap['r'] = 0x23BC;	// Horizontal scanline 7
-        mSpecialGraphicsCharMap['s'] = 0x23BD;	// Horizontal scanline 9
-    }
 
     /**
      * Used for moving selection up along with the scrolling text
@@ -336,7 +335,6 @@ class TerminalEmulator {
     /**
      * UTF-8 support
      */
-    private static final int UNICODE_REPLACEMENT_CHAR = 0xfffd;
     private boolean mUTF8Mode = false;
     private boolean mUTF8EscapeUsed = false;
     private int mUTF8ToFollow = 0;
@@ -344,11 +342,6 @@ class TerminalEmulator {
     private CharBuffer mInputCharBuffer;
     private CharsetDecoder mUTF8Decoder;
     private UpdateCallback mUTF8ModeNotify;
-
-    /** This is not accurate, but it makes the terminal more useful on
-     * small screens.
-     */
-    private final static boolean DEFAULT_TO_AUTOWRAP_ENABLED = true;
 
     /**
      * Construct a terminal emulator that uses the supplied screen
