@@ -1029,7 +1029,8 @@ class FullUnicodeLine {
 
         // Shift the rest of the line right to make room if necessary
         if (shift > 0) {
-            if (spaceUsed + shift > text.length) {
+            // Note requirement for "NUL-terminated" line!
+            if ((spaceUsed + 1) >= text.length) {
                 // We need to grow the array
                 char[] newText = new char[text.length + columns];
                 System.arraycopy(text, 0, newText, 0, pos);
@@ -1074,7 +1075,8 @@ class FullUnicodeLine {
         if (oldCharWidth == 2 && charWidth == 1 || wasExtraColForWideChar && charWidth == 2) {
             int nextPos = pos + newLen;
             char[] newText = text;
-            if (spaceUsed + 1 > text.length) {
+            // Note requirement for "NUL-terminated" line!
+            if ((spaceUsed + 1) >= text.length) {
                 // Array needs growing
                 newText = new char[text.length + columns];
                 System.arraycopy(text, 0, newText, 0, wasExtraColForWideChar ? pos : nextPos);

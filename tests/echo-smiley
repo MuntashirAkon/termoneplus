@@ -1,0 +1,17 @@
+# print "rolling on the floor laughing" emoji
+# UTF-8: \xf0\x9f\xa4\xa3
+# UTF-32: u+0001f923
+
+k=${1-263}
+while test $k -gt 0 ; do
+  #printf '\U01F923'		# format not supported
+  #printf '\xf0\x9f\xa4\xa3'	# command not found (toolbox)
+  echo -n '🤣'
+
+  # To reproduce issue #25 output from regression test
+  # must ensure terminal to draw characters one by one!
+  sleep 1
+
+  #k=`expr $k - 1`		# command not found (toolbox)
+  ((k=$k-1))
+done
