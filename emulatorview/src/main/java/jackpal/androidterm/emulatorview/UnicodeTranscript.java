@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2011 Steven Luo
+ * Copyright (C) 2018-2020 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -58,7 +59,7 @@ class UnicodeTranscript {
     private int mScreenRows;
     private int mColumns;
     private int mActiveTranscriptRows = 0;
-    private int mDefaultStyle = 0;
+    private int mDefaultStyle;
 
     private int mScreenFirstRow = 0;
 
@@ -554,11 +555,13 @@ class UnicodeTranscript {
                 return 2;
             }
         } else {
-            // Outside the BMP, only the ideographic planes contain wide chars
+            // Outside the BMP, ideographic planes contain wide chars
             switch ((codePoint >> 16) & 0xf) {
             case 2: // Supplementary Ideographic Plane
             case 3: // Tertiary Ideographic Plane
                 return 2;
+            case 1: // Supplementary Multilingual Plane
+                return CharacterCompat.charCount(codePoint);
             }
         }
 
@@ -876,7 +879,6 @@ class UnicodeTranscript {
         }
 
         private static class Compat1 {
-            @SuppressWarnings("deprecation")
             private static boolean isDoubleWidth(int ch) {
                 // Android's getEastAsianWidth() only works for BMP characters
                 switch (AndroidCharacter.getEastAsianWidth((char) ch)) {
@@ -898,6 +900,28 @@ class UnicodeTranscript {
                         return true;
                 }
                 return false;
+            }
+        }
+    }
+
+    private static class CharacterCompat {
+        private static int charCount(int cp /*code point*/) {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N /*API Level 24*/)
+                return Compat1.charCount(cp);
+            else
+                return Compat24.charCount(cp);
+        }
+
+        private static class Compat1 {
+            private static int charCount(int cp) {
+                return Character.charCount(cp);
+            }
+        }
+
+        @RequiresApi(24)
+        private static class Compat24 {
+            private static int charCount(int cp) {
+                return UCharacter.charCount(cp);
             }
         }
     }
