@@ -1,0 +1,12 @@
+# test shell script must have unix(LF) end-of-line conversion
+background-lastline text eol=lf
+background-outofindex text eol=lf
+cursor-down text eol=lf
+cursor-down2 text eol=lf
+cursor-down3 text eol=lf
+cursor-up text eol=lf
+cursor-up2 text eol=lf
+cursor-up3 text eol=lf
+echo-smiley text eol=lf
+reset text eol=lf
+scroll-at-bottom-margin text eol=lf
