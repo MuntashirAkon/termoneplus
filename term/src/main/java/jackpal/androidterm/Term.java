@@ -41,6 +41,7 @@ import android.view.ContextMenu.ContextMenuInfo;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -925,10 +926,15 @@ public class Term extends AppCompatActivity
     }
 
     private void doDocumentKeys() {
+        LayoutInflater inflater = getLayoutInflater();
+        View view = inflater.inflate(R.layout.dialog_special_keys, null);
+        TextView message = view.findViewById(R.id.special_keys);
+
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setView(view);
         Resources r = getResources();
         dialog.setTitle(r.getString(R.string.control_key_dialog_title));
-        dialog.setMessage(
+        String hint =
                 formatMessage(mSettings.getControlKeyId(), TermSettings.CONTROL_KEY_ID_NONE,
                         r, R.array.control_keys_short_names,
                         R.string.control_key_dialog_control_text,
@@ -937,7 +943,8 @@ public class Term extends AppCompatActivity
                         formatMessage(mSettings.getFnKeyId(), TermSettings.FN_KEY_ID_NONE,
                                 r, R.array.fn_keys_short_names,
                                 R.string.control_key_dialog_fn_text,
-                                R.string.control_key_dialog_fn_disabled_text, "FNKEY"));
+                                R.string.control_key_dialog_fn_disabled_text, "FNKEY");
+        message.setText(hint);
         dialog.show();
     }
 
