@@ -79,7 +79,7 @@ public class TermExec {
             throw new IllegalStateException("Empty command!");
 
         final String cmd = command.remove(0);
-        final String[] cmdArray = command.toArray(new String[command.size()]);
+        final String[] cmdArray = command.toArray(new String[0]);
         final String[] envArray = new String[environment.size()];
         int i = 0;
         for (Map.Entry<String, String> entry : environment.entrySet()) {

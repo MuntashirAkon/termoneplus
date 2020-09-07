@@ -99,11 +99,11 @@ public class ShellTermSession extends GenericTermSession {
                 Log.e(Application.APP_TAG, "Shell " + arg0 + " not executable!");
                 throw new FileNotFoundException(arg0);
             }
-            args = argList.toArray(new String[1]);
+            args = argList.toArray(new String[0]);
         } catch (Exception e) {
             argList = parse(settings.getFailsafeShell());
             arg0 = argList.get(0);
-            args = argList.toArray(new String[1]);
+            args = argList.toArray(new String[0]);
         }
 
         String[] env = new String[5];
