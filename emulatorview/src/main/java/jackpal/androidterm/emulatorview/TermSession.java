@@ -21,6 +21,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 
+import com.termoneplus.compat.CharacterCompat;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -97,8 +99,8 @@ public class TermSession {
         mUTF8Encoder.onMalformedInput(CodingErrorAction.REPLACE);
         mUTF8Encoder.onUnmappableCharacter(CodingErrorAction.REPLACE);
 
-        mWriteCharBuffer = CharBuffer.allocate(2);
-        mWriteByteBuffer = ByteBuffer.allocate(4);
+        mWriteCharBuffer = CharBuffer.allocate(3); // ensure extra space (>= +1)
+        mWriteByteBuffer = ByteBuffer.allocate(6);
 
         mReceiveBuffer = new byte[4 * 1024];
         mByteQueue = new ByteQueue(4 * 1024);
@@ -205,12 +207,15 @@ public class TermSession {
         CharsetEncoder encoder = mUTF8Encoder;
 
         charBuf.clear();
-        byteBuf.clear();
-        Character.toChars(codePoint, charBuf.array(), 0);
+        int cplen = CharacterCompat.toChars(codePoint, charBuf.array(), 0);
+        charBuf.limit(cplen);
+
         encoder.reset();
+        byteBuf.clear();
         encoder.encode(charBuf, byteBuf, true);
         encoder.flush(byteBuf);
-        write(byteBuf.array(), 0, byteBuf.position() - 1);
+
+        write(byteBuf.array(), 0, byteBuf.position());
     }
 
     /* Notify the writer thread that there's new output waiting */

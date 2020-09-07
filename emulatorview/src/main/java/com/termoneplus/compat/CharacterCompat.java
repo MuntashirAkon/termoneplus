@@ -30,9 +30,20 @@ public class CharacterCompat {
             return Compat24.charCount(cp);
     }
 
+    public static int toChars(int cp, char[] dst, int dstIndex) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N /*API Level 24*/)
+            return Compat1.toChars(cp, dst, dstIndex);
+        else
+            return Compat24.toChars(cp, dst, dstIndex);
+    }
+
     private static class Compat1 {
         private static int charCount(int cp) {
             return Character.charCount(cp);
+        }
+
+        private static int toChars(int cp, char[] dst, int dstIndex) {
+            return Character.toChars(cp, dst, dstIndex);
         }
     }
 
@@ -40,6 +51,10 @@ public class CharacterCompat {
     private static class Compat24 {
         private static int charCount(int cp) {
             return UCharacter.charCount(cp);
+        }
+
+        private static int toChars(int cp, char[] dst, int dstIndex) {
+            return UCharacter.toChars(cp, dst, dstIndex);
         }
     }
 }
