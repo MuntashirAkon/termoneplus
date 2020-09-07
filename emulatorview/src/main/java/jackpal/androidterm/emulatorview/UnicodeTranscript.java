@@ -23,6 +23,8 @@ import android.os.Build;
 import android.text.AndroidCharacter;
 import android.util.Log;
 
+import com.termoneplus.compat.CharacterCompat;
+
 import java.util.Arrays;
 
 import androidx.annotation.RequiresApi;
@@ -904,27 +906,6 @@ class UnicodeTranscript {
         }
     }
 
-    private static class CharacterCompat {
-        private static int charCount(int cp /*code point*/) {
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N /*API Level 24*/)
-                return Compat1.charCount(cp);
-            else
-                return Compat24.charCount(cp);
-        }
-
-        private static class Compat1 {
-            private static int charCount(int cp) {
-                return Character.charCount(cp);
-            }
-        }
-
-        @RequiresApi(24)
-        private static class Compat24 {
-            private static int charCount(int cp) {
-                return UCharacter.charCount(cp);
-            }
-        }
-    }
 }
 
 /*
