@@ -19,7 +19,7 @@ Build-in file selector (aka file explorer) is exported and so allows other appli
 
 Application is localized in many languages and/or territories (locales).
 
-"TermOne Plus" is successor of excellent but un-maintained since 2015 "Terminal Emulator for Android". This new application includes rewritten user interface, many compatibility and portability improvements, stability and defect fixes, and localization enhancements. As result it works fine with recent android releases like Pie(9.0). Even on ancient like Gingerbread(2.3) it looks and works the same as for recent one.
+"TermOne Plus" is successor of excellent but un-maintained since 2015 "Terminal Emulator for Android". This new application includes rewritten user interface, many compatibility and portability improvements, stability and defect fixes, and localization enhancements. As result it works fine with recent android releases (Android 11). Even on ancient like Gingerbread(2.3) it looks and works the same as for recent one.
 
 Please visit application site to find out how to participate into development and/or localization, how to request new or enhanced functionality.
 
