@@ -61,7 +61,7 @@ import jackpal.androidterm.emulatorview.compat.Patterns;
  * If this view is inflated from an XML layout, you need to call {@link
  * #attachSession attachSession} and {@link #setDensity(float)} before using
  * the view.  If creating this view from code, use the {@link
- * #EmulatorView(Context, TermSession, DisplayMetrics)} constructor, which will
+ * #EmulatorView(Context, TermSession, float)} constructor, which will
  * take care of this for you.
  */
 public class EmulatorView extends View implements GestureDetector.OnGestureListener {
@@ -428,16 +428,33 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
 
     /**
      * Create an <code>EmulatorView</code> for a {@link TermSession}.
+     * @deprecated
+     * This method was deprecated in emulatorview 1.7.0.
+     * Use {@link #EmulatorView(Context, TermSession, float)} instead.
      *
      * @param context The {@link Context} for the view.
      * @param session The {@link TermSession} this view will be displaying.
      * @param metrics The {@link DisplayMetrics} of the screen on which the view
      *                will be displayed.
      */
+    @Deprecated
     public EmulatorView(Context context, TermSession session, DisplayMetrics metrics) {
+        this(context, session, metrics.density);
+    }
+
+
+    /**
+     * Create an <code>EmulatorView</code> for a {@link TermSession}.
+     *
+     * @param context The {@link Context} for the view.
+     * @param session The {@link TermSession} this view will be displaying.
+     * @param density The logical density of the screen on which the view
+     *                will be displayed.
+     */
+    public EmulatorView(Context context, TermSession session, float density) {
         super(context);
         attachSession(context, session);
-        setDensity(metrics.density);
+        setDensity(density);
         commonConstructor(context);
     }
 

@@ -373,7 +373,7 @@ public class Term extends AppCompatActivity
     private TermView createEmulatorView(TermSession session) {
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        TermView emulatorView = new TermView(this, session, metrics);
+        TermView emulatorView = new TermView(this, session, metrics.density);
 
         emulatorView.setExtGestureListener(new EmulatorViewGestureListener(emulatorView));
         emulatorView.setOnKeyListener(mKeyListener);
