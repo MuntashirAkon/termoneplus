@@ -403,7 +403,7 @@ public class Term extends AppCompatActivity
         mViewFlipper.updatePrefs(mSettings);
 
         for (View v : mViewFlipper) {
-            ((EmulatorView) v).setDensity(metrics);
+            ((EmulatorView) v).setDensity(metrics.density);
             ((TermView) v).updatePrefs(mSettings);
         }
 

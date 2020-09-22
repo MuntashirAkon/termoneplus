@@ -59,7 +59,7 @@ import jackpal.androidterm.emulatorview.compat.Patterns;
  * terminal emulator.
  * <p>
  * If this view is inflated from an XML layout, you need to call {@link
- * #attachSession attachSession} and {@link #setDensity setDensity} before using
+ * #attachSession attachSession} and {@link #setDensity(float)} before using
  * the view.  If creating this view from code, use the {@link
  * #EmulatorView(Context, TermSession, DisplayMetrics)} constructor, which will
  * take care of this for you.
@@ -197,7 +197,7 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
 
     private boolean mMouseTracking;
 
-    private float mDensity;
+    private float density = 0;
 
     private int mSelXAnchor = -1;
     private int mSelYAnchor = -1;
@@ -437,7 +437,7 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
     public EmulatorView(Context context, TermSession session, DisplayMetrics metrics) {
         super(context);
         attachSession(context, session);
-        setDensity(metrics);
+        setDensity(metrics.density);
         commonConstructor(context);
     }
 
@@ -445,7 +445,7 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
      * Constructor called when inflating this view from XML.
      * <p>
      * You should call {@link #attachSession attachSession} and {@link
-     * #setDensity setDensity} before using an <code>EmulatorView</code> created
+     * #setDensity(float)} before using an <code>EmulatorView</code> created
      * using this constructor.
      */
     public EmulatorView(Context context, AttributeSet attrs) {
@@ -458,7 +458,7 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
      * default style set.
      * <p>
      * You should call {@link #attachSession attachSession} and {@link
-     * #setDensity setDensity} before using an <code>EmulatorView</code> created
+     * #setDensity(float)} before using an <code>EmulatorView</code> created
      * using this constructor.
      */
     public EmulatorView(Context context, AttributeSet attrs, int defStyle) {
@@ -494,15 +494,28 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
 
     /**
      * Update the screen density for the screen on which the view is displayed.
+     * @deprecated
+     * This method was deprecated in emulatorview 1.7.0.
+     * Use {@link EmulatorView#setDensity(float)} instead.
      *
      * @param metrics The {@link DisplayMetrics} of the screen.
      */
+    @Deprecated
     public void setDensity(DisplayMetrics metrics) {
-        if (mDensity == 0) {
+        setDensity(metrics.density);
+    }
+
+    /**
+     * Update the screen density for the screen on which the view is displayed.
+     *
+     * @param density The logical density of the display
+     */
+    public void setDensity(float density) {
+        if (this.density == 0) {
             // First time we've known the screen density, so update font size
-            mTextSize = (int) (mTextSize * metrics.density);
+            mTextSize = (int) (mTextSize * density);
         }
-        mDensity = metrics.density;
+        this.density = density;
     }
 
     /**
@@ -1047,7 +1060,7 @@ public class EmulatorView extends View implements GestureDetector.OnGestureListe
      * @param fontSize the new font size, in density-independent pixels.
      */
     public void setTextSize(int fontSize) {
-        mTextSize = (int) (fontSize * mDensity);
+        mTextSize = (int) (fontSize * density);
         updateText();
     }
 
