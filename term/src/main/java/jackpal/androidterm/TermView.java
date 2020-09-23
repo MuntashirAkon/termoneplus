@@ -17,6 +17,7 @@
 package jackpal.androidterm;
 
 import android.content.Context;
+import android.util.DisplayMetrics;
 
 import jackpal.androidterm.emulatorview.ColorScheme;
 import jackpal.androidterm.emulatorview.EmulatorView;
@@ -25,8 +26,8 @@ import jackpal.androidterm.util.TermSettings;
 
 
 public class TermView extends EmulatorView {
-    public TermView(Context context, TermSession session, float density) {
-        super(context, session, density);
+    public TermView(Context context, TermSession session, DisplayMetrics metrics) {
+        super(context, session, metrics);
     }
 
     public void updatePrefs(TermSettings settings, ColorScheme scheme) {
