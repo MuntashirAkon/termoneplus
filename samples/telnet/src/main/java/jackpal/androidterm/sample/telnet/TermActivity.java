@@ -103,7 +103,7 @@ public class TermActivity extends AppCompatActivity {
         /* Let the EmulatorView know the screen's density. */
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        view.setDensity(metrics.density);
+        view.setDensity(metrics);
 
         /* Create a TermSession. */
         Intent myIntent = getIntent();

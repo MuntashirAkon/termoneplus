@@ -9,7 +9,6 @@ android {
 
         //Major.Minor.Patch
         versionCode 10600
-        //next will be 1.7.0
         versionName '1.6.0'
     }
     compileOptions {
