@@ -134,7 +134,7 @@ public class ColorValue {
         new AlertDialog.Builder(context)
                 .setView(view)
                 .setTitle(R.string.addshortcut_make_text_icon)
-                .setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                .setPositiveButton(android.R.string.ok, (dialog, which) -> {
                     if (which != AlertDialog.BUTTON_POSITIVE) return;
 
                     String s = icon_text.getText().toString();

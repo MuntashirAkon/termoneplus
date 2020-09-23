@@ -126,7 +126,7 @@ public class IntentSampleActivity extends AppCompatActivity {
             Snackbar.make(main_layout,
                     R.string.error_security_grant,
                     Snackbar.LENGTH_INDEFINITE)
-                    .setAction(android.R.string.yes,
+                    .setAction(android.R.string.ok,
                             v -> permissionRunScript())
                     .show();
         }
@@ -144,7 +144,7 @@ public class IntentSampleActivity extends AppCompatActivity {
             Snackbar.make(main_layout,
                     R.string.run_script_rationale,
                     Snackbar.LENGTH_INDEFINITE)
-                    .setAction(android.R.string.yes,
+                    .setAction(android.R.string.ok,
                             v -> requestPermissionRunScript())
                     .show();
         } else {

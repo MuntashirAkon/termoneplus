@@ -598,11 +598,11 @@ public class Term extends AppCompatActivity
         b.setIcon(android.R.drawable.ic_dialog_alert);
         b.setMessage(R.string.confirm_window_close_message);
         final Runnable closeWindow = this::doCloseWindow;
-        b.setPositiveButton(android.R.string.yes, (dialog, id) -> {
+        b.setPositiveButton(android.R.string.ok, (dialog, id) -> {
             dialog.dismiss();
             mHandler.post(closeWindow);
         });
-        b.setNegativeButton(android.R.string.no, null);
+        b.setNegativeButton(android.R.string.cancel, null);
         b.show();
     }
 
@@ -815,7 +815,7 @@ public class Term extends AppCompatActivity
                     mViewFlipper,
                     R.string.message_external_storage_rationale,
                     Snackbar.LENGTH_INDEFINITE)
-                    .setAction(android.R.string.yes,
+                    .setAction(android.R.string.ok,
                             view -> Permissions.requestPermissionExternalStorage(
                                     this,
                                     Permissions.REQUEST_EXTERNAL_STORAGE))

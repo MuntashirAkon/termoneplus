@@ -120,7 +120,7 @@ public class AddShortcut extends AppCompatActivity {
         final AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setView(shortcut_view);
         alert.setTitle(getString(R.string.addshortcut_title));
-        alert.setPositiveButton(android.R.string.yes,
+        alert.setPositiveButton(android.R.string.ok,
                 (dialog, which) -> buildShortcut(
                         AddShortcut.this,
                         path,

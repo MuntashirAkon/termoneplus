@@ -84,7 +84,7 @@ public class WakeLock {
 
         new AlertDialog.Builder(context)
                 .setMessage(msg)
-                .setPositiveButton(android.R.string.yes,
+                .setPositiveButton(android.R.string.ok,
                         (dialog, which) -> openPowerSettings(context)
                 )
                 .setNegativeButton(android.R.string.cancel, null)
