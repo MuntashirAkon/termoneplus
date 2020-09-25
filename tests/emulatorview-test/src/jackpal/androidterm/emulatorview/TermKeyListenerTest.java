@@ -56,7 +56,7 @@ class MockTermSession extends TermSession {
 
         charBuf.clear();
         byteBuf.clear();
-        Character.toChars(codePoint, charBuf.array(), 0);
+        CharacterCompat.toChars(codePoint, charBuf.array(), 0);
         encoder.reset();
         encoder.encode(charBuf, byteBuf, true);
         encoder.flush(byteBuf);

@@ -547,7 +547,7 @@ class UnicodeTranscript {
                 return 2;
             }
         }
-        if (Character.charCount(codePoint) == 1) {
+        if (CharacterCompat.charCount(codePoint) == 1) {
             if (CharacterCompat.isEastAsianDoubleWidth(codePoint)) {
                 return 2;
             }
@@ -558,7 +558,7 @@ class UnicodeTranscript {
             case 3: // Tertiary Ideographic Plane
                 return 2;
             case 1: // Supplementary Multilingual Plane
-                return CharacterCompat.charCount(codePoint);
+                return 2; // TODO
             }
         }
 
@@ -767,7 +767,7 @@ class UnicodeTranscript {
     }
 
     private boolean isBasicChar(int codePoint) {
-        return !(charWidth(codePoint) != 1 || Character.charCount(codePoint) != 1);
+        return !(charWidth(codePoint) != 1 || CharacterCompat.charCount(codePoint) != 1);
     }
 
     private char[] allocateBasicLine(int row, int columns) {
@@ -983,7 +983,7 @@ class FullUnicodeLine {
         }
 
         // Find how much space this column will need
-        int newLen = Character.charCount(codePoint);
+        int newLen = CharacterCompat.charCount(codePoint);
         if (charWidth == 0) {
             /* Combining characters are added to the contents of the column
                instead of overwriting them, so that they modify the existing
@@ -1008,11 +1008,11 @@ class FullUnicodeLine {
 
         // Store the character
         if (charWidth > 0) {
-            Character.toChars(codePoint, text, pos);
+            CharacterCompat.toChars(codePoint, text, pos);
         } else {
             /* Store a combining character at the end of the existing contents,
                so that it modifies them */
-            Character.toChars(codePoint, text, pos + oldLen);
+            CharacterCompat.toChars(codePoint, text, pos + oldLen);
         }
 
         // Shift the rest of the line left to eliminate gaps if necessary
