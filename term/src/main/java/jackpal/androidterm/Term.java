@@ -371,8 +371,7 @@ public class Term extends AppCompatActivity
     }
 
     private TermView createEmulatorView(TermSession session) {
-        DisplayMetrics metrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
         TermView emulatorView = new TermView(this, session, metrics);
 
         emulatorView.setExtGestureListener(new EmulatorViewGestureListener(emulatorView));
@@ -397,11 +396,9 @@ public class Term extends AppCompatActivity
     protected void updatePrefs() {
         mUseKeyboardShortcuts = mSettings.getUseKeyboardShortcutsFlag();
 
-        DisplayMetrics metrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(metrics);
-
         mViewFlipper.updatePrefs(mSettings);
 
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
         for (View v : mViewFlipper) {
             ((EmulatorView) v).setDensity(metrics);
             ((TermView) v).updatePrefs(mSettings);
