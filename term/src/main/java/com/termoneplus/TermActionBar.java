@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017-2019 Roumen Petrov.  All rights reserved.
+ * Copyright (C) 2017-2020 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -211,6 +211,8 @@ public class TermActionBar {
         }
 
         private static class Compat1 {
+            // note suppression is not redundant - for setBackgroundDrawable
+            @SuppressWarnings("deprecation")
             private static void setColors(NavigationView view, int[] colors) {
                 try {
                     View header = view.getHeaderView(0);
