@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2007 The Android Open Source Project
- * Copyright (C) 2018-2019 Roumen Petrov.  All rights reserved.
+ * Copyright (C) 2018-2020 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,6 +31,8 @@ import jackpal.androidterm.util.TermSettings;
 import java.io.*;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -106,12 +108,17 @@ public class ShellTermSession extends GenericTermSession {
             args = argList.toArray(new String[0]);
         }
 
-        String[] env = new String[5];
-        env[0] = "TERM=" + settings.getTermType();
-        env[1] = "PATH=" + Application.xbindir.getPath() + File.pathSeparator + path_settings.buildPATH();
-        env[2] = "HOME=" + settings.getHomePath();
-        env[3] = "TMPDIR=" + Application.getTmpPath();
-        env[4] = "ENV=" + Application.getScriptFilePath();
+        Map<String, String> map = new HashMap<>(System.getenv());
+        map.put("TERM", settings.getTermType());
+        map.put("PATH", Application.xbindir.getPath() + File.pathSeparator + path_settings.buildPATH());
+        map.put("HOME", settings.getHomePath());
+        map.put("TMPDIR", Application.getTmpPath());
+        map.put("ENV", Application.getScriptFilePath());
+
+        String[] env = new String[map.size()];
+        int k = 0;
+        for (Map.Entry<String, String> entry : map.entrySet())
+            env[k++] = entry.getKey() + "=" + entry.getValue();
 
         return Process.createSubprocess(mTermFd, arg0, args, env);
     }
