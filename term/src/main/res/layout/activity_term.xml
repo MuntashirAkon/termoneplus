@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
- * Copyright (c) 2017-2019 Roumen Petrov.  All rights reserved.
+ * Copyright (c) 2017-2020 Roumen Petrov.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -52,6 +52,9 @@
         android:layout_height="match_parent"
         android:layout_marginStart="1dp"
         android:layout_marginLeft="1dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginRight="1dp"
+        android:layout_marginBottom="1dp"
         android:background="@android:color/black"/>
 
 </LinearLayout>
