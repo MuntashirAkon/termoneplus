@@ -37,12 +37,13 @@ android {
 
         signingConfigs {
             release {
-                storeFile = file(properties["store.file"].toString())
-                storePassword = properties["store.password"].toString()
-                keyAlias = properties["key.alias"].toString()
-                keyPassword = properties["key.password"].toString()
+                storeFile file(properties["store.file"])
+                storePassword properties["store.password"]
+                keyAlias properties["key.alias"]
+                keyPassword properties["key.password"]
             }
         }
+
         android.buildTypes.release.signingConfig = signingConfigs.release
     }
     buildTypes {
