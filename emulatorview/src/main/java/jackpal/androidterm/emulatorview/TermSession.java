@@ -611,19 +611,19 @@ public class TermSession {
             }
         }
 
-        private class ExceptionStateNew extends IllegalThreadStateException {
+        private static class ExceptionStateNew extends IllegalThreadStateException {
             private ExceptionStateNew(String msg) {
                 super(msg);
             }
         }
 
-        private class ExceptionStateTerminated extends IllegalThreadStateException {
+        private static class ExceptionStateTerminated extends IllegalThreadStateException {
             private ExceptionStateTerminated(String msg) {
                 super(msg);
             }
         }
 
-        private class ExceptionisAlive extends IllegalThreadStateException {
+        private static class ExceptionisAlive extends IllegalThreadStateException {
             private ExceptionisAlive(String msg) {
                 super(msg);
             }
