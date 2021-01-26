@@ -548,6 +548,8 @@ public class TermSession {
         private final WeakReference<TermSession> reference;
 
         TermHandler(TermSession session) {
+            //by default runs on application's main looper
+            super(Looper.getMainLooper());
             reference = new WeakReference<>(session);
         }
 
@@ -557,11 +559,10 @@ public class TermSession {
             if (session == null) return;
             if (!session.mIsRunning) return;
 
-            if (msg.what == NEW_INPUT) {
+            if (msg.what == NEW_INPUT)
                 session.readFromProcess();
-            } else if (msg.what == EOF) {
-                new Handler(Looper.getMainLooper()).post(session::onProcessExit);
-            }
+            else if (msg.what == EOF)
+                session.onProcessExit();
         }
     }
 
@@ -630,19 +631,18 @@ public class TermSession {
     }
 
     private class ReaderThread extends TraceThread {
-        private byte[] buffer = new byte[4096];
-        private boolean notify_eof;
-        private Handler handler;
+        private final boolean notify_eof;
 
         ReaderThread(String name, boolean notify_eof) {
             super(name);
             this.notify_eof = notify_eof;
-            handler = new TermHandler(TermSession.this);
         }
 
         @Override
         public void run() {
+            Handler handler = new TermHandler(TermSession.this);
             try {
+                byte[] buffer = new byte[4096];
                 while (true) {
                     if (isInterrupted())
                         break;
@@ -653,11 +653,10 @@ public class TermSession {
                     }
                     int offset = 0;
                     while (read > 0) {
-                        int written = mByteQueue.write(buffer,
-                                offset, read);
+                        int written = mByteQueue.write(buffer, offset, read);
                         offset += written;
                         read -= written;
-                        handlerMessage(NEW_INPUT);
+                        handler.sendEmptyMessage(NEW_INPUT);
                     }
                 }
             } catch (IOException ignored) {
@@ -672,11 +671,7 @@ public class TermSession {
             }
 
             if (notify_eof)
-                handlerMessage(EOF);
-        }
-
-        private void handlerMessage(int code) {
-            handler.sendMessage(handler.obtainMessage(code));
+                handler.sendEmptyMessage(EOF);
         }
     }
 
@@ -690,12 +685,9 @@ public class TermSession {
         @Override
         public void run() {
             Looper.prepare();
-
             mWriterHandler = new WriterHandler(Looper.myLooper(), this);
-
             // Drain anything in the queue from before we started
             writeToOutput();
-
             Looper.loop();
         }
 
