@@ -31,9 +31,9 @@
     </string-array>
 
     <string-array name="entryvalues_thememode_preference">
-        <item>dark</item>
-        <item>light</item>
-        <item>system</item>
+        <item>2</item>
+        <item>1</item>
+        <item>-1</item>
     </string-array>
 
     <string-array name="entryvalues_orientation_preference">

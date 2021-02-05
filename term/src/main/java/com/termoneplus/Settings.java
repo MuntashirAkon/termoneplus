@@ -29,17 +29,17 @@ public class Settings {
     /* Note keep synchronized with names in @array.entries_color_preference
     and index in @array.entryvalues_color_preference. */
     public static final ColorScheme[] color_schemes = {
-            new ColorScheme(0xFF000000, 0xFFFFFFFF) /*black on white*/,
-            new ColorScheme(0xFFFFFFFF, 0xFF000000) /*white on black*/,
-            new ColorScheme(0xFFFFFFFF, 0xFF344EBD) /*white on blue*/,
-            new ColorScheme(0xFF00FF00, 0xFF000000) /*green on black*/,
-            new ColorScheme(0xFFFFB651, 0xFF000000) /*amber on black*/,
-            new ColorScheme(0xFFFF0113, 0xFF000000) /*red on black*/,
-            new ColorScheme(0xFF33B5E5, 0xFF000000) /*holo-blue on black*/,
-            new ColorScheme(0xFF657B83, 0xFFFDF6E3) /*solarized light*/,
-            new ColorScheme(0xFF839496, 0xFF002B36) /*solarized dark*/,
-            new ColorScheme(0xFFAAAAAA, 0xFF000000) /*linux console*/,
-            new ColorScheme(0xFFDCDCCC, 0xFF2C2C2C) /*dark pastels*/
+            new ColorScheme(0xFF000000, 0xFFFFFFFF, false) /*black on white*/,
+            new ColorScheme(0xFFFFFFFF, 0xFF000000, true) /*white on black*/,
+            new ColorScheme(0xFFFFFFFF, 0xFF344EBD, true) /*white on blue*/,
+            new ColorScheme(0xFF00FF00, 0xFF000000, true) /*green on black*/,
+            new ColorScheme(0xFFFFB651, 0xFF000000, true) /*amber on black*/,
+            new ColorScheme(0xFFFF0113, 0xFF000000, true) /*red on black*/,
+            new ColorScheme(0xFF33B5E5, 0xFF000000, true) /*holo-blue on black*/,
+            new ColorScheme(0xFF657B83, 0xFFFDF6E3, false) /*solarized light*/,
+            new ColorScheme(0xFF839496, 0xFF002B36, true) /*solarized dark*/,
+            new ColorScheme(0xFFAAAAAA, 0xFF000000, true) /*linux console*/,
+            new ColorScheme(0xFFDCDCCC, 0xFF2C2C2C, true) /*dark pastels*/
     };
 
     private static final String SOURCE_SYS_SHRC_KEY = "source_sys_shrc";

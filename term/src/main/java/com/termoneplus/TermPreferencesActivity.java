@@ -71,7 +71,7 @@ public class TermPreferencesActivity extends BaseActivity {
 
             ListPreference themePref = findPreference(ThemeManager.PREF_THEME_MODE);
             Objects.requireNonNull(themePref).setOnPreferenceChangeListener((preference, newValue) -> {
-                ThemeManager.setTheme(requireActivity().getApplicationContext(), (String) newValue);
+                ThemeManager.setTheme(requireActivity().getApplicationContext(), Integer.parseInt((String) newValue));
                 return true;
             });
         }

@@ -74,7 +74,7 @@
             android:dialogTitle="@string/dialog_title_thememode_preference"
             android:entries="@array/entries_thememode_preference"
             android:entryValues="@array/entryvalues_thememode_preference"
-            android:key="thememode"
+            android:key="theme_mode"
             android:summary="@string/summary_thememode_preference"
             android:title="@string/title_thememode_preference"/>
 

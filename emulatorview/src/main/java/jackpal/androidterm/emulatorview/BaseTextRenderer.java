@@ -297,8 +297,7 @@ abstract class BaseTextRenderer implements TextRenderer {
             0xffeeeeee
     };
 
-    static final ColorScheme defaultColorScheme =
-            new ColorScheme(0xffcccccc, 0xff000000);
+    static final ColorScheme defaultColorScheme = new ColorScheme(0xffcccccc, 0xff000000, true);
 
     private final Paint mCursorScreenPaint;
     private final Paint mCopyRedToAlphaPaint;

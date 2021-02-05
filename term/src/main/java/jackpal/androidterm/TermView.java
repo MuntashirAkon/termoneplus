@@ -19,6 +19,8 @@ package jackpal.androidterm;
 import android.content.Context;
 import android.util.DisplayMetrics;
 
+import androidx.annotation.NonNull;
+import com.termoneplus.utils.ThemeManager;
 import jackpal.androidterm.emulatorview.ColorScheme;
 import jackpal.androidterm.emulatorview.EmulatorView;
 import jackpal.androidterm.emulatorview.TermSession;
@@ -37,7 +39,7 @@ public class TermView extends EmulatorView {
 
         setTextSize(settings.getFontSize());
         setUseCookedIME(settings.useCookedIME());
-        setColorScheme(scheme);
+        setColorScheme(ThemeManager.getColorSchemeMatchingTheme(getContext(), scheme));
         setBackKeyCharacter(settings.getBackKeyCharacter());
         setAltSendsEsc(settings.getAltSendsEscFlag());
         setControlKeyCode(settings.getControlKeyCode());
@@ -51,6 +53,7 @@ public class TermView extends EmulatorView {
     }
 
     @Override
+    @NonNull
     public String toString() {
         return getClass().toString() + '(' + getTermSession() + ')';
     }

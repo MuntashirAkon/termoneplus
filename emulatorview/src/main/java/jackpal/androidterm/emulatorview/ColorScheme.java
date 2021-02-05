@@ -16,6 +16,8 @@
 
 package jackpal.androidterm.emulatorview;
 
+import androidx.annotation.NonNull;
+
 /**
  * A class describing a color scheme for an {@link EmulatorView}.
  * <p>
@@ -32,11 +34,14 @@ package jackpal.androidterm.emulatorview;
  */
 
 public class ColorScheme {
-    private int foreColor;
-    private int backColor;
+    private static final int sDefaultCursorBackColor = 0xff808080;
+
+    private final int foreColor;
+    private final int backColor;
     private int cursorForeColor;
     private int cursorBackColor;
-    final private static int sDefaultCursorBackColor = 0xff808080;
+    private final boolean isNightScheme;
+
 
     private void setDefaultCursorColors() {
         cursorBackColor = sDefaultCursorBackColor;
@@ -69,9 +74,10 @@ public class ColorScheme {
      * @param foreColor The foreground color as an ARGB hex value.
      * @param backColor The background color as an ARGB hex value.
      */
-    public ColorScheme(int foreColor, int backColor) {
+    public ColorScheme(int foreColor, int backColor, boolean isNightScheme) {
         this.foreColor = foreColor;
         this.backColor = backColor;
+        this.isNightScheme = isNightScheme;
         setDefaultCursorColors();
     }
 
@@ -83,11 +89,12 @@ public class ColorScheme {
      * @param cursorForeColor The cursor foreground color as an ARGB hex value.
      * @param cursorBackColor The cursor foreground color as an ARGB hex value.
      */
-    public ColorScheme(int foreColor, int backColor, int cursorForeColor, int cursorBackColor) {
+    public ColorScheme(int foreColor, int backColor, int cursorForeColor, int cursorBackColor, boolean isNightScheme) {
         this.foreColor = foreColor;
         this.backColor = backColor;
         this.cursorForeColor = cursorForeColor;
         this.cursorBackColor = cursorBackColor;
+        this.isNightScheme = isNightScheme;
     }
 
     /**
@@ -96,13 +103,14 @@ public class ColorScheme {
      * @param scheme An integer array <code>{ foreColor, backColor,
      *               optionalCursorForeColor, optionalCursorBackColor }</code>.
      */
-    public ColorScheme(int[] scheme) {
+    public ColorScheme(@NonNull int[] scheme, boolean isNightScheme) {
         int schemeLength = scheme.length;
         if (schemeLength != 2 && schemeLength != 4) {
             throw new IllegalArgumentException();
         }
         this.foreColor = scheme[0];
         this.backColor = scheme[1];
+        this.isNightScheme = isNightScheme;
         if (schemeLength == 2)  {
             setDefaultCursorColors();
         } else {
@@ -141,5 +149,9 @@ public class ColorScheme {
      */
     public int getCursorBackColor() {
         return cursorBackColor;
+    }
+
+    public boolean isNightScheme() {
+        return isNightScheme;
     }
 }
