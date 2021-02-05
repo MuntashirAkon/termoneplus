@@ -17,7 +17,31 @@
 package com.termoneplus.utils;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.preference.PreferenceManager;
+
 public class ThemeManager {
     public static final String PREF_THEME_MODE = "thememode";
 
+    public static void setTheme(@NonNull Context context, @Nullable String mode) {
+        if (mode == null) {
+            final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+            mode = sharedPreferences.getString(PREF_THEME_MODE, "system");
+        }
+        switch (mode) {
+            case "dark":
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                break;
+            case "light":
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                break;
+            case "system":
+            default:
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+        }
+    }
 }

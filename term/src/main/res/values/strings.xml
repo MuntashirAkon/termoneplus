@@ -18,7 +18,6 @@
 
 <resources>
     <string name="application_site" translatable="false">https://www.termoneplus.com</string>
-    <string name="application_email" translatable="false">maintainer@termoneplus.com</string>
 
     <string name="application_terminal">Terminal Emulator</string>
     <string name="preferences">Preferences</string>
@@ -39,10 +38,6 @@
     <string name="ignore_battery_optimizations">Allow \"%1$s\" to ignore battery optimizations?</string>
     <string name="enable_wifilock">Take WifiLock</string>
     <string name="disable_wifilock">Drop WifiLock</string>
-
-    <!-- Navigation drawer -->
-    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
-    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
 
     <string name="message_external_storage_rationale">Access to \"External Storage\" is required to manage its files</string>
     <string name="message_external_storage_granted">Granted access to \"External Storage\"</string>

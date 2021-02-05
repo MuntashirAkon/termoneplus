@@ -16,18 +16,12 @@
 
 package com.termoneplus;
 
-import android.content.Context;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Spinner;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import com.google.android.material.navigation.NavigationView;
 
 
 /**
@@ -35,30 +29,12 @@ import com.google.android.material.navigation.NavigationView;
  */
 
 public class TermActionBar {
-    private final DrawerLayout drawer;
-    private final NavigationView nav_view;
     private final Toolbar toolbar;
     private final Spinner spinner;
 
     private TermActionBar(AppCompatActivity context, boolean floating) {
         toolbar = context.findViewById(R.id.toolbar);
         context.setSupportActionBar(toolbar);
-
-        drawer = context.findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                context, drawer, toolbar,
-                R.string.navigation_drawer_open, R.string.navigation_drawer_close
-        ) {
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                hideSoftInput(drawerView);
-                super.onDrawerOpened(drawerView);
-            }
-        };
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-
-        nav_view = context.findViewById(R.id.nav_view);
 
         ActionBar appbar = context.getSupportActionBar();
         if (appbar != null) {
@@ -74,9 +50,9 @@ public class TermActionBar {
 
     public static TermActionBar setTermContentView(AppCompatActivity context, boolean floating) {
         if (floating) {
-            context.setContentView(R.layout.drawer_term_floatbar);
+            context.setContentView(R.layout.activity_term_floatbar);
         } else {
-            context.setContentView(R.layout.drawer_term);
+            context.setContentView(R.layout.activity_term);
         }
         return new TermActionBar(context, floating);
     }
@@ -98,16 +74,6 @@ public class TermActionBar {
             }
         };
         spinner.setOnItemSelectedListener(wrapper);
-    }
-
-    public void setOnNavigationItemSelectedListener(
-            NavigationView.OnNavigationItemSelectedListener listener
-    ) {
-        nav_view.setNavigationItemSelectedListener(item -> {
-            boolean result = listener.onNavigationItemSelected(item);
-            drawer.closeDrawer(GravityCompat.START);
-            return result;
-        });
     }
 
     public void setSelection(int position) {
@@ -132,29 +98,6 @@ public class TermActionBar {
         } else {
             show();
         }
-    }
-
-    public void lockDrawer(boolean flag) {
-        if (flag)
-            drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-        else
-            drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-    }
-
-    private void hideSoftInput(final View view) {
-        new Thread() {
-            @Override
-            public void run() {
-                Context context = view.getContext();
-
-                InputMethodManager imm = (InputMethodManager)
-                        context.getSystemService(Context.INPUT_METHOD_SERVICE);
-                if (imm == null) return;
-
-                android.os.IBinder token = view.getWindowToken();
-                imm.hideSoftInputFromWindow(token, 0);
-            }
-        }.start();
     }
 
     public interface OnItemSelectedListener {

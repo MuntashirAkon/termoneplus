@@ -30,7 +30,7 @@
         android:scrollbarAlwaysDrawVerticalTrack="true"
         android:scrollbarStyle="insideInset"
         android:scrollbars="vertical"
-        tools:listitem="@layout/content_windowlist">
+        tools:listitem="@layout/item_window">
     </ListView>
 
     <TextView

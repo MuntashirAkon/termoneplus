@@ -42,13 +42,12 @@
         android:name=".Application"
         android:allowBackup="false"
         android:extractNativeLibs="true"
-        android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/application_terminal"
         android:resizeableActivity="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning">
+        tools:ignore="UnusedAttribute">
         <activity
             android:name=".TermActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|layoutDirection|navigation|uiMode|density"
@@ -105,7 +104,9 @@
             </intent-filter>
         </activity>
 
-        <service android:name="jackpal.androidterm.TermService">
+        <service
+            android:name="jackpal.androidterm.TermService"
+            android:exported="false">
             <intent-filter>
                 <action android:name="jackpal.androidterm.action.START_TERM.v1"/>
 

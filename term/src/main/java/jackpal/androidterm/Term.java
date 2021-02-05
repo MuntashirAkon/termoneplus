@@ -22,7 +22,6 @@ import android.content.*;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -64,7 +63,7 @@ import java.io.IOException;
 /**
  * A terminal emulator activity.
  */
-public class Term extends AppCompatActivity
+public class Term extends BaseActivity
         implements UpdateCallback, SharedPreferences.OnSharedPreferenceChangeListener {
     public static final int REQUEST_CHOOSE_WINDOW = 1;
     /**
@@ -245,7 +244,6 @@ public class Term extends AppCompatActivity
             if (mActionBarMode == TermSettings.ACTION_BAR_MODE_HIDES)
                 mActionBar.hide();
         });
-        mActionBar.setOnNavigationItemSelectedListener(this::onNavigationItemSelected);
 
         mViewFlipper = findViewById(VIEW_FLIPPER);
 
@@ -351,8 +349,7 @@ public class Term extends AppCompatActivity
 
         emulatorView.setExtGestureListener(new EmulatorViewGestureListener(emulatorView));
         emulatorView.setOnKeyListener(mKeyListener);
-        emulatorView.setOnToggleSelectingTextListener(
-                () -> mActionBar.lockDrawer(emulatorView.getSelectingText()));
+        emulatorView.setOnToggleSelectingTextListener(null);
         registerForContextMenu(emulatorView);
 
         return emulatorView;
@@ -491,6 +488,7 @@ public class Term extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
@@ -513,34 +511,24 @@ public class Term extends AppCompatActivity
             doToggleWakeLock();
         } else if (id == R.id.menu_toggle_wifilock) {
             doToggleWifiLock();
+        } else if (id == R.id.nav_window_list) {
+            startActivityForResult(new Intent(this, WindowListActivity.class), REQUEST_CHOOSE_WINDOW);
+            return true;
+        } else if (id == R.id.nav_preferences) {
+            doPreferences();
+            return true;
+        } else if (id == R.id.nav_special_keys) {
+            doDocumentKeys();
+            return true;
+        } else if (id == R.id.nav_action_help) {
+            WrapOpenURL.launch(this, R.string.help_url);
+            return true;
         }
         // Hide the action bar if appropriate
         if (mActionBarMode == TermSettings.ACTION_BAR_MODE_HIDES) {
             mActionBar.hide();
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-        switch (id) {
-            case R.id.nav_window_list:
-                startActivityForResult(new Intent(this, WindowListActivity.class), REQUEST_CHOOSE_WINDOW);
-                return true;
-            case R.id.nav_preferences:
-                doPreferences();
-                return true;
-            case R.id.nav_special_keys:
-                doDocumentKeys();
-                return true;
-            case R.id.nav_action_help:
-                WrapOpenURL.launch(this, R.string.help_url);
-                return true;
-            case R.id.nav_send_email:
-                doEmailTranscript();
-                return true;
-        }
-        return false;
     }
 
     private void doCreateNewWindow() {
@@ -800,21 +788,19 @@ public class Term extends AppCompatActivity
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case Permissions.REQUEST_EXTERNAL_STORAGE: {
-                if (Permissions.isPermissionGranted(grantResults)) {
-                    Snackbar.make(mViewFlipper,
-                            R.string.message_external_storage_granted,
-                            Snackbar.LENGTH_SHORT)
-                            .show();
-                } else {
-                    Snackbar.make(mViewFlipper,
-                            R.string.message_external_storage_not_granted,
-                            Snackbar.LENGTH_SHORT)
-                            .show();
-                }
-                return;
+        if (requestCode == Permissions.REQUEST_EXTERNAL_STORAGE) {
+            if (Permissions.isPermissionGranted(grantResults)) {
+                Snackbar.make(mViewFlipper,
+                        R.string.message_external_storage_granted,
+                        Snackbar.LENGTH_SHORT)
+                        .show();
+            } else {
+                Snackbar.make(mViewFlipper,
+                        R.string.message_external_storage_not_granted,
+                        Snackbar.LENGTH_SHORT)
+                        .show();
             }
+            return;
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
@@ -836,36 +822,6 @@ public class Term extends AppCompatActivity
         if (session == null) return;
 
         session.reset();
-    }
-
-    private void doEmailTranscript() {
-        TermSession session = getCurrentTermSession();
-        if (session == null) return;
-
-        // Don't really want to supply an address, but
-        // currently it's required, otherwise nobody
-        // wants to handle the intent.
-        String addr = "user@example.com";
-        Intent intent =
-                new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:"
-                        + addr));
-
-        String subject = getString(R.string.email_transcript_subject);
-        String title = session.getTitle();
-        if (title != null) {
-            subject = subject + " - " + title;
-        }
-        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
-        intent.putExtra(Intent.EXTRA_TEXT,
-                session.getTranscriptText().trim());
-        try {
-            startActivity(Intent.createChooser(intent,
-                    getString(R.string.email_transcript_chooser_title)));
-        } catch (ActivityNotFoundException e) {
-            Toast.makeText(getApplicationContext(),
-                    R.string.email_transcript_no_email_activity_found,
-                    Toast.LENGTH_LONG).show();
-        }
     }
 
     private void doCopyAll() {
@@ -1011,7 +967,7 @@ public class Term extends AppCompatActivity
     }
 
     private class EmulatorViewGestureListener extends SimpleOnGestureListener {
-        private EmulatorView view;
+        private final EmulatorView view;
 
         public EmulatorViewGestureListener(EmulatorView view) {
             this.view = view;

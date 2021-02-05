@@ -84,7 +84,7 @@ public class WindowListAdapter extends BaseAdapter implements UpdateCallback {
         ViewHolder holder;
         if (convertView == null) {
             // NOTE for Adapters parent will apply default layout parameters unless ...!
-            convertView = inflater.inflate(R.layout.content_windowlist, null);
+            convertView = inflater.inflate(R.layout.item_window, null);
             holder = new ViewHolder();
             holder.title = convertView.findViewById(R.id.title);
             holder.close = convertView.findViewById(R.id.close);

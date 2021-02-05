@@ -33,7 +33,7 @@ import jackpal.androidterm.TermService;
 import jackpal.androidterm.util.SessionList;
 
 
-public class WindowListActivity extends AppCompatActivity
+public class WindowListActivity extends BaseActivity
         implements WindowListFragment.OnItemSelectedListener {
 
     private final ServiceConnection service_connection = new ServiceConnection() {

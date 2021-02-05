@@ -17,10 +17,8 @@
 package com.termoneplus;
 
 import android.content.SharedPreferences;
-import android.view.View;
 
 import com.termoneplus.utils.ThemeManager;
-import com.termoneplus.utils.WrapOpenURL;
 import jackpal.androidterm.Term;
 
 
@@ -34,23 +32,4 @@ public class TermActivity extends Term {
         super.onSharedPreferenceChanged(sharedPreferences, key);
     }
 
-    public void onAppIconClicked(View view) {
-        WrapOpenURL.launch(this, urlApplicationSite());
-    }
-
-    public void onAppTitleClicked(View view) {
-        WrapOpenURL.launch(this, urlApplicationSite());
-    }
-
-    public void onEmailAddressClicked(View view) {
-        WrapOpenURL.launch(this, urlApplicationMail());
-    }
-
-    private String urlApplicationSite() {
-        return getResources().getString(R.string.application_site);
-    }
-
-    private String urlApplicationMail() {
-        return "mailto:" + getResources().getString(R.string.application_email);
-    }
 }

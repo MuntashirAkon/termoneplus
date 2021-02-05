@@ -31,7 +31,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.termoneplus.AppCompatActivity;
+import com.termoneplus.BaseActivity;
 import com.termoneplus.R;
 
 import java.io.File;
@@ -48,7 +48,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import jackpal.androidterm.util.TermSettings;
 
 
-public class FileSelection extends AppCompatActivity {
+public class FileSelection extends BaseActivity {
     private final String STATE_CWD = "CWD";
 
     private String cwd; // current working directory
