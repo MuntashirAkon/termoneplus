@@ -16,14 +16,9 @@
 -->
 
 <resources>
-    <color name="colorPrimary">@android:color/white</color>
-    <color name="colorPrimaryDark">@android:color/white</color>
-    <color name="colorAccent">#6200EE</color>
-    <color name="textColorPrimary">#DE000000</color>
-    <color name="textColorSecondary">#99000000</color>
-
-    <color name="colorvalue_alpha">#FFFFFFFF</color>
-    <color name="colorvalue_red">#FFFF0000</color>
-    <color name="colorvalue_green">#FF00FF00</color>
-    <color name="colorvalue_blue">#FF0000FF</color>
+    <color name="colorPrimary">#FF121212</color>
+    <color name="colorPrimaryDark">#FF121212</color>
+    <color name="colorAccent">#FFC89666</color>
+    <color name="textColorPrimary">@android:color/white</color>
+    <color name="textColorSecondary">#FFBEBEBE</color>
 </resources>

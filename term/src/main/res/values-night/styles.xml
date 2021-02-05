@@ -16,10 +16,7 @@
 -->
 
 <resources>
-    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="colorPrimary">#212121</item>
-        <item name="colorPrimaryDark">#212121</item>
-        <item name="colorAccent">#c89666</item>
-        <item name="colorOnPrimary">?android:attr/colorAccent</item>
+    <style name="Theme.MaterialComponents.DayNight.NoActionBar" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     </style>
 </resources>
