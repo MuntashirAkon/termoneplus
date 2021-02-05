@@ -27,6 +27,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import com.google.android.material.button.MaterialButton;
 import jackpal.androidterm.emulatorview.TermSession;
 import jackpal.androidterm.emulatorview.UpdateCallback;
 import jackpal.androidterm.util.SessionList;
@@ -131,6 +132,6 @@ public class WindowListAdapter extends BaseAdapter implements UpdateCallback {
 
     private class ViewHolder {
         public TextView title;
-        public WindowListFragment.CloseButton close;
+        public MaterialButton close;
     }
 }

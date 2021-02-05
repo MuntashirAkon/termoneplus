@@ -8,7 +8,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.0.1'
+        classpath 'com.android.tools.build:gradle:4.0.2'
     }
 }
 
@@ -23,15 +23,10 @@ allprojects {
     project.ext {
         compileSdkVersion = 30
         targetSdkVersion = 30
-        minSdkVersion = 14
+        minSdkVersion = 21
     }
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
-}
-
-apply from: 'version.gradle'
-tasks.named('wrapper') {
-    //distributionUrl = "https://services.gradle.org/distributions/gradle-${gradleVersion}-bin.zip"
 }

@@ -47,7 +47,7 @@
         android:label="@string/application_terminal"
         android:resizeableActivity="true"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:theme="@style/AppTheme.NoActionBar"
+        android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".TermActivity"
@@ -135,7 +135,7 @@
             android:configChanges="orientation|keyboard|keyboardHidden"
             android:label="@string/activity_shortcut_create"
             android:launchMode="singleTop"
-            android:theme="@style/AppTheme.NoActionBar.Translucent">
+            android:theme="@style/AppTheme.Translucent">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
             </intent-filter>

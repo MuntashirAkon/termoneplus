@@ -34,10 +34,7 @@ public class Installer {
     public static final String APPINFO_COMMAND;
 
     static {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN /*API level 16*/)
-            APPINFO_COMMAND = "libexeo-t1plus.so";
-        else
-            APPINFO_COMMAND = "libexec-t1plus.so";
+        APPINFO_COMMAND = "libexec-t1plus.so";
     }
 
     public static boolean install_directory(File dir, boolean share) {

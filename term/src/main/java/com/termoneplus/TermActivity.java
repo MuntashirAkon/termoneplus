@@ -21,9 +21,10 @@ import android.view.View;
 
 import com.termoneplus.utils.ThemeManager;
 import com.termoneplus.utils.WrapOpenURL;
+import jackpal.androidterm.Term;
 
 
-public class TermActivity extends jackpal.androidterm.Term {
+public class TermActivity extends Term {
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
@@ -43,18 +44,6 @@ public class TermActivity extends jackpal.androidterm.Term {
 
     public void onEmailAddressClicked(View view) {
         WrapOpenURL.launch(this, urlApplicationMail());
-    }
-
-    @Override
-    protected void updatePrefs() {
-        Integer theme_resid = getThemeId();
-        if (theme_resid != null) {
-            if (theme_resid != ThemeManager.presetTheme(this, false, theme_resid)) {
-                restart(R.string.restart_thememode_change);
-                return;
-            }
-        }
-        super.updatePrefs();
     }
 
     private String urlApplicationSite() {

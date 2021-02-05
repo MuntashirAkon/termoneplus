@@ -34,7 +34,7 @@ M5,18 h2
 M9,18 h2
     "
         android:strokeWidth="2"
-        android:strokeColor="?attr/themeTextColor"/>
+        android:strokeColor="?attr/colorAccent"/>
 
     <path
         android:pathData="
@@ -42,6 +42,6 @@ M13,13 l6,6
 M13,15 v-2 h2 z
     "
         android:strokeWidth="1"
-        android:strokeColor="?attr/themeTextColor"/>
+        android:strokeColor="?attr/colorAccent"/>
 
 </vector>

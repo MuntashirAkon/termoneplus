@@ -32,6 +32,6 @@ v-9 a3,3 0 0,1 3,-3
 h4 l2,2
     "
         android:strokeWidth="2"
-        android:strokeColor="?attr/themeTextColor"/>
+        android:strokeColor="?attr/colorAccent"/>
 
 </vector>

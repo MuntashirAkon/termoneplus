@@ -35,20 +35,19 @@ public class TermPreferencesActivity extends AppCompatActivity
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        {
-            ActionBar action_bar = getSupportActionBar();
-            if (action_bar != null) {
-                action_bar.setDisplayHomeAsUpEnabled(true);
-            }
+        setContentView(R.layout.activity_preferences);
+        setSupportActionBar(findViewById(R.id.toolbar));
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle(R.string.preferences);
         }
-
-        {
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-            prefs.registerOnSharedPreferenceChangeListener(this);
-        }
-
-        loadPreferences();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        prefs.registerOnSharedPreferenceChangeListener(this);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment, new TermPreferencesFragment())
+                .commit();
     }
 
     @Override
@@ -62,27 +61,18 @@ public class TermPreferencesActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home: // Action bar home button selected
-                NavUtils.navigateUpFromSameTask(this);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == android.R.id.home) { // Action bar home button selected
+            NavUtils.navigateUpFromSameTask(this);
+            return true;
         }
-    }
-
-    private void loadPreferences() {
-        // Display the fragment as the main content.
-        getSupportFragmentManager().beginTransaction()
-                .replace(android.R.id.content, new TermPreferencesFragment())
-                .commit();
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (ThemeManager.PREF_THEME_MODE.equals(key)) {
             // Do no not inform user!
-            restart(0);
+            recreate();
         }
     }
 
@@ -92,7 +82,7 @@ public class TermPreferencesActivity extends AppCompatActivity
             // Load the preferences from an XML resource
             setPreferencesFromResource(R.xml.preferences, rootKey);
 
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(requireActivity().getApplicationContext());
             String pref_home_path = getString(R.string.key_home_path_preference);
             String homedir = prefs.getString(pref_home_path, "");
 

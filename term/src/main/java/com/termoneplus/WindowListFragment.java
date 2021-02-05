@@ -66,28 +66,4 @@ public class WindowListFragment extends ListFragment implements AdapterView.OnIt
     public interface OnItemSelectedListener {
         void onPositionSelected(int position);
     }
-
-    public static class CloseButton extends AppCompatImageView {
-        public CloseButton(Context context) {
-            super(context);
-        }
-
-        public CloseButton(Context context, AttributeSet attrs) {
-            super(context, attrs);
-        }
-
-        public CloseButton(Context context, AttributeSet attrs, int defStyleAttr) {
-            super(context, attrs, defStyleAttr);
-        }
-
-        @Override
-        // Avoid child elements to share pressed state with their parent.
-        // NOTE parent android:clickable attribute set to false is not same!
-        // As result parent could be pressed and Fragment receives onItemClick event.
-        public void setPressed(boolean pressed) {
-            if (pressed && ((View) getParent()).isPressed()) return;
-
-            super.setPressed(pressed);
-        }
-    }
 }

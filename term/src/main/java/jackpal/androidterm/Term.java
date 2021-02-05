@@ -18,12 +18,7 @@
 package jackpal.androidterm;
 
 import android.annotation.SuppressLint;
-import android.content.ActivityNotFoundException;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.content.ServiceConnection;
-import android.content.SharedPreferences;
+import android.content.*;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -36,43 +31,24 @@ import android.os.IBinder;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.ContextMenu;
+import android.view.*;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.GestureDetector.SimpleOnGestureListener;
-import android.view.Gravity;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
+import androidx.preference.PreferenceManager;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
-import com.termoneplus.AppCompatActivity;
-import com.termoneplus.Application;
-import com.termoneplus.Permissions;
-import com.termoneplus.R;
-import com.termoneplus.TermActionBar;
-import com.termoneplus.TermPreferencesActivity;
-import com.termoneplus.WindowListActivity;
-import com.termoneplus.WindowListAdapter;
+import com.termoneplus.*;
 import com.termoneplus.utils.ConsoleStartupScript;
 import com.termoneplus.utils.SimpleClipboardManager;
 import com.termoneplus.utils.WakeLock;
 import com.termoneplus.utils.WrapOpenURL;
-
-import java.io.IOException;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.preference.PreferenceManager;
 import jackpal.androidterm.compat.PathCollector;
 import jackpal.androidterm.compat.PathSettings;
 import jackpal.androidterm.emulatorview.EmulatorView;
@@ -81,6 +57,8 @@ import jackpal.androidterm.emulatorview.UpdateCallback;
 import jackpal.androidterm.emulatorview.compat.KeycodeConstants;
 import jackpal.androidterm.util.SessionList;
 import jackpal.androidterm.util.TermSettings;
+
+import java.io.IOException;
 
 
 /**
@@ -123,7 +101,7 @@ public class Term extends AppCompatActivity
     /**
      * Intercepts keys before the view/terminal gets it.
      */
-    private View.OnKeyListener mKeyListener = new View.OnKeyListener() {
+    private final View.OnKeyListener mKeyListener = new View.OnKeyListener() {
         public boolean onKey(View v, int keyCode, KeyEvent event) {
             return backkeyInterceptor(keyCode, event) || keyboardShortcuts(keyCode, event);
         }
@@ -188,14 +166,14 @@ public class Term extends AppCompatActivity
             mTermService = null;
         }
     };
-    private Handler mHandler = new Handler();
+    private final Handler mHandler = new Handler();
 
     protected static TermSession createTermSession(
             Context context,
             TermSettings settings, PathSettings path_settings,
             String extraCommand) throws IOException {
 
-        String initialCommand = !TextUtils.isEmpty(extraCommand) ? extraCommand: "";
+        String initialCommand = !TextUtils.isEmpty(extraCommand) ? extraCommand : "";
 
         GenericTermSession session = new ShellTermSession(settings, path_settings, initialCommand);
         // XXX We should really be able to fetch this from within TermSession
@@ -251,10 +229,7 @@ public class Term extends AppCompatActivity
                 .registerOnSharedPreferenceChangeListener(this);
 
         TSIntent = new Intent(this, TermService.class);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O /*API level 26*/)
-            startForegroundService(TSIntent);
-        else
-            startService(TSIntent);
+        ContextCompat.startForegroundService(this, TSIntent);
 
         mActionBar = TermActionBar.setTermContentView(this,
                 mActionBarMode == TermSettings.ACTION_BAR_MODE_HIDES);
@@ -923,26 +898,18 @@ public class Term extends AppCompatActivity
     }
 
     private void doDocumentKeys() {
-        LayoutInflater inflater = getLayoutInflater();
-        View view = inflater.inflate(R.layout.dialog_special_keys, null);
-        TextView message = view.findViewById(R.id.special_keys);
+        Resources resources = getResources();
+        String message = formatMessage(mSettings.getControlKeyId(), TermSettings.CONTROL_KEY_ID_NONE,
+                resources, R.array.control_keys_short_names, R.string.control_key_dialog_control_text,
+                R.string.control_key_dialog_control_disabled_text, "CTRLKEY") + "\n\n" +
+                formatMessage(mSettings.getFnKeyId(), TermSettings.FN_KEY_ID_NONE, resources,
+                        R.array.fn_keys_short_names, R.string.control_key_dialog_fn_text,
+                        R.string.control_key_dialog_fn_disabled_text, "FNKEY");
 
-        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setView(view);
-        Resources r = getResources();
-        dialog.setTitle(r.getString(R.string.control_key_dialog_title));
-        String hint =
-                formatMessage(mSettings.getControlKeyId(), TermSettings.CONTROL_KEY_ID_NONE,
-                        r, R.array.control_keys_short_names,
-                        R.string.control_key_dialog_control_text,
-                        R.string.control_key_dialog_control_disabled_text, "CTRLKEY")
-                        + "\n\n" +
-                        formatMessage(mSettings.getFnKeyId(), TermSettings.FN_KEY_ID_NONE,
-                                r, R.array.fn_keys_short_names,
-                                R.string.control_key_dialog_fn_text,
-                                R.string.control_key_dialog_fn_disabled_text, "FNKEY");
-        message.setText(hint);
-        dialog.show();
+        new MaterialAlertDialogBuilder(this)
+                .setTitle(R.string.control_key_dialog_title)
+                .setMessage(message)
+                .show();
     }
 
     private String formatMessage(int keyId, int disabledKeyId,
