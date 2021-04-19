@@ -16,15 +16,14 @@
 
 package jackpal.androidterm.emulatorview.compat;
 
+import java.util.regex.Pattern;
+
 /**
  * Based upon
  *
  * https://android.googlesource.com/platform/frameworks/base/+/android-4.4.2_r2/core/java/android/util/Patterns.java
  *
  */
-
-import java.util.regex.Pattern;
-
 public class Patterns {
 	/**
      *  Regular expression to match all IANA top-level domains for WEB_URL.

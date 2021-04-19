@@ -53,12 +53,11 @@ import jackpal.androidterm.libtermexec.v1.ITerminal;
 import jackpal.androidterm.util.SessionList;
 import jackpal.androidterm.util.TermSettings;
 
-
 public class TermService extends Service {
     private static final int RUNNING_NOTIFICATION = 1;
 
     private final IBinder mTSBinder = new TSBinder();
-    private SessionList mTermSessions = new SessionList();
+    private final SessionList mTermSessions = new SessionList();
     private CommandService command_service;
 
     @Override

@@ -59,12 +59,10 @@ import jackpal.androidterm.util.TermSettings;
 
 import java.io.IOException;
 
-
 /**
  * A terminal emulator activity.
  */
-public class Term extends BaseActivity
-        implements UpdateCallback, SharedPreferences.OnSharedPreferenceChangeListener {
+public class Term extends BaseActivity implements UpdateCallback, SharedPreferences.OnSharedPreferenceChangeListener {
     public static final int REQUEST_CHOOSE_WINDOW = 1;
     /**
      * The name of the ViewFlipper in the resources.
@@ -102,7 +100,7 @@ public class Term extends BaseActivity
      */
     private final View.OnKeyListener mKeyListener = new View.OnKeyListener() {
         public boolean onKey(View v, int keyCode, KeyEvent event) {
-            return backkeyInterceptor(keyCode, event) || keyboardShortcuts(keyCode, event);
+            return backKeyInterceptor(keyCode, event) || keyboardShortcuts(keyCode, event);
         }
 
         /**
@@ -124,15 +122,12 @@ public class Term extends BaseActivity
                 } else {
                     mViewFlipper.showNext();
                 }
-
                 return true;
             } else if (keyCode == KeycodeConstants.KEYCODE_N && isCtrlPressed && isShiftPressed) {
                 doCreateNewWindow();
-
                 return true;
             } else if (keyCode == KeycodeConstants.KEYCODE_V && isCtrlPressed && isShiftPressed) {
                 doPaste();
-
                 return true;
             } else {
                 return false;
@@ -142,7 +137,7 @@ public class Term extends BaseActivity
         /**
          * Make sure the back button always leaves the application.
          */
-        private boolean backkeyInterceptor(int keyCode, KeyEvent event) {
+        private boolean backKeyInterceptor(int keyCode, KeyEvent event) {
             if (keyCode == KeyEvent.KEYCODE_BACK && mActionBarMode == TermSettings.ACTION_BAR_MODE_HIDES && mActionBar.isShowing()) {
                 /* We need to intercept the key event before the view sees it,
                    otherwise the view will handle it before we get it */
@@ -209,8 +204,7 @@ public class Term extends BaseActivity
 
         Log.v(Application.APP_TAG, "onCreate");
 
-        if (icicle == null)
-            onNewIntent(getIntent());
+        if (icicle == null) onNewIntent(getIntent());
 
         mSettings = new TermSettings(this);
         path_settings = new PathSettings(this);

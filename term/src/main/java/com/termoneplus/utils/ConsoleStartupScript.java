@@ -28,7 +28,6 @@ import java.util.Date;
 
 
 public class ConsoleStartupScript {
-
     public static String read(String homedir) {
         StringBuilder builder = new StringBuilder();
         final String nl = System.getProperty("line.separator");

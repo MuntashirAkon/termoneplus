@@ -29,22 +29,20 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.termoneplus.R;
 import com.termoneplus.utils.TextIcon;
-
-import androidx.appcompat.app.AlertDialog;
-
 
 public class ColorValue {
 
     private int color;
     // alpha / red / green / blue
-    private Data data[] = {new Data(), new Data(), new Data(), new Data()};
+    private final Data[] data = {new Data(), new Data(), new Data(), new Data()};
 
-    private EditText icon_text;
-    private TextView hex_code;
+    private final EditText iconText;
+    private final TextView hexCode;
 
-    private SeekBar.OnSeekBarChangeListener seekbar_color = new SeekBar.OnSeekBarChangeListener() {
+    private final SeekBar.OnSeekBarChangeListener seekbarColor = new SeekBar.OnSeekBarChangeListener() {
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
             if (!fromUser) return;
@@ -64,8 +62,8 @@ public class ColorValue {
             }
 
             color = Color.argb(data[0].color, data[1].color, data[2].color, data[3].color);
-            icon_text.setTextColor(color);
-            hex_code.setText(colorAsHexString());
+            iconText.setTextColor(color);
+            hexCode.setText(colorAsHexString());
         }
 
         @Override
@@ -79,7 +77,7 @@ public class ColorValue {
         }
     };
 
-    private CompoundButton.OnCheckedChangeListener lock_checked = (button, isChecked) -> {
+    private final CompoundButton.OnCheckedChangeListener lockChecked = (button, isChecked) -> {
         try {
             String s = (String) button.getTag();
             int index = Integer.parseInt(s);
@@ -90,8 +88,7 @@ public class ColorValue {
     };
 
 
-    public ColorValue(Context context, final ImageView imgview, final String result[]) {
-
+    public ColorValue(Context context, final ImageView imgview, final String[] result) {
         color = (Integer) imgview.getTag();
         data[0].color = Color.alpha(color);
         data[1].color = Color.red(color);
@@ -101,9 +98,9 @@ public class ColorValue {
         View view = LayoutInflater.from(context)
                 .inflate(R.layout.activity_color_value, null);
 
-        icon_text = view.findViewById(R.id.icon_text);
-        icon_text.setTextColor(color);
-        icon_text.setText(result[0]);
+        iconText = view.findViewById(R.id.icon_text);
+        iconText.setTextColor(color);
+        iconText.setText(result[0]);
 
         data[0].seekbar = view.findViewById(R.id.alpha);
         data[1].seekbar = view.findViewById(R.id.red);
@@ -115,31 +112,28 @@ public class ColorValue {
             seekbar.setMax(0xFF);
             seekbar.setProgress(data[k].color);
             seekbar.setBackgroundColor(indexToColor(k));
-            seekbar.setOnSeekBarChangeListener(seekbar_color);
+            seekbar.setOnSeekBarChangeListener(seekbarColor);
         }
 
         CheckBox checkbox;
         checkbox = view.findViewById(R.id.lock_alpha);
-        checkbox.setOnCheckedChangeListener(lock_checked);
+        checkbox.setOnCheckedChangeListener(lockChecked);
         checkbox = view.findViewById(R.id.lock_red);
-        checkbox.setOnCheckedChangeListener(lock_checked);
+        checkbox.setOnCheckedChangeListener(lockChecked);
         checkbox = view.findViewById(R.id.lock_green);
-        checkbox.setOnCheckedChangeListener(lock_checked);
+        checkbox.setOnCheckedChangeListener(lockChecked);
         checkbox = view.findViewById(R.id.lock_blue);
-        checkbox.setOnCheckedChangeListener(lock_checked);
+        checkbox.setOnCheckedChangeListener(lockChecked);
 
-        hex_code = view.findViewById(R.id.hex_code);
-        hex_code.setText(colorAsHexString());
+        hexCode = view.findViewById(R.id.hex_code);
+        hexCode.setText(colorAsHexString());
 
-        new AlertDialog.Builder(context)
+        new MaterialAlertDialogBuilder(context)
                 .setView(view)
                 .setTitle(R.string.addshortcut_make_text_icon)
                 .setPositiveButton(android.R.string.ok, (dialog, which) -> {
-                    if (which != AlertDialog.BUTTON_POSITIVE) return;
-
-                    String s = icon_text.getText().toString();
+                    String s = iconText.getText().toString();
                     if (TextUtils.isEmpty(s)) return;
-
                     Bitmap image = TextIcon.create(s, color, 96, 96);
                     if (image != null) {
                         result[1] = result[0] = s;

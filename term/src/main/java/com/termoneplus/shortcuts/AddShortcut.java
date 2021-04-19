@@ -46,14 +46,13 @@ import jackpal.androidterm.RunShortcut;
 import jackpal.androidterm.compat.PRNGFixes;
 import jackpal.androidterm.util.ShortcutEncryption;
 
-
 public class AddShortcut extends AppCompatActivity {
     private final int REQUEST_FIND_COMMAND = 101;
 
     private View shortcut_view;
     private SharedPreferences preferences;
     private String path = "";
-    private String iconText[] = {"", null};
+    private final String[] iconText = {"", null};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,14 +62,12 @@ public class AddShortcut extends AppCompatActivity {
         */
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String action = getIntent().getAction();
-        if (action != null && action.equals("android.intent.action.CREATE_SHORTCUT"))
+        if (action != null && action.equals("android.intent.action.CREATE_SHORTCUT")) {
             makeShortcut();
-        else
-            finish();
+        } else finish();
     }
 
     private void makeShortcut() {
-
         LayoutInflater inflater = getLayoutInflater();
         shortcut_view = inflater.inflate(R.layout.activity_addshortcut, null);
 
@@ -82,7 +79,7 @@ public class AddShortcut extends AppCompatActivity {
                 String s;
                 if (cmd_name.getText().toString().equals("") &&
                         !(s = cmd_param.getText().toString()).equals("")
-                        )
+                )
                     cmd_name.setText(s.split("\\s")[0]);
             }
         });
@@ -136,14 +133,8 @@ public class AddShortcut extends AppCompatActivity {
         alert.show();
     }
 
-    private void buildShortcut(
-            Context context,
-            String path,
-            String arguments,
-            String shortcutName,
-            String shortcutText,
-            int shortcutColor
-    ) {
+    private void buildShortcut(Context context, String path, String arguments, String shortcutName, String shortcutText,
+                               int shortcutColor) {
         // Apply workarounds for SecureRandom bugs in Android < 4.4
         PRNGFixes.apply();
 
@@ -202,40 +193,26 @@ public class AddShortcut extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        switch (requestCode) {
-            case REQUEST_FIND_COMMAND: {
-                if (resultCode != RESULT_OK) break;
-                if (data == null) break;
-
-                {
-                    Uri uri = data.getData();
-                    if (uri == null) break;
-                    path = uri.getPath();
-                }
-                if (path == null) {
-                    finish();
-                    break;
-                }
-
-                preferences.edit().putString("lastPath", path).commit();
-
-                {
-                    EditText cmd_path = shortcut_view.findViewById(R.id.cmd_path);
-                    cmd_path.setText(path);
-                }
-
-                String name = path.replaceAll(".*/", "");
-
-                {
-                    EditText cmd_name = shortcut_view.findViewById(R.id.cmd_name);
-                    if (cmd_name.getText().toString().equals(""))
-                        cmd_name.setText(name);
-                }
-
-                if (iconText[0] != null && iconText[0].equals(""))
-                    iconText[0] = name;
-
-                break;
+        if (requestCode == REQUEST_FIND_COMMAND) {
+            if (resultCode != RESULT_OK) return;
+            if (data == null) return;
+            Uri uri = data.getData();
+            if (uri == null) return;
+            path = uri.getPath();
+            if (path == null) {
+                finish();
+                return;
+            }
+            preferences.edit().putString("lastPath", path).commit();
+            EditText cmd_path = shortcut_view.findViewById(R.id.cmd_path);
+            cmd_path.setText(path);
+            String name = path.replaceAll(".*/", "");
+            EditText cmd_name = shortcut_view.findViewById(R.id.cmd_name);
+            if (cmd_name.getText().toString().equals("")) {
+                cmd_name.setText(name);
+            }
+            if (iconText[0] != null && iconText[0].equals("")) {
+                iconText[0] = name;
             }
         }
     }

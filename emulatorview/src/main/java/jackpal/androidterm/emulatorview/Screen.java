@@ -32,19 +32,19 @@ interface Screen {
     /**
      * Store a Unicode code point into the screen at location (x, y)
      *
-     * @param x X coordinate (also known as column)
-     * @param y Y coordinate (also known as row)
+     * @param x         X coordinate (also known as column)
+     * @param y         Y coordinate (also known as row)
      * @param codePoint Unicode code point to store
-     * @param style the text style
+     * @param style     the text style
      */
     void set(int x, int y, int codePoint, int style);
 
     /**
      * Store byte b into the screen at location (x, y)
      *
-     * @param x X coordinate (also known as column)
-     * @param y Y coordinate (also known as row)
-     * @param b ASCII character to store
+     * @param x     X coordinate (also known as column)
+     * @param y     Y coordinate (also known as row)
+     * @param b     ASCII character to store
      * @param style the text style
      */
     void set(int x, int y, byte b, int style);
@@ -53,9 +53,9 @@ interface Screen {
      * Scroll the screen down one line. To scroll the whole screen of a 24 line
      * screen, the arguments would be (0, 24).
      *
-     * @param topMargin First line that is scrolled.
+     * @param topMargin    First line that is scrolled.
      * @param bottomMargin One line after the last line that is scrolled.
-     * @param style the style for the newly exposed line.
+     * @param style        the style for the newly exposed line.
      */
     void scroll(int topMargin, int bottomMargin, int style);
 
@@ -67,8 +67,8 @@ interface Screen {
      *
      * @param sx source X coordinate
      * @param sy source Y coordinate
-     * @param w width
-     * @param h height
+     * @param w  width
+     * @param h  height
      * @param dx destination X coordinate
      * @param dy destination Y coordinate
      */
@@ -80,11 +80,11 @@ interface Screen {
      * this is called with a "val" argument of 32 to clear a block of
      * characters.
      *
-     * @param sx source X
-     * @param sy source Y
-     * @param w width
-     * @param h height
-     * @param val value to set.
+     * @param sx    source X
+     * @param sy    source Y
+     * @param w     width
+     * @param h     height
+     * @param val   value to set.
      * @param style the text style
      */
     void blockSet(int sx, int sy, int w, int h, int val, int style);
@@ -107,6 +107,7 @@ interface Screen {
 
     /**
      * Get the selected text inside transcript buffer as a text string.
+     *
      * @param x1 Selection start
      * @param y1 Selection start
      * @param x2 Selection end
@@ -120,10 +121,10 @@ interface Screen {
      * color information.
      *
      * @param colors A StringBuilder which will hold the colors.
-     * @param x1 Selection start
-     * @param y1 Selection start
-     * @param x2 Selection end
-     * @param y2 Selection end
+     * @param x1     Selection start
+     * @param y1     Selection start
+     * @param x2     Selection end
+     * @param y2     Selection end
      * @return the contents of the transcript buffer.
      */
     String getSelectedText(GrowableIntArray colors, int x1, int y1, int x2, int y2);
@@ -139,16 +140,17 @@ interface Screen {
      *
      * @param columns
      * @param rows
-     * @param cursor An int[2] containing the current cursor position
-     *               { col, row }.  If the resize succeeds, the array will be
-     *               updated to reflect the new location.
+     * @param cursor  An int[2] containing the current cursor position
+     *                { col, row }.  If the resize succeeds, the array will be
+     *                updated to reflect the new location.
      * @return Whether the resize succeeded. If the operation fails, save the
-     *         contents of the screen and then use the standard resize.
+     * contents of the screen and then use the standard resize.
      */
     boolean fastResize(int columns, int rows, int[] cursor);
 
     /**
      * Resize the screen
+     *
      * @param columns
      * @param rows
      * @param style

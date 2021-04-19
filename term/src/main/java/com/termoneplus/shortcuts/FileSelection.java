@@ -47,35 +47,26 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 import jackpal.androidterm.util.TermSettings;
 
-
 public class FileSelection extends BaseActivity {
     private final String STATE_CWD = "CWD";
 
     private String cwd; // current working directory
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_file_selection);
-
         setResult(RESULT_CANCELED);
-
-        {
-            Toolbar toolbar = findViewById(R.id.toolbar);
-            setSupportActionBar(toolbar);
-        }
-        {    // Show the Up button in the action bar.
-            ActionBar actionBar = getSupportActionBar();
-            if (actionBar != null)
-                actionBar.setDisplayHomeAsUpEnabled(true);
-        }
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        // Show the Up button in the action bar.
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) actionBar.setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
-
-        if (intent.hasExtra("TITLE"))
+        if (intent.hasExtra("TITLE")) {
             setTitle(intent.getStringExtra("TITLE"));
+        }
 
         if (savedInstanceState == null) {
             Uri uri = intent.getData();
@@ -91,47 +82,39 @@ public class FileSelection extends BaseActivity {
         } else {
             cwd = savedInstanceState.getString(STATE_CWD);
         }
-        if (cwd == null)
-            cwd = DefaultPath.get(getApplicationContext());
+        if (cwd == null) cwd = DefaultPath.get(getApplicationContext());
 
         final Adapter adapter = new Adapter(cwd);
+        RecyclerView view = findViewById(R.id.directory_list);
+        view.setAdapter(adapter);
+        final EditText path_input = findViewById(R.id.path);
+        path_input.setOnKeyListener(
+                (v, keyCode, event) -> {
+                    if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                        String path = path_input.getText().toString();
+                        File file = new File(path);
+                        if (!file.exists()) return true;
 
-        {
-            RecyclerView view = findViewById(R.id.directory_list);
-            view.setAdapter(adapter);
-        }
-
-        {
-            final EditText path_input = findViewById(R.id.path);
-            path_input.setOnKeyListener(
-                    (v, keyCode, event) -> {
-                        if (keyCode == KeyEvent.KEYCODE_ENTER) {
-                            String path = path_input.getText().toString();
-                            File file = new File(path);
-                            if (!file.exists()) return true;
-
-                            if (file.isDirectory()) {
-                                cwd = file.getAbsolutePath();
-                                adapter.load(file);
-                                adapter.notifyDataSetChanged();
-                                return true;
-                            }
-
-                            setResult(RESULT_OK, getIntent().setData(Uri.fromFile(file)));
-                            finish();
+                        if (file.isDirectory()) {
+                            cwd = file.getAbsolutePath();
+                            adapter.load(file);
+                            adapter.notifyDataSetChanged();
                             return true;
                         }
-                        return false;
+
+                        setResult(RESULT_OK, getIntent().setData(Uri.fromFile(file)));
+                        finish();
+                        return true;
                     }
-            );
-        }
+                    return false;
+                }
+        );
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home: // Action bar home/up button selected
-                finish();
-                return true;
+        if (item.getItemId() == android.R.id.home) { // Action bar home/up button selected
+            finish();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

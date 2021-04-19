@@ -16,19 +16,16 @@
 
 package com.termoneplus.utils;
 
-
 import android.content.ClipData;
 import android.content.ClipDescription;
 import android.content.ClipboardManager;
 import android.content.Context;
 
-
 public class SimpleClipboardManager {
     private final ClipboardManager clip;
 
     public SimpleClipboardManager(Context context) {
-        clip = (ClipboardManager) context.getApplicationContext()
-                .getSystemService(Context.CLIPBOARD_SERVICE);
+        clip = (ClipboardManager) context.getApplicationContext().getSystemService(Context.CLIPBOARD_SERVICE);
     }
 
     public CharSequence getText() {

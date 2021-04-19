@@ -33,7 +33,6 @@ import java.nio.charset.Charset;
 import java.nio.charset.CharsetEncoder;
 import java.nio.charset.CodingErrorAction;
 
-
 /**
  * A terminal session, consisting of a VT100 terminal emulator and its
  * input and output streams.

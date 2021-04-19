@@ -21,9 +21,7 @@ import android.content.SharedPreferences;
 import com.termoneplus.utils.ThemeManager;
 import jackpal.androidterm.Term;
 
-
 public class TermActivity extends Term {
-
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         // do not process preference "Theme Mode"
@@ -31,5 +29,4 @@ public class TermActivity extends Term {
 
         super.onSharedPreferenceChanged(sharedPreferences, key);
     }
-
 }

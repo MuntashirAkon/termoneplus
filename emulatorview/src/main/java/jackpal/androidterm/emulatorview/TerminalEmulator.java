@@ -100,8 +100,7 @@ class TerminalEmulator {
     private static final char[] mSpecialGraphicsCharMap = new char[128];
 
     static {
-        for (char i = 0; i < 128; ++i)
-            mSpecialGraphicsCharMap[i] = i;
+        for (char i = 0; i < 128; ++i) mSpecialGraphicsCharMap[i] = i;
         mSpecialGraphicsCharMap['_'] = ' ';     // Blank
         mSpecialGraphicsCharMap['b'] = 0x2409;  // Tab
         mSpecialGraphicsCharMap['c'] = 0x240C;  // Form feed
@@ -142,7 +141,7 @@ class TerminalEmulator {
         mSpecialGraphicsCharMap['s'] = 0x23BD;  // Horizontal scanline 9
     }
 
-    private TermKeyListener mKeyListener;
+    private final TermKeyListener mKeyListener;
     /**
      * The cursor row. Numbered 0..mRows-1.
      */
@@ -166,14 +165,14 @@ class TerminalEmulator {
     /**
      * Stores the characters that appear on the screen of the emulated terminal.
      */
-    private TranscriptScreen mMainBuffer;
+    private final TranscriptScreen mMainBuffer;
     private TranscriptScreen mAltBuffer;
     private TranscriptScreen mScreen;
 
     /**
      * The terminal session this emulator is bound to.
      */
-    private TermSession mSession;
+    private final TermSession mSession;
 
     /**
      * Keeps track of the current argument of the current escape sequence.
@@ -184,12 +183,12 @@ class TerminalEmulator {
     /**
      * Holds the arguments of the current escape sequence.
      */
-    private int[] mArgs = new int[MAX_ESCAPE_PARAMETERS];
+    private final int[] mArgs = new int[MAX_ESCAPE_PARAMETERS];
 
     /**
      * Holds OSC arguments, which can be strings.
      */
-    private byte[] mOSCArg = new byte[MAX_OSC_STRING_LENGTH];
+    private final byte[] mOSCArg = new byte[MAX_OSC_STRING_LENGTH];
 
     private int mOSCArgLength;
 
@@ -319,7 +318,7 @@ class TerminalEmulator {
     private boolean mAlternateCharSet;
 
     // What is the current graphics character set. [0] == G0, [1] == G1
-    private int[] mCharSet = new int[2];
+    private final int[] mCharSet = new int[2];
 
     /**
      * Derived from mAlternateCharSet and mCharSet.
@@ -338,19 +337,19 @@ class TerminalEmulator {
     private boolean mUTF8Mode = false;
     private boolean mUTF8EscapeUsed = false;
     private int mUTF8ToFollow = 0;
-    private ByteBuffer mUTF8ByteBuffer;
-    private CharBuffer mInputCharBuffer;
-    private CharsetDecoder mUTF8Decoder;
+    private final ByteBuffer mUTF8ByteBuffer;
+    private final CharBuffer mInputCharBuffer;
+    private final CharsetDecoder mUTF8Decoder;
     private UpdateCallback mUTF8ModeNotify;
 
     /**
      * Construct a terminal emulator that uses the supplied screen
      *
      * @param session the terminal session the emulator is attached to
-     * @param screen the screen to render characters into.
+     * @param screen  the screen to render characters into.
      * @param columns the number of columns to emulate
-     * @param rows the number of rows to emulate
-     * @param scheme the default color scheme of this emulator
+     * @param rows    the number of rows to emulate
+     * @param scheme  the default color scheme of this emulator
      */
     public TerminalEmulator(TermSession session, TranscriptScreen screen, int columns, int rows, ColorScheme scheme) {
         mKeyListener = new TermKeyListener(session);
@@ -608,7 +607,7 @@ class TerminalEmulator {
      * Accept bytes (typically from the pseudo-teletype) and process them.
      *
      * @param buffer a byte array containing the bytes to be processed
-     * @param base the first index of the array to process
+     * @param base   the first index of the array to process
      * @param length the number of bytes in the array to process
      */
     public void append(byte[] buffer, int base, int length) {
@@ -648,115 +647,115 @@ class TerminalEmulator {
         }
 
         switch (b) {
-        case 0: // NUL
-            // Do nothing
-            break;
+            case 0: // NUL
+                // Do nothing
+                break;
 
-        case 7: // BEL
-            /* If in an OSC sequence, BEL may terminate a string; otherwise do
-             * nothing */
-            if (mEscapeState == EscapeProcessingState.RIGHT_SQUARE_BRACKET) {
-                doEscRightSquareBracket(b);
-            }
-            break;
-
-        case 8: // BS
-            setCursorCol(Math.max(0, mCursorCol - 1));
-            break;
-
-        case 9: // HT
-            // Move to next tab stop, but not past edge of screen
-            setCursorCol(nextTabStop(mCursorCol));
-            break;
-
-        case 13:
-            setCursorCol(0);
-            break;
-
-        case 10: // CR
-        case 11: // VT
-        case 12: // LF
-            doLinefeed();
-            break;
-
-        case 14: // SO:
-            setAltCharSet(true);
-            break;
-
-        case 15: // SI:
-            setAltCharSet(false);
-            break;
-
-
-        case 24: // CAN
-        case 26: // SUB
-            if (mEscapeState != EscapeProcessingState.NONE) {
-                finishSequence();
-                emit((byte) 127);
-            }
-            break;
-
-        case 27: // ESC
-            // Starts an escape sequence unless we're parsing a string
-            if (mEscapeState != EscapeProcessingState.RIGHT_SQUARE_BRACKET) {
-                startSequence();
-            } else {
-                doEscRightSquareBracket(b);
-            }
-            break;
-
-        default:
-            mContinueSequence = false;
-            switch (mEscapeState) {
-            case EscapeProcessingState.NONE:
-                if (b >= 32) {
-                    emit(b);
+            case 7: // BEL
+                /* If in an OSC sequence, BEL may terminate a string; otherwise do
+                 * nothing */
+                if (mEscapeState == EscapeProcessingState.RIGHT_SQUARE_BRACKET) {
+                    doEscRightSquareBracket(b);
                 }
                 break;
 
-            case EscapeProcessingState.START:
-                doEsc(b);
+            case 8: // BS
+                setCursorCol(Math.max(0, mCursorCol - 1));
                 break;
 
-            case EscapeProcessingState.POUND:
-                doEscPound(b);
+            case 9: // HT
+                // Move to next tab stop, but not past edge of screen
+                setCursorCol(nextTabStop(mCursorCol));
                 break;
 
-            case EscapeProcessingState.SELECT_LEFT_PAREN:
-                doEscSelectLeftParen(b);
+            case 13:
+                setCursorCol(0);
                 break;
 
-            case EscapeProcessingState.SELECT_RIGHT_PAREN:
-                doEscSelectRightParen(b);
+            case 10: // CR
+            case 11: // VT
+            case 12: // LF
+                doLinefeed();
                 break;
 
-            case EscapeProcessingState.LEFT_SQUARE_BRACKET:
-                doEscLeftSquareBracket(b); // CSI
+            case 14: // SO:
+                setAltCharSet(true);
                 break;
 
-            case EscapeProcessingState.LEFT_SQUARE_BRACKET_QUESTION_MARK:
-                doEscLSBQuest(b); // CSI ?
+            case 15: // SI:
+                setAltCharSet(false);
                 break;
 
-            case EscapeProcessingState.PERCENT:
-                doEscPercent(b);
+
+            case 24: // CAN
+            case 26: // SUB
+                if (mEscapeState != EscapeProcessingState.NONE) {
+                    finishSequence();
+                    emit((byte) 127);
+                }
                 break;
 
-            case EscapeProcessingState.RIGHT_SQUARE_BRACKET:
-                doEscRightSquareBracket(b);
-                break;
-
-            case EscapeProcessingState.RIGHT_SQUARE_BRACKET_ESC:
-                doEscRightSquareBracketEsc(b);
+            case 27: // ESC
+                // Starts an escape sequence unless we're parsing a string
+                if (mEscapeState != EscapeProcessingState.RIGHT_SQUARE_BRACKET) {
+                    startSequence();
+                } else {
+                    doEscRightSquareBracket(b);
+                }
                 break;
 
             default:
-                unknownSequence(b);
+                mContinueSequence = false;
+                switch (mEscapeState) {
+                    case EscapeProcessingState.NONE:
+                        if (b >= 32) {
+                            emit(b);
+                        }
+                        break;
+
+                    case EscapeProcessingState.START:
+                        doEsc(b);
+                        break;
+
+                    case EscapeProcessingState.POUND:
+                        doEscPound(b);
+                        break;
+
+                    case EscapeProcessingState.SELECT_LEFT_PAREN:
+                        doEscSelectLeftParen(b);
+                        break;
+
+                    case EscapeProcessingState.SELECT_RIGHT_PAREN:
+                        doEscSelectRightParen(b);
+                        break;
+
+                    case EscapeProcessingState.LEFT_SQUARE_BRACKET:
+                        doEscLeftSquareBracket(b); // CSI
+                        break;
+
+                    case EscapeProcessingState.LEFT_SQUARE_BRACKET_QUESTION_MARK:
+                        doEscLSBQuest(b); // CSI ?
+                        break;
+
+                    case EscapeProcessingState.PERCENT:
+                        doEscPercent(b);
+                        break;
+
+                    case EscapeProcessingState.RIGHT_SQUARE_BRACKET:
+                        doEscRightSquareBracket(b);
+                        break;
+
+                    case EscapeProcessingState.RIGHT_SQUARE_BRACKET_ESC:
+                        doEscRightSquareBracketEsc(b);
+                        break;
+
+                    default:
+                        unknownSequence(b);
+                        break;
+                }
+                if (!mContinueSequence)
+                    finishSequence();
                 break;
-            }
-            if (!mContinueSequence)
-                finishSequence();
-            break;
         }
     }
 
@@ -864,16 +863,16 @@ class TerminalEmulator {
 
     private void doEscPercent(byte b) {
         switch (b) {
-        case '@': // Esc % @ -- return to ISO 2022 mode
-            setUTF8Mode(false);
-            mUTF8EscapeUsed = true;
-            break;
-        case 'G': // Esc % G -- UTF-8 mode
-            setUTF8Mode(true);
-            mUTF8EscapeUsed = true;
-            break;
-        default: // unimplemented character set
-            break;
+            case '@': // Esc % @ -- return to ISO 2022 mode
+                setUTF8Mode(false);
+                mUTF8EscapeUsed = true;
+                break;
+            case 'G': // Esc % G -- UTF-8 mode
+                setUTF8Mode(true);
+                mUTF8EscapeUsed = true;
+                break;
+            default: // unimplemented character set
+                break;
         }
     }
 
@@ -882,53 +881,53 @@ class TerminalEmulator {
         int mask = getDecFlagsMask(arg);
         int oldFlags = mDecFlags;
         switch (b) {
-        case 'h': // Esc [ ? Pn h - DECSET
-            mDecFlags |= mask;
-            switch (arg) {
-            case 1:
-                mKeyListener.setCursorKeysApplicationMode(true);
-                break;
-            case 47:
-            case 1047:
-            case 1049:
-                if (mAltBuffer != null) {
-                    mScreen = mAltBuffer;
+            case 'h': // Esc [ ? Pn h - DECSET
+                mDecFlags |= mask;
+                switch (arg) {
+                    case 1:
+                        mKeyListener.setCursorKeysApplicationMode(true);
+                        break;
+                    case 47:
+                    case 1047:
+                    case 1049:
+                        if (mAltBuffer != null) {
+                            mScreen = mAltBuffer;
+                        }
+                        break;
+                }
+                if (arg >= 1000 && arg <= 1003) {
+                    mMouseTrackingMode = arg;
                 }
                 break;
-            }
-            if (arg >= 1000 && arg <= 1003) {
-                mMouseTrackingMode = arg;
-            }
-            break;
 
-        case 'l': // Esc [ ? Pn l - DECRST
-            mDecFlags &= ~mask;
-            switch (arg) {
-            case 1:
-                mKeyListener.setCursorKeysApplicationMode(false);
+            case 'l': // Esc [ ? Pn l - DECRST
+                mDecFlags &= ~mask;
+                switch (arg) {
+                    case 1:
+                        mKeyListener.setCursorKeysApplicationMode(false);
+                        break;
+                    case 47:
+                    case 1047:
+                    case 1049:
+                        mScreen = mMainBuffer;
+                        break;
+                }
+                if (arg >= 1000 && arg <= 1003) {
+                    mMouseTrackingMode = 0;
+                }
                 break;
-            case 47:
-            case 1047:
-            case 1049:
-                mScreen = mMainBuffer;
+
+            case 'r': // Esc [ ? Pn r - restore
+                mDecFlags = (mDecFlags & ~mask) | (mSavedDecFlags & mask);
                 break;
-            }
-            if (arg >= 1000 && arg <= 1003) {
-                mMouseTrackingMode = 0;
-            }
-            break;
 
-        case 'r': // Esc [ ? Pn r - restore
-            mDecFlags = (mDecFlags & ~mask) | (mSavedDecFlags & mask);
-            break;
+            case 's': // Esc [ ? Pn s - save
+                mSavedDecFlags = (mSavedDecFlags & ~mask) | (mDecFlags & mask);
+                break;
 
-        case 's': // Esc [ ? Pn s - save
-            mSavedDecFlags = (mSavedDecFlags & ~mask) | (mDecFlags & mask);
-            break;
-
-        default:
-            parseArg(b);
-            break;
+            default:
+                parseArg(b);
+                break;
         }
 
         int newlySetFlags = (~oldFlags) & mDecFlags;
@@ -985,382 +984,318 @@ class TerminalEmulator {
     private void doSelectCharSet(int charSetIndex, byte b) {
         int charSet;
         switch (b) {
-        case 'A': // United Kingdom character set
-            charSet = CHAR_SET_UK;
-            break;
-        case 'B': // ASCII set
-            charSet = CHAR_SET_ASCII;
-            break;
-        case '0': // Special Graphics
-            charSet = CHAR_SET_SPECIAL_GRAPHICS;
-            break;
-        case '1': // Alternate character set
-            charSet = CHAR_SET_ALT_STANDARD;
-            break;
-        case '2':
-            charSet = CHAR_SET_ALT_SPECIAL_GRAPICS;
-            break;
-        default:
-            unknownSequence(b);
-            return;
+            case 'A': // United Kingdom character set
+                charSet = CHAR_SET_UK;
+                break;
+            case 'B': // ASCII set
+                charSet = CHAR_SET_ASCII;
+                break;
+            case '0': // Special Graphics
+                charSet = CHAR_SET_SPECIAL_GRAPHICS;
+                break;
+            case '1': // Alternate character set
+                charSet = CHAR_SET_ALT_STANDARD;
+                break;
+            case '2':
+                charSet = CHAR_SET_ALT_SPECIAL_GRAPICS;
+                break;
+            default:
+                unknownSequence(b);
+                return;
         }
         mCharSet[charSetIndex] = charSet;
         computeEffectiveCharSet();
     }
 
     private void doEscPound(byte b) {
-        switch (b) {
-        case '8': // Esc # 8 - DECALN alignment test
-            mScreen.blockSet(0, 0, mColumns, mRows, 'E',
-                    getStyle());
-            break;
-
-        default:
+        if (b == '8') { // Esc # 8 - DECALN alignment test
+            mScreen.blockSet(0, 0, mColumns, mRows, 'E', getStyle());
+        } else {
             unknownSequence(b);
-            break;
         }
     }
 
     private void doEsc(byte b) {
         switch (b) {
-        case '#':
-            continueSequence(EscapeProcessingState.POUND);
-            break;
-
-        case '(':
-            continueSequence(EscapeProcessingState.SELECT_LEFT_PAREN);
-            break;
-
-        case ')':
-            continueSequence(EscapeProcessingState.SELECT_RIGHT_PAREN);
-            break;
-
-        case '7': // DECSC save cursor
-            mSavedCursorRow = mCursorRow;
-            mSavedCursorCol = mCursorCol;
-            mSavedEffect = mEffect;
-            mSavedDecFlags_DECSC_DECRC = mDecFlags & K_DECSC_DECRC_MASK;
-            break;
-
-        case '8': // DECRC restore cursor
-            setCursorRowCol(mSavedCursorRow, mSavedCursorCol);
-            mEffect = mSavedEffect;
-            mDecFlags = (mDecFlags & ~K_DECSC_DECRC_MASK)
-                    | mSavedDecFlags_DECSC_DECRC;
-            break;
-
-        case 'c': // ESC c - RIS - Reset to Initial State
-            reset();
-            setCursorPosition(0, 0);
-            break;
-
-        case 'D': // INDEX
-            doLinefeed();
-            break;
-
-        case 'E': // NEL
-            setCursorCol(0);
-            doLinefeed();
-            break;
-
-        case 'F': // Cursor to lower-left corner of screen
-            setCursorRowCol(0, mBottomMargin - 1);
-            break;
-
-        case 'H': // Tab set
-            mTabStop[mCursorCol] = true;
-            break;
-
-        case 'M': // Reverse index
-            if (mCursorRow <= mTopMargin) {
-                mScreen.blockCopy(0, mTopMargin, mColumns, mBottomMargin
-                        - (mTopMargin + 1), 0, mTopMargin + 1);
-                blockClear(0, mTopMargin, mColumns);
-            } else {
-                mCursorRow--;
-            }
-
-            break;
-
-        case 'N': // SS2
-            unimplementedSequence(b);
-            break;
-
-        case '0': // SS3
-            unimplementedSequence(b);
-            break;
-
-        case 'P': // Device control string
-            unimplementedSequence(b);
-            break;
-
-        case 'Z': // return terminal ID
-            sendDeviceAttributes();
-            break;
-
-        case '[':
-            continueSequence(EscapeProcessingState.LEFT_SQUARE_BRACKET);
-            break;
-
-        case '=': // DECKPAM
-            mbKeypadApplicationMode = true;
-            break;
-
-        case ']': // OSC
-            startCollectingOSCArgs();
-            continueSequence(EscapeProcessingState.RIGHT_SQUARE_BRACKET);
-            break;
-
-        case '>': // DECKPNM
-            mbKeypadApplicationMode = false;
-            break;
-
-        default:
-            unknownSequence(b);
-            break;
+            case '#':
+                continueSequence(EscapeProcessingState.POUND);
+                break;
+            case '(':
+                continueSequence(EscapeProcessingState.SELECT_LEFT_PAREN);
+                break;
+            case ')':
+                continueSequence(EscapeProcessingState.SELECT_RIGHT_PAREN);
+                break;
+            case '7': // DECSC save cursor
+                mSavedCursorRow = mCursorRow;
+                mSavedCursorCol = mCursorCol;
+                mSavedEffect = mEffect;
+                mSavedDecFlags_DECSC_DECRC = mDecFlags & K_DECSC_DECRC_MASK;
+                break;
+            case '8': // DECRC restore cursor
+                setCursorRowCol(mSavedCursorRow, mSavedCursorCol);
+                mEffect = mSavedEffect;
+                mDecFlags = (mDecFlags & ~K_DECSC_DECRC_MASK) | mSavedDecFlags_DECSC_DECRC;
+                break;
+            case 'c': // ESC c - RIS - Reset to Initial State
+                reset();
+                setCursorPosition(0, 0);
+                break;
+            case 'D': // INDEX
+                doLinefeed();
+                break;
+            case 'E': // NEL
+                setCursorCol(0);
+                doLinefeed();
+                break;
+            case 'F': // Cursor to lower-left corner of screen
+                setCursorRowCol(0, mBottomMargin - 1);
+                break;
+            case 'H': // Tab set
+                mTabStop[mCursorCol] = true;
+                break;
+            case 'M': // Reverse index
+                if (mCursorRow <= mTopMargin) {
+                    mScreen.blockCopy(0, mTopMargin, mColumns, mBottomMargin - (mTopMargin + 1), 0,
+                            mTopMargin + 1);
+                    blockClear(0, mTopMargin, mColumns);
+                } else {
+                    mCursorRow--;
+                }
+                break;
+            case 'N': // SS2
+                unimplementedSequence(b);
+                break;
+            case '0': // SS3
+                unimplementedSequence(b);
+                break;
+            case 'P': // Device control string
+                unimplementedSequence(b);
+                break;
+            case 'Z': // return terminal ID
+                sendDeviceAttributes();
+                break;
+            case '[':
+                continueSequence(EscapeProcessingState.LEFT_SQUARE_BRACKET);
+                break;
+            case '=': // DECKPAM
+                mbKeypadApplicationMode = true;
+                break;
+            case ']': // OSC
+                startCollectingOSCArgs();
+                continueSequence(EscapeProcessingState.RIGHT_SQUARE_BRACKET);
+                break;
+            case '>': // DECKPNM
+                mbKeypadApplicationMode = false;
+                break;
+            default:
+                unknownSequence(b);
+                break;
         }
     }
 
     private void doEscLeftSquareBracket(byte b) {
         // CSI
         switch (b) {
-        case '@': // ESC [ Pn @ - ICH Insert Characters
-        {
-            int charsAfterCursor = mColumns - mCursorCol;
-            int charsToInsert = Math.min(getArg0(1), charsAfterCursor);
-            int charsToMove = charsAfterCursor - charsToInsert;
-            mScreen.blockCopy(mCursorCol, mCursorRow, charsToMove, 1,
-                    mCursorCol + charsToInsert, mCursorRow);
-            blockClear(mCursorCol, mCursorRow, charsToInsert);
-            break;
-        }
-
-        case 'A': // ESC [ Pn A - Cursor Up
-        {
-            int row = mCursorRow - getArg0(1);
-            if (mCursorRow < mTopMargin)
-                row = Math.max(0, row);
-            else
-                row = Math.max(mTopMargin, row);
-            setCursorRow(row);
-            break;
-        }
-
-        case 'B': // ESC [ Pn B - Cursor Down
-        {
-            int row = mCursorRow + getArg0(1);
-            if (mCursorRow >= mBottomMargin)
-                row = Math.min(mRows - 1, row);
-            else
-                row = Math.min(mBottomMargin - 1, row);
-            setCursorRow(row);
-            break;
-        }
-
-        case 'C': // ESC [ Pn C - Cursor Right
-            setCursorCol(Math.min(mColumns - 1, mCursorCol + getArg0(1)));
-            break;
-
-        case 'D': // ESC [ Pn D - Cursor Left
-            setCursorCol(Math.max(0, mCursorCol - getArg0(1)));
-            break;
-
-        case 'G': // ESC [ Pn G - Cursor Horizontal Absolute
-            setCursorCol(Math.min(Math.max(1, getArg0(1)), mColumns) - 1);
-            break;
-
-        case 'H': // ESC [ Pn ; H - Cursor Position
-            setHorizontalVerticalPosition();
-            break;
-
-        case 'J': // ESC [ Pn J - ED - Erase in Display
-            // ED ignores the scrolling margins.
-            switch (getArg0(0)) {
-            case 0: // Clear below
-                blockClear(mCursorCol, mCursorRow, mColumns - mCursorCol);
-                blockClear(0, mCursorRow + 1, mColumns,
-                        mRows - (mCursorRow + 1));
-                break;
-
-            case 1: // Erase from the start of the screen to the cursor.
-                blockClear(0, 0, mColumns, mCursorRow);
-                blockClear(0, mCursorRow, mCursorCol + 1);
-                break;
-
-            case 2: // Clear all
-                blockClear(0, 0, mColumns, mRows);
-                break;
-
-            default:
-                unknownSequence(b);
+            case '@': // ESC [ Pn @ - ICH Insert Characters
+            {
+                int charsAfterCursor = mColumns - mCursorCol;
+                int charsToInsert = Math.min(getArg0(1), charsAfterCursor);
+                int charsToMove = charsAfterCursor - charsToInsert;
+                mScreen.blockCopy(mCursorCol, mCursorRow, charsToMove, 1,
+                        mCursorCol + charsToInsert, mCursorRow);
+                blockClear(mCursorCol, mCursorRow, charsToInsert);
                 break;
             }
-            break;
-
-        case 'K': // ESC [ Pn K - Erase in Line
-            switch (getArg0(0)) {
-            case 0: // Clear to right
-                blockClear(mCursorCol, mCursorRow, mColumns - mCursorCol);
-                break;
-
-            case 1: // Erase start of line to cursor (including cursor)
-                blockClear(0, mCursorRow, mCursorCol + 1);
-                break;
-
-            case 2: // Clear whole line
-                blockClear(0, mCursorRow, mColumns);
-                break;
-
-            default:
-                unknownSequence(b);
+            case 'A': // ESC [ Pn A - Cursor Up
+            {
+                int row = mCursorRow - getArg0(1);
+                if (mCursorRow < mTopMargin)
+                    row = Math.max(0, row);
+                else
+                    row = Math.max(mTopMargin, row);
+                setCursorRow(row);
                 break;
             }
-            break;
-
-        case 'L': // Insert Lines
-        {
-            int linesAfterCursor = mBottomMargin - mCursorRow;
-            int linesToInsert = Math.min(getArg0(1), linesAfterCursor);
-            int linesToMove = linesAfterCursor - linesToInsert;
-            mScreen.blockCopy(0, mCursorRow, mColumns, linesToMove, 0,
-                    mCursorRow + linesToInsert);
-            blockClear(0, mCursorRow, mColumns, linesToInsert);
-            break;
-        }
-
-        case 'M': // Delete Lines
-        {
-            int linesAfterCursor = mBottomMargin - mCursorRow;
-            int linesToDelete = Math.min(getArg0(1), linesAfterCursor);
-            int linesToMove = linesAfterCursor - linesToDelete;
-            mScreen.blockCopy(0, mCursorRow + linesToDelete, mColumns,
-                    linesToMove, 0, mCursorRow);
-            blockClear(0, mCursorRow + linesToMove, mColumns, linesToDelete);
-            break;
-        }
-
-        case 'P': // Delete Characters
-        {
-            int charsAfterCursor = mColumns - mCursorCol;
-            int charsToDelete = Math.min(getArg0(1), charsAfterCursor);
-            int charsToMove = charsAfterCursor - charsToDelete;
-            mScreen.blockCopy(mCursorCol + charsToDelete, mCursorRow,
-                    charsToMove, 1, mCursorCol, mCursorRow);
-            blockClear(mCursorCol + charsToMove, mCursorRow, charsToDelete);
-            break;
-        }
-
-        case 'T': // Mouse tracking
-            unimplementedSequence(b);
-            break;
-
-        case 'X': // Erase characters
-            blockClear(mCursorCol, mCursorRow, getArg0(0));
-            break;
-
-        case 'Z': // Back tab
-            setCursorCol(prevTabStop(mCursorCol));
-            break;
-
-        case '?': // Esc [ ? -- start of a private mode set
-            continueSequence(EscapeProcessingState.LEFT_SQUARE_BRACKET_QUESTION_MARK);
-            break;
-
-        case 'c': // Send device attributes
-            sendDeviceAttributes();
-            break;
-
-        case 'd': // ESC [ Pn d - Vert Position Absolute
-            setCursorRow(Math.min(Math.max(1, getArg0(1)), mRows) - 1);
-            break;
-
-        case 'f': // Horizontal and Vertical Position
-            setHorizontalVerticalPosition();
-            break;
-
-        case 'g': // Clear tab stop
-            switch (getArg0(0)) {
-            case 0:
-                mTabStop[mCursorCol] = false;
+            case 'B': // ESC [ Pn B - Cursor Down
+            {
+                int row = mCursorRow + getArg0(1);
+                if (mCursorRow >= mBottomMargin)
+                    row = Math.min(mRows - 1, row);
+                else
+                    row = Math.min(mBottomMargin - 1, row);
+                setCursorRow(row);
                 break;
-
-            case 3:
-                for (int i = 0; i < mColumns; i++) {
-                    mTabStop[i] = false;
+            }
+            case 'C': // ESC [ Pn C - Cursor Right
+                setCursorCol(Math.min(mColumns - 1, mCursorCol + getArg0(1)));
+                break;
+            case 'D': // ESC [ Pn D - Cursor Left
+                setCursorCol(Math.max(0, mCursorCol - getArg0(1)));
+                break;
+            case 'G': // ESC [ Pn G - Cursor Horizontal Absolute
+                setCursorCol(Math.min(Math.max(1, getArg0(1)), mColumns) - 1);
+                break;
+            case 'H': // ESC [ Pn ; H - Cursor Position
+                setHorizontalVerticalPosition();
+                break;
+            case 'J': // ESC [ Pn J - ED - Erase in Display
+                // ED ignores the scrolling margins.
+                switch (getArg0(0)) {
+                    case 0: // Clear below
+                        blockClear(mCursorCol, mCursorRow, mColumns - mCursorCol);
+                        blockClear(0, mCursorRow + 1, mColumns, mRows - (mCursorRow + 1));
+                        break;
+                    case 1: // Erase from the start of the screen to the cursor.
+                        blockClear(0, 0, mColumns, mCursorRow);
+                        blockClear(0, mCursorRow, mCursorCol + 1);
+                        break;
+                    case 2: // Clear all
+                        blockClear(0, 0, mColumns, mRows);
+                        break;
+                    default:
+                        unknownSequence(b);
+                        break;
                 }
                 break;
-
-            default:
-                // Specified to have no effect.
+            case 'K': // ESC [ Pn K - Erase in Line
+                switch (getArg0(0)) {
+                    case 0: // Clear to right
+                        blockClear(mCursorCol, mCursorRow, mColumns - mCursorCol);
+                        break;
+                    case 1: // Erase start of line to cursor (including cursor)
+                        blockClear(0, mCursorRow, mCursorCol + 1);
+                        break;
+                    case 2: // Clear whole line
+                        blockClear(0, mCursorRow, mColumns);
+                        break;
+                    default:
+                        unknownSequence(b);
+                        break;
+                }
+                break;
+            case 'L': // Insert Lines
+            {
+                int linesAfterCursor = mBottomMargin - mCursorRow;
+                int linesToInsert = Math.min(getArg0(1), linesAfterCursor);
+                int linesToMove = linesAfterCursor - linesToInsert;
+                mScreen.blockCopy(0, mCursorRow, mColumns, linesToMove, 0,
+                        mCursorRow + linesToInsert);
+                blockClear(0, mCursorRow, mColumns, linesToInsert);
                 break;
             }
-            break;
-
-        case 'h': // Set Mode
-            doSetMode(true);
-            break;
-
-        case 'l': // Reset Mode
-            doSetMode(false);
-            break;
-
-        case 'm': // Esc [ Pn m - character attributes.
-                  // (can have up to 16 numerical arguments)
-            selectGraphicRendition();
-            break;
-
-        case 'n': // Esc [ Pn n - ECMA-48 Status Report Commands
-            //sendDeviceAttributes()
-            switch (getArg0(0)) {
-            case 5: // Device status report (DSR):
-                    // Answer is ESC [ 0 n (Terminal OK).
-                byte[] dsr = {(byte) 27, (byte) '[', (byte) '0', (byte) 'n'};
-                mSession.write(dsr, 0, dsr.length);
-                break;
-
-            case 6: // Cursor position report (CPR):
-                    // Answer is ESC [ y ; x R, where x,y is
-                    // the cursor location.
-                byte[] cpr = String.format(Locale.US, "\033[%d;%dR",
-                                 mCursorRow + 1, mCursorCol + 1).getBytes();
-                mSession.write(cpr, 0, cpr.length);
-                break;
-
-            default:
+            case 'M': // Delete Lines
+            {
+                int linesAfterCursor = mBottomMargin - mCursorRow;
+                int linesToDelete = Math.min(getArg0(1), linesAfterCursor);
+                int linesToMove = linesAfterCursor - linesToDelete;
+                mScreen.blockCopy(0, mCursorRow + linesToDelete, mColumns,
+                        linesToMove, 0, mCursorRow);
+                blockClear(0, mCursorRow + linesToMove, mColumns, linesToDelete);
                 break;
             }
-            break;
-
-        case 'r': // Esc [ Pn ; Pn r - set top and bottom margins
-        {
-            // The top margin defaults to 1, the bottom margin
-            // (unusually for arguments) defaults to mRows.
-            //
-            // The escape sequence numbers top 1..23, but we
-            // number top 0..22.
-            // The escape sequence numbers bottom 2..24, and
-            // so do we (because we use a zero based numbering
-            // scheme, but we store the first line below the
-            // bottom-most scrolling line.
-            // As a result, we adjust the top line by -1, but
-            // we leave the bottom line alone.
-            //
-            // Also require that top + 2 <= bottom
-
-            int top = Math.max(0, Math.min(getArg0(1) - 1, mRows - 2));
-            int bottom = Math.max(top + 2, Math.min(getArg1(mRows), mRows));
-            mTopMargin = top;
-            mBottomMargin = bottom;
-
-            // The cursor is placed in the home position
-            // column 1, line 1 of the page(numbering from 1).
-            setCursorRowCol(0, 0);
-            break;
-        }
-
-        default:
-            parseArg(b);
-            break;
+            case 'P': // Delete Characters
+            {
+                int charsAfterCursor = mColumns - mCursorCol;
+                int charsToDelete = Math.min(getArg0(1), charsAfterCursor);
+                int charsToMove = charsAfterCursor - charsToDelete;
+                mScreen.blockCopy(mCursorCol + charsToDelete, mCursorRow,
+                        charsToMove, 1, mCursorCol, mCursorRow);
+                blockClear(mCursorCol + charsToMove, mCursorRow, charsToDelete);
+                break;
+            }
+            case 'T': // Mouse tracking
+                unimplementedSequence(b);
+                break;
+            case 'X': // Erase characters
+                blockClear(mCursorCol, mCursorRow, getArg0(0));
+                break;
+            case 'Z': // Back tab
+                setCursorCol(prevTabStop(mCursorCol));
+                break;
+            case '?': // Esc [ ? -- start of a private mode set
+                continueSequence(EscapeProcessingState.LEFT_SQUARE_BRACKET_QUESTION_MARK);
+                break;
+            case 'c': // Send device attributes
+                sendDeviceAttributes();
+                break;
+            case 'd': // ESC [ Pn d - Vert Position Absolute
+                setCursorRow(Math.min(Math.max(1, getArg0(1)), mRows) - 1);
+                break;
+            case 'f': // Horizontal and Vertical Position
+                setHorizontalVerticalPosition();
+                break;
+            case 'g': // Clear tab stop
+                switch (getArg0(0)) {
+                    case 0:
+                        mTabStop[mCursorCol] = false;
+                        break;
+                    case 3:
+                        for (int i = 0; i < mColumns; i++) {
+                            mTabStop[i] = false;
+                        }
+                        break;
+                    default:
+                        // Specified to have no effect.
+                        break;
+                }
+                break;
+            case 'h': // Set Mode
+                doSetMode(true);
+                break;
+            case 'l': // Reset Mode
+                doSetMode(false);
+                break;
+            case 'm': // Esc [ Pn m - character attributes.
+                // (can have up to 16 numerical arguments)
+                selectGraphicRendition();
+                break;
+            case 'n': // Esc [ Pn n - ECMA-48 Status Report Commands
+                //sendDeviceAttributes()
+                switch (getArg0(0)) {
+                    case 5: // Device status report (DSR):
+                        // Answer is ESC [ 0 n (Terminal OK).
+                        byte[] dsr = {(byte) 27, (byte) '[', (byte) '0', (byte) 'n'};
+                        mSession.write(dsr, 0, dsr.length);
+                        break;
+                    case 6: // Cursor position report (CPR):
+                        // Answer is ESC [ y ; x R, where x,y is
+                        // the cursor location.
+                        byte[] cpr = String.format(Locale.US, "\033[%d;%dR", mCursorRow + 1,
+                                mCursorCol + 1).getBytes();
+                        mSession.write(cpr, 0, cpr.length);
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case 'r': // Esc [ Pn ; Pn r - set top and bottom margins
+            {
+                // The top margin defaults to 1, the bottom margin
+                // (unusually for arguments) defaults to mRows.
+                //
+                // The escape sequence numbers top 1..23, but we
+                // number top 0..22.
+                // The escape sequence numbers bottom 2..24, and
+                // so do we (because we use a zero based numbering
+                // scheme, but we store the first line below the
+                // bottom-most scrolling line.
+                // As a result, we adjust the top line by -1, but
+                // we leave the bottom line alone.
+                //
+                // Also require that top + 2 <= bottom
+                int top = Math.max(0, Math.min(getArg0(1) - 1, mRows - 2));
+                int bottom = Math.max(top + 2, Math.min(getArg1(mRows), mRows));
+                mTopMargin = top;
+                mBottomMargin = bottom;
+                // The cursor is placed in the home position
+                // column 1, line 1 of the page(numbering from 1).
+                setCursorRowCol(0, 0);
+                break;
+            }
+            default:
+                parseArg(b);
+                break;
         }
     }
 
@@ -1375,9 +1310,7 @@ class TerminalEmulator {
                     code = 0;
                 }
             }
-
             // See http://en.wikipedia.org/wiki/ANSI_escape_code#graphics
-
             if (code == 0) { // reset
                 mForeColor = mDefaultForeColor;
                 mBackColor = mDefaultBackColor;
@@ -1446,8 +1379,7 @@ class TerminalEmulator {
         boolean result = (0 <= color && color <= 255);
         if (!result) {
             if (EmulatorDebug.LOG_UNKNOWN_ESCAPE_SEQUENCES) {
-                Log.w(EmulatorDebug.LOG_TAG,
-                        String.format("Invalid color index %d", color));
+                Log.w(EmulatorDebug.LOG_TAG, String.format("Invalid color index %d", color));
             }
         }
         return result;
@@ -1455,31 +1387,26 @@ class TerminalEmulator {
 
     private void doEscRightSquareBracket(byte b) {
         switch (b) {
-        case 0x7:
-            doOSC();
-            break;
-        case 0x1b: // Esc, probably start of Esc \ sequence
-            continueSequence(EscapeProcessingState.RIGHT_SQUARE_BRACKET_ESC);
-            break;
-        default:
-            collectOSCArgs(b);
-            break;
+            case 0x7:
+                doOSC();
+                break;
+            case 0x1b: // Esc, probably start of Esc \ sequence
+                continueSequence(EscapeProcessingState.RIGHT_SQUARE_BRACKET_ESC);
+                break;
+            default:
+                collectOSCArgs(b);
+                break;
         }
     }
 
     private void doEscRightSquareBracketEsc(byte b) {
-        switch (b) {
-        case '\\':
+        if (b == '\\') {
             doOSC();
-            break;
-
-        default:
-            // The ESC character was not followed by a \, so insert the ESC and
+        } else {// The ESC character was not followed by a \, so insert the ESC and
             // the current character in arg buffer.
             collectOSCArgs((byte) 0x1b);
             collectOSCArgs(b);
             continueSequence(EscapeProcessingState.RIGHT_SQUARE_BRACKET);
-            break;
         }
     }
 
@@ -1487,14 +1414,14 @@ class TerminalEmulator {
         startTokenizingOSC();
         int ps = nextOSCInt(';');
         switch (ps) {
-        case 0: // Change icon name and window title to T
-        case 1: // Change icon name to T
-        case 2: // Change window title to T
-            changeTitle(ps, nextOSCString(-1));
-            break;
-        default:
-            unknownParameter(ps);
-            break;
+            case 0: // Change icon name and window title to T
+            case 1: // Change icon name to T
+            case 2: // Change window title to T
+                changeTitle(ps, nextOSCString(-1));
+                break;
+            default:
+                unknownParameter(ps);
+                break;
         }
         finishSequence();
     }
@@ -1523,21 +1450,15 @@ class TerminalEmulator {
 
     private void doSetMode(boolean newValue) {
         int modeBit = getArg0(0);
-        switch (modeBit) {
-        case 4:
+        if (modeBit == 4) {
             mInsertMode = newValue;
-            break;
-
-        default:
+        } else {
             unknownParameter(modeBit);
-            break;
         }
     }
 
     private void setHorizontalVerticalPosition() {
-
         // Parameters are Row ; Column
-
         setCursorPosition(getArg1(1) - 1, getArg0(1) - 1);
     }
 
@@ -1548,9 +1469,7 @@ class TerminalEmulator {
             effectiveTopMargin = mTopMargin;
             effectiveBottomMargin = mBottomMargin;
         }
-        int newRow =
-                Math.max(effectiveTopMargin, Math.min(effectiveTopMargin + y,
-                        effectiveBottomMargin - 1));
+        int newRow = Math.max(effectiveTopMargin, Math.min(effectiveTopMargin + y, effectiveBottomMargin - 1));
         int newCol = Math.max(0, Math.min(x, mColumns - 1));
         setCursorRowCol(newRow, newCol);
     }
@@ -1559,11 +1478,10 @@ class TerminalEmulator {
         // This identifies us as a DEC vt100 with advanced
         // video options. This is what the xterm terminal
         // emulator sends.
-        byte[] attributes =
-                {
+        byte[] attributes = {
                 /* VT100 */
-                 (byte) 27, (byte) '[', (byte) '?', (byte) '1',
-                 (byte) ';', (byte) '2', (byte) 'c'
+                (byte) 27, (byte) '[', (byte) '?', (byte) '1',
+                (byte) ';', (byte) '2', (byte) 'c'
 
                 /* VT220
                 (byte) 27, (byte) '[', (byte) '?', (byte) '6',
@@ -1576,8 +1494,7 @@ class TerminalEmulator {
                 (byte) '1',  (byte) '5', (byte) ';',
                 (byte) 'c'
                 */
-                };
-
+        };
         mSession.write(attributes, 0, attributes.length);
     }
 
@@ -1624,7 +1541,7 @@ class TerminalEmulator {
     }
 
     private int getArg(int index, int defaultValue,
-            boolean treatZeroAsDefault) {
+                       boolean treatZeroAsDefault) {
         int result = mArgs[index];
         if (result < 0 || (result == 0 && treatZeroAsDefault)) {
             result = defaultValue;
@@ -1747,7 +1664,7 @@ class TerminalEmulator {
     /**
      * Send a Unicode code point to the screen.
      *
-     * @param c The code point of the character to display
+     * @param c     The code point of the character to display
      * @param style The encoded text style (effects, foreground and background colors)
      */
     private void emit(int c, int style) {

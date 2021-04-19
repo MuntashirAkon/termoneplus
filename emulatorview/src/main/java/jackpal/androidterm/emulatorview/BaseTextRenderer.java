@@ -307,9 +307,9 @@ abstract class BaseTextRenderer implements TextRenderer {
     private final Path mAltCursor;
     private final Path mCtrlCursor;
     private final Path mFnCursor;
-    private RectF mTempSrc;
-    private RectF mTempDst;
-    private Matrix mScaleMatrix;
+    private final RectF mTempSrc;
+    private final RectF mTempDst;
+    private final Matrix mScaleMatrix;
     private float mLastCharWidth;
     private float mLastCharHeight;
     private static final Matrix.ScaleToFit mScaleType = Matrix.ScaleToFit.FILL;

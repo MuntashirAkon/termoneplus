@@ -37,7 +37,6 @@ public class TermIO {
         Native.setWindowSize(fd, row, col, 0, 0);
     }
 
-
     private static class Native {
         private static native void setUTF8Input(int fd, boolean flag) throws IOException;
 

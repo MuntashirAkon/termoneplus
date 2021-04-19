@@ -22,27 +22,29 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
-
 public class CharacterCompat {
     public static int charCount(int cp /*code point*/) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N /*API Level 24*/)
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N /*API Level 24*/) {
             return Compat1.charCount(cp);
-        else
+        } else {
             return Compat24.charCount(cp);
+        }
     }
 
     public static int toChars(int cp, char[] dst, int dstIndex) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N /*API Level 24*/)
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N /*API Level 24*/) {
             return Compat1.toChars(cp, dst, dstIndex);
-        else
+        } else {
             return Compat24.toChars(cp, dst, dstIndex);
+        }
     }
 
     public static boolean isEastAsianDoubleWidth(int ch /*code point*/) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N /*API Level 24*/)
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N /*API Level 24*/) {
             return Compat1.isEastAsianDoubleWidth(ch);
-        else
+        } else {
             return Compat24.isEastAsianDoubleWidth(ch);
+        }
     }
 
     private static class Compat1 {

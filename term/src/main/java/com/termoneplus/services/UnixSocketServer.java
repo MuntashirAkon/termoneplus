@@ -34,7 +34,6 @@ public class UnixSocketServer {
 
     private final ServerThread server;
 
-
     public UnixSocketServer(String address, ConnectionHandler handler) throws IOException {
         final LocalServerSocket socket = new LocalServerSocket(address);
         server = new ServerThread(socket, handler);
@@ -59,11 +58,9 @@ public class UnixSocketServer {
         }
     }
 
-
     public interface ConnectionHandler {
         void handle(InputStream inputStream, OutputStream outputStream) throws IOException;
     }
-
 
     private static class ServerThread extends Thread {
         private final LocalServerSocket socket;
@@ -113,7 +110,6 @@ public class UnixSocketServer {
     private static class WorkerThread extends Thread {
         private final LocalSocket socket;
         private final ConnectionHandler handler;
-
 
         WorkerThread(LocalSocket socket, ConnectionHandler handler) {
             this.socket = socket;
